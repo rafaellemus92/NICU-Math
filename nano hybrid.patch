@@ -1,0 +1,272 @@
+diff --git a/api/app/schema.sql b/api/app/schema.sql
+index 1111111..2222222 100644
+--- a/api/app/schema.sql
++++ b/api/app/schema.sql
+@@ -1,3 +1,4 @@
++-- schema.sql  (adds hybrid FTS + cache)
+ -- Documents table
+ CREATE TABLE IF NOT EXISTS documents (
+     id           BIGSERIAL PRIMARY KEY,
+@@ -10,17 +11,63 @@ CREATE TABLE IF NOT EXISTS chunks (
+     id           BIGSERIAL PRIMARY KEY,
+     document_id  BIGINT  NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+     chunk_index  INTEGER NOT NULL,
+-    content      TEXT    NOT NULL,
+-    embedding    VECTOR(1536),
++    content      TEXT NOT NULL,
++    embedding    VECTOR(1536),
+     UNIQUE (document_id, chunk_index)
+ );
+
+ -- Helpful btrees
+ CREATE INDEX IF NOT EXISTS idx_chunks_document   ON chunks(document_id);
+ CREATE INDEX IF NOT EXISTS idx_chunks_doc        ON chunks(document_id, chunk_index);
+
+ -- Vector ANN (tune lists for your corpus size)
+ CREATE INDEX IF NOT EXISTS idx_chunks_embedding_ivfflat
+   ON chunks USING ivfflat (embedding) WITH (lists='100');
+
++-- ---------- Full‑text search (hybrid) ----------
++-- tsvector column + GIN index + trigger to maintain it
++ALTER TABLE chunks ADD COLUMN IF NOT EXISTS tsv tsvector;
++CREATE INDEX IF NOT EXISTS idx_chunks_tsv ON chunks USING GIN(tsv);
++
++-- Create the trigger only if it does not exist
++DO $$
++BEGIN
++  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'chunks_tsv_update') THEN
++    CREATE TRIGGER chunks_tsv_update
++    BEFORE INSERT OR UPDATE ON chunks
++    FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv','pg_catalog.english','content');
++  END IF;
++END$$;
++
++-- Backfill existing rows once
++UPDATE chunks SET tsv = to_tsvector('english', content) WHERE tsv IS NULL;
++
++-- ---------- Query embedding cache ----------
++CREATE TABLE IF NOT EXISTS query_cache (
++  q   TEXT PRIMARY KEY,
++  v   VECTOR(1536),
++  ts  TIMESTAMPTZ DEFAULT now()
++);
++
+diff --git a/api/app/search.py b/api/app/search.py
+index 3333333..4444444 100644
+--- a/api/app/search.py
++++ b/api/app/search.py
+@@ -1,63 +1,176 @@
+-from typing import List, Optional
++from typing import List, Optional, Dict, Any, Tuple
+ import os
+
+ from fastapi import APIRouter
+ from pydantic import BaseModel, Field
+ from openai import OpenAI
+
+ from .db import get_conn
+
+ # Must match ingestion & table dimension (text-embedding-3-small = 1536)
+ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+ client = OpenAI()  # reads OPENAI_API_KEY from env
+
+ router = APIRouter()
+
+
+ class SearchRequest(BaseModel):
+     query: str = Field(..., description="Natural language question")
+     k: int = Field(5, ge=1, le=50, description="How many passages to return")
+
+
+ class Passage(BaseModel):
+     document_id: int
+     title: Optional[str]
+     path: Optional[str]
+     chunk_index: int
+-    excerpt: str
+-    score: float
+-    content: str
++    excerpt: str                  # kept for UI compatibility
++    score: float                  # combined / RRF score when hybrid
++    content: Optional[str] = None # raw content (optional payload)
+
+
+ class SearchResponse(BaseModel):
+     results: List[Passage]
+
+
+-def _embed(text: str) -> list[float]:
++def _embed(text: str) -> list[float]:
+     """Return a single embedding vector for the query."""
+     resp = client.embeddings.create(model=EMBEDDING_MODEL, input=[text])
+     return resp.data[0].embedding
+
+
+-def _pgvector_literal(vec: list[float]) -> str:
++def _pgvector_literal(vec: list[float]) -> str:
+     """pgvector text literal, e.g. '[0.123,-0.456,...]'"""
+     return "[" + ",".join(f"{x:.7f}" for x in vec) + "]"
+
++def _get_or_make_query_vec(con, q: str) -> list[float]:
++    """Tiny embedding cache in Postgres to shave 100–300ms on repeats."""
++    with con.cursor() as cur:
++        cur.execute("SELECT v FROM query_cache WHERE q=%s", (q,))
++        row = cur.fetchone()
++        if row:
++            # row[0] is a pgvector; cast to python list
++            return list(row[0])
++    v = _embed(q)
++    with con.cursor() as cur:
++        cur.execute(
++            "INSERT INTO query_cache(q, v) VALUES (%s, %s) ON CONFLICT (q) DO UPDATE SET v=EXCLUDED.v, ts=now()",
++            (q, _pgvector_literal(v)),
++        )
++    return v
++
++def _semantic_topk(con, v_lit: str, k: int) -> List[Dict[str, Any]]:
++    sql = """
++        SELECT d.id, d.title, d.source_path, c.chunk_index, c.content,
++               (c.embedding <-> %(v)s::vector) AS score
++        FROM chunks c
++        JOIN documents d ON d.id = c.document_id
++        ORDER BY c.embedding <-> %(v)s::vector
++        LIMIT %(k)s;
++    """
++    out = []
++    with con.cursor() as cur:
++        cur.execute(sql, {"v": v_lit, "k": k})
++        for r in cur.fetchall():
++            out.append(
++                dict(
++                    document_id=r[0],
++                    title=r[1],
++                    path=r[2],
++                    chunk_index=r[3],
++                    content=r[4],
++                    score=float(r[5]),
++                )
++            )
++    return out
++
++def _lexical_topk(con, q: str, k: int) -> List[Dict[str, Any]]:
++    sql = """
++        SELECT d.id, d.title, d.source_path, c.chunk_index, c.content,
++               ts_rank_cd(c.tsv, plainto_tsquery('english', %(q)s)) AS score
++        FROM chunks c
++        JOIN documents d ON d.id = c.document_id
++        WHERE c.tsv @@ plainto_tsquery('english', %(q)s)
++        ORDER BY score DESC
++        LIMIT %(k)s;
++    """
++    out = []
++    with con.cursor() as cur:
++        cur.execute(sql, {"q": q, "k": k})
++        for r in cur.fetchall():
++            out.append(
++                dict(
++                    document_id=r[0],
++                    title=r[1],
++                    path=r[2],
++                    chunk_index=r[3],
++                    content=r[4],
++                    score=float(r[5]),
++                )
++            )
++    return out
++
++def _rrf_merge(sem_rows: List[Dict[str, Any]],
++               lex_rows: List[Dict[str, Any]],
++               k: int,
++               k_rrf: int = 60) -> List[Dict[str, Any]]:
++    """
++    Reciprocal Rank Fusion:
++      score = Σ 1 / (k_rrf + rank_i)
++    Merge by (document_id, chunk_index) identity.
++    """
++    def as_key(r: Dict[str, Any]) -> Tuple[int, int]:
++        return (r["document_id"], r["chunk_index"])
++
++    scores: Dict[Tuple[int, int], float] = {}
++    index: Dict[Tuple[int, int], Dict[str, Any]] = {}
++    for i, r in enumerate(sem_rows):
++        k_ = as_key(r)
++        scores[k_] = scores.get(k_, 0.0) + 1.0 / (k_rrf + i + 1)
++        index[k_] = r
++    for i, r in enumerate(lex_rows):
++        k_ = as_key(r)
++        scores[k_] = scores.get(k_, 0.0) + 1.0 / (k_rrf + i + 1)
++        index[k_] = index.get(k_, r)  # keep any copy
++
++    merged = []
++    for k_, s in scores.items():
++        r = dict(index[k_])
++        r["score"] = s
++        merged.append(r)
++    merged.sort(key=lambda x: x["score"], reverse=True)
++    return merged[:k]
+
+ @router.post("/search", response_model=SearchResponse, summary="Semantic search over ingested PDFs")
+ def search(req: SearchRequest) -> SearchResponse:
+-    vec = _embed(req.query)
+-    v_lit = _pgvector_literal(vec)  # pass as text, cast to ::vector in SQL
+-
+-    sql = """
+-        SELECT
+-            d.id AS document_id,
+-            d.title,
+-            d.source_path AS path,
+-            c.chunk_index,
+-            c.content,
+-            (c.embedding <-> %(v)s::vector) AS score
+-        FROM chunks c
+-        JOIN documents d ON d.id = c.document_id
+-        ORDER BY c.embedding <-> %(v)s::vector
+-        LIMIT %(k)s;
+-    """
+-
+-    rows: list[Passage] = []
+-    with get_conn() as con, con.cursor() as cur:
+-        cur.execute(sql, {"v": v_lit, "k": req.k})
+-        for r in cur.fetchall():
+-            rows.append(
+-                Passage(
+-                    document_id=r[0],
+-                    title=r[1],
+-                    path=r[2],
+-                    chunk_index=r[3],
+-                    excerpt=r[4],
+-                    score=float(r[5]),
+-                )
+-            )
+-
+-    return SearchResponse(results=rows)
++    k = req.k
++    # Slightly over‑retrieve for better RRF quality
++    k_sem = max(k * 3, 10)
++    k_lex = max(k * 3, 10)
++
++    with get_conn() as con:
++        vec = _get_or_make_query_vec(con, req.query)
++        v_lit = _pgvector_literal(vec)
++
++        sem = _semantic_topk(con, v_lit, k_sem)
++        lex = _lexical_topk(con, req.query, k_lex)
++        merged = _rrf_merge(sem, lex, k)
++
++    rows: List[Passage] = []
++    for r in merged:
++        excerpt = r["content"]
++        if len(excerpt) > 420:
++            excerpt = excerpt[:420].rstrip() + "…"
++        rows.append(
++            Passage(
++                document_id=r["document_id"],
++                title=r["title"],
++                path=r["path"],
++                chunk_index=r["chunk_index"],
++                excerpt=excerpt,
++                score=float(r["score"]),
++                content=None,  # omit raw content to keep payload small
++            )
++        )
++    return SearchResponse(results=rows)
