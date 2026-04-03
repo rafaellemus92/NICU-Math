@@ -5,13 +5,13 @@ import { ABP_DOMAINS } from "./domains";
 
 const DB_PATH = path.join(process.cwd(), "data", "neonatal-torus.db");
 const SCHEMA_PATH = path.join(process.cwd(), "lib", "schema.sql");
+const GRAPH_SCHEMA_PATH = path.join(process.cwd(), "lib", "graph-schema.sql");
 
 let _db: Database.Database | null = null;
 
 export function getDb(): Database.Database {
   if (_db) return _db;
 
-  // Ensure data directory exists
   const dataDir = path.dirname(DB_PATH);
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -21,12 +21,16 @@ export function getDb(): Database.Database {
   _db.pragma("journal_mode = WAL");
   _db.pragma("foreign_keys = ON");
 
-  // Migrate: widen concept_edges relation_type CHECK if old schema
+  // Migrate old concept_edges if needed
   migrateEdgesTable(_db);
 
-  // Run schema (CREATE IF NOT EXISTS is safe to re-run)
+  // Run original schema
   const schema = fs.readFileSync(SCHEMA_PATH, "utf-8");
   _db.exec(schema);
+
+  // Run graph v2 schema
+  const graphSchema = fs.readFileSync(GRAPH_SCHEMA_PATH, "utf-8");
+  _db.exec(graphSchema);
 
   // Seed domains if empty
   const count = _db.prepare("SELECT COUNT(*) as c FROM domains").get() as { c: number };
@@ -46,30 +50,23 @@ export function getDb(): Database.Database {
 }
 
 function migrateEdgesTable(db: Database.Database) {
-  // Check if concept_edges exists
   const tableExists = db
     .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='concept_edges'")
     .get();
 
-  if (!tableExists) return; // Will be created by schema.sql
+  if (!tableExists) return;
 
-  // Check if sequence_order column exists
   const cols = db.prepare("PRAGMA table_info(concept_edges)").all() as Array<{ name: string }>;
   const hasSequenceOrder = cols.some((c) => c.name === "sequence_order");
 
   if (!hasSequenceOrder) {
-    // Need to recreate the table to widen CHECK and add column
     db.exec("PRAGMA foreign_keys = OFF");
     db.exec(`
       CREATE TABLE concept_edges_new (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         source_id INTEGER NOT NULL REFERENCES concepts(id),
         target_id INTEGER NOT NULL REFERENCES concepts(id),
-        relation_type TEXT NOT NULL CHECK(relation_type IN (
-          'distinction','association','mechanism','treatment','genetic','temporal',
-          'embryology','physiology','timeline','differential','mimic','management',
-          'infectious_association','anatomy'
-        )),
+        relation_type TEXT NOT NULL,
         weight REAL NOT NULL DEFAULT 0.5,
         explanation TEXT,
         sequence_order INTEGER,
