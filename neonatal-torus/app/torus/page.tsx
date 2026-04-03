@@ -1,12 +1,51 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Component, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { ABP_DOMAINS } from "@/lib/domains";
 import ConceptPanel from "@/components/ConceptPanel";
 import TraversalPanel from "@/components/TraversalPanel";
 import type { TorusConcept, TorusEdge, TorusDensity, FiberHoverInfo, TraversalPathData } from "@/components/ConceptTorus";
 import type { ActiveTraversal } from "@/components/TraversalPanel";
+
+// ── Error Boundary for Three.js ────────────────────────────────────
+
+class TorusErrorBoundary extends Component<
+  { children: ReactNode; onError?: (error: Error) => void },
+  { error: Error | null }
+> {
+  constructor(props: { children: ReactNode; onError?: (error: Error) => void }) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  componentDidCatch(error: Error) {
+    this.props.onError?.(error);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="w-full h-full bg-zinc-950 flex items-center justify-center p-8">
+          <div className="bg-red-950/50 border border-red-800 rounded-xl p-6 max-w-lg text-center">
+            <div className="text-red-400 font-bold text-sm mb-2">Torus Render Error</div>
+            <div className="text-red-300/70 text-xs font-mono mb-4 break-all">
+              {this.state.error.message}
+            </div>
+            <button
+              onClick={() => this.setState({ error: null })}
+              className="px-3 py-1.5 text-xs bg-zinc-800 text-zinc-300 rounded hover:bg-zinc-700"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const ConceptTorus = dynamic(() => import("@/components/ConceptTorus"), {
   ssr: false,
@@ -17,12 +56,52 @@ const ConceptTorus = dynamic(() => import("@/components/ConceptTorus"), {
   ),
 });
 
+// ── Graph data validation ──────────────────────────────────────────
+
+interface GraphMeta {
+  source: string;
+  nodeCount: number;
+  edgeCount: number;
+  droppedEdges: number;
+}
+
+function validateGraphData(
+  concepts: TorusConcept[],
+  edges: TorusEdge[]
+): { valid: boolean; issues: string[] } {
+  const issues: string[] = [];
+  const nodeIds = new Set(concepts.map((c) => c.id));
+
+  // Check for concepts missing required fields
+  for (const c of concepts) {
+    if (!c.slug) issues.push(`Node ${c.id} (${c.name}) missing slug`);
+    if (!c.primary_domain) issues.push(`Node ${c.id} (${c.name}) missing primary_domain`);
+  }
+
+  // Check for edges referencing missing nodes
+  let danglingCount = 0;
+  for (const e of edges) {
+    if (!nodeIds.has(e.source_id) || !nodeIds.has(e.target_id)) {
+      danglingCount++;
+    }
+  }
+  if (danglingCount > 0) {
+    issues.push(`${danglingCount} edges reference missing nodes`);
+  }
+
+  return { valid: issues.length === 0, issues };
+}
+
 export default function TorusPage() {
   // Data
   const [concepts, setConcepts] = useState<TorusConcept[]>([]);
   const [edges, setEdges] = useState<TorusEdge[]>([]);
   const [density, setDensity] = useState<TorusDensity[]>([]);
   const [seeded, setSeeded] = useState(false);
+  const [graphMeta, setGraphMeta] = useState<GraphMeta | null>(null);
+  const [graphIssues, setGraphIssues] = useState<string[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [resetting, setResetting] = useState(false);
 
   // UI state
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,16 +114,35 @@ export default function TorusPage() {
   const [activePanel, setActivePanel] = useState<"concept" | "traversal">("concept");
   const [traversalPath, setTraversalPath] = useState<TraversalPathData | null>(null);
 
-  // Load graph data
+  // Load graph data with validation
   const loadGraph = useCallback(() => {
+    setLoadError(null);
     fetch("/api/graph")
-      .then((r) => r.json())
-      .then((d) => {
-        setConcepts(d.concepts || []);
-        setEdges(d.edges || []);
-        setDensity(d.density || []);
+      .then((r) => {
+        if (!r.ok) throw new Error(`Graph API returned ${r.status}`);
+        return r.json();
       })
-      .catch(() => {});
+      .then((d) => {
+        const c = d.concepts || [];
+        const e = d.edges || [];
+        const dens = d.density || [];
+
+        // Validate before setting state
+        const { issues } = validateGraphData(c, e);
+        setGraphIssues(issues);
+        setGraphMeta(d._meta || null);
+
+        // Filter out any concepts missing slug (would crash torus)
+        const validConcepts = c.filter((n: TorusConcept) => n.slug && n.primary_domain);
+        setConcepts(validConcepts);
+        setEdges(e);
+        setDensity(dens);
+      })
+      .catch((err) => {
+        setLoadError(err instanceof Error ? err.message : "Failed to load graph");
+        setConcepts([]);
+        setEdges([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -56,6 +154,25 @@ export default function TorusPage() {
     setSeeded(true);
     await fetch("/api/seed-examples", { method: "POST" });
     loadGraph();
+  }, [loadGraph]);
+
+  // Reset and rebuild graph
+  const resetAndRebuild = useCallback(async () => {
+    setResetting(true);
+    setLoadError(null);
+    setGraphIssues([]);
+    try {
+      await fetch("/api/reset-graph", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clear_v2: true, clear_legacy: true, reseed: true, extract: true }),
+      });
+      loadGraph();
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Reset failed");
+    } finally {
+      setResetting(false);
+    }
   }, [loadGraph]);
 
   // Search concepts
@@ -320,19 +437,45 @@ export default function TorusPage() {
 
       {/* Main content */}
       <div className="flex-1 flex min-h-0 relative">
-        {/* Torus viewport */}
+        {/* Error / issue banners */}
+        {loadError && (
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 bg-red-950/90 border border-red-800 rounded-lg px-4 py-2 text-xs text-red-300 flex items-center gap-3 backdrop-blur-sm">
+            <span>Graph load error: {loadError}</span>
+            <button onClick={resetAndRebuild} disabled={resetting}
+              className="px-2 py-1 bg-red-800/50 rounded text-red-200 hover:bg-red-700/50 disabled:opacity-50">
+              {resetting ? "Resetting..." : "Reset & Rebuild"}
+            </button>
+          </div>
+        )}
+        {graphIssues.length > 0 && !loadError && (
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 bg-amber-950/90 border border-amber-800 rounded-lg px-4 py-2 text-xs text-amber-300 flex items-center gap-3 backdrop-blur-sm">
+            <div>
+              <span className="font-bold">Graph issues:</span>{" "}
+              {graphIssues.slice(0, 2).join("; ")}
+              {graphIssues.length > 2 && ` (+${graphIssues.length - 2} more)`}
+            </div>
+            <button onClick={resetAndRebuild} disabled={resetting}
+              className="px-2 py-1 bg-amber-800/50 rounded text-amber-200 hover:bg-amber-700/50 shrink-0 disabled:opacity-50">
+              {resetting ? "Fixing..." : "Fix"}
+            </button>
+          </div>
+        )}
+
+        {/* Torus viewport with error boundary */}
         <div className="flex-1">
-          <ConceptTorus
-            concepts={concepts}
-            edges={edges}
-            chunkDensity={density}
-            focusConceptId={focusConceptId}
-            activeDomain={activeDomain}
-            traversalPath={traversalPath}
-            onConceptSelect={selectConcept}
-            onDomainSelect={setActiveDomain}
-            onFiberHover={setFiberHover}
-          />
+          <TorusErrorBoundary onError={(e) => setLoadError(e.message)}>
+            <ConceptTorus
+              concepts={concepts}
+              edges={edges}
+              chunkDensity={density}
+              focusConceptId={focusConceptId}
+              activeDomain={activeDomain}
+              traversalPath={traversalPath}
+              onConceptSelect={selectConcept}
+              onDomainSelect={setActiveDomain}
+              onFiberHover={setFiberHover}
+            />
+          </TorusErrorBoundary>
         </div>
 
         {/* Right panel */}
