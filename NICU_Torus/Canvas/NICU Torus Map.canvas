@@ -1,0 +1,957 @@
+{
+  "nodes": [
+    {
+      "id": "center",
+      "type": "text",
+      "x": -150,
+      "y": -50,
+      "width": 300,
+      "height": 100,
+      "text": "# NICU Torus\nKnowledge Map"
+    },
+    {
+      "id": "dom-maternal",
+      "type": "file",
+      "x": -120,
+      "y": -630,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Maternal-Fetal.md"
+    },
+    {
+      "id": "dom-asphyxia",
+      "type": "file",
+      "x": 140,
+      "y": -571,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Asphyxia-Resuscitation.md"
+    },
+    {
+      "id": "dom-respiratory",
+      "type": "file",
+      "x": 349,
+      "y": -404,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Respiratory.md"
+    },
+    {
+      "id": "dom-cardiovascular",
+      "type": "file",
+      "x": 465,
+      "y": -164,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Cardiovascular.md"
+    },
+    {
+      "id": "dom-genetics",
+      "type": "file",
+      "x": 465,
+      "y": 104,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Genetics-Dysmorphism.md"
+    },
+    {
+      "id": "dom-nutrition",
+      "type": "file",
+      "x": 349,
+      "y": 344,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Nutrition-GI.md"
+    },
+    {
+      "id": "dom-water",
+      "type": "file",
+      "x": 140,
+      "y": 511,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Water-Salt-Renal.md"
+    },
+    {
+      "id": "dom-endocrine",
+      "type": "file",
+      "x": -120,
+      "y": 570,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Endocrine-Metabolic-Thermal.md"
+    },
+    {
+      "id": "dom-immunology",
+      "type": "file",
+      "x": -380,
+      "y": 511,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Immunology-Infectious Disease.md"
+    },
+    {
+      "id": "dom-hematology",
+      "type": "file",
+      "x": -589,
+      "y": 344,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Hematology-Bilirubin.md"
+    },
+    {
+      "id": "dom-neurology",
+      "type": "file",
+      "x": -705,
+      "y": 104,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Neurology-Neurodevelopment.md"
+    },
+    {
+      "id": "dom-ent",
+      "type": "file",
+      "x": -705,
+      "y": -164,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/ENT-Eyes-Skin.md"
+    },
+    {
+      "id": "dom-pharmacology",
+      "type": "file",
+      "x": -589,
+      "y": -404,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Pharmacology.md"
+    },
+    {
+      "id": "dom-ethics",
+      "type": "file",
+      "x": -380,
+      "y": -571,
+      "width": 240,
+      "height": 60,
+      "file": "01_Domains/Ethics-Quality-Research.md"
+    },
+    {
+      "id": "topic-resp-lungdev",
+      "type": "file",
+      "x": -179,
+      "y": -1123,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Lung Development.md"
+    },
+    {
+      "id": "topic-resp-flf",
+      "type": "file",
+      "x": 13,
+      "y": -1118,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Fetal Lung Fluid.md"
+    },
+    {
+      "id": "topic-resp-surfactant",
+      "type": "file",
+      "x": 201,
+      "y": -1080,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Surfactant.md"
+    },
+    {
+      "id": "topic-resp-ept",
+      "type": "file",
+      "x": 380,
+      "y": -1010,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Extrauterine Pulmonary Transition.md"
+    },
+    {
+      "id": "topic-resp-mechanics",
+      "type": "file",
+      "x": 543,
+      "y": -910,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Respiratory Mechanics.md"
+    },
+    {
+      "id": "topic-resp-ph",
+      "type": "file",
+      "x": 687,
+      "y": -783,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Pulmonary Hypertension.md"
+    },
+    {
+      "id": "topic-resp-rds",
+      "type": "file",
+      "x": 807,
+      "y": -633,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/RDS.md"
+    },
+    {
+      "id": "topic-resp-bpd",
+      "type": "file",
+      "x": 898,
+      "y": -465,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/BPD.md"
+    },
+    {
+      "id": "topic-resp-airleak",
+      "type": "file",
+      "x": 959,
+      "y": -283,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Air Leak.md"
+    },
+    {
+      "id": "topic-resp-cdh",
+      "type": "file",
+      "x": 988,
+      "y": -94,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Congenital Diaphragmatic Hernia.md"
+    },
+    {
+      "id": "topic-resp-hypo",
+      "type": "file",
+      "x": 983,
+      "y": 98,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Pulmonary Hypoplasia.md"
+    },
+    {
+      "id": "topic-resp-acd",
+      "type": "file",
+      "x": 945,
+      "y": 286,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Respiratory/Alveolar Capillary Dysplasia.md"
+    },
+    {
+      "id": "topic-cardio-fc",
+      "type": "file",
+      "x": 392,
+      "y": -1004,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Fetal Circulation.md"
+    },
+    {
+      "id": "topic-cardio-tc",
+      "type": "file",
+      "x": 571,
+      "y": -889,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Transitional Circulation.md"
+    },
+    {
+      "id": "topic-cardio-co",
+      "type": "file",
+      "x": 725,
+      "y": -741,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Cardiac Output.md"
+    },
+    {
+      "id": "topic-cardio-preload",
+      "type": "file",
+      "x": 847,
+      "y": -567,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Preload.md"
+    },
+    {
+      "id": "topic-cardio-afterload",
+      "type": "file",
+      "x": 934,
+      "y": -372,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Afterload.md"
+    },
+    {
+      "id": "topic-cardio-fs",
+      "type": "file",
+      "x": 981,
+      "y": -165,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Frank-Starling Principle.md"
+    },
+    {
+      "id": "topic-cardio-pda",
+      "type": "file",
+      "x": 988,
+      "y": 48,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/PDA Physiology.md"
+    },
+    {
+      "id": "topic-cardio-pvr",
+      "type": "file",
+      "x": 953,
+      "y": 258,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Pulmonary Vascular Resistance.md"
+    },
+    {
+      "id": "topic-cardio-chd",
+      "type": "file",
+      "x": 878,
+      "y": 458,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/Congenital Heart Disease Approach.md"
+    },
+    {
+      "id": "topic-cardio-pphn",
+      "type": "file",
+      "x": 767,
+      "y": 639,
+      "width": 220,
+      "height": 50,
+      "file": "02_Topics/Cardiovascular/PPHN Hemodynamics.md"
+    },
+    {
+      "id": "spoke-surfactant-development",
+      "type": "text",
+      "x": -180,
+      "y": -1617,
+      "width": 160,
+      "height": 40,
+      "text": "Development"
+    },
+    {
+      "id": "spoke-surfactant-physiology",
+      "type": "text",
+      "x": 44,
+      "y": -1615,
+      "width": 160,
+      "height": 40,
+      "text": "Physiology"
+    },
+    {
+      "id": "spoke-surfactant-pathophysiology",
+      "type": "text",
+      "x": 264,
+      "y": -1583,
+      "width": 160,
+      "height": 40,
+      "text": "Pathophysiology"
+    },
+    {
+      "id": "spoke-surfactant-diagnosis",
+      "type": "text",
+      "x": 478,
+      "y": -1519,
+      "width": 160,
+      "height": 40,
+      "text": "Diagnosis"
+    },
+    {
+      "id": "spoke-surfactant-management",
+      "type": "text",
+      "x": 682,
+      "y": -1427,
+      "width": 160,
+      "height": 40,
+      "text": "Management"
+    },
+    {
+      "id": "spoke-surfactant-pearl",
+      "type": "text",
+      "x": 870,
+      "y": -1307,
+      "width": 160,
+      "height": 40,
+      "text": "Pearl"
+    },
+    {
+      "id": "spoke-rds-development",
+      "type": "text",
+      "x": 959,
+      "y": -1428,
+      "width": 160,
+      "height": 40,
+      "text": "Development"
+    },
+    {
+      "id": "spoke-rds-physiology",
+      "type": "text",
+      "x": 1145,
+      "y": -1270,
+      "width": 160,
+      "height": 40,
+      "text": "Physiology"
+    },
+    {
+      "id": "spoke-rds-pathophysiology",
+      "type": "text",
+      "x": 1307,
+      "y": -1087,
+      "width": 160,
+      "height": 40,
+      "text": "Pathophysiology"
+    },
+    {
+      "id": "spoke-rds-diagnosis",
+      "type": "text",
+      "x": 1442,
+      "y": -884,
+      "width": 160,
+      "height": 40,
+      "text": "Diagnosis"
+    },
+    {
+      "id": "spoke-rds-management",
+      "type": "text",
+      "x": 1547,
+      "y": -663,
+      "width": 160,
+      "height": 40,
+      "text": "Management"
+    },
+    {
+      "id": "spoke-rds-pearl",
+      "type": "text",
+      "x": 1621,
+      "y": -431,
+      "width": 160,
+      "height": 40,
+      "text": "Pearl"
+    },
+    {
+      "id": "spoke-pphn-development",
+      "type": "text",
+      "x": 1449,
+      "y": 452,
+      "width": 160,
+      "height": 40,
+      "text": "Development"
+    },
+    {
+      "id": "spoke-pphn-physiology",
+      "type": "text",
+      "x": 1368,
+      "y": 660,
+      "width": 160,
+      "height": 40,
+      "text": "Physiology"
+    },
+    {
+      "id": "spoke-pphn-pathophysiology",
+      "type": "text",
+      "x": 1260,
+      "y": 855,
+      "width": 160,
+      "height": 40,
+      "text": "Pathophysiology"
+    },
+    {
+      "id": "spoke-pphn-diagnosis",
+      "type": "text",
+      "x": 1125,
+      "y": 1033,
+      "width": 160,
+      "height": 40,
+      "text": "Diagnosis"
+    },
+    {
+      "id": "spoke-pphn-management",
+      "type": "text",
+      "x": 967,
+      "y": 1190,
+      "width": 160,
+      "height": 40,
+      "text": "Management"
+    },
+    {
+      "id": "spoke-pphn-pearl",
+      "type": "text",
+      "x": 788,
+      "y": 1324,
+      "width": 160,
+      "height": 40,
+      "text": "Pearl"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-center-dom-maternal",
+      "fromNode": "center",
+      "toNode": "dom-maternal",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-asphyxia",
+      "fromNode": "center",
+      "toNode": "dom-asphyxia",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-respiratory",
+      "fromNode": "center",
+      "toNode": "dom-respiratory",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-cardiovascular",
+      "fromNode": "center",
+      "toNode": "dom-cardiovascular",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-genetics",
+      "fromNode": "center",
+      "toNode": "dom-genetics",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-nutrition",
+      "fromNode": "center",
+      "toNode": "dom-nutrition",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-water",
+      "fromNode": "center",
+      "toNode": "dom-water",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-endocrine",
+      "fromNode": "center",
+      "toNode": "dom-endocrine",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-immunology",
+      "fromNode": "center",
+      "toNode": "dom-immunology",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-hematology",
+      "fromNode": "center",
+      "toNode": "dom-hematology",
+      "fromSide": "left",
+      "toSide": "right",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-neurology",
+      "fromNode": "center",
+      "toNode": "dom-neurology",
+      "fromSide": "left",
+      "toSide": "right",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-ent",
+      "fromNode": "center",
+      "toNode": "dom-ent",
+      "fromSide": "left",
+      "toSide": "right",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-pharmacology",
+      "fromNode": "center",
+      "toNode": "dom-pharmacology",
+      "fromSide": "left",
+      "toSide": "right",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-center-dom-ethics",
+      "fromNode": "center",
+      "toNode": "dom-ethics",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#888888"
+    },
+    {
+      "id": "edge-resp-topic-resp-lungdev",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-lungdev",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-flf",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-flf",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-surfactant",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-surfactant",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-ept",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-ept",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-mechanics",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-mechanics",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-ph",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-ph",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-rds",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-rds",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-bpd",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-bpd",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-airleak",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-airleak",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-cdh",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-cdh",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-hypo",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-hypo",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-resp-topic-resp-acd",
+      "fromNode": "dom-respiratory",
+      "toNode": "topic-resp-acd",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-fc",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-fc",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-tc",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-tc",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-co",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-co",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-preload",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-preload",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-afterload",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-afterload",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-fs",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-fs",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-pda",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-pda",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-pvr",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-pvr",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-chd",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-chd",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-cardio-topic-cardio-pphn",
+      "fromNode": "dom-cardiovascular",
+      "toNode": "topic-cardio-pphn",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#ff4a4a"
+    },
+    {
+      "id": "edge-spoke-surfactant-development",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-development",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-surfactant-physiology",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-physiology",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-surfactant-pathophysiology",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-pathophysiology",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-surfactant-diagnosis",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-diagnosis",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-surfactant-management",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-management",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-surfactant-pearl",
+      "fromNode": "topic-resp-surfactant",
+      "toNode": "spoke-surfactant-pearl",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-development",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-development",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-physiology",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-physiology",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-pathophysiology",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-pathophysiology",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-diagnosis",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-diagnosis",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-management",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-management",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-rds-pearl",
+      "fromNode": "topic-resp-rds",
+      "toNode": "spoke-rds-pearl",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-development",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-development",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-physiology",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-physiology",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-pathophysiology",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-pathophysiology",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-diagnosis",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-diagnosis",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-management",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-management",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-spoke-pphn-pearl",
+      "fromNode": "topic-cardio-pphn",
+      "toNode": "spoke-pphn-pearl",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#666666"
+    },
+    {
+      "id": "edge-cross-ph-pphn",
+      "fromNode": "topic-resp-ph",
+      "toNode": "topic-cardio-pphn",
+      "fromSide": "right",
+      "toSide": "top",
+      "color": "#aa55ff"
+    },
+    {
+      "id": "edge-cross-ept-tc",
+      "fromNode": "topic-resp-ept",
+      "toNode": "topic-cardio-tc",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "#aa55ff"
+    },
+    {
+      "id": "edge-cross-pvr-pphn",
+      "fromNode": "topic-cardio-pvr",
+      "toNode": "topic-cardio-pphn",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "color": "#ff9900"
+    }
+  ]
+}
