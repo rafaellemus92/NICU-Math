@@ -4,6 +4,33 @@ import path from "path";
 import { getDb } from "@/lib/db";
 import { processDocument } from "@/lib/ingest";
 
+async function extractPdfText(buffer: Buffer): Promise<{ text: string; pageCount: number }> {
+  // Use pdfjs-dist directly to avoid worker issues with Next.js
+  const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
+
+  const data = new Uint8Array(buffer);
+  const doc = await pdfjsLib.getDocument({
+    data,
+    useSystemFonts: true,
+    disableFontFace: true,
+    verbosity: 0,
+  }).promise;
+
+  const pages: string[] = [];
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    const strings = content.items
+      .filter((item): item is typeof item & { str: string } => "str" in item)
+      .map((item) => item.str);
+    pages.push(strings.join(" "));
+  }
+
+  const text = pages.join("\f"); // Form-feed as page separator
+  doc.destroy();
+  return { text, pageCount: doc.numPages };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -39,12 +66,9 @@ export async function POST(req: NextRequest) {
     const sourceType = ext === ".pdf" ? "pdf" : "docx";
 
     if (ext === ".pdf") {
-      const { PDFParse } = await import("pdf-parse");
-      const pdf = new PDFParse({ data: new Uint8Array(buffer) });
-      const textResult = await pdf.getText();
-      fullText = textResult.text;
-      pageCount = textResult.pages.length;
-      await pdf.destroy();
+      const result = await extractPdfText(buffer);
+      fullText = result.text;
+      pageCount = result.pageCount;
     } else {
       const mammoth = await import("mammoth");
       const result = await mammoth.extractRawText({ buffer });
