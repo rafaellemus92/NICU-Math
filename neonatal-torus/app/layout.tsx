@@ -25,6 +25,9 @@ export default function RootLayout({
               <Link href="/" className="text-zinc-400 hover:text-zinc-100 transition-colors">
                 Search
               </Link>
+              <Link href="/explore" className="text-zinc-400 hover:text-zinc-100 transition-colors">
+                Explore
+              </Link>
               <Link href="/concepts" className="text-zinc-400 hover:text-zinc-100 transition-colors">
                 Concepts
               </Link>
