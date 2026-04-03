@@ -4,7 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { ABP_DOMAINS } from "@/lib/domains";
 import ConceptPanel from "@/components/ConceptPanel";
-import type { TorusConcept, TorusEdge, TorusDensity, FiberHoverInfo } from "@/components/ConceptTorus";
+import TraversalPanel from "@/components/TraversalPanel";
+import type { TorusConcept, TorusEdge, TorusDensity, FiberHoverInfo, TraversalPathData } from "@/components/ConceptTorus";
+import type { ActiveTraversal } from "@/components/TraversalPanel";
 
 const ConceptTorus = dynamic(() => import("@/components/ConceptTorus"), {
   ssr: false,
@@ -20,6 +22,7 @@ export default function TorusPage() {
   const [concepts, setConcepts] = useState<TorusConcept[]>([]);
   const [edges, setEdges] = useState<TorusEdge[]>([]);
   const [density, setDensity] = useState<TorusDensity[]>([]);
+  const [seeded, setSeeded] = useState(false);
 
   // UI state
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,9 +32,11 @@ export default function TorusPage() {
   const [activeDomain, setActiveDomain] = useState<string | null>(null);
   const [fiberHover, setFiberHover] = useState<FiberHoverInfo | null>(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [activePanel, setActivePanel] = useState<"concept" | "traversal">("concept");
+  const [traversalPath, setTraversalPath] = useState<TraversalPathData | null>(null);
 
   // Load graph data
-  useEffect(() => {
+  const loadGraph = useCallback(() => {
     fetch("/api/graph")
       .then((r) => r.json())
       .then((d) => {
@@ -41,6 +46,17 @@ export default function TorusPage() {
       })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    loadGraph();
+  }, [loadGraph]);
+
+  // Seed example data
+  const seedExamples = useCallback(async () => {
+    setSeeded(true);
+    await fetch("/api/seed-examples", { method: "POST" });
+    loadGraph();
+  }, [loadGraph]);
 
   // Search concepts
   useEffect(() => {
@@ -57,7 +73,7 @@ export default function TorusPage() {
     setSearchResults(matches.slice(0, 12));
   }, [searchQuery, concepts]);
 
-  // Select a concept — focus torus on it, open panel
+  // Select a concept
   const selectConcept = useCallback(
     (concept: TorusConcept) => {
       setSelectedConcept(concept);
@@ -69,7 +85,7 @@ export default function TorusPage() {
     []
   );
 
-  // Navigate to a connected concept
+  // Navigate to a connected concept (from panel or traversal)
   const navigateToConcept = useCallback(
     (conceptId: number) => {
       const c = concepts.find((x) => x.id === conceptId);
@@ -78,13 +94,30 @@ export default function TorusPage() {
     [concepts, selectConcept]
   );
 
+  // Handle traversal changes
+  const handleTraversalChange = useCallback(
+    (traversal: ActiveTraversal | null) => {
+      if (traversal && traversal.conceptIds.length > 1) {
+        setTraversalPath({
+          conceptIds: traversal.conceptIds,
+          currentStep: traversal.currentStep,
+          relation: traversal.relation,
+        });
+      } else {
+        setTraversalPath(null);
+      }
+    },
+    []
+  );
+
   // Clear focus
   const clearFocus = useCallback(() => {
     setSelectedConcept(null);
     setFocusConceptId(null);
+    setTraversalPath(null);
   }, []);
 
-  // Keyboard shortcut
+  // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "/" && !showSearch) {
@@ -98,6 +131,11 @@ export default function TorusPage() {
         } else if (selectedConcept) {
           clearFocus();
         }
+      }
+      // Tab between concept and traversal panels
+      if (e.key === "t" && selectedConcept && !showSearch) {
+        e.preventDefault();
+        setActivePanel((p) => (p === "concept" ? "traversal" : "concept"));
       }
     };
     window.addEventListener("keydown", handler);
@@ -113,7 +151,7 @@ export default function TorusPage() {
         <div className="flex items-center gap-3">
           <h1 className="text-sm font-bold text-zinc-300">Torus</h1>
 
-          {/* Search trigger */}
+          {/* Search */}
           <div className="relative">
             {showSearch ? (
               <div className="relative">
@@ -130,7 +168,6 @@ export default function TorusPage() {
                     }
                   }}
                 />
-                {/* Search results dropdown */}
                 {searchResults.length > 0 && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden shadow-xl z-50">
                     {searchResults.map((c) => (
@@ -143,9 +180,8 @@ export default function TorusPage() {
                           className="w-2 h-2 rounded-full shrink-0"
                           style={{
                             backgroundColor:
-                              ABP_DOMAINS.find(
-                                (d) => d.id === c.primary_domain
-                              )?.color || "#71717A",
+                              ABP_DOMAINS.find((d) => d.id === c.primary_domain)
+                                ?.color || "#71717A",
                           }}
                         />
                         <span className="text-zinc-200 font-medium truncate">
@@ -166,9 +202,7 @@ export default function TorusPage() {
                 className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-500 text-sm hover:border-zinc-600 transition-colors"
               >
                 <span>Search concept</span>
-                <kbd className="text-[9px] bg-zinc-800 px-1 py-0.5 rounded text-zinc-600">
-                  /
-                </kbd>
+                <kbd className="text-[9px] bg-zinc-800 px-1 py-0.5 rounded text-zinc-600">/</kbd>
               </button>
             )}
           </div>
@@ -180,9 +214,8 @@ export default function TorusPage() {
                 className="w-2 h-2 rounded-full"
                 style={{
                   backgroundColor:
-                    ABP_DOMAINS.find(
-                      (d) => d.id === selectedConcept.primary_domain
-                    )?.color || "#71717A",
+                    ABP_DOMAINS.find((d) => d.id === selectedConcept.primary_domain)
+                      ?.color || "#71717A",
                 }}
               />
               <span className="text-xs text-zinc-200 font-medium">
@@ -196,18 +229,59 @@ export default function TorusPage() {
               </button>
             </div>
           )}
+
+          {/* Traversal indicator */}
+          {traversalPath && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-amber-400/10 border border-amber-400/20 rounded-lg">
+              <span className="text-[10px] text-amber-400">
+                Traversing: {traversalPath.relation}
+              </span>
+              <span className="text-[10px] text-amber-400/60">
+                step {traversalPath.currentStep + 1}/{traversalPath.conceptIds.length}
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Domain filter pills */}
-        <div className="flex items-center gap-1">
-          {activeDomain && (
+        {/* Right controls */}
+        <div className="flex items-center gap-2">
+          {/* Panel toggle */}
+          {selectedConcept && (
+            <div className="flex gap-0.5 bg-zinc-900 border border-zinc-800 rounded-lg p-0.5">
+              <button
+                onClick={() => setActivePanel("concept")}
+                className={`px-2 py-1 text-[10px] rounded transition-colors ${
+                  activePanel === "concept"
+                    ? "bg-zinc-700 text-zinc-200"
+                    : "text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                Concept
+              </button>
+              <button
+                onClick={() => setActivePanel("traversal")}
+                className={`px-2 py-1 text-[10px] rounded transition-colors ${
+                  activePanel === "traversal"
+                    ? "bg-amber-400/20 text-amber-400"
+                    : "text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                Traverse
+              </button>
+            </div>
+          )}
+
+          {/* Seed button */}
+          {concepts.length === 0 && !seeded && (
             <button
-              onClick={() => setActiveDomain(null)}
-              className="text-[9px] px-2 py-1 text-zinc-400 hover:text-zinc-200"
+              onClick={seedExamples}
+              className="px-3 py-1.5 text-[10px] bg-amber-400/10 text-amber-400 border border-amber-400/30 rounded-lg hover:bg-amber-400/20 transition-colors"
             >
-              Clear filter
+              Seed example data
             </button>
           )}
+
+          {/* Domain filter pills */}
           <div className="flex gap-0.5">
             {ABP_DOMAINS.filter((d) => d.exam_percent >= 5).map((d) => (
               <button
@@ -234,31 +308,37 @@ export default function TorusPage() {
       {/* Main content */}
       <div className="flex-1 flex min-h-0 relative">
         {/* Torus viewport */}
-        <div
-          className={`flex-1 transition-all duration-300 ${
-            panelOpen ? "mr-0" : ""
-          }`}
-        >
+        <div className="flex-1">
           <ConceptTorus
             concepts={concepts}
             edges={edges}
             chunkDensity={density}
             focusConceptId={focusConceptId}
             activeDomain={activeDomain}
+            traversalPath={traversalPath}
             onConceptSelect={selectConcept}
             onDomainSelect={setActiveDomain}
             onFiberHover={setFiberHover}
           />
         </div>
 
-        {/* Concept panel (right side) */}
+        {/* Right panel */}
         {panelOpen && selectedConcept && (
-          <div className="w-[340px] shrink-0 border-l border-zinc-800 overflow-hidden">
-            <ConceptPanel
-              concept={selectedConcept}
-              onClose={clearFocus}
-              onConceptNavigate={navigateToConcept}
-            />
+          <div className="w-[340px] shrink-0 overflow-hidden">
+            {activePanel === "concept" ? (
+              <ConceptPanel
+                concept={selectedConcept}
+                onClose={clearFocus}
+                onConceptNavigate={navigateToConcept}
+              />
+            ) : (
+              <TraversalPanel
+                conceptId={selectedConcept.id}
+                conceptName={selectedConcept.name}
+                onTraversalChange={handleTraversalChange}
+                onJumpToNode={navigateToConcept}
+              />
+            )}
           </div>
         )}
 
@@ -279,9 +359,7 @@ export default function TorusPage() {
               </div>
               <div className="flex items-center gap-2 mt-1 text-zinc-400">
                 <span className="font-mono">{fiberHover.relationType}</span>
-                <span>
-                  weight: {Math.round(fiberHover.weight * 100)}%
-                </span>
+                <span>weight: {Math.round(fiberHover.weight * 100)}%</span>
               </div>
               {fiberHover.explanation && (
                 <div className="text-zinc-500 mt-1 max-w-48">
@@ -292,7 +370,7 @@ export default function TorusPage() {
           </div>
         )}
 
-        {/* Legend (bottom-left, over torus) */}
+        {/* Legend */}
         <div className="absolute bottom-3 left-3 bg-zinc-900/70 backdrop-blur-sm border border-zinc-800/50 rounded-lg p-2.5 text-[9px] z-10">
           <div className="text-zinc-500 uppercase tracking-wider mb-1 font-bold">
             Navigation
@@ -300,30 +378,23 @@ export default function TorusPage() {
           <div className="text-zinc-500 space-y-0.5">
             <div>
               <span className="text-zinc-400">/</span> search ·{" "}
-              <span className="text-zinc-400">click</span> node to focus ·{" "}
-              <span className="text-zinc-400">ESC</span> to clear
+              <span className="text-zinc-400">click</span> node ·{" "}
+              <span className="text-zinc-400">t</span> toggle traverse ·{" "}
+              <span className="text-zinc-400">ESC</span> clear
             </div>
-            <div>
-              Ring = Domain · Tube = Timeline · Size = Relevance
+            <div>Ring = Domain · Tube = Timeline · Size = Relevance</div>
+          </div>
+          {traversalPath && (
+            <div className="mt-1.5 text-amber-400/60">
+              <span className="text-amber-400">Traversal:</span>{" "}
+              <span className="text-zinc-400">←</span>{" "}
+              <span className="text-zinc-400">→</span> step ·{" "}
+              <span className="text-zinc-400">space</span> play
             </div>
-          </div>
-          <div className="flex items-center gap-2 mt-1.5 text-zinc-600">
-            <span>
-              <span className="inline-block w-4 h-px bg-zinc-400 align-middle" />{" "}
-              assoc
-            </span>
-            <span>
-              <span className="inline-block w-4 border-t border-dashed border-zinc-400 align-middle" />{" "}
-              distinct
-            </span>
-            <span>
-              <span className="inline-block w-4 border-t-2 border-double border-zinc-400 align-middle" />{" "}
-              treatment
-            </span>
-          </div>
+          )}
         </div>
 
-        {/* Stats (bottom-right) */}
+        {/* Stats */}
         <div className="absolute bottom-3 right-3 text-[9px] text-zinc-700 z-10">
           {concepts.length} concepts · {edges.length} edges ·{" "}
           {density.reduce((s, d) => s + d.count, 0)} chunks

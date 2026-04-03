@@ -56,9 +56,14 @@ CREATE TABLE IF NOT EXISTS concept_edges (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   source_id INTEGER NOT NULL REFERENCES concepts(id),
   target_id INTEGER NOT NULL REFERENCES concepts(id),
-  relation_type TEXT NOT NULL CHECK(relation_type IN ('distinction','association','mechanism','treatment','genetic','temporal')),
+  relation_type TEXT NOT NULL CHECK(relation_type IN (
+    'distinction','association','mechanism','treatment','genetic','temporal',
+    'embryology','physiology','timeline','differential','mimic','management',
+    'infectious_association','anatomy'
+  )),
   weight REAL NOT NULL DEFAULT 0.5,
   explanation TEXT,
+  sequence_order INTEGER,
   UNIQUE(source_id, target_id, relation_type)
 );
 

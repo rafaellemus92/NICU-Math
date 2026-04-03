@@ -38,12 +38,19 @@ export interface TorusDensity {
   count: number;
 }
 
+export interface TraversalPathData {
+  conceptIds: number[];
+  currentStep: number;
+  relation: string;
+}
+
 export interface ConceptTorusProps {
   concepts: TorusConcept[];
   edges: TorusEdge[];
   chunkDensity: TorusDensity[];
   focusConceptId: number | null;
   activeDomain: string | null;
+  traversalPath: TraversalPathData | null;
   onConceptSelect: (concept: TorusConcept) => void;
   onDomainSelect: (domain: string | null) => void;
   onFiberHover: (info: FiberHoverInfo | null) => void;
@@ -439,6 +446,7 @@ function TorusScene({
   chunkDensity,
   focusConceptId,
   activeDomain,
+  traversalPath,
   onConceptSelect,
   onDomainSelect,
   onFiberHover,
@@ -461,6 +469,16 @@ function TorusScene({
     () => Math.max(...chunkDensity.map((d) => d.count), 1),
     [chunkDensity]
   );
+
+  // Traversal state
+  const traversalIds = useMemo(
+    () => new Set(traversalPath?.conceptIds || []),
+    [traversalPath]
+  );
+  const isTraversing = traversalPath && traversalPath.conceptIds.length > 1;
+  const traversalCurrentId = isTraversing
+    ? traversalPath.conceptIds[traversalPath.currentStep]
+    : null;
 
   // Connected concept IDs (direct neighbors of focus)
   const connectedIds = useMemo(() => {
@@ -490,17 +508,17 @@ function TorusScene({
     return positions;
   }, [concepts]);
 
-  // Compute target rotation to bring focus concept to front
+  // Compute target rotation to bring focus/traversal concept to front
   useEffect(() => {
-    if (focusConceptId) {
-      const c = conceptMap.get(focusConceptId);
+    const targetId = traversalCurrentId || focusConceptId;
+    if (targetId) {
+      const c = conceptMap.get(targetId);
       if (c) {
         const phi = domainPhi(c.primary_domain);
-        // Rotate so focus concept's domain is at the front (facing camera)
         targetRotation.current = -phi + Math.PI / 2;
       }
     }
-  }, [focusConceptId, conceptMap]);
+  }, [focusConceptId, traversalCurrentId, conceptMap]);
 
   // Animate rotation toward target
   useFrame((_, delta) => {
@@ -525,15 +543,21 @@ function TorusScene({
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  // Which edges to render (only those touching focus or between connected nodes)
+  // Which edges to render
   const visibleEdges = useMemo(() => {
-    if (!focusConceptId) return edges.slice(0, 50); // show some ambient edges
+    if (isTraversing) {
+      // In traversal: show edges between traversal nodes
+      return edges.filter(
+        (e) => traversalIds.has(e.source_id) && traversalIds.has(e.target_id)
+      );
+    }
+    if (!focusConceptId) return edges.slice(0, 50);
     return edges.filter(
       (e) =>
         e.source_id === focusConceptId ||
         e.target_id === focusConceptId
     );
-  }, [focusConceptId, edges]);
+  }, [focusConceptId, edges, isTraversing, traversalIds]);
 
   return (
     <group ref={groupRef}>
@@ -624,18 +648,24 @@ function TorusScene({
         const targetDomain = targetConcept?.primary_domain;
         const color = ABP_DOMAINS.find((d) => d.id === targetDomain)?.color || "#71717A";
 
-        const isFaded =
-          !!focusConceptId &&
-          edge.source_id !== focusConceptId &&
-          edge.target_id !== focusConceptId;
+        const isPathEdge =
+          isTraversing &&
+          traversalIds.has(edge.source_id) &&
+          traversalIds.has(edge.target_id);
+
+        const isFaded = isTraversing
+          ? !isPathEdge
+          : !!focusConceptId &&
+            edge.source_id !== focusConceptId &&
+            edge.target_id !== focusConceptId;
 
         return (
           <Fiber
             key={`${edge.source_id}-${edge.target_id}-${edge.relation_type}`}
             from={fromPos}
             to={toPos}
-            edge={edge}
-            color={color}
+            edge={isPathEdge ? { ...edge, weight: Math.max(edge.weight, 0.7) } : edge}
+            color={isPathEdge ? "#F59E0B" : color}
             isFaded={isFaded}
             onHover={onFiberHover}
             sourceName={conceptMap.get(edge.source_id)?.name || "?"}
@@ -653,13 +683,22 @@ function TorusScene({
           ABP_DOMAINS.find((d) => d.id === concept.primary_domain)?.color ||
           "#71717A";
 
-        const isFocus = concept.id === focusConceptId;
-        const isConnected = connectedIds.has(concept.id);
-        const isFaded =
-          !!focusConceptId && !isFocus && !isConnected;
+        const isOnPath = traversalIds.has(concept.id);
+        const isCurrentTraversalNode = concept.id === traversalCurrentId;
+        const isFocus = concept.id === focusConceptId || isCurrentTraversalNode;
+        const isConnected = connectedIds.has(concept.id) || isOnPath;
+        const isFaded = isTraversing
+          ? !isOnPath && !isFocus
+          : !!focusConceptId && !isFocus && !isConnected;
 
-        // Domain filter
-        if (activeDomain && concept.primary_domain !== activeDomain && !isFocus && !isConnected) {
+        // Domain filter (skip in traversal mode for path nodes)
+        if (
+          activeDomain &&
+          concept.primary_domain !== activeDomain &&
+          !isFocus &&
+          !isConnected &&
+          !isOnPath
+        ) {
           return null;
         }
 

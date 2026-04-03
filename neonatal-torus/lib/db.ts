@@ -21,7 +21,10 @@ export function getDb(): Database.Database {
   _db.pragma("journal_mode = WAL");
   _db.pragma("foreign_keys = ON");
 
-  // Run schema
+  // Migrate: widen concept_edges relation_type CHECK if old schema
+  migrateEdgesTable(_db);
+
+  // Run schema (CREATE IF NOT EXISTS is safe to re-run)
   const schema = fs.readFileSync(SCHEMA_PATH, "utf-8");
   _db.exec(schema);
 
@@ -40,4 +43,43 @@ export function getDb(): Database.Database {
   }
 
   return _db;
+}
+
+function migrateEdgesTable(db: Database.Database) {
+  // Check if concept_edges exists
+  const tableExists = db
+    .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='concept_edges'")
+    .get();
+
+  if (!tableExists) return; // Will be created by schema.sql
+
+  // Check if sequence_order column exists
+  const cols = db.prepare("PRAGMA table_info(concept_edges)").all() as Array<{ name: string }>;
+  const hasSequenceOrder = cols.some((c) => c.name === "sequence_order");
+
+  if (!hasSequenceOrder) {
+    // Need to recreate the table to widen CHECK and add column
+    db.exec("PRAGMA foreign_keys = OFF");
+    db.exec(`
+      CREATE TABLE concept_edges_new (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        source_id INTEGER NOT NULL REFERENCES concepts(id),
+        target_id INTEGER NOT NULL REFERENCES concepts(id),
+        relation_type TEXT NOT NULL CHECK(relation_type IN (
+          'distinction','association','mechanism','treatment','genetic','temporal',
+          'embryology','physiology','timeline','differential','mimic','management',
+          'infectious_association','anatomy'
+        )),
+        weight REAL NOT NULL DEFAULT 0.5,
+        explanation TEXT,
+        sequence_order INTEGER,
+        UNIQUE(source_id, target_id, relation_type)
+      );
+      INSERT INTO concept_edges_new (id, source_id, target_id, relation_type, weight, explanation)
+        SELECT id, source_id, target_id, relation_type, weight, explanation FROM concept_edges;
+      DROP TABLE concept_edges;
+      ALTER TABLE concept_edges_new RENAME TO concept_edges;
+    `);
+    db.exec("PRAGMA foreign_keys = ON");
+  }
 }
