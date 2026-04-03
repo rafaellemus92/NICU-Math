@@ -1,144 +1,333 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { ABP_DOMAINS } from "@/lib/domains";
+import ConceptPanel from "@/components/ConceptPanel";
+import type { TorusConcept, TorusEdge, TorusDensity, FiberHoverInfo } from "@/components/ConceptTorus";
 
-// Dynamic import for Three.js (needs client-side only)
-const Torus3D = dynamic(() => import("@/components/Torus3D"), {
+const ConceptTorus = dynamic(() => import("@/components/ConceptTorus"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[600px] bg-zinc-950 rounded-xl border border-zinc-800 flex items-center justify-center">
-      <div className="text-zinc-500 text-sm">Loading 3D visualization...</div>
+    <div className="w-full h-full bg-zinc-950 flex items-center justify-center">
+      <div className="text-zinc-600 text-sm">Loading torus...</div>
     </div>
   ),
 });
 
-interface Concept {
-  id: number;
-  name: string;
-  slug: string;
-  primary_domain: string;
-  exam_relevance: number;
-  ring1_identity: string | null;
-}
-
 export default function TorusPage() {
-  const router = useRouter();
-  const [concepts, setConcepts] = useState<Concept[]>([]);
-  const [chunkDensity, setChunkDensity] = useState<
-    { domain: string; count: number }[]
-  >([]);
-  const [view, setView] = useState<"3d" | "grid">("3d");
+  // Data
+  const [concepts, setConcepts] = useState<TorusConcept[]>([]);
+  const [edges, setEdges] = useState<TorusEdge[]>([]);
+  const [density, setDensity] = useState<TorusDensity[]>([]);
 
+  // UI state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<TorusConcept[]>([]);
+  const [selectedConcept, setSelectedConcept] = useState<TorusConcept | null>(null);
+  const [focusConceptId, setFocusConceptId] = useState<number | null>(null);
+  const [activeDomain, setActiveDomain] = useState<string | null>(null);
+  const [fiberHover, setFiberHover] = useState<FiberHoverInfo | null>(null);
+  const [showSearch, setShowSearch] = useState(false);
+
+  // Load graph data
   useEffect(() => {
-    // Fetch concepts
-    fetch("/api/concepts?limit=500")
+    fetch("/api/graph")
       .then((r) => r.json())
-      .then((d) => setConcepts(d.concepts || []))
-      .catch(() => {});
-
-    // Fetch chunk density per domain
-    fetch("/api/density")
-      .then((r) => r.json())
-      .then((d) => setChunkDensity(d.density || []))
+      .then((d) => {
+        setConcepts(d.concepts || []);
+        setEdges(d.edges || []);
+        setDensity(d.density || []);
+      })
       .catch(() => {});
   }, []);
 
+  // Search concepts
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const q = searchQuery.toLowerCase();
+    const matches = concepts.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        (c.ring1_identity && c.ring1_identity.toLowerCase().includes(q))
+    );
+    setSearchResults(matches.slice(0, 12));
+  }, [searchQuery, concepts]);
+
+  // Select a concept — focus torus on it, open panel
+  const selectConcept = useCallback(
+    (concept: TorusConcept) => {
+      setSelectedConcept(concept);
+      setFocusConceptId(concept.id);
+      setSearchQuery("");
+      setSearchResults([]);
+      setShowSearch(false);
+    },
+    []
+  );
+
+  // Navigate to a connected concept
+  const navigateToConcept = useCallback(
+    (conceptId: number) => {
+      const c = concepts.find((x) => x.id === conceptId);
+      if (c) selectConcept(c);
+    },
+    [concepts, selectConcept]
+  );
+
+  // Clear focus
+  const clearFocus = useCallback(() => {
+    setSelectedConcept(null);
+    setFocusConceptId(null);
+  }, []);
+
+  // Keyboard shortcut
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "/" && !showSearch) {
+        e.preventDefault();
+        setShowSearch(true);
+      }
+      if (e.key === "Escape") {
+        if (showSearch) {
+          setShowSearch(false);
+          setSearchQuery("");
+        } else if (selectedConcept) {
+          clearFocus();
+        }
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [showSearch, selectedConcept, clearFocus]);
+
+  const panelOpen = !!selectedConcept;
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Torus Map</h1>
-          <p className="text-zinc-500 text-sm">
-            Knowledge surface — domains on the ring, depth from identity to edge
-          </p>
-        </div>
-        <div className="flex gap-1 bg-zinc-900 border border-zinc-700 rounded-lg p-0.5">
-          <button
-            onClick={() => setView("3d")}
-            className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
-              view === "3d"
-                ? "bg-zinc-700 text-zinc-100"
-                : "text-zinc-400 hover:text-zinc-200"
-            }`}
-          >
-            3D Torus
-          </button>
-          <button
-            onClick={() => setView("grid")}
-            className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
-              view === "grid"
-                ? "bg-zinc-700 text-zinc-100"
-                : "text-zinc-400 hover:text-zinc-200"
-            }`}
-          >
-            Domain Grid
-          </button>
-        </div>
-      </div>
+    <div className="fixed inset-0 bg-zinc-950 flex flex-col" style={{ top: "49px" }}>
+      {/* Top bar */}
+      <div className="shrink-0 flex items-center justify-between px-4 py-2 border-b border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm z-20">
+        <div className="flex items-center gap-3">
+          <h1 className="text-sm font-bold text-zinc-300">Torus</h1>
 
-      {view === "3d" ? (
-        <Torus3D
-          concepts={concepts}
-          chunkDensity={chunkDensity}
-          onConceptClick={(slug) => router.push(`/concept/${slug}`)}
-        />
-      ) : (
-        /* Flat grid fallback */
-        <div className="grid grid-cols-5 gap-2">
-          {ABP_DOMAINS.map((d) => {
-            const density = chunkDensity.find((cd) => cd.domain === d.id);
-            const domainConcepts = concepts.filter(
-              (c) => c.primary_domain === d.id
-            );
-
-            return (
-              <div
-                key={d.id}
-                className="rounded-lg p-3 flex flex-col items-center justify-center text-center"
-                style={{
-                  backgroundColor: d.color + "15",
-                  border: `1px solid ${d.color}30`,
-                  minHeight: `${Math.max(80, d.exam_percent * 10)}px`,
-                }}
-              >
-                <span
-                  className="text-xs font-bold font-mono"
-                  style={{ color: d.color }}
-                >
-                  {d.abbrev}
-                </span>
-                <span className="text-[10px] text-zinc-500 mt-1">
-                  {d.exam_percent}%
-                </span>
-                {density && (
-                  <span className="text-[9px] text-zinc-600">
-                    {density.count} chunks
-                  </span>
-                )}
-                {domainConcepts.length > 0 && (
-                  <div className="flex flex-wrap gap-0.5 mt-2 justify-center">
-                    {domainConcepts.map((c) => (
-                      <a
+          {/* Search trigger */}
+          <div className="relative">
+            {showSearch ? (
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search concept..."
+                  className="w-72 bg-zinc-900 border border-zinc-600 rounded-lg px-3 py-1.5 text-zinc-100 text-sm focus:outline-none focus:border-amber-400"
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && searchResults[0]) {
+                      selectConcept(searchResults[0]);
+                    }
+                  }}
+                />
+                {/* Search results dropdown */}
+                {searchResults.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden shadow-xl z-50">
+                    {searchResults.map((c) => (
+                      <button
                         key={c.id}
-                        href={`/concept/${c.slug}`}
-                        className="w-2 h-2 rounded-full hover:scale-150 transition-transform"
-                        style={{ backgroundColor: d.color }}
-                        title={c.name}
-                      />
+                        onClick={() => selectConcept(c)}
+                        className="w-full text-left px-3 py-2 text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2"
+                      >
+                        <div
+                          className="w-2 h-2 rounded-full shrink-0"
+                          style={{
+                            backgroundColor:
+                              ABP_DOMAINS.find(
+                                (d) => d.id === c.primary_domain
+                              )?.color || "#71717A",
+                          }}
+                        />
+                        <span className="text-zinc-200 font-medium truncate">
+                          {c.name}
+                        </span>
+                        <span className="text-[10px] text-zinc-500 ml-auto shrink-0">
+                          {ABP_DOMAINS.find((d) => d.id === c.primary_domain)
+                            ?.abbrev || c.primary_domain}
+                        </span>
+                      </button>
                     ))}
                   </div>
                 )}
               </div>
-            );
-          })}
-        </div>
-      )}
+            ) : (
+              <button
+                onClick={() => setShowSearch(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-500 text-sm hover:border-zinc-600 transition-colors"
+              >
+                <span>Search concept</span>
+                <kbd className="text-[9px] bg-zinc-800 px-1 py-0.5 rounded text-zinc-600">
+                  /
+                </kbd>
+              </button>
+            )}
+          </div>
 
-      <div className="text-center text-zinc-600 text-xs">
-        {concepts.length} concepts | {chunkDensity.reduce((s, d) => s + d.count, 0)} chunks across {chunkDensity.length} domains
+          {/* Focus indicator */}
+          {selectedConcept && (
+            <div className="flex items-center gap-2 px-3 py-1 bg-zinc-900 border border-zinc-700 rounded-lg">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{
+                  backgroundColor:
+                    ABP_DOMAINS.find(
+                      (d) => d.id === selectedConcept.primary_domain
+                    )?.color || "#71717A",
+                }}
+              />
+              <span className="text-xs text-zinc-200 font-medium">
+                {selectedConcept.name}
+              </span>
+              <button
+                onClick={clearFocus}
+                className="text-zinc-500 hover:text-zinc-300 text-xs ml-1"
+              >
+                x
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Domain filter pills */}
+        <div className="flex items-center gap-1">
+          {activeDomain && (
+            <button
+              onClick={() => setActiveDomain(null)}
+              className="text-[9px] px-2 py-1 text-zinc-400 hover:text-zinc-200"
+            >
+              Clear filter
+            </button>
+          )}
+          <div className="flex gap-0.5">
+            {ABP_DOMAINS.filter((d) => d.exam_percent >= 5).map((d) => (
+              <button
+                key={d.id}
+                onClick={() =>
+                  setActiveDomain(activeDomain === d.id ? null : d.id)
+                }
+                className="w-3 h-3 rounded-sm transition-all hover:scale-150"
+                style={{
+                  backgroundColor:
+                    activeDomain === d.id ? d.color : d.color + "40",
+                  border:
+                    activeDomain === d.id
+                      ? `1px solid ${d.color}`
+                      : "1px solid transparent",
+                }}
+                title={`${d.name} (${d.exam_percent}%)`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex min-h-0 relative">
+        {/* Torus viewport */}
+        <div
+          className={`flex-1 transition-all duration-300 ${
+            panelOpen ? "mr-0" : ""
+          }`}
+        >
+          <ConceptTorus
+            concepts={concepts}
+            edges={edges}
+            chunkDensity={density}
+            focusConceptId={focusConceptId}
+            activeDomain={activeDomain}
+            onConceptSelect={selectConcept}
+            onDomainSelect={setActiveDomain}
+            onFiberHover={setFiberHover}
+          />
+        </div>
+
+        {/* Concept panel (right side) */}
+        {panelOpen && selectedConcept && (
+          <div className="w-[340px] shrink-0 border-l border-zinc-800 overflow-hidden">
+            <ConceptPanel
+              concept={selectedConcept}
+              onClose={clearFocus}
+              onConceptNavigate={navigateToConcept}
+            />
+          </div>
+        )}
+
+        {/* Fiber hover tooltip */}
+        {fiberHover && (
+          <div
+            className="fixed z-50 pointer-events-none"
+            style={{
+              left: fiberHover.screenPos.x + 12,
+              top: fiberHover.screenPos.y - 20,
+            }}
+          >
+            <div className="bg-zinc-900/95 border border-zinc-700 rounded-lg px-3 py-2 text-[10px] shadow-xl backdrop-blur-sm">
+              <div className="text-zinc-200 font-bold">
+                {fiberHover.sourceName}{" "}
+                <span className="text-zinc-500">→</span>{" "}
+                {fiberHover.targetName}
+              </div>
+              <div className="flex items-center gap-2 mt-1 text-zinc-400">
+                <span className="font-mono">{fiberHover.relationType}</span>
+                <span>
+                  weight: {Math.round(fiberHover.weight * 100)}%
+                </span>
+              </div>
+              {fiberHover.explanation && (
+                <div className="text-zinc-500 mt-1 max-w-48">
+                  {fiberHover.explanation}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Legend (bottom-left, over torus) */}
+        <div className="absolute bottom-3 left-3 bg-zinc-900/70 backdrop-blur-sm border border-zinc-800/50 rounded-lg p-2.5 text-[9px] z-10">
+          <div className="text-zinc-500 uppercase tracking-wider mb-1 font-bold">
+            Navigation
+          </div>
+          <div className="text-zinc-500 space-y-0.5">
+            <div>
+              <span className="text-zinc-400">/</span> search ·{" "}
+              <span className="text-zinc-400">click</span> node to focus ·{" "}
+              <span className="text-zinc-400">ESC</span> to clear
+            </div>
+            <div>
+              Ring = Domain · Tube = Timeline · Size = Relevance
+            </div>
+          </div>
+          <div className="flex items-center gap-2 mt-1.5 text-zinc-600">
+            <span>
+              <span className="inline-block w-4 h-px bg-zinc-400 align-middle" />{" "}
+              assoc
+            </span>
+            <span>
+              <span className="inline-block w-4 border-t border-dashed border-zinc-400 align-middle" />{" "}
+              distinct
+            </span>
+            <span>
+              <span className="inline-block w-4 border-t-2 border-double border-zinc-400 align-middle" />{" "}
+              treatment
+            </span>
+          </div>
+        </div>
+
+        {/* Stats (bottom-right) */}
+        <div className="absolute bottom-3 right-3 text-[9px] text-zinc-700 z-10">
+          {concepts.length} concepts · {edges.length} edges ·{" "}
+          {density.reduce((s, d) => s + d.count, 0)} chunks
+        </div>
       </div>
     </div>
   );

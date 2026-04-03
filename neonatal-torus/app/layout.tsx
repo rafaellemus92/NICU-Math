@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="font-mono bg-zinc-950 text-zinc-100 min-h-screen antialiased">
-        <nav className="border-b border-zinc-800 px-6 py-3">
+        <nav className="border-b border-zinc-800 px-6 py-3 relative z-30">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 text-zinc-100 hover:text-amber-400 transition-colors">
               <span className="text-lg font-bold tracking-tight">Neonatal Torus</span>
@@ -34,7 +34,7 @@ export default function RootLayout({
               <Link href="/upload" className="text-zinc-400 hover:text-zinc-100 transition-colors">
                 Upload
               </Link>
-              <Link href="/torus" className="text-zinc-400 hover:text-zinc-100 transition-colors">
+              <Link href="/torus" className="text-amber-400/80 hover:text-amber-400 transition-colors font-medium">
                 Torus
               </Link>
             </div>
