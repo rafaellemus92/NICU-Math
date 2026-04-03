@@ -1,7 +1,6 @@
 ---
 title: PPHN Hemodynamics
 domain: Cardiovascular
-topic_type: Core Topic
 ring_focus: Identity
 gestational_axis:
   - term
@@ -24,207 +23,285 @@ related_notes:
   - Extrauterine Pulmonary Transition
 ---
 
-# PPHN Hemodynamics
-
 ## 1. Identity
-> Persistent pulmonary hypertension of the newborn (PPHN) is a syndrome of failed postnatal circulatory transition characterized by sustained elevation of pulmonary vascular resistance (PVR), right-to-left shunting, and hypoxemia.
 
-- Persistent fetal circulation pattern after birth
-- PVR remains supra-systemic → right-to-left shunt at [[PDA Physiology|PDA]] and/or foramen ovale
-- Results in severe hypoxemia refractory to supplemental oxygen
+- **Persistent Pulmonary Hypertension of the Newborn (PPHN)** is the failure of normal postnatal PVR fall → persistence of fetal circulation pattern
+- Characterized by: elevated PVR → right-to-left shunting at PDA and/or PFO → severe hypoxemia despite high FiO₂
+- Incidence: ~2 per 1,000 live births; most common in term/near-term infants
+- High mortality if severe: ~10-20% despite modern therapy; major cause of ECMO utilization
+- Central pathophysiology: PVR > SVR → R→L shunt → deoxygenated blood enters systemic circulation
+
+---
 
 ## 2. Taxonomy / Developmental Placement
-- Occurs at the transitional-to-postnatal interface
-- Represents failure of the normal [[Transitional Circulation|fetal-to-neonatal circulatory transition]]
-- Three pathophysiologic categories:
-  - **Maladaptation**: structurally normal vasculature with functional vasoconstriction (MAS, sepsis, RDS, asphyxia)
-  - **Maldevelopment**: remodeled pulmonary vasculature with excessive muscularization (chronic fetal hypoxia, [[Congenital Diaphragmatic Hernia]])
-  - **Underdevelopment**: reduced vascular cross-sectional area ([[Pulmonary Hypoplasia]], [[Alveolar Capillary Dysplasia]])
+
+- Classified as a **transitional circulation failure** — fetal hemodynamic pattern persists postnatally
+- PVR fails to fall for three broad reasons (see Section 5)
+- Links: [[Pulmonary Vascular Resistance]] (mechanism), [[Transitional Circulation]] (normal physiology), [[PDA Physiology]] (shunt), [[Pulmonary Hypertension]] (chronic form), [[Extrauterine Pulmonary Transition]] (respiratory component)
+- Gestational axis: primarily **term/near-term** (lung maturity required for classic PPHN); may occur in preterm (less common, confounded by RDS)
+
+---
 
 ## 3. Structure
-- Pulmonary arterioles: smooth muscle hypertrophy and distal extension of muscle into normally non-muscularized vessels (maldevelopment type)
-- Right ventricle: remains hypertrophied in fetal pattern, maintains high pressure
-- Foramen ovale: remains patent → right-to-left atrial shunt
-- Ductus arteriosus: remains patent → right-to-left ductal shunt
-- In underdevelopment: reduced total vascular bed area
+
+**Three Categories of PPHN:**
+
+1. **Maladaptation** (most common):
+   - Normal pulmonary vascular architecture; PVR CAN fall but FAILS to fall due to extrinsic factors
+   - Associated conditions: MAS, RDS, neonatal sepsis/pneumonia, perinatal asphyxia, hypothermia, hypoglycemia, polycythemia
+   - Potentially reversible with treatment of underlying cause + pulmonary vasodilators
+   - Best response to iNO
+
+2. **Maldevelopment**:
+   - Abnormal pulmonary vascular architecture (medial hypertrophy, abnormal muscularization of small arteries)
+   - Associated with: CDH, chronic in-utero hypoxia, post-dates pregnancy, IDM
+   - Structurally elevated PVR; partial response to vasodilators
+   - CDH has the most extreme form: abnormal vascular remodeling + pulmonary hypoplasia
+
+3. **Underdevelopment** (pulmonary hypoplasia):
+   - Insufficient pulmonary vascular cross-sectional area → fixed elevated PVR
+   - Associated with: CDH, oligohydramnios sequence (bilateral renal agenesis, severe IUGR), skeletal dysplasias affecting thorax
+   - Worst prognosis; limited response to any pulmonary vasodilator
+   - Absolute reduction in vascular bed → PVR cannot normalize
+
+**Shunt Anatomy in PPHN:**
+- **Ductal shunting**: R→L at PDA → deoxygenated PA blood enters descending aorta → lower body receives deoxygenated blood → post-ductal SpO₂ low
+- **Atrial shunting**: R→L at PFO → deoxygenated RA blood → LA → LV → systemic
+- Combined or isolated; bidirectional in some patients
+
+---
 
 ## 4. Function
-### Normal Transitional Hemodynamics (for contrast)
-- Birth triggers PVR drop via oxygen, NO release, mechanical lung expansion
-- Pulmonary blood flow increases 8-10 fold
-- Left atrial pressure rises → foramen ovale closes functionally
-- PDA constricts → series circulation established
 
-### In PPHN
-- PVR fails to drop (or rises after initial drop)
-- Right ventricular pressure remains at or exceeds systemic
-- Right-to-left shunting at ductal and/or atrial level
-- Pulmonary blood flow remains low → hypoxemia
-- Left ventricular preload reduced → systemic hypotension possible
+**Normal vs. PPHN Hemodynamics:**
+
+| Parameter | Normal Transition | PPHN |
+|---|---|---|
+| PVR | Falls at birth | Remains elevated |
+| RV pressure | Falls rapidly | Equals or exceeds LV pressure |
+| DA flow | R→L → closes → L→R (if persists) | R→L (suprasystemic PVR) or bidirectional |
+| PFO flow | L→R (closes) | R→L (RA > LA pressure) |
+| Systemic SpO₂ | Rises to >95% | Low (60-80%); labile |
+| Pre-post ductal diff | <5% | >10% (R→L PDA) |
+
+**Pre-Post Ductal SpO₂ Gradient:**
+- Pre-ductal (right hand): reflects blood from LV → ascending aorta → before DA entry
+- Post-ductal (feet): reflects blood from descending aorta = LV output diluted by R→L PDA shunt
+- Difference >5-10% → significant R→L ductal shunting → PPHN or structural cardiac lesion
+- **Reverse differential**: post-ductal > pre-ductal → TGA with PPHN (oxygenated blood enters descending aorta via DA)
+
+**OI (Oxygenation Index):**
+- OI = MAP × FiO₂ × 100 / PaO₂
+- Normal <5; moderate PPHN 20-25; severe >25; ECMO threshold >40
+- Best obtained from pre-ductal arterial line (right radial artery)
+
+---
 
 ## 5. Dysfunction / Pathophysiology
-- **Vasoconstriction mediators**: endothelin-1, thromboxane, reactive oxygen species
-- **Vasodilator deficiency**: reduced NO production, reduced prostacyclin (PGI2)
-- **Vascular remodeling**: smooth muscle proliferation, adventitial thickening
-- **RV dysfunction**: pressure overload → RV dilation → tricuspid regurgitation → decreased RV output
-- **Ventricular interdependence**: RV dilation → leftward septal bowing → impaired LV filling
-- **Vicious cycle**: hypoxemia → acidosis → further pulmonary vasoconstriction
 
-### Triggers / Exacerbators
-- Hypoxia, hypercarbia, acidosis
-- Hypothermia, pain, agitation
-- Excessive mean airway pressure (impedes venous return)
+**Hemodynamic Cascade:**
+1. Elevated PVR → increased RV afterload
+2. RV pressure rises to match/exceed systemic pressure
+3. Interventricular septum bows toward LV (RV strain pattern on echo)
+4. RV dilation → tricuspid annular dilation → TR → further RV volume overload
+5. Reduced LV preload (reduced pulmonary venous return + septal shift impairs LV filling)
+6. R→L shunting at PDA and PFO → hypoxemia
+7. Hypoxemia → worsens pulmonary vasoconstriction (HPV) → vicious cycle
+
+**Myocardial Dysfunction in PPHN:**
+- Common in severe/prolonged PPHN
+- Both RV (pressure overload) and LV (underfilling, ischemia) may be affected
+- Clinical: low BP, need for inotropes despite vasodilator therapy
+- Milrinone: treats both elevated PVR and myocardial dysfunction
+
+---
 
 ## 6. Clinical Phenotype
-- Severe hypoxemia out of proportion to parenchymal lung disease
-- Labile oxygenation — "flip-flop" physiology with rapid desaturation episodes
-- **Pre-post ductal saturation gradient >5-10%** (right-to-left PDA shunt)
-- Differential cyanosis: lower SpO2 in post-ductal (left foot) vs pre-ductal (right hand)
-- May have no gradient if shunting is predominantly at foramen ovale
-- Systemic hypotension in severe cases
-- Single loud S2 (no splitting)
-- TR murmur possible
+
+- Term or near-term infant (often post-dates or with MAS)
+- Severe hypoxemia: SpO₂ 60-85%, labile (responsive to stimulation, suctioning, position)
+- **Lability** is hallmark: SpO₂ swings with minimal handling → reflects reactive pulmonary vascular bed
+- Pre-post ductal SpO₂ gradient (right hand vs. foot) >5-10% → confirms R→L PDA shunt
+- Clinical context: MAS (meconium-stained liquor), birth asphyxia, sepsis, CDH
+- May have minimal response or worsening with supplemental O₂ alone (unlike pure lung disease)
+- Echo: elevated RV pressure, R→L or bidirectional PDA shunt, septal bowing, TR
+
+**Associated Findings:**
+- Tachypnea, retractions (underlying lung disease)
+- Loud S2 (elevated PA pressures)
+- TR murmur (high RV pressure)
+- Hepatomegaly (raised CVP from RV failure)
+
+---
 
 ## 7. Differential / Distinctions
-| Feature | PPHN | Cyanotic CHD |
-|---------|------|-------------|
-| Hyperoxia test | Partial improvement possible | Usually no improvement |
-| Pre-post ductal gradient | Often present | Variable (depends on lesion) |
-| Echocardiography | Structurally normal heart | Structural defect |
-| CXR | May show lung disease | Variable heart size/shape |
 
-- **vs. Cyanotic CHD**: echocardiography is definitive — PPHN has structurally normal heart
-- **vs. Parenchymal lung disease alone**: PPHN shows disproportionate hypoxemia relative to radiographic findings
-- **vs. [[Alveolar Capillary Dysplasia]]**: refractory to all therapies including ECMO; diagnosed on biopsy/autopsy
+| Condition | SpO₂ Response to O₂ | Pre-post ductal difference | Echo |
+|---|---|---|---|
+| PPHN (maladaptation) | Partial | Present (if R→L PDA) | Elevated RVsP, R→L shunt |
+| PPHN (CDH/underdevelopment) | Minimal | Present | Elevated RVsP, hypoplastic lungs |
+| Cyanotic CHD (TGA) | None | Reverse differential | Structural abnormality |
+| RDS | Good | None | Normal cardiac anatomy |
+| Pneumothorax | Sudden deterioration | None (bilateral) | Not cardiac |
+| MAS without PPHN | Good | None | Normal |
+
+---
 
 ## 8. Diagnosis
-### Echocardiography (key diagnostic tool)
-- **TR jet velocity** → estimated RV systolic pressure (≥2/3 systemic = significant)
-- **Septal position**: flat or leftward bowing = RV pressure ≥ LV pressure
-- **PDA shunt direction**: right-to-left or bidirectional confirms supra-systemic PVR
-- **Foramen ovale shunt direction**: right-to-left
-- Structurally normal heart (rules out CHD)
-- RV function assessment (TAPSE, fractional area change)
 
-### Other
-- Pre-post ductal SpO2 difference >5% (right hand vs left foot)
-- ABG: severe hypoxemia, may have respiratory and/or metabolic acidosis
-- Oxygenation index (OI) = MAP × FiO2 × 100 / PaO2
-  - OI >25: severe
-  - OI >40: consider ECMO
-- CXR: may be normal, show underlying disease (MAS, CDH), or show decreased pulmonary vascularity
+**Echocardiography (Essential and Definitive):**
+- **TR jet velocity**: estimate RVsP = 4v² + RAP; if RVsP >2/3 systemic = significant PH
+- **PDA shunt direction**: R→L or bidirectional → confirms suprasystemic/systemic-level PVR
+- **Septal position**: D-shaped LV (flattened septum) → RV = LV pressure; reversed D → RV > LV pressure
+- **RV size and function**: dilation, hypokinesis
+- **LV function**: may be reduced (underfilling, septal shift, ischemia)
+- **Structural anatomy**: rule out CHD (TGA, TAPVR, etc.)
+
+**Oxygenation Index (OI):**
+- Pre-ductal ABG (right radial artery)
+- OI = MAP × FiO₂ × 100 / PaO₂
+- Guide for treatment escalation and ECMO referral
+
+**Pre-Post Ductal Pulse Oximetry:**
+- Right hand (pre-ductal) and foot (post-ductal) simultaneously
+- Difference >10% → R→L ductal shunting
+- Normal pre-ductal SpO₂ with low post-ductal → confirms PDA-level shunt
+
+---
 
 ## 9. Management
-### General Principles
-- Minimize stimulation and handling
-- Optimize lung recruitment without overdistension
-- Target pre-ductal SpO2 91-95%
-- Correct acidosis, hypothermia, hypoglycemia, anemia
 
-### Stepwise Approach
-1. **Optimize ventilation**: adequate lung recruitment, avoid atelectasis and overdistension
-   - Conventional ventilation or HFOV
-   - Target mild alkalosis initially (pH 7.35-7.45) — avoid aggressive hyperventilation
-2. **Sedation/analgesia**: fentanyl, morphine — reduce pain-triggered vasoconstriction
-3. **Inhaled nitric oxide (iNO)**: 20 ppm starting dose
-   - Selective pulmonary vasodilator
-   - No response in ~30-40% of patients
-4. **Systemic vasodilators if needed**:
-   - Milrinone (PDE3 inhibitor): inodilator, reduces PVR
-   - Sildenafil (PDE5 inhibitor): augments NO/cGMP pathway
-5. **Hemodynamic support**: volume if hypovolemic, vasopressors for systemic BP
-   - Norepinephrine preferred (raises SVR > PVR ratio)
-   - Vasopressin: systemic vasoconstriction with possible pulmonary vasodilation
-6. **ECMO**: for refractory cases (OI persistently >40, or clinical deterioration)
-   - Must rule out lethal conditions first ([[Alveolar Capillary Dysplasia]], severe bilateral [[Pulmonary Hypoplasia]])
+**Management Algorithm:**
+
+**Step 1: Optimize Lung Recruitment**
+- Surfactant (if RDS or MAS component): improve lung homogeneity → facilitate PVR fall
+- Conventional ventilation: gentle (PIP/PEEP balance, avoid over-distension and atelectasis)
+- HFOV: may optimize lung recruitment with less barotrauma; consider for severe MAS
+- Target: PaCO₂ 40-50 mmHg; pH 7.35-7.45; PaO₂ 50-90 mmHg
+
+**Step 2: Optimize O₂ and Chemical Milieu**
+- FiO₂ 1.0 initially; target SpO₂ 91-95% (avoid both hypoxia and hyperoxia)
+- Correct metabolic acidosis (bicarbonate, acetate)
+- Correct hypoglycemia and hypocalcemia (impair myocardial function)
+- Minimize stimulation (PPHN is highly reactive)
+- Adequate sedation/analgesia
+
+**Step 3: iNO**
+- Indication: OI >25, or severe PPHN on 100% O₂
+- Starting dose: 20 ppm (range 5-40 ppm; higher doses not more effective and increase methemoglobin)
+- Mechanism: inhaled → pulmonary endothelium → sGC → cGMP → pulmonary vasodilation (selective)
+- Wean gradually over hours-days; abrupt discontinuation → rebound vasoconstriction
+- ~30-40% of PPHN cases do not respond to iNO (especially CDH, underdevelopment)
+
+**Step 4: Escalation — Adjunctive Vasodilators**
+- **Milrinone** 0.25-0.75 mcg/kg/min: PDE3 inhibitor; inotrope + lusitrope; reduces PVR and SVR; treats myocardial dysfunction
+- **Sildenafil** 0.5-2 mg/kg q6-8h PO/IV: PDE5 inhibitor; sustains cGMP; also used for iNO weaning support
+- **Inhaled prostacyclin (iloprost)**: cAMP-mediated vasodilation; alternative when iNO unavailable
+- Treat underlying systemic hypotension to maintain SVR > PVR (reduces R→L shunt): norepinephrine, vasopressin
+
+**Step 5: ECMO**
+- Indication: OI >40 on two serial ABGs, or acute deterioration with hemodynamic instability
+- Mechanism: extracorporeal oxygenation → bypasses the pulmonary circulation → allows recovery
+- Types: VA-ECMO (venoarterial; provides cardiac + pulmonary support) or VV-ECMO (venovenous; pulmonary support only)
+- CDH with PPHN: most common ECMO indication; limited by lung hypoplasia (recovery less predictable)
+- Minimum weight: ~2 kg at most centers; gestational age >34 weeks typically
+
+---
 
 ## 10. Therapeutics
-| Drug | Mechanism | Key Points |
-|------|-----------|------------|
-| **iNO** | sGC → cGMP → smooth muscle relaxation | Selective pulmonary vasodilator; wean slowly (rebound PHT) |
-| **Sildenafil** | PDE5 inhibitor → ↑ cGMP | Oral or IV; synergistic with iNO; helps weaning |
-| **Milrinone** | PDE3 inhibitor → ↑ cAMP | Inotropy + lusitropy + vasodilation; watch for hypotension |
-| **Epinephrine** | α1 + β1 agonist | Increases SVR and contractility |
-| **Norepinephrine** | α1 > β1 | Raises SVR, improves SVR/PVR ratio |
-| **Vasopressin** | V1 receptor | Systemic vasoconstriction; may have pulmonary vasodilation via V1/NO |
-| **PGE1** | Ductal patency | Keeps PDA open as "pop-off" in supra-systemic PVR with RV failure |
-| **Hydrocortisone** | Upregulates cardiovascular adrenergic receptors | Adjunct in refractory cases |
+
+- **iNO** 20 ppm: first-line selective pulmonary vasodilator; activates NO-cGMP pathway
+- **Milrinone** 0.25-0.75 mcg/kg/min: PDE3 inhibitor; reduces PVR + SVR + positive inotropy/lusitropy
+- **Sildenafil** 0.5-2 mg/kg q6-8h: PDE5 inhibitor; amplifies cGMP; useful as iNO bridge/adjunct
+- **Surfactant** (calfactant/poractant): improves lung recruitment in MAS/RDS component
+- **Norepinephrine** 0.05-1 mcg/kg/min: increases SVR → raises systemic BP → reduces R→L gradient at PDA
+- **Vasopressin** 0.0001-0.002 units/kg/min: non-adrenergic vasopressor; may selectively reduce PVR at low doses
+- **ECMO** (VA or VV): refractory PPHN; bridges to recovery or definitive therapy
+
+---
 
 ## 11. Complications / Outcomes
-### Acute
-- Refractory hypoxemia → multiorgan failure
-- RV failure → cardiogenic shock
-- ECMO-related complications (hemorrhage, thrombosis, renal failure)
-- Hearing loss (multifactorial: hypoxia, aminoglycosides, noise)
 
-### Long-term
-- Neurodevelopmental impairment (related to severity/duration of hypoxemia)
-- Sensorineural hearing loss (screen before discharge)
-- Chronic pulmonary hypertension (rare, more common with CDH/ACD)
-- Recurrent wheezing in childhood
+- **Mortality**: ~10-20% overall; higher in CDH (up to 30-40%)
+- **Chronic PH**: minority develop persistent or recurrent PH (especially CDH, BPD)
+- **Neurodevelopmental impairment**: from hypoxemia, acidosis, ECMO (embolic/hemorrhagic risk)
+- **iNO rebound**: acute hypoxemia with abrupt discontinuation; wean by 5 ppm increments; minimum effective dose
+- **ECMO complications**: bleeding, stroke, hemolysis, infection, renal failure
+- **Survivors of severe PPHN**: increased risk of sensorineural hearing loss, cognitive delay, behavioral issues
 
-### Prognosis
-- Survival >90% with modern management (excluding lethal etiologies)
-- Worse prognosis: CDH-associated PPHN, ACD, severe bilateral pulmonary hypoplasia
+---
 
 ## 12. Associations / Genetics / Maternal-Fetal Links
-### Maternal
-- Maternal SSRI use (especially late trimester) → increased PPHN risk
-- Maternal NSAID use → premature ductal constriction → fetal PVR remodeling
-- Chorioamnionitis → inflammatory PPHN
-- Gestational diabetes
 
-### Neonatal Conditions
-- Meconium aspiration syndrome (most common association in term infants)
-- Perinatal asphyxia
-- Neonatal sepsis / pneumonia (especially GBS)
-- [[Congenital Diaphragmatic Hernia]]
-- [[Pulmonary Hypoplasia]]
-- [[Alveolar Capillary Dysplasia]] (FOXF1 mutation — lethal)
-- Surfactant protein deficiency
+- **MAS (meconium aspiration syndrome)**: most common cause; chemical pneumonitis → HPV → PPHN
+- **Perinatal asphyxia**: hypoxic injury + acidosis → impaired PVR fall; myocardial dysfunction
+- **Maternal SSRIs**: associated with PPHN (adjusted OR ~2-6x); possible serotonin-mediated vascular effects
+- **Post-dates pregnancy**: increased MAS risk; increased PVR due to chronic in-utero hypoxia
+- **CDH**: maldevelopment of pulmonary vasculature; most severe PPHN; see [[Congenital Diaphragmatic Hernia]]
+- **Maternal diabetes**: IDM at risk for PPHN via polycythemia and hypertrophic cardiomyopathy
+- **BMPR2 mutations** (rare familial PH): BMP signaling critical for normal vascular development
 
-### Genetic
-- FOXF1 mutations → [[Alveolar Capillary Dysplasia]] with PPHN
-- TBX4, BMPR2 → heritable pulmonary arterial hypertension
-- CPS1 polymorphisms → altered NO substrate availability
+---
 
 ## 13. Context / Board Framing
-- **Classic board vignette**: term infant with MAS, labile hypoxemia, pre-post ductal gradient, structurally normal heart on echo
-- **Key board concept**: OI calculation and thresholds (>25 severe, >40 consider ECMO)
-- **Hyperoxia test**: important to distinguish from cyanotic CHD
-- **SSRI association**: frequently tested — maternal SSRI in third trimester
-- Understand the three pathophysiologic categories and give examples of each
-- Know when to use PGE1 in PPHN (RV failure with supra-systemic PVR → keep PDA as pop-off)
+
+- **"Three categories of PPHN"**: maladaptation, maldevelopment (CDH), underdevelopment (pulmonary hypoplasia)
+- **"iNO mechanism"**: inhaled → sGC activation → cGMP → smooth muscle relaxation → selective pulmonary vasodilation
+- **"Pre-post ductal gradient >5%"**: R→L PDA shunting suggests right-to-left ductal shunting
+- **"OI >25"**: consider iNO; OI >40: consider ECMO
+- **"Best PPHN responder to iNO"**: maladaptation (MAS, RDS, sepsis) — normal vascular architecture, functional PVR elevation
+- **"Worst PPHN responder to iNO"**: CDH underdevelopment — structural PVR elevation, reduced vascular bed
+- **"Milrinone in PPHN"**: reduces both PVR and SVR, supports myocardial function; used when systemic BP is also adequate
+- **"PDA may be protective in PPHN"**: R→L PDA vents the RV; closing DA → acute RV decompensation
+
+---
 
 ## 14. Edge Pearl
-> **PGE1 in PPHN**: Counterintuitively, PGE1 (which keeps the PDA open) can be life-saving in severe PPHN with RV failure. The PDA acts as a "pop-off valve" — right-to-left ductal shunting decompresses the failing RV and maintains systemic cardiac output, even at the cost of cyanosis. This is the same drug used in duct-dependent CHD, but for a completely different hemodynamic rationale.
 
-> **Flip-flop physiology**: In PPHN, small changes in PVR/SVR ratio can cause abrupt swings between adequate and catastrophic oxygenation. A baby can go from SpO2 95% to 40% within seconds if PVR transiently exceeds SVR. This is why minimal stimulation is critical.
+- **Sildenafil + iNO combination carries a hypotension risk** because sildenafil's PDE5 inhibition amplifies cGMP signaling in systemic vessels too, not just pulmonary. When combined with iNO (which raises cGMP systemically to a small extent), the result can be a significant drop in SVR → systemic hypotension. The practical pearl: **start sildenafil slowly and ensure adequate preload and vasopressor support before adding it to iNO**; the combination is effective but requires close hemodynamic monitoring.
 
 ---
 
 ## Linked Notes
+
 - [[Pulmonary Vascular Resistance]]
 - [[Transitional Circulation]]
-- [[Fetal Circulation]]
 - [[PDA Physiology]]
 - [[Pulmonary Hypertension]]
 - [[Extrauterine Pulmonary Transition]]
+- [[Congenital Heart Disease Approach]]
+- [[Afterload]]
+- [[Cardiac Output]]
 - [[Congenital Diaphragmatic Hernia]]
-- [[Pulmonary Hypoplasia]]
-- [[Alveolar Capillary Dysplasia]]
+
+---
 
 ## Visual Map Position
-- Domain: Cardiovascular
-- Ring: Identity
-- Spoke: Hemodynamics / Transitional Physiology
+
+```
+PPHN HEMODYNAMICS (Identity)
+        |
+        ├── PVR fails to fall → R→L shunting (DA + PFO)
+        ├── Three categories:
+        │     ├── Maladaptation: MAS, RDS, sepsis → best iNO response
+        │     ├── Maldevelopment: CDH → partial response
+        │     └── Underdevelopment: pulmonary hypoplasia → worst response
+        └── Management ladder:
+              1. Lung recruitment + O₂
+              2. iNO (OI >25)
+              3. Milrinone / Sildenafil
+              4. ECMO (OI >40)
+```
+
+---
 
 ## Questions To Review
-- [ ] What are the three pathophysiologic categories of PPHN? Give examples of each.
-- [ ] How does echocardiography distinguish PPHN from cyanotic CHD?
-- [ ] Calculate OI and state ECMO threshold.
-- [ ] When would you use PGE1 in PPHN and why?
-- [ ] What is the mechanism of iNO and why is it "selective"?
-- [ ] What maternal medications increase PPHN risk?
-- [ ] Explain flip-flop physiology.
-- [ ] How does ventricular interdependence worsen PPHN?
+
+1. Define PPHN and describe the hemodynamic consequences of persistently elevated PVR.
+2. What are the three categories of PPHN, give an example of each, and predict iNO response for each.
+3. What is the oxygenation index (OI)? Write the formula and state the thresholds for iNO and ECMO.
+4. Explain the pre-post ductal SpO₂ gradient in PPHN: what causes it, how to measure it, and what value is significant.
+5. What is the mechanism of iNO, and why is it called a "selective" pulmonary vasodilator?
+6. Why is abrupt iNO discontinuation dangerous, and how should it be weaned?
+7. Why might a PDA be therapeutically beneficial in severe PPHN?
+8. What is the role of milrinone in PPHN management beyond pulmonary vasodilation?
