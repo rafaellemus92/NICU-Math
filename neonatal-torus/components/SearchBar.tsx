@@ -24,6 +24,7 @@ interface SearchResult {
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [domain, setDomain] = useState("");
+  const [ring, setRing] = useState("");
   const [results, setResults] = useState<SearchResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -42,6 +43,7 @@ export default function SearchBar() {
       try {
         const params = new URLSearchParams({ q: query });
         if (domain) params.set("domain", domain);
+        if (ring) params.set("ring", ring);
         const res = await fetch(`/api/search?${params}`);
         const data = await res.json();
         setResults(data);
@@ -56,7 +58,7 @@ export default function SearchBar() {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [query, domain]);
+  }, [query, domain, ring]);
 
   const domainColor = (id: string | null) =>
     ABP_DOMAINS.find((d) => d.id === id)?.color || "#71717A";
@@ -111,6 +113,18 @@ export default function SearchBar() {
               {d.abbrev}
             </option>
           ))}
+        </select>
+        <select
+          value={ring}
+          onChange={(e) => setRing(e.target.value)}
+          className="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-3 text-zinc-300 text-sm focus:outline-none focus:border-amber-400"
+        >
+          <option value="">All rings</option>
+          <option value="identity">Identity</option>
+          <option value="taxonomy">Taxonomy</option>
+          <option value="associations">Associations</option>
+          <option value="distinctions">Distinctions</option>
+          <option value="edge">Edge</option>
         </select>
       </div>
 

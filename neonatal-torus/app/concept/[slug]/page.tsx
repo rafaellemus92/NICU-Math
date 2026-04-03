@@ -125,6 +125,13 @@ export default async function ConceptPage({
               </span>
             ) : null;
           })}
+          <div className="flex-1" />
+          <Link
+            href={`/concepts/${concept.id}/edit`}
+            className="px-3 py-1.5 text-xs text-zinc-400 border border-zinc-700 rounded-lg hover:bg-zinc-800 transition-colors"
+          >
+            Edit
+          </Link>
         </div>
         <div className="flex items-center gap-4 text-sm text-zinc-500">
           <span>Exam relevance: {Math.round(concept.exam_relevance * 100)}%</span>
