@@ -271,14 +271,27 @@ export default function TorusPage() {
             </div>
           )}
 
-          {/* Seed button */}
+          {/* Seed / Extract buttons */}
           {concepts.length === 0 && !seeded && (
-            <button
-              onClick={seedExamples}
-              className="px-3 py-1.5 text-[10px] bg-amber-400/10 text-amber-400 border border-amber-400/30 rounded-lg hover:bg-amber-400/20 transition-colors"
-            >
-              Seed example data
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={seedExamples}
+                className="px-3 py-1.5 text-[10px] bg-amber-400/10 text-amber-400 border border-amber-400/30 rounded-lg hover:bg-amber-400/20 transition-colors"
+              >
+                Seed example data
+              </button>
+              <button
+                onClick={async () => {
+                  setSeeded(true);
+                  await fetch("/api/seed-graph", { method: "POST" });
+                  await fetch("/api/extract-graph", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+                  loadGraph();
+                }}
+                className="px-3 py-1.5 text-[10px] bg-emerald-400/10 text-emerald-400 border border-emerald-400/30 rounded-lg hover:bg-emerald-400/20 transition-colors"
+              >
+                Build graph from PDFs
+              </button>
+            </div>
           )}
 
           {/* Domain filter pills */}
