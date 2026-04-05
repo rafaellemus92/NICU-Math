@@ -21,6 +21,8 @@ related_notes:
   - Extrauterine Pulmonary Transition
   - Congenital Diaphragmatic Hernia
   - BPD
+  - Meconium Aspiration Syndrome
+  - High-Frequency Ventilation
 ---
 
 ## 1. Identity
@@ -242,6 +244,9 @@ related_notes:
 - [[Alveolar Capillary Dysplasia]]
 - [[Lung Development]]
 - [[Air Leak]]
+- [[Meconium Aspiration Syndrome]]
+- [[High-Frequency Ventilation]]
+- [[Transitional Circulation]]
 
 ---
 

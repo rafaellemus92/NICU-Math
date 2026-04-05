@@ -17,6 +17,9 @@ related_notes:
   - Lung Development
   - BPD
   - Respiratory Mechanics
+  - TTN
+  - ENaC and Fetal Lung Fluid
+  - Meconium Aspiration Syndrome
 ---
 
 ## 1. Identity
@@ -44,6 +47,7 @@ related_notes:
 
 **Pathologic Basis:**
 - Insufficient [[Surfactant]] → alveolar surface tension not reduced → alveolar collapse at end-expiration
+- **Laplace's law** (P = 2T/r): small alveoli with high surface tension collapse first → atelectasis cascade
 - Each breath requires re-recruitment of collapsed alveoli → massive elastic work of breathing
 - Protein-rich edema floods alveoli (disrupted alveolar-capillary barrier from stretching)
 - Edema proteins further inactivate residual surfactant
@@ -83,8 +87,9 @@ related_notes:
 - Hours 6–12: worsening as residual surfactant depleted, edema increases
 - Hours 24–48: peak severity (oxygen requirement maximal)
 - Day 3–4: type II cell recovery begins if no superimposed complications
-- Resolution: diuretic phase (fluid mobilization) → gradual improvement
+- Resolution: **recovery diuresis** — endogenous cortisol rising → [[ENaC and Fetal Lung Fluid|ENaC activates]] → Na⁺ absorbed from airspace → fluid clears. The recovery diuresis at ~72h coincides with ENaC finally activating (same mechanism as [[TTN]] resolution)
 - With treatment: dramatically accelerated recovery
+- **Antenatal betamethasone primes BOTH surfactant production AND ENaC transcription simultaneously** — one drug, two targets
 
 ---
 
@@ -132,7 +137,9 @@ related_notes:
 | Genetic surfactant deficiency | Term | Ground-glass | No response to surfactant | Family history, genetic |
 
 - **RDS vs GBS pneumonia**: CXR identical; culture, CBC, clinical history distinguish; treat both empirically
-- **RDS vs TTN**: timing, GA, CXR; TTN is wet/hyperinflated; RDS is ground-glass with low volumes
+- **RDS vs [[TTN]]**: TTN = larger infants, rapid resolution <72h, wet lungs on CXR with perihilar streaking + fluid in fissures + hyperinflation, **NO air bronchograms** (alveoli open, just wet). RDS = preterm, ground-glass with air bronchograms, low volumes. Both have wet lungs but different alveolar state: **collapsed (RDS) vs open (TTN)**
+- **RDS vs [[Meconium Aspiration Syndrome|MAS]]**: MAS in term/post-term with meconium-stained fluid; patchy CXR with hyperinflation + flat diaphragms (vs ground-glass in RDS)
+- **RDS vs [[Congenital Diaphragmatic Hernia|CDH]]**: scaphoid abdomen, dextrocardia, bowel sounds in chest
 
 ---
 
@@ -141,7 +148,7 @@ related_notes:
 - **Clinical + CXR**: sufficient in typical case (preterm, ground-glass, air bronchograms, low volumes)
 - **Blood gas**: hypoxemia (↓ PaO₂), hypercarbia (↑ PaCO₂), respiratory acidosis
 - **SpO₂ monitoring**: continuous; assess FiO₂ requirement
-- **L/S ratio** (amniocentesis): if delivery decision pending; L/S <2.0 = immature
+- **L/S ratio** (amniocentesis): if delivery decision pending; **L/S >2 predicts maturity**; **PG (phosphatidylglycerol) presence = definitive maturity marker**
 - **Gastric aspirate lamellar body count**: rapid, bedside; <25,000/μL = immature
 - **Lung ultrasound**: bilateral B-lines (absent A-lines), lung consolidation pattern; high sensitivity/specificity
 - **Echocardiogram**: if PPHN suspected or to evaluate for PDA
@@ -231,6 +238,8 @@ related_notes:
 - **"INSURE vs LISA?"** → LISA: thin catheter, no intubation, breathing on CPAP; ↓ BPD/IVH; preferred where available
 - **"Why does maternal DM increase RDS?"** → Fetal hyperinsulinemia antagonizes cortisol-mediated surfactant maturation
 - **"When does RDS peak?"** → Hours 6–12 as surfactant depletes; improves day 3–4 as type II cells recover
+- **"Recovery diuresis?"** → ~72h: endogenous cortisol rising → ENaC activates → Na⁺ absorbed from airspace → fluid clears (same ENaC mechanism as TTN resolution)
+- **"Betamethasone does what exactly?"** → Primes BOTH surfactant production (type II pneumocytes) AND ENaC transcription (Na⁺ absorption) — one drug, two targets
 - **"RDS in term infant?"** → Think genetic surfactant deficiency (SP-B, ABCA3)
 
 ---
@@ -251,6 +260,10 @@ related_notes:
 - [[Pulmonary Hypertension]]
 - [[Fetal Lung Fluid]]
 - [[Extrauterine Pulmonary Transition]]
+- [[TTN]]
+- [[ENaC and Fetal Lung Fluid]]
+- [[Meconium Aspiration Syndrome]]
+- [[Non-Invasive Ventilation]]
 
 ---
 

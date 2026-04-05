@@ -17,6 +17,9 @@ related_notes:
   - Surfactant
   - Pulmonary Hypertension
   - Respiratory Mechanics
+  - Apnea of Prematurity
+  - Non-Invasive Ventilation
+  - PDA Physiology
 ---
 
 ## 1. Identity
@@ -131,6 +134,9 @@ related_notes:
 | CXR | Haziness, hyperinflation | Coarse, cystic | Perihilar, patchy |
 | O₂ need | Yes | Yes | Variable |
 
+- **BPD vs Wilson-Mikity**: late-onset bilateral cystic CXR, no vent history — distinct from new BPD
+- **BPD vs chronic pulmonary HTN without parenchymal disease**: echo + CXR distinguish
+- **BPD vs recurrent aspiration**: recurrent events, feeding-related, lipid-laden macrophages
 - **BPD vs recurrent viral bronchiolitis**: ex-preterm infants have high rates of RSV/rhinovirus-related severe illness; may look like BPD exacerbations
 - **BPD-PH vs cardiac disease**: echo distinguishes; BPD-PH has evidence of RV hypertension without structural cardiac defect
 
@@ -259,6 +265,10 @@ related_notes:
 - [[Respiratory Mechanics]]
 - [[Air Leak]]
 - [[Extrauterine Pulmonary Transition]]
+- [[Apnea of Prematurity]]
+- [[Non-Invasive Ventilation]]
+- [[High-Frequency Ventilation]]
+- [[PDA Physiology]]
 
 ---
 

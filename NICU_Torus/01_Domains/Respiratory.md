@@ -30,6 +30,11 @@ The Respiratory domain covers the full arc of lung biology in the neonate: from 
 - [[Congenital Diaphragmatic Hernia]]
 - [[Pulmonary Hypoplasia]]
 - [[Alveolar Capillary Dysplasia]]
+- [[TTN]]
+- [[Meconium Aspiration Syndrome]]
+- [[Apnea of Prematurity]]
+- [[Non-Invasive Ventilation]]
+- [[High-Frequency Ventilation]]
 
 ---
 
@@ -39,13 +44,13 @@ The Respiratory domain covers the full arc of lung biology in the neonate: from 
 |---|---|
 | Development | [[Lung Development]], [[Fetal Lung Fluid]], [[Surfactant]] (synthesis timeline), [[Pulmonary Hypoplasia]] (arrested development), [[Alveolar Capillary Dysplasia]] (vascular maldevelopment) |
 | Structure | [[Lung Development]] (airway branching, alveolarization), [[Congenital Diaphragmatic Hernia]] (herniation and lung compression), [[Alveolar Capillary Dysplasia]] (misaligned vasculature) |
-| Function | [[Surfactant]] (surface tension reduction), [[Fetal Lung Fluid]] (stretch-driven growth), [[Respiratory Mechanics]] (compliance, resistance, time constants), [[Extrauterine Pulmonary Transition]] (fluid clearance, first breath) |
-| Dysfunction | [[RDS]] (surfactant deficiency), [[BPD]] (arrested alveolarization + vascular injury), [[Air Leak]] (overdistension, pressure–volume mismatch), [[Pulmonary Hypertension]] (failed PVR drop), [[Congenital Diaphragmatic Hernia]] (hypoplasia + pulmonary vascular remodeling), [[Pulmonary Hypoplasia]] (reduced lung mass) |
+| Function | [[Surfactant]] (surface tension reduction), [[Fetal Lung Fluid]] (stretch-driven growth, ENaC switch at birth), [[Respiratory Mechanics]] (compliance, resistance, time constants), [[Extrauterine Pulmonary Transition]] (fluid clearance, first breath) |
+| Dysfunction | [[RDS]] (surfactant deficiency), [[TTN]] (ENaC activation failure), [[Meconium Aspiration Syndrome]] (obstruction + inactivation + PPHN), [[BPD]] (arrested alveolarization + vascular injury), [[Air Leak]] (overdistension, pressure–volume mismatch), [[Pulmonary Hypertension]] (failed PVR drop), [[Congenital Diaphragmatic Hernia]] (hypoplasia + pulmonary vascular remodeling), [[Pulmonary Hypoplasia]] (reduced lung mass) |
 | Phenotype | [[RDS]] (grunting, retractions, ground-glass CXR), [[BPD]] (oxygen dependency, hyperinflation), [[Air Leak]] (PIE, pneumothorax, pneumomediastinum), [[Pulmonary Hypertension]] (cyanosis, differential saturation), [[Congenital Diaphragmatic Hernia]] (scaphoid abdomen, bowel sounds in chest) |
 | Differential | [[Pulmonary Hypertension]] vs [[RDS]] vs cardiac disease; [[BPD]] vs evolving pneumonia; [[Air Leak]] subtypes; [[Pulmonary Hypoplasia]] vs [[Alveolar Capillary Dysplasia]] |
 | Diagnosis | [[RDS]] (CXR, surfactant deficiency markers), [[BPD]] (Jensen 2019 definition, CXR, echocardiography), [[Pulmonary Hypertension]] (echo, pre/post-ductal sats, cardiac catheterization), [[Alveolar Capillary Dysplasia]] (lung biopsy, FOXF1 gene) |
-| Management | [[Extrauterine Pulmonary Transition]] (delivery room stabilization, CPAP), [[RDS]] (surfactant replacement, non-invasive support), [[BPD]] (volume-targeted ventilation, caffeine, diuretics, nutrition), [[Air Leak]] (needle decompression, chest tube), [[Congenital Diaphragmatic Hernia]] (delayed repair, pulmonary vasodilators) |
-| Therapeutics | [[Surfactant]] (exogenous surfactant: poractant, beractant, calfactant, lucinactant), [[Pulmonary Hypertension]] (iNO, sildenafil, bosentan, PGI2 analogues), [[BPD]] (caffeine, diuretics, systemic steroids — dexamethasone vs hydrocortisone risk-benefit), [[Respiratory Mechanics]] (ventilator modes: HFOV, SIMV, VTV) |
+| Management | [[Extrauterine Pulmonary Transition]] (delivery room stabilization, CPAP), [[RDS]] (surfactant replacement, non-invasive support), [[TTN]] (supportive, NOT furosemide), [[Meconium Aspiration Syndrome]] (surfactant replacement, iNO, ECMO), [[BPD]] (volume-targeted ventilation, caffeine, diuretics, nutrition), [[Air Leak]] (needle decompression, chest tube), [[Congenital Diaphragmatic Hernia]] (delayed repair, pulmonary vasodilators), [[Apnea of Prematurity]] (caffeine, CPAP) |
+| Therapeutics | [[Surfactant]] (exogenous surfactant: poractant, beractant, calfactant, lucinactant), [[Pulmonary Hypertension]] (iNO, sildenafil, bosentan, PGI2 analogues), [[BPD]] (caffeine, diuretics, systemic steroids — dexamethasone vs hydrocortisone risk-benefit), [[Non-Invasive Ventilation]] (CPAP, NIPPV, HFNC, LISA), [[High-Frequency Ventilation]] (HFOV vs HFJV), [[Apnea of Prematurity]] (caffeine — CAP trial) |
 | Complications | [[BPD]] (pulmonary hypertension, cor pulmonale, neurodevelopmental impairment), [[Congenital Diaphragmatic Hernia]] (chronic lung disease, GERD, sensorineural hearing loss, neurodevelopment), [[Alveolar Capillary Dysplasia]] (universally fatal without lung transplant) |
 | Associations | [[RDS]] (prematurity, male sex, Caucasian race, maternal diabetes, C-section without labor), [[BPD]] (extreme prematurity, infection, volutrauma, oxidative stress), [[Congenital Diaphragmatic Hernia]] (Bochdalek left-sided 85%, chromosomal anomalies in 10–15%), [[Pulmonary Hypoplasia]] (oligohydramnios, space-occupying lesions, neuromuscular disease) |
 | Context | [[Lung Development]] (antenatal corticosteroids accelerate maturation), [[Fetal Lung Fluid]] (labor and ANP drive clearance — C-section risk), [[RDS]] (antenatal steroids, threshold for surfactant), [[BPD]] (outcomes by GA, NICU QI metrics) |
@@ -76,3 +81,8 @@ The Respiratory domain covers the full arc of lung biology in the neonate: from 
 - CDH: Bochdalek vs Morgagni, survival predictors (lung-to-head ratio, liver herniation), delayed repair rationale, ECMO use
 - Pulmonary hypoplasia: causes (space, fluid, movement), distinguishing from ACD
 - Alveolar capillary dysplasia: FOXF1, malalignment of veins, lung biopsy diagnosis, prognosis
+- TTN: ENaC molecular switch, C/S risk, furosemide NOT helpful, betamethasone dual effect
+- MAS: 4 mechanisms (obstruction, pneumonitis, inactivation, PPHN), no routine suctioning (2015 NRP), surfactant works
+- Apnea of prematurity: caffeine (CAP trial — reduces BPD + improves neuro), mixed most common type
+- Non-invasive ventilation: SUPPORT trial (CPAP = intubation), LISA protocol, nasal septal trauma
+- High-frequency ventilation: HFJV for air leaks (passive exhalation), HFOV for diffuse disease, frequency-Vt paradox

@@ -16,6 +16,8 @@ related_notes:
   - RDS
   - Respiratory Mechanics
   - Pulmonary Hypoplasia
+  - High-Frequency Ventilation
+  - Meconium Aspiration Syndrome
 ---
 
 ## 1. Identity
@@ -48,6 +50,7 @@ related_notes:
 - CXR: linear and cystic radiolucencies extending from hilum; "bubbly" lung; does not spare cyst margins (unlike alveolar overdistension)
 - Can be bilateral or unilateral; unilateral → can selectively intubate contralateral lung
 - Worsens ventilation: compresses adjacent alveoli, increases dead space
+- **PIE is pathognomonic of prematurity + ventilator-induced injury** — not seen in unventilated term infants
 
 **2. Pneumomediastinum**
 - Air dissects into mediastinal connective tissue via perivascular sheaths
@@ -66,6 +69,7 @@ related_notes:
 - Causes cardiac tamponade physiology: ↑ pericardial pressure → compression of heart → ↓ cardiac output
 - Rare; CXR shows air outlining cardiac silhouette (halo around heart)
 - Requires emergency pericardiocentesis if causing tamponade
+- **Most lethal air leak type** — tamponade physiology develops rapidly
 
 **5. Pneumoperitoneum (rare)**
 - Air dissects through diaphragmatic defects into peritoneal cavity
@@ -187,8 +191,9 @@ related_notes:
 **PIE management:**
 - Reduce ventilator pressures and volumes (accept permissive hypercapnia)
 - Lateral positioning with affected side down (compresses PIE, allows contralateral lung to expand)
-- **High-frequency oscillatory ventilation (HFOV)**: delivers small volumes at very low pressures; allows PIE resolution
-- **Selective intubation of contralateral main bronchus**: for severe unilateral PIE; allows affected lung to deflate
+- **High-frequency jet ventilation ([[High-Frequency Ventilation|HFJV]])**: first-line for air leaks and PIE — passive exhalation + lower MAP = less gas trapping than HFOV
+- **HFOV**: also useful but HFJV preferred for air leaks specifically (passive vs active exhalation)
+- **Selective intubation of contralateral main bronchus**: for severe unilateral PIE; allows affected lung to deflate and heal
 
 **Pneumopericardium:**
 - Emergency pericardiocentesis if tamponade: subxiphoid approach with 22G angiocath; aspirate air
@@ -265,6 +270,8 @@ related_notes:
 - [[Pulmonary Hypoplasia]]
 - [[Congenital Diaphragmatic Hernia]]
 - [[Pulmonary Hypertension]]
+- [[High-Frequency Ventilation]]
+- [[Meconium Aspiration Syndrome]]
 
 ---
 

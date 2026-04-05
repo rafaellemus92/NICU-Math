@@ -15,6 +15,9 @@ related_notes:
   - Lung Development
   - Extrauterine Pulmonary Transition
   - Surfactant
+  - TTN
+  - RDS
+  - Pulmonary Hypoplasia
 ---
 
 ## 1. Identity
@@ -22,7 +25,8 @@ related_notes:
 - **Fetal Lung Fluid (FLF)** is a chloride-rich fluid actively secreted by the fetal lung epithelium throughout gestation
 - Serves as the mechanical distending force that drives lung growth during fetal life
 - Must be rapidly cleared at birth to establish functional residual capacity (FRC) and enable gas exchange
-- Failure of clearance → [[Extrauterine Pulmonary Transition]] failure; excess retained fluid → Transient Tachypnea of the Newborn (TTN)
+- **ENaC (epithelial Na⁺ channel) is the apical molecular switch** converting the lung from fluid-secreting (fetal Cl⁻ driven) to fluid-absorbing (neonatal Na⁺ driven) at birth
+- Failure of clearance → [[Extrauterine Pulmonary Transition]] failure; excess retained fluid → [[TTN|Transient Tachypnea of the Newborn (TTN)]]
 
 ---
 
@@ -48,11 +52,24 @@ related_notes:
 - Cl⁻ secreted into airspace lumen → creates osmotic gradient → water follows
 - Na⁺ and water accompany Cl⁻ via paracellular routes and aquaporins
 
-**Clearance mechanism (4 pathways):**
-1. **Labor catecholamines** (epinephrine surge): β-adrenergic receptor → cAMP → activates ENaC; switches epithelium from Cl⁻ secretion to Na⁺ absorption
-2. **ENaC (epithelial sodium channel)** activation: Na⁺ absorbed into interstitium → water follows; principal postnatal mechanism
-3. **Lymphatic absorption**: interstitial fluid drained via pulmonary lymphatics (active during labor)
-4. **Vascular absorption**: into pulmonary capillaries as PVR falls after birth
+**The ENaC Molecular Switch (Brodsky Pulm pp.6-7):**
+- **In utero**: NKCC2-like Cl⁻ secretion fills future airspace → lung distention drives growth
+- **Na⁺/K⁺-ATPase** (basolateral) maintains low intracellular Na⁺, creating gradient — this is the **basolateral engine** (always on, needs ATP)
+- **At birth**: ENaC opens apically → Na⁺ flows from airspace into cell → Na⁺/K⁺-ATPase pumps it to interstitium → water follows → FLF cleared
+- **ENaC = apical gate** (turned on at birth); Na⁺/K⁺-ATPase = basolateral engine (always on)
+- **Same ENaC channel** in kidney collecting duct is controlled by aldosterone
+
+**Three triggers for ENaC activation (fast → slow):**
+1. **Catecholamines** (fastest, seconds): epinephrine → β-adrenergic → cAMP → ENaC **membrane insertion** (trafficking from intracellular pool to apical membrane)
+2. **Cortisol** (hours): gene-level transcription → ↑ ENaC protein synthesis (priming)
+3. **Thyroid hormone** (days-weeks): structural maturation of channels and transporters
+
+**Clearance phases (3 sequential):**
+1. **35% prenatal**: cortisol/thyroid gene-level ENaC priming during late gestation
+2. **30% during labor**: catecholamine surge → cAMP → ENaC membrane insertion (seconds to minutes)
+3. **35% postnatal**: lung distention + lymphatic drainage + vascular absorption
+
+**Lymphatic + vascular absorption**: interstitial fluid drained via pulmonary lymphatics (active during labor) and into pulmonary capillaries as PVR falls after birth
 
 ---
 
@@ -72,18 +89,20 @@ related_notes:
 - Reduced distension → [[Pulmonary Hypoplasia]]
 - Causes: renal agenesis (Potter sequence), severe PPROM, bilateral renal dysplasia
 
-**Failed clearance at birth:**
+**Failed clearance at birth → [[TTN]]:**
 - Retained FLF fills airspaces → ↑ work of breathing, hypoxia, tachypnea
-- **TTN (Transient Tachypnea of the Newborn)**: most common cause of respiratory distress in term/near-term
+- **Elective C/S → no labor → no catecholamine surge → ENaC dormant → Na⁺ cannot be absorbed from airspace → FLF stays → TTN**
 - Risk factors for failed clearance:
   - **Cesarean section without labor**: no catecholamine surge, no labor-mediated ENaC activation
+  - **Maternal DM**: insulin delays BOTH surfactant maturation AND ENaC expression (insulin opposes cortisol maturational signal)
   - Sedating maternal medications (suppress catecholamine response)
-  - Prematurity: fewer ENaC channels, immature β-adrenergic signaling
-  - Male sex, macrosomia (associated with TTN)
+  - Prematurity: immature ENaC expression + immature Na⁺/K⁺-ATPase → contributes to [[RDS]] severity
+  - Male sex, macrosomia
 
 **ENaC dysfunction:**
-- Genetic ENaC mutations → retained FLF → severe neonatal respiratory distress (rare)
-- Prematurity → reduced ENaC expression → TTN-like presentation
+- Genetic ENaC mutations (SCNN1A/B/G) → retained FLF → severe neonatal respiratory distress (rare)
+- Prematurity → reduced ENaC expression + immature Na⁺/K⁺-ATPase → both TTN-like and RDS contribution
+- **HIE**: ATP failure → Na⁺/K⁺-ATPase fails → ENaC cannot maintain gradient → pulmonary edema
 
 ---
 
@@ -147,10 +166,12 @@ related_notes:
 
 ## 10. Therapeutics
 
-- **Antenatal steroids**: upregulate ENaC expression → accelerate FLF clearance capacity at birth; reduce TTN severity
+- **Betamethasone primes BOTH surfactant production AND ENaC transcription** — one drug, two targets (Brodsky Pulm pp.6-7)
 - **Elective C-section timing**: ACOG recommends ≥39 weeks for elective repeat C-section (reduces TTN/RDS risk)
+- **Antenatal steroids in late preterm** may reduce TTN by priming ENaC ahead of delivery
 - **FETO (fetal endoscopic tracheal occlusion)**: experimental for severe CDH — occludes trachea to retain FLF and stimulate lung growth
-- **No role for diuretics** in routine TTN management
+- **Diuretics NOT helpful for TTN**: furosemide acts at the **loop of Henle** (not alveolar ENaC) — it cannot directly fix TTN. Furosemide may venodilate but does not address the alveolar ENaC failure
+- **Same ENaC channel** in collecting duct controlled by aldosterone → explains why renal and pulmonary Na⁺ physiology share the same molecular machinery
 
 ---
 
@@ -178,7 +199,10 @@ related_notes:
 - **"Why does C-section without labor cause TTN?"** → No catecholamine surge → ENaC not activated → FLF not absorbed → retained fluid = TTN
 - **"What drives FLF secretion?"** → Chloride channels (CFTR, TMEM16A); Cl⁻ secretion osmotically draws water into airspace
 - **"FLF volume at term?"** → ~30 mL/kg (~150 mL in a term infant)
-- **"What activates ENaC at birth?"** → Epinephrine (labor catecholamine surge) → β-adrenergic → cAMP → ENaC → Na⁺ absorption → fluid clearance
+- **"What activates ENaC at birth?"** → Three triggers: catecholamines (seconds, cAMP → ENaC insertion), cortisol (hours, gene transcription), thyroid hormone (days, structural maturation)
+- **"Why can't furosemide treat TTN?"** → Furosemide acts at the loop of Henle, NOT at alveolar ENaC — cannot directly clear FLF
+- **"Betamethasone does what to ENaC?"** → Primes ENaC transcription + surfactant production simultaneously — one drug, two targets
+- **"Same channel in the kidney?"** → Yes — ENaC in collecting duct controlled by aldosterone; same molecular machinery
 - **"L/S ratio source?"** → Surfactant phospholipids from FLF expelled into amniotic cavity
 - **"What happens if fetal breathing movements are absent?"** → No mechanical distension → [[Pulmonary Hypoplasia]]
 
@@ -186,7 +210,12 @@ related_notes:
 
 ## 14. Edge Pearl
 
-- **FETO procedure exploits FLF physiology**: in severe left CDH, a balloon is placed endoscopically into the fetal trachea at 26–30 weeks to prevent FLF efflux → lung distension increases → lung grows against herniated bowel. Balloon is removed at ~34 weeks to allow surfactant accumulation. This is a direct clinical application of the understanding that FLF distension is the growth signal for the fetal lung.
+- **The ENaC story unifies RDS and TTN**: both diseases have wet lungs, but the alveolar state differs:
+  - **RDS** = surfactant failure → alveoli **collapsed** (atelectasis)
+  - **TTN** = ENaC failure → alveoli **open** but wet (fluid-filled)
+  - CXR reflects this: RDS = ground-glass (collapsed); TTN = perihilar streaking + hyperinflation (open but wet)
+  - Betamethasone primes BOTH systems simultaneously — explaining why antenatal steroids reduce BOTH RDS and TTN
+  - The recovery diuresis at ~72h in RDS also reflects ENaC finally activating (endogenous cortisol rising)
 
 ---
 
@@ -198,6 +227,7 @@ related_notes:
 - [[RDS]]
 - [[Pulmonary Hypoplasia]]
 - [[Congenital Diaphragmatic Hernia]]
+- [[TTN]]
 
 ---
 

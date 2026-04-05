@@ -34,6 +34,9 @@ related_notes:
 - Type II pneumocytes differentiate in the **canalicular stage** (~22–24 weeks GA)
 - Lamellar bodies (storage organelles) appear at ~22–24 weeks; secretion ramps up through the **saccular stage**
 - Mature surfactant function established ~35–36 weeks in most infants
+- **Maturation accelerators**: antenatal steroids, thyroid hormone, catecholamines, chronic stress (IUGR, PPROM)
+- **Maturation inhibitors**: maternal DM (insulin opposes cortisol), hydrops, **male sex** (androgens delay — same testosterone pathway in steroid synthesis)
+- **Histologic maturity**: immature lung = large glycogen lakes, few lamellar bodies; mature lung = no glycogen, many lamellar bodies
 - Developmental ring: **Identity** — the functional molecule defining alveolar stability
 - Gestational axis: fetal origin, critical at transitional and postnatal phases
 
@@ -75,7 +78,7 @@ related_notes:
 - **SP-B deficiency** (SFTPB gene mutation): complete absence → lethal neonatal respiratory failure; no exogenous surfactant is effective long-term; only cure = lung transplant
 - **SP-C deficiency** (SFTPC gene mutation): variable phenotype; chronic ILD in infants/children; less severe than SP-B
 - **ABCA3 deficiency**: transporter required for lamellar body formation; presents as neonatal respiratory failure; lethal or chronic ILD
-- **Surfactant inactivation**: meconium, blood, edema proteins inactivate surfactant → secondary surfactant dysfunction (MAS, ARDS)
+- **Surfactant inactivation**: meconium, blood, edema proteins inactivate surfactant → secondary surfactant dysfunction ([[Meconium Aspiration Syndrome|MAS]], ARDS). Meconium INACTIVATES surfactant → exogenous replacement effective in MAS
 
 **Consequences of deficiency:**
 - Diffuse atelectasis → reduced compliance → increased work of breathing → hypoxia, hypercarbia
@@ -125,7 +128,7 @@ related_notes:
 - Reduces RDS incidence ~50%, severity substantially
 
 **Exogenous surfactant therapy:**
-- Indicated for: RDS (rescue), prophylaxis in ELBW (selective), meconium aspiration syndrome (adjunct)
+- Indicated for: [[RDS]] (rescue), prophylaxis in ELBW (selective), [[Meconium Aspiration Syndrome|MAS]] (meconium INACTIVATES surfactant), pulmonary hemorrhage (adjunct)
 - **Timing**: early rescue (within 2 hours of birth) superior to late rescue
 - **Route**: intratracheal (via ETT or thin catheter)
 - **INSURE** (Intubate-Surfactant-Extubate): intubate briefly for surfactant, immediately extubate to CPAP — reduces BPD vs prolonged intubation
@@ -136,7 +139,7 @@ related_notes:
 ## 10. Therapeutics
 
 **Animal-derived surfactants (contain SP-B/C analogs):**
-- **Poractant alfa (Curosurf)**: porcine; high phospholipid concentration; 100–200 mg/kg dose; most widely used globally
+- **Poractant alfa (Curosurf)**: porcine; **highest DPPC concentration**; 100–200 mg/kg dose; most widely used globally
 - **Beractant (Survanta)**: bovine; 100 mg/kg dose; lipid-supplemented
 - **Calfactant (Infasurf)**: bovine; 105 mg/kg; high SP-B content
 - Animal-derived are superior to synthetic for speed of response
@@ -168,7 +171,7 @@ related_notes:
 ## 12. Associations / Genetics / Maternal-Fetal Links
 
 - **Maternal diabetes**: hyperinsulinemia delays type II cell maturation → reduced surfactant synthesis even at term GA
-- **Maternal corticosteroids**: upregulate SFTPB, SFTPC, ABCA3 gene expression in type II cells
+- **Maternal corticosteroids**: upregulate SFTPB, SFTPC, ABCA3 gene expression in type II cells. **Cortisol and thyroid hormone are the dominant hormonal maturers** — same steroid axis as aldosterone (different adrenal zone)
 - **SP-B deficiency (SFTPB)**: autosomal recessive; ~1:1,000,000; requires heterozygous carrier parents; prenatal diagnosis available
 - **ABCA3 deficiency (ABCA3)**: autosomal recessive; more common than SP-B; variable severity by mutation type
 - **SP-C (SFTPC)**: autosomal dominant, often de novo; variable penetrance
@@ -203,6 +206,8 @@ related_notes:
 - [[Extrauterine Pulmonary Transition]]
 - [[Pulmonary Hypertension]]
 - [[Alveolar Capillary Dysplasia]]
+- [[Meconium Aspiration Syndrome]]
+- [[Non-Invasive Ventilation]]
 
 ---
 

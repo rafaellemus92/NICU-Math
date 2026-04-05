@@ -122,6 +122,7 @@ related_notes:
 | Diagnosis | Key Feature | Distinguisher |
 |---|---|---|
 | CDH (Bochdalek) | Bowel in chest, posterolateral defect | CXR, scaphoid abdomen, prenatal US |
+| Eventration | Diaphragm intact but elevated | Fluoroscopy, intact diaphragm |
 | Morgagni hernia | Anterior defect, rare, often incidental | Location on CXR/CT |
 | CCAM/CPAM | Cystic lung mass | No bowel herniation; lung mass not bowel |
 | Bronchogenic cyst | Mediastinal or lung | No diaphragmatic defect |
@@ -272,6 +273,8 @@ related_notes:
 - [[Fetal Lung Fluid]]
 - [[Air Leak]]
 - [[Alveolar Capillary Dysplasia]]
+- [[High-Frequency Ventilation]]
+- [[Transitional Circulation]]
 
 ---
 
