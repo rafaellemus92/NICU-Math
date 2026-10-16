@@ -1,0 +1,60 @@
+=== versions ===
+elan 4.2.4 (227caca13 2026-08-25)
+Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
+Lake version 5.0.0-src+eb6cafb (Lean version 4.35.0)
+=== lake update ===
+info: toolchain not updated; already up-to-date
+
+real	0m0.102s
+user	0m0.067s
+sys	0m0.031s
+exit=0
+=== lake exe cache get ===
+error: unknown executable cache
+
+real	0m0.073s
+user	0m0.066s
+sys	0m0.008s
+exit=1
+=== lake build ===
+✔ [2/16] Built Wyrd.Sqrt2 (1.4s)
+✔ [3/16] Built Wyrd.Encoding (1.7s)
+✔ [4/16] Built Wyrd.MinimalData (1.7s)
+✔ [5/16] Built Wyrd.Pangram (12s)
+✔ [6/16] Built Wyrd.Distinct (522ms)
+✔ [7/16] Built Wyrd.Euclid (570ms)
+✔ [8/16] Built Wyrd.Parity (708ms)
+✔ [9/16] Built Wyrd.Minimal (28s)
+✔ [10/16] Built Wyrd.MinimalTable0 (277s)
+✔ [11/16] Built Wyrd.MinimalTable1 (452s)
+✔ [12/16] Built Wyrd.MinimalTable2 (627s)
+✔ [13/16] Built Wyrd.MinimalTable3 (972s)
+✔ [14/16] Built Wyrd.Smallest (4.1s)
+✔ [15/16] Built Wyrd (395ms)
+Build completed successfully (16 jobs).
+
+real	17m1.189s
+user	28m22.898s
+sys	6m25.721s
+exit=0
+=== lake env lean Audit.lean ===
+'Wyrd.decode_encode' depends on axioms: [propext, Quot.sound]
+'Wyrd.encode_injective' depends on axioms: [propext, Quot.sound]
+'Wyrd.solution_names' does not depend on any axioms
+'Wyrd.solution_isPangram' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.lower_bound' depends on axioms: [propext, Quot.sound]
+'Wyrd.primes_nodup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.length_primesOf' depends on axioms: [propext, Quot.sound]
+'Wyrd.sum_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.two_not_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.no_smaller_pangram' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.smallest_pangram_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.exists_prime_gt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.primes_infinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Wyrd.no_fraction_squares_to_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+real	0m0.476s
+user	0m0.313s
+sys	0m0.147s
+exit=0
+LEAN SEQUENCE DONE

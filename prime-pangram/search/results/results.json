@@ -1,0 +1,328 @@
+{
+ "language": "Prime-26: a prime is named by its base-26 digits, A=0..Z=25 (no leading A)",
+ "date": "2026-10-16",
+ "original_equation_pangram": {
+  "left": [
+   "YR",
+   "BQL",
+   "CWH",
+   "DNF",
+   "GAX"
+  ],
+  "right": [
+   "KV",
+   "MT",
+   "OP",
+   "ESJ",
+   "IUZ"
+  ],
+  "left_values": [
+   641,
+   1103,
+   1931,
+   2371,
+   4079
+  ],
+  "right_values": [
+   281,
+   331,
+   379,
+   3181,
+   5953
+  ],
+  "side_sum": 10125,
+  "left_letter_sum": 150,
+  "right_letter_sum": 175,
+  "verified": true,
+  "theorem": "sum of any Prime-26 perfect pangram is 0 mod 25 (26 = 1 mod 25); for an equation pangram each side is 0 mod 25 separately"
+ },
+ "equal_sum_five_pair_puzzle": {
+  "statement": "five pairs (p_i,q_i) of Prime-26 words with p_i+q_i = N for all i, every letter used exactly once",
+  "solutions": 0,
+  "proved_bounds": {
+   "N_parity": "even (C=2 can be used once)",
+   "N_mod_10": 0,
+   "N_upper_bound_exclusive": 35152,
+   "max_word_letters": 4
+  },
+  "search": "all even N < 40000, words < 26^4, exact cover; two independent implementations (scratchpad/pairs.c, Python structural search)",
+  "four_pair_covers_of_all_26_letters": 0,
+  "best_partial_example": {
+   "N": 10146,
+   "pairs": [
+    [
+     "F",
+     "PAB"
+    ],
+    [
+     "N",
+     "OZT"
+    ],
+    [
+     "EHX",
+     "KSJ"
+    ],
+    [
+     "GWL",
+     "IDV"
+    ]
+   ],
+   "letters_left": "CMQRUY"
+  }
+ },
+ "equal_difference_five_pair_puzzle": {
+  "statement": "five pairs with q_i - p_i = D for all i, every letter used exactly once",
+  "proved_bounds": {
+   "D_parity": "even",
+   "D_not_multiple_of_26": true,
+   "D_min": 28,
+   "D_upper_bound_exclusive": 17576,
+   "max_word_letters": 4
+  },
+  "derived_constraint": "sum of letter values of the five smaller words = 10*D (mod 25)",
+  "search": "all even D <= 20000, words < 26^4 (scratchpad/diff.c) - exhaustive by the bounds",
+  "solutions": [
+   {
+    "D": 204,
+    "pairs": [
+     [
+      "YSH",
+      "ZAD"
+     ],
+     [
+      "MWF",
+      "NEB"
+     ],
+     [
+      "JUP",
+      "KCL"
+     ],
+     [
+      "GX",
+      "OT"
+     ],
+     [
+      "IV",
+      "QR"
+     ]
+    ],
+    "values": [
+     [
+      16699,
+      16903
+     ],
+     [
+      8689,
+      8893
+     ],
+     [
+      6619,
+      6823
+     ],
+     [
+      179,
+      383
+     ],
+     [
+      229,
+      433
+     ]
+    ],
+    "smaller_word_letter_sum": 190
+   },
+   {
+    "D": 258,
+    "pairs": [
+     [
+      "KQR",
+      "LAP"
+     ],
+     [
+      "BUF",
+      "CED"
+     ],
+     [
+      "MWJ",
+      "NGH"
+     ],
+     [
+      "IV",
+      "ST"
+     ],
+     [
+      "OZ",
+      "YX"
+     ]
+    ],
+    "values": [
+     [
+      7193,
+      7451
+     ],
+     [
+      1201,
+      1459
+     ],
+     [
+      8693,
+      8951
+     ],
+     [
+      229,
+      487
+     ],
+     [
+      389,
+      647
+     ]
+    ],
+    "smaller_word_letter_sum": 180
+   },
+   {
+    "D": 534,
+    "pairs": [
+     [
+      "UGL",
+      "VAZ"
+     ],
+     [
+      "CB",
+      "WP"
+     ],
+     [
+      "ED",
+      "YR"
+     ],
+     [
+      "NQF",
+      "OKT"
+     ],
+     [
+      "HSJ",
+      "IMX"
+     ]
+    ],
+    "values": [
+     [
+      13687,
+      14221
+     ],
+     [
+      53,
+      587
+     ],
+     [
+      107,
+      641
+     ],
+     [
+      9209,
+      9743
+     ],
+     [
+      5209,
+      5743
+     ]
+    ],
+    "smaller_word_letter_sum": 115
+   }
+  ],
+  "supply_statistics_candidate_pairs_per_D": {
+   "mean_3_divides_D": 1554.8,
+   "mean_3_not_divides_D": 777.5,
+   "mean_30_divides_D": 1943.1,
+   "mean_5_divides_D": 1296.7,
+   "mean_5_not_divides_D": 971.6,
+   "source": "results/pack_by_D.tsv (scratchpad/pack.c)"
+  },
+  "two_letter_pairs_available": {
+   "204": 34,
+   "258": 27,
+   "534": 15,
+   "starters_common_to_204_and_258": [
+    "CB",
+    "CH",
+    "CV",
+    "DB",
+    "EF",
+    "GH",
+    "IV",
+    "KD",
+    "KX",
+    "OJ",
+    "OT",
+    "OZ"
+   ]
+  }
+ },
+ "perfect_pangram_counts_exact": {
+  "method": "DP over 2^26 letter subsets with exact word count (scratchpad/pangdp.c); validated vs scratchpad/brute.c and tests/test_solutions.py --slow",
+  "words_le_3_letters": 2476752460975,
+  "words_le_4_letters": 1820178519744870,
+  "words_le_5_letters": 17712554714431732,
+  "words_le_6_letters": null,
+  "validation_checks": {
+   "K3": {
+    "ABCDEFGHIJKLMN:6": 13373,
+    "ABCDEFGHIJKLMN:5": 8728,
+    "ABCDEFGHIJKLM:5": 6397,
+    "ABCDEFGHIJKL:5": 3210,
+    "ABCDEFGHIJKL:4": 1263
+   },
+   "K4": {
+    "ABCDEFGHIJKL:5": 27152,
+    "ABCDEFGHIJKL:4": 73155,
+    "ABCDEFGHIJKL:3": 30128,
+    "ABCDEFGHIJKLM:5": 122443
+   },
+   "K5": {
+    "ABCDEFGHIJK:4": 20150,
+    "ABCDEFGHIJK:3": 48840,
+    "ABCDEFGHIJKL:3": 378715
+   }
+  },
+  "word_table_sizes": {
+   "K4": 30124,
+   "K5": 522752,
+   "K6": 9060348
+  }
+ },
+ "equation_pangram_estimates": {
+  "definition": "perfect pangrams admitting a split into two groups of five words with equal sums (counted with multiplicity of balanced splits; uniform sampling from the exact DP)",
+  "words_le_3_letters": {
+   "samples": 1000000,
+   "balanced_hits": 4007,
+   "rate": 0.00403,
+   "rate_se": 6.4e-05,
+   "estimate": 9981000000.0,
+   "estimate_se": 160000000.0
+  },
+  "words_le_4_letters": {
+   "samples": 2000000,
+   "balanced_hits": 205,
+   "rate": 0.000103,
+   "rate_se": 7.2e-06,
+   "estimate": 187500000000.0,
+   "estimate_se": 13000000000.0
+  },
+  "words_le_5_letters": {
+   "samples": 1000000,
+   "balanced_hits": 14,
+   "rate": 1.4e-05,
+   "rate_se": 3.7e-06,
+   "estimate": 248000000000.0,
+   "estimate_se": 66000000000.0
+  },
+  "words_le_6_letters": null,
+  "longer_words": "8+ letter words impossible in an equation pangram; 7-letter words only in profiles with >= 6 single-letter words, estimated contribution ~1e7-1e8",
+  "headline": "on the order of 2e11 equation pangrams in all; an earlier off-hand estimate of 1e15 was wrong by ~4 orders of magnitude"
+ },
+ "brute_force_throughput": {
+  "program": "scratchpad/enumfull.c",
+  "K": 4,
+  "seconds": 90.1,
+  "pangrams_enumerated": 84410368,
+  "per_second": 937100.0,
+  "years_for_K4_universe_one_core": 61.7
+ }
+}

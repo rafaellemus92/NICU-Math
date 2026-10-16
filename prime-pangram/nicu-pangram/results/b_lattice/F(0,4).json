@@ -1,0 +1,55 @@
+{
+ "regime": "F(0,4)",
+ "n_onsets": 1,
+ "n_codas": 123521,
+ "n_nuclei": 6,
+ "n_prime": 32121,
+ "packing_feasible": null,
+ "witness": [
+  [
+   "erc",
+   3851,
+   "",
+   "rc",
+   0
+  ],
+  [
+   "apk",
+   1103,
+   "",
+   "pk",
+   1
+  ],
+  [
+   "ybdzg",
+   11462939,
+   "",
+   "bdzg",
+   1
+  ],
+  [
+   "ifhlq",
+   4223977,
+   "",
+   "fhlq",
+   1
+  ],
+  [
+   "ojmvw",
+   7039783,
+   "",
+   "jmvw",
+   1
+  ],
+  [
+   "uxtns",
+   10032223,
+   "",
+   "xtns",
+   1
+  ]
+ ],
+ "min_foreign_clusters": null,
+ "count": 252992298224,
+ "seconds": 33
+}

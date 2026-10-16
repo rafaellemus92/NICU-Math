@@ -1,0 +1,56 @@
+
+=== F(4,0): 105,501 prime words (onsets 123521, nuclei 6, codas 1) [2s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (785 nodes)
+  witness: BO CDWI FGHTE JKLMU NPQZA RSVXY   values: 67 / 56,039 / 2,870,821 / 4,771,567 / 6,691,049 / 8,575,033
+  exact number of perfect pangrams: 6,632,950,416,638,335
+  (34s)
+
+=== F(0,4): 32,121 prime words (onsets 1, nuclei 6, codas 123521) [4s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (132 nodes)
+  witness: ERC APK YBDZG IFHLQ OJMVW UXTNS   values: 3,851 / 1,103 / 11,462,939 / 4,223,977 / 7,039,783 / 10,032,223
+  exact number of perfect pangrams: 252,992,298,224
+  (33s)
+
+=== F(3,2): 458,401 prime words (onsets 7241, nuclei 6, codas 401) [4s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  witness search: solution (1,405 nodes)
+  witness: BI CY DGTA HLNOFK MZPUJQ XVWERS   values: 61 / 103 / 75,557 / 100,791,091 / 166,634,953 / 295,614,611
+  exact number of perfect pangrams: 16,417,633,268,700,800
+  (107s)
+
+=== F(2,3): 453,441 prime words (onsets 401, nuclei 6, codas 7241) [4s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  witness search: solution (1,280 nodes)
+  witness: E BO FXICG MRYDHK NWAJLQ TVUPZS   values: 5 / 67 / 3,169,849 / 163,125,779 / 176,874,377 / 248,061,599
+  exact number of perfect pangrams: 3,421,738,179,441,134
+  (64s)
+
+=== F(4,1): 523,930 prime words (onsets 123521, nuclei 6, codas 21) [4s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (5,452 nodes)
+  witness: E BU CDFZY HJLMIG NPQTOK VXRWAS   values: 5 / 73 / 1,445,989 / 99,840,709 / 173,963,593 / 272,689,657
+  exact number of perfect pangrams: 76,380,875,883,311,234
+  (36s)
+
+=== F(1,4): 450,883 prime words (onsets 21, nuclei 6, codas 123521) [5s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (1,487 nodes)
+  witness: BU CY TIDS ZAFGPK VEHJLQ NOMXRW   values: 73 / 103 / 357,727 / 309,483,367 / 263,822,849 / 173,439,107
+  exact number of perfect pangrams: 603,962,334,877,113
+  (37s)
+
+=== F(5,0): 1,396,507 prime words (onsets 1984001, nuclei 6, codas 1) [35s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (4,654 nodes)
+  witness: BO CY DFMA GHJLTI KNPVSE QRXZWU   values: 67 / 103 / 74,699 / 87,009,841 / 137,389,387 / 210,648,979
+  exact number of perfect pangrams: 128,575,945,396,019,880
+  (74s)
+
+=== F(0,5): 425,147 prime words (onsets 1, nuclei 6, codas 1984001) [36s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (803 nodes)
+  witness: YC UK EBTG ODFHLS AJMPVQ INZRXW   values: 653 / 557 / 89,759 / 180,159,739 / 16,691,029 / 113,799,839
+  exact number of perfect pangrams: 11,913,392,779,963
+  (66s)
