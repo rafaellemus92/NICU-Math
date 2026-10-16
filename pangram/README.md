@@ -331,7 +331,10 @@ QZXENCTS VO MI DWU PHYLK BJFARG (values 144,860,269,703 / 587 / 347 / 3,323 /
 `ncts` as in instincts, `lk`, `rg`) on the first candidate tried - the
 generic exact-cover search had simply wandered.  The exact number of R(3,0)
 solutions with exactly two non-English onsets is in `results/r30_by_cost.json`
-(`resolve_r30_count.py`): <<R30_TWO>>.
+(`resolve_r30_count.py`, cost-tracked engine, two moduli): **2,192,453,354**
+solutions use exactly two non-English onsets, and the same run returns 0 for
+"exactly zero" and "exactly one" foreign onset, as it must (task (a) and
+`check_onset3.py`), which checks the cost bookkeeping.
 
 | regime (free family, one vowel per word) | prime words | exact number of solutions | witness |
 |---|---|---|---|
