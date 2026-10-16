@@ -1,2 +1,4 @@
 base 31: 16,357 prime words; final letters coprime to 31: abcdefghijklmnopqrstuvwxyz (26 of 26); prime words by last letter: {'a': 43, 'b': 517, 'c': 494, 'd': 730, 'e': 39, 'f': 383, 'g': 444, 'h': 1822, 'i': 25, 'k': 817, 'l': 377, 'm': 647, 'n': 734, 'o': 38, 'p': 563, 'r': 129, 's': 5336, 't': 2186, 'u': 44, 'w': 190, 'x': 284, 'y': 47, 'z': 468}
   witness: None  (84,769,038 nodes)
+    block products: 169
+    mod 2147483647: [0]  (200.1s)

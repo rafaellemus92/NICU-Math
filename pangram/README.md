@@ -53,6 +53,7 @@ is re-checked against the lists by `structure.py`).
 | `run_a_english.py` | task (a) |
 | `run_b_lattice.py` | task (b), lattice of relaxations (mixed regimes R(o,c) and free regimes F(n,m)) |
 | `reach.py`, `run_b_single.py` | task (b), the smallest *single* cluster whose addition creates a solution |
+| `congruences.py`, `run_base_scan.py`, `summarize_bases.py` | base-dependence experiment: the two congruences and the English regime in bases 24–31 |
 | `resolve_r30.py`, `resolve_r30_witness.py`, `resolve_r30_count.py` | task (b), the R(3,0) case: packing bound, witness with two foreign onsets, exact count by number of foreign onsets |
 | `run_c_english.py` | task (c), English regime |
 | `run_d_free_count.py`, `freedp.c` | task (d) and task (c) for the free regime; `freedp.c` is an independent second implementation of the count |
@@ -185,6 +186,37 @@ differ not in how likely a random pronounceable pangram is to be all-prime,
 but in whether the residue structure allows any at all: English N₀ is 10¹⁰
 times smaller than the free N₀ *and* every one of its pangrams is killed by
 the mod-26 constraint.
+
+## Why the base matters, and what it cannot change (base-dependence experiment)
+
+Not part of the fixed task (which keeps base 26), but it isolates the
+*mechanism* behind every number above.  A positional value
+value(w) = Σ dᵢ·b^(k−i) obeys two congruences at once:
+
+* b^k ≡ 0 (mod b) for k ≥ 1, so **value ≡ last digit (mod b)**: a prime word
+  must end in a letter whose digit is coprime to b (φ(b)/b of the digits);
+* b ≡ 1 (mod b−1), so **value ≡ sum of the digits (mod b−1)**: a prime word's
+  digit sum must be coprime to b−1.  For an odd base that makes every prime
+  word's digit sum odd, and since the 26 letters sum to 351 (odd), a perfect
+  pangram of prime words must then consist of an **odd number of words**
+  (3 or 5), which the English clusters cannot pack.
+
+`congruences.py` tabulates both filters; `PANGRAM_BASE=b python3
+run_base_scan.py` reruns the English-cluster regime (same lists, 1–2 vowels,
+digits A=1..Z=26) in base b, with an exhaustive exact-cover search and the
+engine count (two moduli):
+
+<<BASE_TABLE>>
+
+So no base escapes: even bases lose half the final letters to the first
+congruence (base 26 keeps 12 of 26, base 24 only 9, base 30 only 7), odd and
+prime bases lose nothing there but are forced by the second congruence into
+3- or 5-word pangrams.  A "physically motivated" base, whatever it is, is
+still a base; only *which* words the two congruences strike changes.  In
+base 26 the second congruence is the mild rule "digit sum not divisible by 5"
+(26 ≡ 1 mod 25), which is why it was invisible until now; `congruences.py`
+checks that none of the 16,243 prime words violates it (the one exception is
+E = 5 itself).
 
 ## (b) Minimal relaxation
 

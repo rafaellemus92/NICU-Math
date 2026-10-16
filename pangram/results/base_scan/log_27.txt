@@ -1,1 +1,2 @@
 base 27: 21,728 prime words; final letters coprime to 27: abdeghjkmnpqstvwyz (18 of 26); prime words by last letter: {'a': 62, 'b': 831, 'd': 1070, 'e': 51, 'g': 648, 'h': 2735, 'k': 1298, 'm': 896, 'n': 1142, 'p': 823, 's': 7916, 't': 3243, 'w': 264, 'y': 57, 'z': 692}
+  witness: None  (128,356,126 nodes)
