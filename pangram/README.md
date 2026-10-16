@@ -159,18 +159,16 @@ integer counts, and the all-ones version reproduces N₀ to 3 × 10⁻⁸).
 | English clusters (1–2 vowels) | 353,750,976,000 ≈ 3.54 × 10¹¹ | 7.06 × 10⁴ | **0 (exact)** | 0 |
 | free CC·V·CC (1 vowel) | 2.9706 × 10²¹ | 6.193 × 10¹⁴ | 1.108 × 10¹³ | 1.126 × 10¹³ |
 
-The refined first moment predicts the free-regime count to within 1.6 %
-(observed / E_refined = 1.016); the naive one is 55× too high because it
-ignores that half of all words are even and 1/13 are divisible by 13.
-For the English regime the naive first moment, N₀ × (average of Π 1/ln nᵢ)
-= 7.1 × 10⁴, would predict tens of thousands of solutions, so the observed 0
-is *not* a fluctuation of a fair model: the model is wrong.  The refined
-first moment is exactly 0, because the refined density vanishes on every
-word that ends in a letter not coprime to 26, and `check_coprime.py` proves
-(exact count, 0 mod a 31-bit prime, 137,556 of the 289,404 pronounceable
-words end in a coprime letter) that **no pronounceable pangram at all has
-every word ending in a letter coprime to 26** - the packing obstruction of
-`structure.py` again.  (`run_c_english.py` prints E_refined = -0.41: that is
+The refined first moment is exactly 0, because the refined density vanishes on every
+word that ends in a letter not coprime to 26, and **no pronounceable pangram
+at all has every word ending in a letter coprime to 26**: every vowel index
+is coprime to 26, so such a pangram would be exactly a cover of the 20
+consonants by ≤ 6 English onsets and ≤ 6 odd codas, which the packing DP of
+`structure.py` rules out (at most 17 consonants).  `check_coprime.py` is a
+consistency check of the same statement with the counting engine: the number
+of such pangrams (137,556 of the 289,404 pronounceable words end in a coprime
+letter) is 0 modulo two 31-bit primes whose product 4.6 × 10¹⁸ exceeds N₀,
+so the engine count is certified to be exactly 0.
 float64 round-off of an alternating inclusion–exclusion sum whose individual
 terms are ~10¹⁵; the exact value is 0.)  Average prime probability per
 pangram in the two regimes: E_naive/N₀ = 2.0 × 10⁻⁷ (English) and
