@@ -15,3 +15,4 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`) — never `sorryAx`
 #print axioms Wyrd.smallest_pangram_sum
 #print axioms Wyrd.exists_prime_gt
 #print axioms Wyrd.primes_infinite
+#print axioms Wyrd.no_fraction_squares_to_two

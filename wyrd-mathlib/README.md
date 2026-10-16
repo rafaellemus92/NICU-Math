@@ -12,6 +12,7 @@ only, so it builds without the 7 GB Mathlib download.
 | `isPrime_iff` | Our `IsPrime` is exactly Mathlib's `Nat.Prime` |
 | `setOf_prime_infinite` | Mathlib's "the primes form an infinite set", proved by **our** Euclid |
 | `solution_primes` | The ten pangram primes are `Nat.Prime` |
+| `irrational_sqrt_two` | `Irrational (√2)` for the real number, derived from **our** core-Lean descent proof |
 | `bertrand` | Bertrand's postulate (a prime between `n` and `2n`) for our `IsPrime`, from Mathlib's `Nat.bertrand` |
 
 Once the bridge exists, anything Mathlib knows about primes applies to our

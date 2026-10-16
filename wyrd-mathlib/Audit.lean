@@ -5,3 +5,4 @@ import WyrdMathlib
 #print axioms Wyrd.setOf_prime_infinite
 #print axioms Wyrd.solution_primes
 #print axioms Wyrd.bertrand
+#print axioms Wyrd.irrational_sqrt_two

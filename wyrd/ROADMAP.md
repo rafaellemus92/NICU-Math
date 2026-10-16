@@ -24,8 +24,8 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
   factorial and prime-factor lemmas.
 - ⬜ Prove Bertrand's postulate ourselves. Right now `bertrand` borrows
   Mathlib's proof through the bridge.
-- ⬜ √2 is irrational. Good practice in core Lean, and Mathlib has it too
-  for comparison.
+- ✅ √2 is irrational: infinite descent in core Lean (`no_fraction_squares_to_two`),
+  lifted to the real number in `../wyrd-mathlib` (`irrational_sqrt_two`).
 - ⬜ Goldbach for even `N` up to some bound. It is a finite check, so this
   is doable. The full conjecture is open and won't be settled here, but
   formalising *exactly* what is known is honest work.
