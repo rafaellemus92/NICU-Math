@@ -2,3 +2,6 @@ base 27: 21,728 prime words; final letters coprime to 27: abdeghjkmnpqstvwyz (18
   witness: None  (128,356,126 nodes)
     block products: 169
     mod 2147483647: [0]  (140.3s)
+    block products: 169
+    mod 2147483629: [0]  (137.5s)
+  exact number of perfect pangrams of prime words, base 27: 0  (708s)
