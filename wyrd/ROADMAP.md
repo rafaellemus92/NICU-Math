@@ -19,11 +19,13 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
 
 ## Beyond
 
-- ⬜ Add Mathlib, then re-prove `IsPrime` equivalent to Mathlib's `Nat.Prime`.
+- ✅ Connect to Mathlib: `IsPrime ↔ Nat.Prime` (`../wyrd-mathlib`, `isPrime_iff`).
 - ✅ Infinitely many primes (`primes_infinite`), in core Lean with our own
   factorial and prime-factor lemmas.
-- ⬜ Classic theorems as practice: √2 irrational, Bertrand's postulate (Mathlib already has these, so try them without it
-  first).
+- ⬜ Prove Bertrand's postulate ourselves. Right now `bertrand` borrows
+  Mathlib's proof through the bridge.
+- ⬜ √2 is irrational. Good practice in core Lean, and Mathlib has it too
+  for comparison.
 - ⬜ Goldbach for even `N` up to some bound. It is a finite check, so this
   is doable. The full conjecture is open and won't be settled here, but
   formalising *exactly* what is known is honest work.

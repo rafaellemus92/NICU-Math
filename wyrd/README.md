@@ -74,8 +74,7 @@ each one:
 
 ## Notes
 
-- This uses core Lean only, with no Mathlib. Mathlib
-  (Lean's maths library) will be needed for deeper number theory. Adding it is
-  one line in `lakefile.toml`.
+- This uses core Lean only, with no Mathlib. The sister project
+  [`../wyrd-mathlib`](../wyrd-mathlib) connects these results to Mathlib.
 - `IsPrime` is defined here because core Lean has none. `primeB_sound` proves
   that the fast checker agrees with the definition.
