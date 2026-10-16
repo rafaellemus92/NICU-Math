@@ -1,0 +1,55 @@
+{
+ "regime": "F(3,1)",
+ "n_onsets": 7241,
+ "n_codas": 21,
+ "n_nuclei": 6,
+ "n_prime": 39362,
+ "packing_feasible": true,
+ "witness": [
+  [
+   "ni",
+   373,
+   "n",
+   "",
+   0
+  ],
+  [
+   "bdvu",
+   38449,
+   "bdv",
+   "",
+   1
+  ],
+  [
+   "fhxec",
+   2898821,
+   "fhx",
+   "c",
+   1
+  ],
+  [
+   "jkmog",
+   4772281,
+   "jkm",
+   "g",
+   1
+  ],
+  [
+   "lptaq",
+   5778491,
+   "lpt",
+   "q",
+   2
+  ],
+  [
+   "wrzys",
+   10845061,
+   "wrz",
+   "s",
+   1
+  ]
+ ],
+ "min_foreign_clusters": null,
+ "count": 206104093487571,
+ "seconds": 84
+}

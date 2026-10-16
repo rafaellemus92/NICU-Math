@@ -1,0 +1,7 @@
+base 30: 27,435 prime words; final letters coprime to 30: agkmqsw (7 of 26); prime words by last letter: {'a': 145, 'e': 1, 'g': 1432, 'k': 3200, 'm': 2228, 's': 19827, 'w': 602}
+  witness: None  (3,966,259 nodes)
+    block products: 169
+    mod 2147483647: [0]  (183.4s)
+    block products: 169
+    mod 2147483629: [0]  (152.9s)
+  exact number of perfect pangrams of prime words, base 30: 0  (356s)

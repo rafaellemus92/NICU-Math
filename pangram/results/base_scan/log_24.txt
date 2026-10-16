@@ -1,0 +1,7 @@
+base 24: 23,271 prime words; final letters coprime to 24: aegkmqswy (9 of 26); prime words by last letter: {'a': 110, 'e': 125, 'g': 1233, 'k': 2768, 'm': 1896, 's': 16525, 'w': 505, 'y': 109}
+  witness: None  (2,279,341 nodes)
+    block products: 169
+    mod 2147483647: [0]  (188.0s)
+    block products: 169
+    mod 2147483629: [0]  (150.1s)
+  exact number of perfect pangrams of prime words, base 24: 0  (348s)

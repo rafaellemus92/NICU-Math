@@ -1,0 +1,8 @@
+{
+ "base": 29,
+ "n_prime": 16489,
+ "admissible_final_letters": "abcdefghijklmnopqrstuvwxyz",
+ "phi_over_b": "26/26 of the letter digits",
+ "witness": null,
+ "count": 0
+}

@@ -1,0 +1,5 @@
+alphabetical     prime words 16,243  final letters acegikoqsuwy   none (1,633,290 nodes)  [4.1s]
+breath_path      prime words 22,176  final letters adefghilmpqs   SOLUTION  ZOF VEL JAMP QYWD GNIXTH BRUCKS   values: 12,241 / 14,969 /   count 3,457  [303.5s]
+lips_first       prime words  8,569  final letters bcknoruvwxyz   SOLUTION  JO VEX SQYMB DWIGN FLUTZ PHRACK   values: 389 / 4,019 / 4,86  count 1,268  [214.2s]
+acoustic_up      prime words  9,108  final letters cdfijklmuvwz   SOLUTION  VEC JAF XIGM SQULTZ BYWD PHRONK   values: 6,469 / 11,777 / 4  count 2,168  [214.2s]
+acoustic_down    prime words 22,940  final letters abgnopqrstxy   SOLUTION  JA ZUMB VOGHT QINX FLYCKS DWERP   values: 277 / 84,523 / 8,5  count 3,813  [297.8s]

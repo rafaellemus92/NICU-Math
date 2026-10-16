@@ -1,0 +1,45 @@
+
+=== R(2,0): 108,593 prime words (onsets 413, nuclei 36, codas 175) [1s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 3
+  budget 3 foreign clusters: solution (6,064,512 nodes)
+  witness: VE QA BZYC XJIWK DPURG MNOLFTHS   values: 577 / 443 / 53,381 / 11,149,877 / 2,123,791 / 108,922,176,707
+  foreign clusters: [('bz', ''), ('xj', ''), ('dp', '')]
+  exact number of perfect pangrams: 8,627,591,390
+  (612s)
+
+=== R(0,2): 40,546 prime words (onsets 70, nuclei 36, codas 493) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 2
+  budget 2 foreign clusters: solution (295,251 nodes)
+  witness: VE ZA JOBG DWYXQ FLUMPTS CHRINK   values: 577 / 677 / 185,959 / 2,249,693 / 2,005,907,507 / 39,622,763
+  foreign clusters: [('', 'bg'), ('', 'xq')]
+  exact number of perfect pangrams: 475,567,462
+  (460s)
+
+=== R(2,1): 110,624 prime words (onsets 413, nuclei 36, codas 178) [1s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 3
+  budget 3 foreign clusters: solution (7,185,811 nodes)
+  witness: VE ZA BJUC XMONG DQYLFTHS PRIWK   values: 577 / 677 / 42,461 / 11,206,423 / 37,681,446,211 / 7,634,677
+  foreign clusters: [('bj', ''), ('xm', ''), ('dq', '')]
+  exact number of perfect pangrams: 27,117,653,723
+  (571s)
+
+=== R(1,2): 40,546 prime words (onsets 70, nuclei 36, codas 493) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 2
+  budget 2 foreign clusters: solution (295,251 nodes)
+  witness: VE ZA JOBG DWYXQ FLUMPTS CHRINK   values: 577 / 677 / 185,959 / 2,249,693 / 2,005,907,507 / 39,622,763
+  foreign clusters: [('', 'bg'), ('', 'xq')]
+  exact number of perfect pangrams: 475,567,462
+  (479s)
+
+=== R(2,2): 241,381 prime words (onsets 413, nuclei 36, codas 493) [2s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 2
+  budget 2 foreign clusters: solution (4,537,969 nodes)
+  witness: ZA VE BJYG FLOXQ DWUMPTS CHRINK   values: 677 / 577 / 42,569 / 2,963,549 / 1,518,771,091 / 39,622,763
+  foreign clusters: [('bj', ''), ('', 'xq')]
+  exact number of perfect pangrams: 20,886,836,221,201
+  (583s)
