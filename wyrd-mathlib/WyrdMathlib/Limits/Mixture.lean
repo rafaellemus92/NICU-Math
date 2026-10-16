@@ -60,19 +60,38 @@ def apart : Cond := ⟨0, 0⟩
 /-- Any single-condition result is reproduced exactly by the pure alike world. -/
 theorem alike_explains_any_one_condition (r p q : ℝ) (c : Cond) :
     resp (resp r p q c) 0 0 c = resp r p q c := by
-  sorry
+  simp only [resp]
+  ring
 
 /-- Two conditions never identify the mixture. -/
 theorem two_conditions_never_enough (c₁ c₂ : Cond) :
     ∃ r p q : ℝ, (r, p, q) ≠ (0, 0, 0) ∧ resp r p q c₁ = 0 ∧ resp r p q c₂ = 0 := by
-  sorry
+  by_cases h : c₁.perceived = c₂.perceived ∧ c₁.contact = c₂.contact
+  · refine ⟨-c₁.perceived, 1, 0, ?_, ?_, ?_⟩
+    · simp
+    · simp only [resp]
+      ring
+    · simp only [resp]
+      rw [h.1]
+      ring
+  · refine ⟨c₁.perceived * c₂.contact - c₁.contact * c₂.perceived, c₁.contact - c₂.contact,
+      c₂.perceived - c₁.perceived, ?_, ?_, ?_⟩
+    · intro h0
+      simp only [Prod.mk.injEq] at h0
+      apply h
+      constructor <;> linarith [h0.1, h0.2.1, h0.2.2]
+    · simp only [resp]
+      ring
+    · simp only [resp]
+      ring
 
 /-- Three conditions recover each part explicitly. -/
 theorem additive_recover (r p q : ℝ) :
     p = resp r p q skinAwake - resp r p q skinAsleep ∧
     q = resp r p q skinAwake - resp r p q bedsideAwake ∧
     r = resp r p q bedsideAwake + resp r p q skinAsleep - resp r p q skinAwake := by
-  sorry
+  simp only [resp, skinAwake, skinAsleep, bedsideAwake]
+  refine ⟨by ring, by ring, by ring⟩
 
 /-- Three conditions identify the additive mixture. -/
 theorem additive_identified {r p q r' p' q' : ℝ}
@@ -80,7 +99,8 @@ theorem additive_identified {r p q r' p' q' : ℝ}
     (h₂ : resp r p q skinAwake = resp r' p' q' skinAwake)
     (h₃ : resp r p q skinAsleep = resp r' p' q' skinAsleep) :
     r = r' ∧ p = p' ∧ q = q' := by
-  sorry
+  simp only [resp, skinAwake, skinAsleep, bedsideAwake] at h₁ h₂ h₃
+  refine ⟨by linarith, by linarith, by linarith⟩
 
 /-- With an interaction, the same three conditions cannot tell `(1, −1, −1, 1)`
 from nothing at all; mom apart can. -/
@@ -89,7 +109,8 @@ theorem three_conditions_miss_interaction :
     respI 1 (-1) (-1) 1 skinAwake = respI 0 0 0 0 skinAwake ∧
     respI 1 (-1) (-1) 1 skinAsleep = respI 0 0 0 0 skinAsleep ∧
     respI 1 (-1) (-1) 1 apart ≠ respI 0 0 0 0 apart := by
-  sorry
+  simp only [respI, skinAwake, skinAsleep, bedsideAwake, apart]
+  norm_num
 
 /-- The full 2 × 2 design identifies the mixture with interaction. -/
 theorem four_conditions_identify_interaction {r p q i r' p' q' i' : ℝ}
@@ -98,6 +119,7 @@ theorem four_conditions_identify_interaction {r p q i r' p' q' i' : ℝ}
     (h₃ : respI r p q i skinAsleep = respI r' p' q' i' skinAsleep)
     (h₄ : respI r p q i apart = respI r' p' q' i' apart) :
     r = r' ∧ p = p' ∧ q = q' ∧ i = i' := by
-  sorry
+  simp only [respI, skinAwake, skinAsleep, bedsideAwake, apart] at h₁ h₂ h₃ h₄
+  refine ⟨by linarith, by linarith, by linarith, by linarith⟩
 
 end Wyrd.Limits
