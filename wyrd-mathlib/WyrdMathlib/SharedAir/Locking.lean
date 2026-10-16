@@ -13,7 +13,10 @@ the exact statements for that averaged equation:
 That is the source's `|ω − 2Ω| < ε a₂/2`. It is exact for the averaged equation
 only; for the full noisy, modulated population model it is a first-order
 approximation. Also, for 2:1 locking the first circular moment can vanish even
-under perfect locking (phases `0` and `π`), so the index must use the second.
+under perfect locking (phases `0` and `π`). So a 2:1 index should use the second
+harmonic (or analyse `θ − 2ψ` directly). The source does not give its index's
+implementation, so this is a check to make, not a proven defect. The source's
+`a₂ ≈ 0.19` matches `2e⁻² I₂(2) ≈ 0.18648` numerically; that value is not proved here.
 -/
 
 namespace Wyrd.SharedAir

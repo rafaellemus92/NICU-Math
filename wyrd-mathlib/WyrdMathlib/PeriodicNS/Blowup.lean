@@ -6,14 +6,15 @@ import Mathlib
 A candidate Navier–Stokes singularity at time `t_b`, written with
 `τ = t_b − t → 0⁺` (from the slides): radial length `l_r ~ τ^{1/2}`, radial
 speed `u_r ~ τ^{−1/2}`, swirl length `l_θ ~ τ^{1/2 − h}`, swirl speed
-`u_θ ~ τ^{−(1/2 + h)}`, with `0 < h < 0.01`.
+`u_θ ~ τ^{−(1/2 + h)}`, with `0 < h < 0.01`. (This `h` is the slides' exponent, unrelated to the
+Shared Air coefficient `h`.)
 
 Proved here, about these power laws only:
 
 * the radial Reynolds number `u_r l_r` is constant: that is the Navier–Stokes
   scaling `u ~ τ^{−1/2}, l ~ τ^{1/2}`;
-* the swirl Reynolds number `u_θ l_θ = τ^{−2h}` blows up, so viscosity cannot
-  keep pace with the swirl;
+* the swirl Reynolds number `u_θ l_θ = τ^{−2h}` blows up (heuristically, viscosity
+  cannot keep pace with the swirl; that reading is not proved);
 * lengths shrink to zero and speeds blow up;
 * vorticity `~ u_r/l_r = 1/τ` is not integrable up to `t_b`, which is exactly the
   divergence the Beale–Kato–Majda criterion requires of any blow-up.
@@ -24,7 +25,7 @@ solution with these scalings exists, which is the open Millennium problem. The
 solutions, not proofs.
 -/
 
-namespace Wyrd.SharedAir
+namespace Wyrd.PeriodicNS
 
 open Filter Topology
 
@@ -82,4 +83,4 @@ theorem vorticity_not_integrable {tb : ℝ} (htb : 0 < tb) :
   · exact htb.ne h0
   · exact hmem Set.right_mem_uIcc
 
-end Wyrd.SharedAir
+end Wyrd.PeriodicNS

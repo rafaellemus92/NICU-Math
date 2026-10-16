@@ -77,4 +77,9 @@ theorem delay_unstable {a b d c h g τ : ℝ} (ha : 0 < a) (hb : 0 < b) (hd : 0 
   obtain ⟨s, hs, hs0⟩ := intermediate_value_Ioo hS0.le hcont ⟨h0, hSpos⟩
   exact ⟨s, hs.1, hs0⟩
 
+/-- The real characteristic function is the delayed determinant at real `s`, with `c = r q`. -/
+theorem Dd_eq_det (a b d r q h g τ s : ℝ) :
+    (Dd a b d (r * q) h g τ s : ℂ) = (delayMatrix a b d r q h g τ (s : ℂ)).det := by
+  sorry
+
 end Wyrd.SharedAir

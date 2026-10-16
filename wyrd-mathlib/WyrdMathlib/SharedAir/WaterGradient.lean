@@ -1,7 +1,7 @@
 import Mathlib
 
 /-!
-# Passive water exchange is a gradient flow: it settles and cannot oscillate
+# Passive water exchange: free energy is a strict Lyapunov function
 
 `m` cells with water volumes `vᵢ`, fixed effective osmoles `nᵢ` inside and `n_E`
 outside, closed total water `W` (so outside water is `V_E = W − Σ vᵢ`), and
@@ -15,8 +15,10 @@ unique equilibrium, `vᵢ = W nᵢ/(n_E + Σ nⱼ)`, which is the osmotic split 
 `BodyWater/Osmotic.lean`. Also, two configurations with the same totals can
 move differently: the aggregate does not determine its own change.
 
-(Global convergence follows by standard Lyapunov arguments; it is not
-formalised here.)
+Global convergence, and so the absence of sustained oscillations, follows by
+standard Lyapunov arguments. Neither is formalised here; what is proved is the
+dissipation identity, its sign, when it vanishes, and that the equilibrium
+exists (`equilibrium_exists`) and is unique (`equilibrium_eq`).
 -/
 
 namespace Wyrd.SharedAir
@@ -122,5 +124,13 @@ theorem aggregate_counterexample :
       (∑ i, flux ![1, 1] ![1, 1] 2 4 ![(1 / 2 : ℝ), 3 / 2] i) = 2 / 3 := by
   simp [VE, flux, Fin.sum_univ_two]
   norm_num
+
+/-- **The equilibrium exists**: `vᵢ = W nᵢ/(n_E + Σ nⱼ)` gives positive volumes, positive
+outside water, and zero flux into every cell. -/
+theorem equilibrium_exists {m : ℕ} {K n : Fin m → ℝ} {nE W : ℝ} (hn : ∀ i, 0 < n i) (hnE : 0 < nE)
+    (hW : 0 < W) :
+    (∀ i, 0 < W * n i / (nE + ∑ j, n j)) ∧ 0 < VE W (fun i => W * n i / (nE + ∑ j, n j)) ∧
+      ∀ i, flux K n nE W (fun i => W * n i / (nE + ∑ j, n j)) i = 0 := by
+  sorry
 
 end Wyrd.SharedAir

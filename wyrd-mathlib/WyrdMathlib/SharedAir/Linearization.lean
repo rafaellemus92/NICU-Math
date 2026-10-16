@@ -1,4 +1,5 @@
 import Mathlib
+import WyrdMathlib.SharedAir.Basic
 
 /-!
 # The linear system is the linearisation of the Shared Air equations
@@ -86,5 +87,18 @@ theorem hasDerivAt_field_line (g : ℝ) (v : ℝ × ℝ × ℝ) :
     simp only [cap, zero_mul, zero_div, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
       add_zero, div_one, mul_one, mul_zero]
     ring
+
+/-- **Fréchet linearisation**: the field is differentiable at the origin, and its
+derivative is the linear system. -/
+theorem hasFDerivAt_field (g : ℝ) :
+    ∃ L : ℝ × ℝ × ℝ →L[ℝ] ℝ × ℝ × ℝ, HasFDerivAt (field g) L 0 ∧ ∀ v, L v = linField g v := by
+  sorry
+
+/-- The linear system is the Shared Air system matrix (`a = 1/30`, `b = 1/20`, `d = 1/4`,
+`r = 1/25`, `q = 1/10`, `h = 3/40`) acting on the state. -/
+theorem linField_eq_sysMatrix (g : ℝ) (p : ℝ × ℝ × ℝ) :
+    (sysMatrix (1 / 30) (1 / 20) (1 / 4) (1 / 25) (1 / 10) (3 / 40) g).mulVec ![(p.1 : ℂ), p.2.1, p.2.2] =
+      ![((linField g p).1 : ℂ), (linField g p).2.1, (linField g p).2.2] := by
+  sorry
 
 end Wyrd.SharedAir

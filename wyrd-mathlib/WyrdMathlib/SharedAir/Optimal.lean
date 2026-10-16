@@ -3,7 +3,11 @@ import WyrdMathlib.SharedAir.Dominant
 /-!
 # A unique finite optimal coupling, and the exact stability range
 
-Recovery speed is the **spectral rate** `ρ(g) = −max Re(eigenvalues)`. With `s*`
+Everything here is about the **zero-delay** linearisation (`U = 0`, `A₀ = 0`,
+steadiness `1`, `τ = 0`). Recovery speed is its **spectral rate**
+`ρ(g) = −max Re(eigenvalues)`. That is not the source's Test 4 statistic (time
+back to within 10 bpm), and nothing here proves an optimum for the nonlinear,
+noisy or delayed model. With `s*`
 the root of `H` in `(-b, -a)` and `g* = G(s*)`:
 
 1. for every `g ≥ 0` some eigenvalue has real part `≥ s*`, so `ρ(g) ≤ −s*`;
@@ -11,8 +15,14 @@ the root of `H` in `(-b, -a)` and `g* = G(s*)`:
 3. at `g = g*` every eigenvalue has real part `≤ s*`.
 
 So `g*` is the **unique** maximiser of `ρ`, and it is finite and positive.
-Stronger coupling eventually destabilises: the equilibrium is stable (all real
-parts negative) exactly when `g < g_c`.
+Stronger coupling eventually destabilises: at zero delay, the equilibrium is
+stable (all real parts negative) exactly when `g < g_c`.
+
+**Delay changes the stability range.** Only the instability for `g > g_c`
+survives every delay (`Delay.lean`). Below `g_c`, delay can destabilise.
+Numerically (two independent root searches, not a Lean proof), with the Shared
+Air coefficients: at `g = 3` stability is lost at `τ ≈ 1.84 s`, and at `g = 1` at
+`τ ≈ 4.76 s`. So the zero-delay range must not be transferred to `τ > 0`.
 -/
 
 namespace Wyrd.SharedAir
@@ -155,8 +165,8 @@ theorem P_zero_pos_iff {a b d c h g : ℝ} (hp : Hyp a b d c h) (hg : 0 ≤ g) :
   · intro hlt
     exact mul_pos_of_neg_of_neg (sub_neg.mpr hlt) hneg
 
-/-- **Exact stability range**: for `g ≥ 0`, every eigenvalue has negative real part
-if and only if `g < g_c`. -/
+/-- **Exact stability range, zero delay**: for `g ≥ 0`, every eigenvalue of the
+zero-delay linearisation has negative real part if and only if `g < g_c`. -/
 theorem stable_iff {a b d c h g : ℝ} (hp : Hyp a b d c h) (hg : 0 ≤ g) :
     (∀ z : ℂ, Pc a b d c h g z = 0 → z.re < 0) ↔ g < gc a b d c h := by
   have ha := hp.a_pos

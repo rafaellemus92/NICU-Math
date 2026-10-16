@@ -162,4 +162,30 @@ theorem same_synchrony_different_future_24 (K : ℝ) :
   · have hc : starRingEnd ℂ (1 / 2 : ℂ) = 1 / 2 := by rw [map_div₀, map_one, map_ofNat]
     rw [Z1dot_eq, eB1, eB2, hc]; ring
 
+/-- Along any trajectory moving with the mean-field velocity, `Z₁' = Z1dot`. -/
+theorem hasDerivAt_Z1_vel {m : ℕ} {K t : ℝ} {θ : ℝ → Fin m → ℝ}
+    (h : ∀ j, HasDerivAt (fun s => θ s j) (vel K (θ t) j) t) :
+    HasDerivAt (fun s => Z1 (θ s)) (Z1dot K (θ t)) t := by
+  sorry
+
+/-- Where `Z` is real and positive, the synchrony `R = |Z|` changes at rate `Re Z'`. -/
+theorem hasDerivAt_norm_of_real_pos {Z : ℝ → ℂ} {Z' : ℂ} {t r : ℝ} (hZ : HasDerivAt Z Z' t)
+    (hr : 0 < r) (hval : Z t = r) : HasDerivAt (fun s => ‖Z s‖) Z'.re t := by
+  sorry
+
+/-- For `K ≠ 0` the two futures really differ. -/
+theorem different_future_of_ne {K : ℝ} (hK : K ≠ 0) :
+    Z1 confA = Z1 confB ∧ Z1dot K confA ≠ Z1dot K confB := by
+  sorry
+
+/-- **Same synchrony, different synchronisation rate**: along any trajectories through
+configurations A and B, the synchrony `R = |Z₁|` is `1/2` for both, but it changes at
+rate `K/4` for A and `0` for B. -/
+theorem synchrony_rates {K t : ℝ} {θA θB : ℝ → Fin 4 → ℝ} (hA0 : θA t = confA) (hB0 : θB t = confB)
+    (hA : ∀ j, HasDerivAt (fun s => θA s j) (vel K (θA t) j) t)
+    (hB : ∀ j, HasDerivAt (fun s => θB s j) (vel K (θB t) j) t) :
+    ‖Z1 (θA t)‖ = 1 / 2 ∧ ‖Z1 (θB t)‖ = 1 / 2 ∧
+      HasDerivAt (fun s => ‖Z1 (θA s)‖) (K / 4) t ∧ HasDerivAt (fun s => ‖Z1 (θB s)‖) 0 t := by
+  sorry
+
 end Wyrd.SharedAir

@@ -69,4 +69,8 @@ theorem contrast_pos_without_coupling : 0 < corr X M - corr X O := by
   rw [div_lt_div_iff_of_pos_left one_pos (Real.sqrt_pos.mpr (by norm_num)) two_pos]
   exact h2
 
+/-- The three signals have mean zero, so `corr` is the Pearson correlation. -/
+theorem signals_mean_zero : E X = 0 ∧ E M = 0 ∧ E O = 0 := by
+  sorry
+
 end Wyrd.SharedAir

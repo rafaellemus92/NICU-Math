@@ -8,9 +8,12 @@ import WyrdMathlib.SharedAir.Delay
 (so `c = 1/250`), `h = 3/40`. Then
 
 * `P(s, g) = (s + 1/30)(s + 1/20)(s + 1/4) + 3g/40 (s + 1/20) − g²/250 (s + 1/4)`;
-* the optimal coupling is `g* ≈ 0.0803559`, with dominant eigenvalue `s* ≈ −0.0482709`;
-* the equilibrium is stable exactly for `g < 15/8 + √2265/24 ≈ 3.858`, and unstable
-  above it for every delay.
+* at zero delay, the optimal coupling is `g* ∈ (0.08035, 0.08036)` (numerically
+  `0.0803559`), with dominant eigenvalue `s* ∈ (−0.048271, −0.04827)`;
+* at zero delay, the equilibrium is stable exactly for `g < 15/8 + √2265/24 ≈ 3.858`.
+  Above that it is unstable **for every delay**. Below it, delay can destabilise:
+  numerically, `g = 3` loses stability at `τ ≈ 1.84 s` (the source's default delay is
+  `1.5 s`) and `g = 1` at `τ ≈ 4.76 s`. That is not a Lean proof.
 
 These values inherit the model's illustrative coefficients. They are not
 biological estimates.
@@ -80,7 +83,8 @@ theorem gc_bounds : 3.858 < gc (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) ∧
     rw [Real.sqrt_lt' (by norm_num)]; norm_num
   constructor <;> linarith
 
-/-- Coupling `g = 3` (the top of the model's own sweep) is still stable. -/
+/-- At zero delay, coupling `g = 3` (the top of the model's own sweep) is still stable.
+(With delay it is stable only up to about `τ ≈ 1.84 s`, numerically.) -/
 theorem stable_at_three :
     ∀ z : ℂ, Pc (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) 3 z = 0 → z.re < 0 := by
   exact (stable_iff hyp_sharedAir (by norm_num : (0 : ℝ) ≤ 3)).mpr (by linarith [gc_bounds.1])
@@ -100,5 +104,10 @@ theorem unstable_every_delay {g τ : ℝ} (hg : 15 / 8 + Real.sqrt 2265 / 24 < g
     nlinarith [mul_pos e1 e2]
   exact delay_unstable (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     hg0 hτ hP
+
+/-- The optimum exists (and is unique) for these coefficients. -/
+theorem exists_optimum :
+    ∃! s, s ∈ Set.Ioo (-(1 / 20) : ℝ) (-(1 / 30)) ∧ H (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) s = 0 := by
+  sorry
 
 end Wyrd.SharedAir
