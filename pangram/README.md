@@ -226,8 +226,23 @@ search with a cost budget).  "packing" is the structural bound of
 |---|---|---|---|---|
 <<LATTICE_A>>
 
-| regime (free family) | prime words | packing | exact number of solutions |
+| regime (free family, one vowel per word) | prime words | exact number of solutions | witness |
 |---|---|---|---|
-<<LATTICE_B>>
+| F(1,1) | 228 | 0 | — |
+| F(0,3) | 2,414 | 0 | — |
+| F(1,2) | 2,614 | 0 | — |
+| F(2,1) | 2,966 | 0 | — |
+| F(3,0) | 7,816 | 0 | — |
+| F(0,4) | 32,121 | 252,992,298,224 ≈ 2.53 × 10^11 | ERC APK YBDZG IFHLQ OJMVW UXTNS |
+| F(1,3) | 34,231 | 2,787,766,399,849 ≈ 2.79 × 10^12 | XAC ZEG RYBDS TUFHK LOJMQ PINVW |
+| F(2,2) | 34,587 | 11,261,264,735,669 ≈ 1.13 × 10^13 | ZA BROC JMYDG HXIFK PTULQ SVENW |
+| F(3,1) | 39,362 | 206,104,093,487,571 ≈ 2.06 × 10^14 | NI BDVU FHXEC JKMOG LPTAQ WRZYS |
+| F(4,0) | 105,501 | 6,632,950,416,638,335 ≈ 6.63 × 10^15 | BO CDWI FGHTE JKLMU NPQZA RSVXY |
+| F(0,5) | 425,147 | 11,913,392,779,963 ≈ 1.19 × 10^13 | YC UK EBTG ODFHLS AJMPVQ INZRXW |
+| F(1,4) | 450,883 | 603,962,334,877,113 ≈ 6.04 × 10^14 | BU CY TIDS ZAFGPK VEHJLQ NOMXRW |
+| F(2,3) | 453,441 | 3,421,738,179,441,134 ≈ 3.42 × 10^15 | E BO FXICG MRYDHK NWAJLQ TVUPZS |
+| F(3,2) | 458,401 | 16,417,633,268,700,800 ≈ 1.64 × 10^16 | BI CY DGTA HLNOFK MZPUJQ XVWERS |
+| F(4,1) | 523,930 | 76,380,875,883,311,234 ≈ 7.64 × 10^16 | E BU CDFZY HJLMIG NPQTOK VXRWAS |
+| F(5,0) | 1,396,507 | 128,575,945,396,019,880 ≈ 1.29 × 10^17 | BO CY DFMA GHJLTI KNPVSE QRXZWU |
 
 <<LATTICE_COMMENT>>

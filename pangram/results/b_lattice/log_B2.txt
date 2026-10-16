@@ -40,3 +40,17 @@
   witness: BU CY TIDS ZAFGPK VEHJLQ NOMXRW   values: 73 / 103 / 357,727 / 309,483,367 / 263,822,849 / 173,439,107
   exact number of perfect pangrams: 603,962,334,877,113
   (37s)
+
+=== F(5,0): 1,396,507 prime words (onsets 1984001, nuclei 6, codas 1) [35s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (4,654 nodes)
+  witness: BO CY DFMA GHJLTI KNPVSE QRXZWU   values: 67 / 103 / 74,699 / 87,009,841 / 137,389,387 / 210,648,979
+  exact number of perfect pangrams: 128,575,945,396,019,880
+  (74s)
+
+=== F(0,5): 425,147 prime words (onsets 1, nuclei 6, codas 1984001) [36s]
+  packing bound: skipped (too many clusters)
+  witness search: solution (803 nodes)
+  witness: YC UK EBTG ODFHLS AJMPVQ INZRXW   values: 653 / 557 / 89,759 / 180,159,739 / 16,691,029 / 113,799,839
+  exact number of perfect pangrams: 11,913,392,779,963
+  (66s)
