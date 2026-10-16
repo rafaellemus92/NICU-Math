@@ -7,12 +7,17 @@ Water is the largest part of the body. It splits into intracellular water (ICW)
 and extracellular water (ECW), and ECW splits into interstitial fluid and
 plasma. Each volume is measured by **indicator dilution**: give a dose `I` of
 a tracer that spreads through one compartment only, wait for it to mix, and
-measure its plasma concentration `C`. Then the volume is `V = I / C`. The
-tracers are D₂O or H₂¹⁸O for total body water, bromide or sucrose for ECW,
-and Evans blue for plasma.
+measure its plasma concentration `C`. Then the volume is `V = I / C`. Tracers
+include antipyrine, D₂O or H₂¹⁸O for total body water, bromide, sucrose or
+inulin for ECW, and Evans blue for plasma.
 
 Source: *Body Composition in the Fetus and Newborn: Effects of Intrauterine
 Growth Aberration* (abdominalkey.com), Table 2.1 and the formulas after it.
+The blood-volume relation is a standard textbook one, not from that chapter.
+
+A real instance of `dilution_overestimate`: deuterium also exchanges with
+hydrogen in protein and other non-water molecules, so the D₂O space overstates
+total body water by roughly 4% and is usually corrected for it.
 
 Educational model only. It is not for clinical dosing.
 -/
@@ -74,7 +79,8 @@ theorem dilution_overestimate {I V e : ℝ} (hI : 0 < I) (hV : 0 < V) (he0 : 0 <
   nlinarith
 
 /-- Blood volume from plasma volume and haematocrit: `BV = PV / (1 − Hct)`, and it
-exceeds the plasma volume whenever there are any red cells. -/
+exceeds the plasma volume whenever there are any red cells. (Use the whole-body
+haematocrit, which is a little below the venous value.) -/
 theorem blood_volume {pv hct : ℝ} (hpv : 0 < pv) (h0 : 0 < hct) (h1 : hct < 1) :
     pv < pv / (1 - hct) ∧ pv / (1 - hct) * (1 - hct) = pv := by
   have h : 0 < 1 - hct := by linarith

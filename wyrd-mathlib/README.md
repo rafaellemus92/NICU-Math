@@ -52,6 +52,26 @@ The "dark" band is *darker*, not black: the theorems exclude refracted light
 reflected once or twice, while external reflection, higher-order bows,
 diffraction and the sun's disc still put some light there.
 
+## Body water (`WyrdMathlib/BodyWater/`)
+
+The physiology of total body water, as theorems about simple models. These are
+**for understanding, not dosing**; every file says what its model leaves out.
+Newborn figures come from *Body Composition in the Fetus and Newborn: Effects of
+Intrauterine Growth Aberration* (abdominalkey.com).
+
+| Theorem | Statement |
+|---|---|
+| `dilution_recovers`, `dilution_overestimate` | Indicator dilution `V = I / C` works, and tracer lost before sampling always makes the volume look bigger, by `1/(1 − e)` (e.g. D₂O overstates TBW by about 4%) |
+| `water_load_split`, `adult_water_load`, `newborn_water_load` | Free water spreads in proportion to effective osmoles: 2/3 into the cells for an adult, only 34/78 ≈ 43.6% for a term newborn |
+| `isotonic_stays_extracellular` | Isotonic fluid whose solute stays out (0.9% saline) leaves cell water unchanged (iso-osmolar dextrose does not) |
+| `solute_load_shrinks_cells` | Extra effective solute outside the cells shrinks them |
+| `adrogue_madias` | From Edelman's relation: `v` litres at concentration `c` change sodium by `v(c − Na)/(W + v)` |
+| `per_litre_scaling_underestimates` | Scaling the per-litre form `(c − Na)/(TBW + 1)` down to a small volume **underestimates** the model change; about 42% for 10 mL in a 3 kg newborn |
+| `smaller_body_bigger_change_abs` | The same fluid moves sodium further, in either direction, in a smaller body |
+| `free_water_deficit` | `W(Na/140 − 1)` litres of free water bring model sodium to 140 (a total, never a rate) |
+| `water_fraction_falls` | Losing extracellular water after birth lowers the body's water fraction |
+| `more_water_less_fat` | At equal fat-free-mass hydration, more water means less fat, consistent with term SGA (more water) and LGA (more fat) infants |
+
 ## Running it
 
 ```sh

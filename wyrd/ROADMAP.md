@@ -36,6 +36,11 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
   dark band holds for every colour from red up.
 - ⬜ Rainbow width to 0.1°: tighter arcsin brackets would prove the ~1.7° and
   ~3.1° band widths, not just more than 1° and 2°.
+- ✅ Body water (`../wyrd-mathlib/WyrdMathlib/BodyWater/`): dilution principle,
+  osmotic shifts (adult 2/3 versus newborn 34/78 into cells), Adrogué–Madias and
+  free-water deficit derived from Edelman's relation, and the newborn transition.
+- ⬜ Body water over time: a model of the postnatal diuresis (ECW contraction
+  as a function of days and gestational age) with proved bounds.
 - ⬜ Goldbach for even `N` up to some bound. It is a finite check, so this
   is doable. The full conjecture is open and won't be settled here, but
   formalising *exactly* what is known is honest work.

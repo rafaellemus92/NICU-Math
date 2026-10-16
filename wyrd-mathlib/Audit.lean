@@ -27,3 +27,13 @@ import WyrdMathlib
 #print axioms Wyrd.Rainbow.water_colour_order
 #print axioms Wyrd.Rainbow.primary_spread
 #print axioms Wyrd.Rainbow.secondary_spread
+#print axioms Wyrd.BodyWater.dilution_overestimate
+#print axioms Wyrd.BodyWater.newborn_water_load
+#print axioms Wyrd.BodyWater.isotonic_stays_extracellular
+#print axioms Wyrd.BodyWater.solute_load_shrinks_cells
+#print axioms Wyrd.BodyWater.adrogue_madias
+#print axioms Wyrd.BodyWater.smaller_body_bigger_change_abs
+#print axioms Wyrd.BodyWater.per_litre_scaling_underestimates
+#print axioms Wyrd.BodyWater.free_water_deficit
+#print axioms Wyrd.BodyWater.water_fraction_falls
+#print axioms Wyrd.BodyWater.more_water_less_fat
