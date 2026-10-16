@@ -5,3 +5,12 @@
   budget 3 foreign clusters: solution (6,064,512 nodes)
   witness: VE QA BZYC XJIWK DPURG MNOLFTHS   values: 577 / 443 / 53,381 / 11,149,877 / 2,123,791 / 108,922,176,707
   foreign clusters: [('bz', ''), ('xj', ''), ('dp', '')]
+  exact number of perfect pangrams: 8,627,591,390
+  (612s)
+
+=== R(0,2): 40,546 prime words (onsets 70, nuclei 36, codas 493) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  packing lower bound on the number of non-English clusters: 2
+  budget 2 foreign clusters: solution (295,251 nodes)
+  witness: VE ZA JOBG DWYXQ FLUMPTS CHRINK   values: 577 / 677 / 185,959 / 2,249,693 / 2,005,907,507 / 39,622,763
+  foreign clusters: [('', 'bg'), ('', 'xq')]
