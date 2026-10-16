@@ -17,6 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from plot_results import SURFACE, INK, INK2, MUTED, GRID, AXIS, ORANGE, _style, _orange_ramp
+import step1_adaptive as s1
 
 # ordinal ramp for the three resolutions (light -> dark = coarse -> fine);
 # validated with the dataviz palette checker (light surface, ordinal mode)
@@ -30,6 +31,10 @@ def load(prefix):
     hist = {k[5:]: d[k] for k in d.files if k.startswith("hist_")}
     snaps = [{k: d[f"snap{i}_{k}"] for k in ("t", "wmax", "x", "omega", "theta")}
              for i in range(int(d["n_snaps"]))]
+    # fits recomputed from the saved series with the current blowup_fit
+    wend = float(hist["wmax"][-1])
+    summ["fits"] = {f"last_{dcd:g}_decades": s1.blowup_fit(hist, wend / 10 ** dcd)
+                    for dcd in (0.5, 1.0, 2.0)}
     return hist, snaps, summ
 
 
@@ -89,7 +94,7 @@ def make_figure(prefixes, path="step1_reciprocal.png"):
     ax.plot(tt, a_fit * (T - tt), color=MUTED, lw=1.2, ls="--", zorder=1,
             label="straight line through max|ω| = 10³ … 10⁴")
     ax.plot(T, 0, "o", color=INK, ms=7, mec=SURFACE, mew=1.5, zorder=6)
-    ax.annotate(f"T = {T:.5f}", (T, 0), xytext=(-62, 14), textcoords="offset points",
+    ax.annotate(f"T = {T:.6f}", (T, 0), xytext=(-70, 14), textcoords="offset points",
                 fontsize=9.5, color=INK, fontweight="bold")
     ax.set_xlim(0.30, 0.86)
     ax.set_ylim(0, 0.52)
@@ -125,8 +130,8 @@ def make_figure(prefixes, path="step1_reciprocal.png"):
     ax.set_ylabel("1 / max |ω|", fontsize=9.5, color=INK2)
     nres = {1: "One resolution lies", 2: "Both resolutions lie", 3: "All three resolutions lie"}
     _style(ax, "B · The last two decades, zoomed",
-           f"{nres.get(len(runs), 'All resolutions lie')} on one line; growth exponent "
-           f"p = {fit['p']:.4f}")
+           f"{nres.get(len(runs), 'All resolutions lie')} on one line (p fixed at 1); "
+           f"free-exponent fit: p = {fit['p_free']:.4f}")
     ax.legend(fontsize=8, frameon=False, loc="lower left", labelcolor=INK2, handlelength=1.6)
 
     # --- C: where the local fit puts T, as the run proceeds ---------------
@@ -136,7 +141,7 @@ def make_figure(prefixes, path="step1_reciprocal.png"):
         m = wl > 4
         ax.plot(wl[m], Tl[m], color=c, lw=2.0, label=f"N = {summ['N']}")
     ax.axhline(T, color=MUTED, lw=1.0, ls="--", zorder=0)
-    ax.text(4.3, T + 0.0025, f"T = {T:.5f}", fontsize=9, color=INK2)
+    ax.text(4.3, T + 0.0025, f"T = {T:.6f}", fontsize=9, color=INK2)
     # the uniform-grid estimates from the baseline check, for contrast
     for Nb, Tb, wend in ((4096, 0.92572, 7.86), (8192, 0.90395, 9.43), (16384, 0.88120, 11.45)):
         ax.plot(wend, Tb, "o", color=ORANGE, ms=8, mec=SURFACE, mew=1.5, zorder=5)
@@ -173,7 +178,7 @@ def make_figure(prefixes, path="step1_reciprocal.png"):
     ax.set_xlabel("x / x*(t)   (x* = position of the |ω| peak)", fontsize=9.5, color=INK2)
     ax.set_ylabel("ω / max |ω|", fontsize=9.5, color=INK2)
     _style(ax, "D · One shape at every scale",
-           f"Rescaled profiles collapse while x* shrinks by 10⁹;  width ∝ (T − t)^{fit['c0']:.3f}")
+           f"Rescaled profiles collapse while x* shrinks by 10⁹;  width ∝ (T − t)^{fit['c']:.3f}")
     ax.legend(fontsize=8, frameon=False, loc="lower right", labelcolor=INK2, handlelength=1.6)
 
     fig.text(0.015, 0.004,
@@ -197,11 +202,18 @@ def write_summary(runs, extra_prefixes=(), path="step1_results.json"):
                      "wmax_final": summ["wmax_final"], "xstar_final": summ["xstar_final"],
                      "hmin_final": summ["hmin_final"], "tail_max": summ["tail_max"],
                      "n_remesh": summ["n_remesh"], "steps": summ["steps"], "seconds": summ["seconds"],
-                     "T_last_decade": f1.get("T"), "p_last_decade": f1.get("p"),
-                     "c_last_decade": f1.get("c0"), "T_last_2_decades": f2.get("T"),
-                     "p_last_2_decades": f2.get("p"), "c_last_2_decades": f2.get("c0")})
+                     "last_decade": {k: f1.get(k) for k in ("T", "p", "c", "T_quadratic", "T_free",
+                                                             "p_free", "c_free", "T_model_spread",
+                                                             "p_model_spread", "c_model_spread",
+                                                             "max_rel_resid", "n_points")},
+                     "last_2_decades": {k: f2.get(k) for k in ("T", "p", "c", "T_free", "p_free",
+                                                                "c_free", "max_rel_resid")}})
     out = {"model": "1D Hou-Luo, nu = 0, omega0 = 0, theta0 = 1 - cos(2 pi x)",
            "caveat": "A 1D toy model. Nothing here is evidence about 3D Navier-Stokes.",
+           "fit_models": "T, p, c: straight line through 1/max|omega| (assumes p = 1) with p, c "
+                         "measured against that T. T_quadratic: quadratic in t. T_free, p_free, "
+                         "c_free: T and p both free. The *_model_spread values are the fit-model "
+                         "systematic; the numerical error across N, dt and remesh rule is smaller.",
            "runs": rows}
     with open(path, "w") as fh:
         json.dump(out, fh, indent=2)
@@ -212,5 +224,7 @@ if __name__ == "__main__":
     prefixes = sys.argv[1:] or ["step1_N4096", "step1_N8192", "step1_N16384"]
     prefixes = [p for p in prefixes if os.path.exists(p + ".json")]
     runs = make_figure(prefixes)
-    write_summary(runs)
+    extra = sorted(f[:-4] for f in os.listdir(".") if f.startswith("step1_N") and f.endswith(".npz"))
+    extra = [e for e in extra if e not in prefixes and os.path.exists(e + ".json")]
+    write_summary(runs + [load(e) for e in extra])
     print("Wrote step1_reciprocal.png and step1_results.json for", prefixes)

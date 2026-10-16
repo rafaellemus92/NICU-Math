@@ -104,7 +104,8 @@ Figure: tall stacked panels, large text (CLAUDE.md conventions).
 2. Resolution: N vs 2N at fixed map, plus time-step and remesh-rule checks,
    all before any number is quoted. Each run's stop reason is reported.
 3. Citations: verified by search on 2026-10-16 —
-   Luo & Hou, PNAS 111(36) 2014 / arXiv:1310.0497 (adaptive moving meshes,
+   Luo & Hou, "Potentially singular solutions of the 3D axisymmetric Euler
+   equations", PNAS 111(36) 2014, doi:10.1073/pnas.1405238111 / arXiv:1310.0497 (adaptive moving meshes,
    3×10^8-fold vorticity growth); Hou & Luo arXiv:1311.2613 (the 1D model);
    Choi, Hou, Kiselev, Luo, Šverák & Yao, CPAM 70(11) 2017, 2218–2243 /
    arXiv:1407.4776 (blowup proof for the 1D model); Chen, Hou & Huang,
@@ -147,6 +148,51 @@ asymptotic regime, as suspected. c = 3 is what the Chen–Hou–Huang abstract's
 "θ bounded in C^{1/3}" implies via the scaling relations (c_θ/c_l = 1/3,
 c_l − c_θ = 2); Step 2 should check the published profile directly.
 
+The T, p, c columns above are "model A" (straight line through 1/max|ω|,
+then p and c against that T). See §7 for why that is not the whole story.
+
 Outputs: `step1_N*.json/.npz/.log`, `step1_results.json`,
 `step1_reciprocal.png` (figure: reciprocal plot, zoom, local-T convergence,
 self-similar collapse).
+
+## 7. Independent verification (same day) and what it changed
+Three checkers were run that did not see the conclusions above, then two
+skeptics per claimed defect.
+
+**Blind re-fit from the raw .npz series** (numpy only): T = 0.8445130973
+(N = 8192) and 0.8445130962 (N = 16384), p = 1.00025, c = 3.0007 — identical
+to the table. It also found that the straight-line residual (8e−4) is not
+scatter but smooth curvature, the same at both N: 1/max|ω| ≈ 1.451 τ (1 − 1.54 τ),
+τ = T − t. A quadratic fit gives T = 0.8445130; sub-window straight-line fits
+converge monotonically (max|ω| 5e3…1e4: T = 0.84451299, p = 1.000007).
+
+**Code audit** (re-derived the kernel diagonal, checked H and u signs,
+Fourier phase/Nyquist conventions, symmetry mirrors, remesh interpolation,
+inverse map, RK4 vs the baseline's Lawson RK4, peak refinement — all correct
+to round-off). One finding survived both skeptics: `blowup_fit` fixed T by
+a p = 1 straight line and then measured p and c against that T, so p was
+pulled toward 1 by construction (a synthetic p = 0.95 series is reported as
+1.016). The bias is identical for every N, dt and remesh rule, so the
+convergence ladder cannot see it. **Fixed:** `blowup_fit` now reports three
+models and their spread; `step1_results.json` carries all of them:
+
+| model (last decade, every run) | T | p | c |
+|---|---|---|---|
+| A straight line, p fixed at 1 | 0.8445131 | 1.0002 | 3.0007 |
+| B quadratic in t | 0.8445130 | – | – |
+| C free exponent (T, p both free) | 0.8445129 | 0.9993 | 2.9977 |
+
+So the defensible statement is **T = 0.844513 (±1e−7 from the fit model;
+±1e−9 from the numerics), p = 1.000 ± 0.001, c = 3.000 ± 0.003**. Two
+minor fixes from the same audit: rows the grid did not resolve are excluded
+from fits (never occurred in the reported runs), and the duplicate history
+row written at each remesh is gone.
+
+**Citations:** all four verified with DOIs (the PNAS title corrected above).
+The checker also found the published exponent: Chen, Hou & Huang 2022,
+Theorem 1, as quoted by the checker: λ = c_l/|c_ω| = 2.99870 ± 6e−5 and
+γ = 0.33304 ± 2e−5, with the dynamic-rescaling steady state c̄_l = 3,
+c̄_ω ≈ −1.00043. Our c = 3.000 ± 0.003 is consistent with λ = 2.9987; the
+difference (1.3e−3) is inside our fit-model spread, so Step 1 cannot
+distinguish 3 from 2.9987. Step 2 should read Theorem 1 directly and compute
+the profile.

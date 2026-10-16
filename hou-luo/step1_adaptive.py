@@ -378,6 +378,8 @@ def run(N=8192, L=128.0, r0=0.05, uniform=False, t_end=2.0, wmax_target=1e4,
         # remesh when the peak approaches the plateau edge
         if not uniform and xstar < remesh_cells * g.hmin and wmax > 1.0:
             r_new = g.r * xstar / (remesh_target * g.hmin)
+            for k_ in keys:                            # the row is re-recorded on the new mesh
+                hist[k_].pop()
             g, w, th = remesh(g, w, th, r_new)
             remeshes.append({"t": t, "wmax": wmax, "r": g.r, "hmin": g.hmin,
                              "xstar_cells": xstar / g.hmin})
@@ -409,27 +411,79 @@ def run(N=8192, L=128.0, r0=0.05, uniform=False, t_end=2.0, wmax_target=1e4,
 # ----------------------------------------------------------------------------
 # Blowup diagnostics
 # ----------------------------------------------------------------------------
-def blowup_fit(res, wlo, whi=None):
-    """Fit 1/max|omega| = a (T - t) on the window wlo <= max|omega| <= whi.
-    Returns T, the growth exponent p (max|omega| ~ (T-t)^-p) and the width
-    exponent c (width ~ (T-t)^c) measured with the fitted T."""
-    t, w, width = res["t"], res["wmax"], res["width"]
+def _golden_min(f, lo, hi, iters=80):
+    """Golden-section minimiser of a unimodal f on [lo, hi] (numpy only)."""
+    gr = (np.sqrt(5.0) - 1.0) / 2.0
+    c, d = hi - gr * (hi - lo), lo + gr * (hi - lo)
+    fc, fd = f(c), f(d)
+    for _ in range(iters):
+        if fc < fd:
+            hi, d, fd = d, c, fc
+            c = hi - gr * (hi - lo); fc = f(c)
+        else:
+            lo, c, fc = c, d, fd
+            d = lo + gr * (hi - lo); fd = f(d)
+    return 0.5 * (lo + hi)
+
+
+def blowup_fit(res, wlo, whi=None, tail_tol=1e-6):
+    """Blowup-time and exponent estimates on the window wlo <= max|omega| <= whi,
+    using only rows the grid resolved (tail <= tail_tol). Three fit models:
+
+      A  straight line  1/max|omega| = a (T - t)              -> T, then p, c measured
+         against that T (p is pulled toward 1 by construction: the line assumes it)
+      B  quadratic      1/max|omega| = a (T - t) + b (T - t)^2 -> T_quadratic
+      C  free exponent  max|omega| = A (T - t)^-p, T and p both free (least squares
+         in log-log, golden-section search over T)     -> T_free, p_free, c_free
+
+    The spread between A, B and C is the fit-model systematic; the numerical
+    error (N, dt, remesh rule) is much smaller than it for the Step 1 runs.
+    Width exponent c uses width0 = max|omega| / |omega_x(0)| when available.
+    """
+    t, w = res["t"], res["wmax"]
+    width = res["width0"] if "width0" in res else res["width"]
     whi = w[-1] if whi is None else whi
-    m = (w >= wlo) & (w <= whi)
+    m = (w >= wlo) & (w <= whi) & (w > 0)
+    if "tail" in res:
+        m &= res["tail"] <= tail_tol
     if m.sum() < 10:
         return None
-    a, b = np.polyfit(t[m], 1.0 / w[m], 1)
+    tm, wm, widm = t[m], w[m], width[m]
+
+    # A: straight line
+    a, b = np.polyfit(tm, 1.0 / wm, 1)
     T = -b / a
-    resid = 1.0 / w[m] - (a * t[m] + b)
-    tau = T - t[m]
+    resid = 1.0 / wm - (a * tm + b)
+    tau = T - tm
     ok = tau > 0
-    p = -np.polyfit(np.log(tau[ok]), np.log(w[m][ok]), 1)[0]
-    c = np.polyfit(np.log(tau[ok]), np.log(width[m][ok]), 1)[0]
-    c0 = np.polyfit(np.log(tau[ok]), np.log(res["width0"][m][ok]), 1)[0]
-    return {"T": float(T), "p": float(p), "c": float(c), "c0": float(c0),
-            "fit_window_t": [float(t[m][0]), float(t[m][-1])],
-            "omega_range": [float(w[m][0]), float(w[m][-1])],
-            "max_rel_resid": float(np.max(np.abs(resid) * w[m]))}
+    p = -np.polyfit(np.log(tau[ok]), np.log(wm[ok]), 1)[0]
+    c = np.polyfit(np.log(tau[ok]), np.log(widm[ok]), 1)[0]
+
+    # B: quadratic in t, root just beyond the data
+    q2, q1, q0 = np.polyfit(tm, 1.0 / wm, 2)
+    roots = np.roots([q2, q1, q0])
+    roots = roots[np.isreal(roots)].real
+    roots = roots[roots > tm[-1]]
+    T_quad = float(roots.min()) if roots.size else float("nan")
+
+    # C: free (T, p)
+    def rss(Tc):
+        return np.polyfit(np.log(Tc - tm), np.log(wm), 1, full=True)[1][0]
+    span = max(T - tm[-1], 1e-12)
+    T_free = _golden_min(rss, tm[-1] + 1e-3 * span, tm[-1] + 20.0 * span)
+    p_free = -np.polyfit(np.log(T_free - tm), np.log(wm), 1)[0]
+    c_free = np.polyfit(np.log(T_free - tm), np.log(widm), 1)[0]
+
+    Ts = [T, T_quad, T_free]
+    return {"T": float(T), "p": float(p), "c": float(c), "c0": float(c),
+            "T_quadratic": T_quad, "T_free": float(T_free), "p_free": float(p_free),
+            "c_free": float(c_free),
+            "T_model_spread": float(np.nanmax(Ts) - np.nanmin(Ts)),
+            "p_model_spread": float(abs(p - p_free)), "c_model_spread": float(abs(c - c_free)),
+            "fit_window_t": [float(tm[0]), float(tm[-1])],
+            "omega_range": [float(wm[0]), float(wm[-1])],
+            "n_points": int(m.sum()),
+            "max_rel_resid": float(np.max(np.abs(resid) * wm))}
 
 
 def local_T(res, every=1):
@@ -449,7 +503,7 @@ def thin(a, n=2000):
     return a[idx]
 
 
-def summarize(res, decades=(1.0, 2.0)):
+def summarize(res, decades=(0.5, 1.0, 2.0)):
     wend = float(res["wmax"][-1])
     fits = {}
     for d in decades:
@@ -516,9 +570,9 @@ def main():
     prefix = args.out or f"step1_N{args.N}" + ("_uniform" if args.uniform else "")
     summ = save(res, prefix)
     for name, f in summ["fits"].items():
-        print(f"  {name}: T = {f['T']:.7f}  p = {f['p']:.4f}  c = {f['c']:.3f} c0 = {f['c0']:.3f}"
-              f"  (max|omega| {f['omega_range'][0]:.3g} .. {f['omega_range'][1]:.3g},"
-              f" max rel resid {f['max_rel_resid']:.1e})")
+        print(f"  {name}: line T = {f['T']:.7f} (p = {f['p']:.4f}, c = {f['c']:.4f}, resid {f['max_rel_resid']:.1e});"
+              f" quadratic T = {f['T_quadratic']:.7f}; free fit T = {f['T_free']:.7f}, p = {f['p_free']:.4f},"
+              f" c = {f['c_free']:.4f}  [max|omega| {f['omega_range'][0]:.3g} .. {f['omega_range'][1]:.3g}]")
     print(f"Wrote {prefix}.json and {prefix}.npz")
 
 

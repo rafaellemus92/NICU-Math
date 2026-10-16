@@ -56,10 +56,17 @@ stagnation point x = 0.
 
 ## Step 1 results (2026-10-16, adaptive mesh, see step1_plan.md)
 - Inviscid run followed to max|omega| = 1e4 (t = 0.844444), smallest cell
-  1e-14, spectral tail never above 3e-10. Converged: N = 2048 … 16384, halved
-  dt, two remesh rules and three map steepnesses all give **T = 0.8445131**
-  (7 digits), **p = 1.000** (max|omega| ~ (T - t)^-1) and **c = 3.001**
-  (width ~ (T - t)^3) over max|omega| from 1e3 to 1e4.
+  1e-14, spectral tail never above 3e-10. Numerically converged: N = 2048 …
+  16384, halved dt, two remesh rules and three map steepnesses agree on T to
+  1e-9. Every run stopped because it reached the target, not for resolution.
+- **T = 0.844513, p = 1.000 ± 0.001, c = 3.000 ± 0.003** over max|omega| from
+  1e3 to 1e4. The ± is the fit-model systematic (straight line with p fixed
+  at 1 gives T = 0.8445131, p = 1.0002, c = 3.0007; a free-exponent fit gives
+  T = 0.8445129, p = 0.9993, c = 2.9977); it is far larger than the numerical
+  error and was found by an independent audit, not by the refinement ladder.
+- Consistent with the published exponent lambda = 2.99870 ± 6e-5 (Chen, Hou &
+  Huang, Annals of PDE 2022, Theorem 1, doi:10.1007/s40818-022-00140-7, as
+  quoted by a citation-checking agent; read it directly in Step 2).
 - The baseline's T ~ 0.90 and c ~ 4.3 were pre-asymptotic artefacts. Local
   fits of T converge only once max|omega| > ~100.
 - Rescaled profiles omega/max|omega| vs x/x* collapse onto one curve from
