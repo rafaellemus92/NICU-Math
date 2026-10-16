@@ -81,7 +81,7 @@ packing lower bound; total wall time for everything is about 3 hours on
 
 ## (a) Reproduction of result (1): no solution under the English lists
 
-`python3 run_a_english.py` (13 s):
+`python3 run_a_english.py` (about 10 s):
 
 | quantity | value |
 |---|---|
@@ -89,7 +89,7 @@ packing lower bound; total wall time for everything is about 3 hours on
 | of which prime (the dictionary) | **16,243** |
 | prime words by length 1/2/3/4/5/6/7/8/9 | 1 / 74 / 392 / 1,504 / 3,904 / 5,667 / 3,657 / 975 / 69 |
 | prime words with 1 / 2 vowels | 3,142 / 13,101 |
-| exact-cover search nodes (bitset Algorithm X, `xcover.c`) | 2,805,970 |
+| exact-cover search nodes (bitset Algorithm X, `xcover.c`) | 1,633,290 (2,805,970 without the consonant-capacity prune added later to `xcover.c`) |
 | perfect pangrams of prime words | **0** |
 
 The dictionary is 16,243 words rather than 4,644 because my lists are
@@ -221,8 +221,8 @@ in `q` is allowed arithmetically, and it lets two of the "onset-only" letters
 `j v x z` ride inside a coda, which is exactly what the packing bound said
 was missing.  The most productive additions are `jvq` (38,093 solutions),
 `vzq` (37,750), `vjq` (34,951), `jxq` (29,656), `zxq` (28,703).  Witnesses
-(each line is a complete perfect pangram of prime words; the first word
-carries the foreign coda):
+(each line is a complete perfect pangram of prime words; the word ending in
+`q` carries the foreign coda, every other cluster is English):
 
 * ZA XEG DYJVQ FLOK BRIMPTS WHUNC — values 677 / 16,361 / 2,274,653 / 113,969 / 836,048,947 / 10,665,619
 * ZA XEG DYJVQ FONC BLIMPHS TRUWK — values 677 / 16,361 / 2,274,653 / 115,963 / 764,760,379 / 9,470,693
