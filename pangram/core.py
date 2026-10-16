@@ -11,6 +11,12 @@ from clusters import VOWELS, CONSONANTS, ONSETS, CODAS
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 FULL = (1 << 26) - 1
+# Numeration base.  The task fixes 26; the environment variable PANGRAM_BASE
+# exists only for the base-dependence experiment (run_base_scan.py).  Letters
+# keep their digits A=1..Z=26, so any base >= 27 is still an injective
+# (bijective-style) numeration; bases < 27 are injective on words of distinct
+# letters only in the sense of the fixed-length reading used here.
+BASE = int(os.environ.get("PANGRAM_BASE", "26"))
 VOWEL_MASK = sum(1 << (ord(c) - 97) for c in VOWELS)
 CONS_MASK = FULL ^ VOWEL_MASK
 CONS_LIST = list(CONSONANTS)                      # 20 consonants in bit order
@@ -22,7 +28,7 @@ def value(word: str) -> int:
     """Bijective base-26 value, A=1..Z=26 (the task's numeration)."""
     v = 0
     for ch in word:
-        v = v * 26 + (ord(ch) - 96)
+        v = v * BASE + (ord(ch) - 96)
     return v
 
 
@@ -143,7 +149,7 @@ def generate_words(onsets, nucs, codas, prime_only=True, with_tags=False,
     om, ov, oL = _cluster_arrays(onsets)
     nm, nv, nL = _cluster_arrays(nucs)
     cm, cv, cL = _cluster_arrays(codas)
-    pow26 = np.array([26 ** k for k in range(12)], dtype=np.uint64)
+    pow26 = np.array([BASE ** k for k in range(12)], dtype=np.uint64)
     results = []
     # stage 1: onset x nucleus
     on_pairs = []
