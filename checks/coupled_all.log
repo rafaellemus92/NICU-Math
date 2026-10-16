@@ -1,0 +1,10 @@
+progress N=50000
+progress N=100000
+progress N=150000
+progress N=200000
+progress N=250000
+progress N=300000
+progress N=350000
+progress N=400000
+progress N=450000
+done coupled [1352,457000]: 227336 sums with a full-alphabet pair set searched, 12 solutions

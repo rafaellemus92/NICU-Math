@@ -28,6 +28,12 @@ python3 experiments/coupled_prime26_pangram.py --plain  # plain, no solution
 
 Formal proofs of these facts (in Lean 4) live in [`wyrd/`](wyrd/).
 
+[`checks/`](checks/) is a computer search, not a Lean proof, that enumerates
+*every* solution instead of stopping at the first: exactly 12 five-pair pangrams
+exist under the coupled naming (all with N ≤ 15990), and none at all under plain
+naming, for every even N up to the 457000 cutoff beyond which the names are too
+long to fit the alphabet.
+
 Caveat: the coupling rule was chosen after the plain search failed, so the
 result shows that *a* simple reversible naming yields a pangram, not that
 primes "want" to spell the alphabet.
