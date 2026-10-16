@@ -210,7 +210,7 @@ run_base_scan.py` reruns the English-cluster regime (same lists, 1–2 vowels,
 digits A=1..Z=26) in base b, with an exhaustive exact-cover search and the
 engine count (two moduli):
 
-| base b | b | b−1 | admissible final letters | word count | prime words | perfect pangrams | witness |
+| base b | b | b−1 | final letters coprime to b (words of ≥ 2 letters) | word count | prime words | perfect pangrams | witness |
 |---|---|---|---|---|---|---|---|
 | 24 | 2·2·2·3 | 23 | aegkmqswy (9) | 3..6 | 23,271 | **0** | — |
 | 25 | 5·5 | 2·2·2·3 | abcdfghiklmnpqrsuvwxz (21) | odd (3 or 5) | 17,856 | **0** | — |

@@ -11,7 +11,7 @@ def factor(n):
         p += 1
     if n > 1: f.append(n)
     return "·".join(map(str, f))
-print("| base b | b | b−1 | admissible final letters | word count | prime words | perfect pangrams | witness |")
+print("| base b | b | b−1 | final letters coprime to b (words of ≥ 2 letters) | word count | prime words | perfect pangrams | witness |")
 print("|---|---|---|---|---|---|---|---|")
 for b in sorted(rows):
     r = rows[b]
