@@ -30,14 +30,16 @@ def O (u _e1 _e2 e3 : ℝ) : ℝ := u + 3 * e3
 and each coin is fair with mean zero. -/
 theorem coins_fair : E (fun u _ _ _ => u) = 0 ∧ E (fun _ e1 _ _ => e1) = 0 ∧
     E (fun _ _ e2 _ => e2) = 0 ∧ E (fun _ _ _ e3 => e3) = 0 := by
-  sorry
+  -- each is a finite sum over Bool⁴ of ±1 values that cancels
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [E, coin]
 
 theorem second_moments :
     E (fun u e1 e2 e3 => X u e1 e2 e3 ^ 2) = 2 ∧ E (fun u e1 e2 e3 => M u e1 e2 e3 ^ 2) = 2 ∧
       E (fun u e1 e2 e3 => O u e1 e2 e3 ^ 2) = 10 ∧
       E (fun u e1 e2 e3 => X u e1 e2 e3 * M u e1 e2 e3) = 1 ∧
       E (fun u e1 e2 e3 => X u e1 e2 e3 * O u e1 e2 e3) = 1 := by
-  sorry
+  -- expand the 16-term sums explicitly and evaluate
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> simp [E, coin, X, M, O] <;> norm_num
 
 /-- Correlation of two mean-zero signals. -/
 noncomputable def corr (f g : ℝ → ℝ → ℝ → ℝ → ℝ) : ℝ :=
@@ -45,13 +47,26 @@ noncomputable def corr (f g : ℝ → ℝ → ℝ → ℝ → ℝ) : ℝ :=
     Real.sqrt (E (fun u e1 e2 e3 => f u e1 e2 e3 ^ 2) * E (fun u e1 e2 e3 => g u e1 e2 e3 ^ 2))
 
 theorem corr_XM : corr X M = 1 / 2 := by
-  sorry
+  obtain ⟨hX, hM, -, hXM, -⟩ := second_moments
+  unfold corr
+  rw [hX, hM, hXM]
+  -- √(2·2) = 2
+  have h4 : Real.sqrt (2 * 2) = 2 := Real.sqrt_mul_self (by norm_num)
+  rw [h4]
 
 theorem corr_XO : corr X O = 1 / Real.sqrt 20 := by
-  sorry
+  obtain ⟨hX, -, hO, -, hXO⟩ := second_moments
+  unfold corr
+  rw [hX, hO, hXO]
+  norm_num
 
 /-- **The contrast is positive with no direct coupling.** -/
 theorem contrast_pos_without_coupling : 0 < corr X M - corr X O := by
-  sorry
+  rw [corr_XM, corr_XO, sub_pos]
+  -- 1/√20 < 1/2 because 2 < √20 (as 2² = 4 < 20)
+  have h2 : (2 : ℝ) < Real.sqrt 20 := by
+    rw [Real.lt_sqrt (by norm_num)]; norm_num
+  rw [div_lt_div_iff_of_pos_left one_pos (Real.sqrt_pos.mpr (by norm_num)) two_pos]
+  exact h2
 
 end Wyrd.SharedAir
