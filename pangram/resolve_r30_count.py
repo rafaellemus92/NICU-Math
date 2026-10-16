@@ -10,7 +10,16 @@ eo = set(ONSETS)
 tagged = [(w, v, m, 0 if o in eo else 1) for (w, v, m, o, c) in words]
 print(f"R(3,0): {len(tagged):,} prime words, {sum(1 for t in tagged if t[3])} with a non-English onset ({time.time()-t0:.0f}s)", flush=True)
 res = []
+known = {}
+try:
+    known = {int(k): v for k, v in json.load(open("results/r30_residues.json")).items()}
+except Exception:
+    pass
 for i in range(nprimes):
+    if PRIMES[i] in known:          # residue already computed by an earlier run
+        res.append([0, 0, known[PRIMES[i]]])
+        print(f"  mod {PRIMES[i]}: reusing recorded residues {res[-1]}", flush=True)
+        continue
     cnt, M = exact_count(tagged, max_cost=2, nprimes=i + 1, verbose=True, word_cost_max=1) if False else (None, None)
     # run one prime at a time so partial results are visible
     from engine import build_G, count_partitions
@@ -20,6 +29,8 @@ for i in range(nprimes):
     r = count_partitions(G, mod=p, verbose=True, max_cost=2)
     res.append([int(x) for x in r])
     print(f"  mod {p}: solutions with 0/1/2 foreign onsets = {res[-1]}  ({time.time()-t1:.0f}s)", flush=True)
+    known[p] = res[-1][2]
+    json.dump({str(k): v for k, v in known.items()}, open("results/r30_residues.json", "w"))
     del G
 out = []
 for c in range(3):
