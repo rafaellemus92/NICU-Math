@@ -26,6 +26,12 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
   Mathlib's proof through the bridge.
 - ✅ √2 is irrational: infinite descent in core Lean (`no_fraction_squares_to_two`),
   lifted to the real number in `../wyrd-mathlib` (`irrational_sqrt_two`).
+- ✅ The rainbow (`../wyrd-mathlib/WyrdMathlib/Rainbow/`): the k-th bow at
+  `cos² i = (n² − 1)/(k(k+2))` is the unique strict minimum of the deviation;
+  for water the bows sit at 41–43° and 50–52°, with Alexander's dark band
+  between them.
+- ⬜ Rainbow colours: prove the bow angle moves monotonically with `n`, so red
+  and violet bows separate (dispersion).
 - ⬜ Goldbach for even `N` up to some bound. It is a finite check, so this
   is doable. The full conjecture is open and won't be settled here, but
   formalising *exactly* what is known is honest work.

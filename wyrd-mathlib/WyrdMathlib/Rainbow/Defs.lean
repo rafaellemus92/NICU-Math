@@ -15,6 +15,17 @@ So the total deviation is `D(i) = 2(i - r) + k(π - 2r) = kπ + 2i - 2(k+1)r`.
 
 Rays pile up where `D` is stationary. That bright fold (a *caustic*) is the
 rainbow. `k = 1` is the primary bow, `k = 2` the secondary.
+
+`D` is the total turning angle, not reduced mod `2π`, always measured in the
+same rotational sense. Seen from the antisolar point (the shadow of your head),
+a ray leaves at angle `|π - D|` after reducing mod `2π`: that is `π - D` for the
+primary (`D ≈ 138°`, seen at about 42°) and `D - π` for the secondary
+(`D ≈ 231°`, seen at about 51°).
+
+Descartes found the bow angles by tracing rays by hand. The closed form
+`cos² i = (n² - 1) / (k(k+2))` for the stationary point is due to Newton and
+Halley (around 1700). Everything here uses one refractive index; the colours of
+a real rainbow come from `n` varying slightly with wavelength (dispersion).
 -/
 
 namespace Wyrd.Rainbow
@@ -27,7 +38,9 @@ noncomputable def refr (n i : ℝ) : ℝ := arcsin (sin i / n)
 /-- Total deviation of a ray entering at incidence `i` and reflecting `k` times inside. -/
 noncomputable def dev (k : ℕ) (n i : ℝ) : ℝ := k * π + 2 * i - 2 * (k + 1) * refr n i
 
-/-- The incidence angle of the `k`-th bow: where `cos² i = (n² - 1) / (k(k+2))`. -/
+/-- The incidence angle of the `k`-th bow: where `cos² i = (n² - 1) / (k(k+2))`.
+Meaningful for `1 < n < k + 1` (see `cos_bowIncidence_sq`). Outside that range
+the formula clamps to `0` or `π / 2`. -/
 noncomputable def bowIncidence (k : ℕ) (n : ℝ) : ℝ := arccos (√((n ^ 2 - 1) / (k * (k + 2))))
 
 /-- `refr` really satisfies Snell's law (for `n ≥ 1`, so `sin i / n` is a valid sine). -/
