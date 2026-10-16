@@ -37,3 +37,9 @@ long to fit the alphabet.
 Caveat: the coupling rule was chosen after the plain search failed, so the
 result shows that *a* simple reversible naming yields a pangram, not that
 primes "want" to spell the alphabet.
+
+[`prime-pangram/`](prime-pangram/) preserves the Prime-26 search programs and
+raw results (`search/`) and a copy of the NICU-Module pronounceable-prime
+pangram project with its onset/coda lists and dictionaries (`nicu-pangram/`),
+with a README giving definitions, reproduction commands, runtimes and what is
+still unfinished.

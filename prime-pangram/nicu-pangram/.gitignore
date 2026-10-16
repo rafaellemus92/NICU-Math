@@ -1,0 +1,8 @@
+# compiled helpers and large intermediate tables (regenerate with the scripts)
+libmr.so
+xcover
+freedp
+results/reach_mod*.npz
+results/_xcover_*.dat
+results/*.log
+__pycache__/

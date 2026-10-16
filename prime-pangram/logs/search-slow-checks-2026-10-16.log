@@ -1,0 +1,32 @@
+=== python3 tests/test_solutions.py --slow ===
+ok   partition count [ABCDEFGHIJKL] into 4 words (K<=3) = 1263 (DP and C brute force gave 1263)
+ok   partition count [ABCDEFGHIJKL] into 5 words (K<=4) = 27152 (DP and C brute force gave 27152)
+ok   partition count [ABCDEFGHIJKL] into 4 words (K<=4) = 73155 (DP and C brute force gave 73155)
+ok   partition count [ABCDEFGHIJKL] into 3 words (K<=4) = 30128 (DP and C brute force gave 30128)
+ok   partition count [ABCDEFGHIJK] into 4 words (K<=5) = 20150 (DP and C brute force gave 20150)
+ok   partition count [ABCDEFGHIJK] into 3 words (K<=5) = 48840 (DP and C brute force gave 48840)
+
+0 failure(s)
+
+real	0m40.512s
+user	0m39.682s
+sys	0m0.028s
+=== ./pangdp 3 1000000 23 (rerun) ===
+
+real	2m30.885s
+user	2m25.256s
+sys	0m3.283s
+exit=0
+K=3: 1790 distinct-letter prime words
+  25.0% 19s
+  50.0% 41s
+  75.0% 65s
+K=3 exact: #perfect pangrams with words <=3 letters = 2476752460975 (2.4768e+12)   [94s]
+  sample equation pangram: GAR KSB CEP DL NQF YH UIX OTJ MZ WV
+  sample equation pangram: EAZ MSB CJ OD QF GUH IKV XYL NP WTR
+  sample equation pangram: KAT NBR ICL DQX SEF GWJ H MYZ OP UV
+  sample equation pangram: VAB ICL UD KEF GNP HWT YQJ MZ OSR X
+uniform samples: 1000000, pangrams with a balanced split: 4007 (4.030e-03 per pangram +- 6.4e-05)
+=> #equation pangrams (words<=3 letters) ~ 9.981e+09  +- 1.6e+08
+sampling time 54s
+DONE
