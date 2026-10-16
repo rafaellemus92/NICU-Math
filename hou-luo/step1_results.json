@@ -1,0 +1,52 @@
+{
+  "model": "1D Hou-Luo, nu = 0, omega0 = 0, theta0 = 1 - cos(2 pi x)",
+  "caveat": "A 1D toy model. Nothing here is evidence about 3D Navier-Stokes.",
+  "runs": [
+    {
+      "N": 4096,
+      "L": 128.0,
+      "cfl": 0.5,
+      "dt_scale": 1.0,
+      "remesh_cells": 48,
+      "remesh_target": 192,
+      "status": "reached max|omega| target 10000",
+      "t_final": 0.8444445178391996,
+      "wmax_final": 10069.620615989983,
+      "xstar_final": 1.0068554378001725e-12,
+      "hmin_final": 1.5822515308684933e-14,
+      "tail_max": 2.692330017690014e-10,
+      "n_remesh": 15,
+      "steps": 2785,
+      "seconds": 57.2648766040802,
+      "T_last_decade": 0.8445130941293365,
+      "p_last_decade": 1.0002460338015438,
+      "c_last_decade": 3.0006530825587565,
+      "T_last_2_decades": 0.8445159440483738,
+      "p_last_2_decades": 1.0056563229983517,
+      "c_last_2_decades": 3.020107206900821
+    },
+    {
+      "N": 8192,
+      "L": 128.0,
+      "cfl": 0.5,
+      "dt_scale": 1.0,
+      "remesh_cells": 48,
+      "remesh_target": 192,
+      "status": "reached max|omega| target 10000",
+      "t_final": 0.8444442478288418,
+      "wmax_final": 10030.194479584126,
+      "xstar_final": 1.0186599606904614e-12,
+      "hmin_final": 8.510765754916668e-15,
+      "tail_max": 2.342462595894227e-10,
+      "n_remesh": 15,
+      "steps": 5375,
+      "seconds": 620.5993826389313,
+      "T_last_decade": 0.8445130952368523,
+      "p_last_decade": 1.0002528365748888,
+      "c_last_decade": 3.0007215171369688,
+      "T_last_2_decades": 0.8445159765128943,
+      "p_last_2_decades": 1.0057244762549988,
+      "c_last_2_decades": 3.020335862725243
+    }
+  ]
+}

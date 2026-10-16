@@ -1,0 +1,21 @@
+Inviscid 1D Hou-Luo model on an adaptive mesh: N=16384 L=128
+    t=0.000000 max|w|=         0 x*=0.000e+00 hmin=3.08e-06 x*/hmin=   0.0 tail= 0.0e+00 dt= 1.0e-02 (   0.1s)
+    t=0.180411 max|w|=     1.135 x*=2.283e-01 hmin=3.08e-06 x*/hmin=74016.1 tail= 2.6e-11 dt= 1.8e-04 ( 128.3s)
+    t=0.255198 max|w|=     1.609 x*=2.068e-01 hmin=3.08e-06 x*/hmin=67038.9 tail= 3.6e-11 dt= 1.3e-04 ( 258.0s)
+    t=0.313056 max|w|=     1.984 x*=1.854e-01 hmin=3.08e-06 x*/hmin=60107.1 tail= 3.8e-11 dt= 1.1e-04 ( 387.9s)
+    t=0.362417 max|w|=     2.313 x*=1.643e-01 hmin=3.08e-06 x*/hmin=53245.9 tail= 4.5e-11 dt= 9.3e-05 ( 524.7s)
+    t=0.406606 max|w|=      2.62 x*=1.434e-01 hmin=3.08e-06 x*/hmin=46485.3 tail= 4.7e-11 dt= 8.5e-05 ( 650.6s)
+    t=0.447371 max|w|=     2.918 x*=1.230e-01 hmin=3.08e-06 x*/hmin=39862.1 tail= 4.6e-11 dt= 7.9e-05 ( 738.4s)
+    t=0.485797 max|w|=      3.22 x*=1.031e-01 hmin=3.08e-06 x*/hmin=33423.2 tail= 4.1e-11 dt= 7.5e-05 ( 818.1s)
+    t=0.522631 max|w|=     3.537 x*=8.400e-02 hmin=3.08e-06 x*/hmin=27229.0 tail= 3.5e-11 dt= 7.2e-05 ( 894.2s)
+    t=0.558436 max|w|=     3.881 x*=6.589e-02 hmin=3.08e-06 x*/hmin=21358.9 tail= 3.2e-11 dt= 7.1e-05 ( 939.6s)
+    t=0.593666 max|w|=     4.273 x*=4.910e-02 hmin=3.08e-06 x*/hmin=15917.8 tail= 3.3e-11 dt= 7.0e-05 ( 978.5s)
+    t=0.628708 max|w|=     4.745 x*=3.406e-02 hmin=3.08e-06 x*/hmin=11042.3 tail= 2.3e-11 dt= 7.0e-05 (1017.2s)
+    t=0.663905 max|w|=     5.355 x*=2.129e-02 hmin=3.08e-06 x*/hmin=6902.5 tail= 1.9e-11 dt= 7.1e-05 (1059.0s)
+    t=0.699566 max|w|=     6.227 x*=1.137e-02 hmin=3.08e-06 x*/hmin=3684.9 tail= 1.8e-11 dt= 7.2e-05 (1120.6s)
+    t=0.735973 max|w|=     7.675 x*=4.716e-03 hmin=3.08e-06 x*/hmin=1528.8 tail= 1.5e-11 dt= 7.4e-05 (1158.4s)
+    t=0.773374 max|w|=     10.75 x*=1.250e-03 hmin=3.08e-06 x*/hmin= 405.1 tail= 1.2e-11 dt= 7.6e-05 (1193.6s)
+    remesh #1 at t=0.808691: r=1.246e-02 hmin=8.16e-07 x*/hmin=181
+    t=0.812018 max|w|=      21.9 x*=1.095e-04 hmin=8.16e-07 x*/hmin= 134.1 tail= 3.5e-12 dt= 7.8e-05 (1244.3s)
+    remesh #2 at t=0.821349: r=3.108e-03 hmin=2.10e-07 x*/hmin=186
+    remesh #3 at t=0.829728: r=7.754e-04 hmin=5.40e-08 x*/hmin=187
