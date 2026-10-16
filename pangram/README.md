@@ -191,8 +191,18 @@ ordering of the k consonants.
 | 4 | 1,041,654 | 213,826 | 15,022 | 92,916,257 |
 | 5 | <<K5>> | | | |
 
-So **the smallest single addition is a 3-consonant coda**, and no 1- or
-2-consonant cluster (onset or coda) suffices.  All 100 working 3-clusters are
+So **the smallest single addition is a 3-consonant coda ending in `q`**, and
+no 1- or 2-consonant cluster (onset or coda) suffices.  The two short cases
+fail for different reasons: with k = 1 there is not even a letter packing
+(0 coverable complements, as the capacity bound predicts), whereas with
+k = 2 there are 2,011 coverable configurations but not one of the foreign
+words they allow is prime.  Among the 100 working 3-codas, 68 contain one of
+`j v x z` and 32 do not (e.g. `dfq` 8,006 solutions, `bmq` 6,058, `bfq`
+5,986): what matters is that `q`, which is coprime to 26, can *end* a word,
+so `q` leaves the onset slot it is forced into by the English lists.  At
+k = 4 the 15,022 working clusters split into 7,294 codas (ending in
+c, g, k, q or w; 69,161,901 solutions) and 7,728 onsets (23,754,356
+solutions).  All 100 working 3-clusters are
 codas ending in `q` (`check_onset3.py 3`: no 3-consonant *onset* works at all, 0 prime
 foreign words among 60,649 coverable configurations; the smallest single added
 *onset* that works has 4 consonants, e.g. `qvjx`, 7,728 such onsets, 23,754,356
@@ -207,6 +217,9 @@ carries the foreign coda):
 * ZA XEG DYJVQ FLOK BRIMPTS WHUNC — values 677 / 16,361 / 2,274,653 / 113,969 / 836,048,947 / 10,665,619
 * ZA XEG DYJVQ FONC BLIMPHS TRUWK — values 677 / 16,361 / 2,274,653 / 115,963 / 764,760,379 / 9,470,693
 * ZA XEG DYJVQ FLINC BUWK THROMPS — values 677 / 16,361 / 2,274,653 / 2,959,219 / 49,957 / 6,281,864,959
+
+* BAXDQ VE ZYC JONG FLUMPTS RHIWK — values 947,873 / 577 / 18,229 / 186,271 / 2,005,907,507 / 8,372,869 (foreign coda `xdq`)
+* BAVFQ ZO JUC MYXTHS DWENK PLIRG — values 946,573 / 691 / 7,309 / 166,317,859 / 2,235,907 / 7,529,087 (foreign coda `vfq`)
 
 (Checked by `check_single.py jvq`, which enumerates by exact cover *all*
 38,093 perfect pangrams whose only non-English cluster is the coda `jvq` -
