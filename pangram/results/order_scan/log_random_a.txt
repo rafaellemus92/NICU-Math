@@ -45,3 +45,7 @@ random_043       prime words  6,367  final letters acegjlmrvxyz   none (547,041 
 random_044       prime words 15,329  final letters abcefhkqtuwz   SOLUTION  JEC VAB SQYLK XIRF GNOTZ DWUMPH   values: 12,413 / 4,513 / 7  [0.6s]
 random_045       prime words 10,583  final letters abghjlnuwxyz   none (4,880,744 nodes)  [6.3s]
 random_046       prime words 27,207  final letters eghjmnpstuxz   SOLUTION  JE VIX QONG ZYCKS DWULFTH BRAMP   values: 149 / 5,581 / 352,  [2.8s]
+random_047       prime words 21,329  final letters bcefijmrstuy   SOLUTION  JAB VIF ZYGM QOXT KNULC PHREWDS   values: 10,513 / 5,903 / 4  [4.5s]
+random_048       prime words 15,539  final letters afghijkmotuz   SOLUTION  JO VACK SQUNG BRIXT DWELF ZYMPH   values: 547 / 249,677 / 1,  [1.3s]
+random_049       prime words 13,924  final letters bdghijlortuw   none (8,394,012 nodes)  [14.9s]
+random_050       prime words  9,650  final letters acdefijoqtuz   none (1,546,760 nodes)  [2.1s]

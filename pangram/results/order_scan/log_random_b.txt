@@ -41,3 +41,6 @@ random_109       prime words 22,933  final letters abehklmpsvxy   SOLUTION  VY J
 random_110       prime words 12,371  final letters cefgilnotwxz   none (12,806,224 nodes)  [18.4s]
 random_111       prime words  7,697  final letters acfijklnoquz   none (785,572 nodes)  [0.9s]
 random_112       prime words 13,164  final letters abcefhioqtvz   SOLUTION  VAC JEZ SQIF KNYLB DWOMPH GRUXT   values: 17,293 / 15,107 /   [0.9s]
+random_113       prime words 21,467  final letters gijlnpqstuwy   none (6,022,850 nodes)  [17.2s]
+random_114       prime words 20,627  final letters bklmopqrswxz   SOLUTION  JIB VYK QEZ DWANX FROGM CHULPTS   values: 11,173 / 15,259 /   [0.2s]
+random_115       prime words 11,062  final letters aegklmrtuvyz   none (4,309,561 nodes)  [5.6s]
