@@ -66,9 +66,18 @@ python3 run_a_english.py
 python3 structure.py
 python3 run_d_free_count.py && ./freedp results/free_prime_masks.txt
 python3 run_c_english.py
-python3 run_b_lattice.py A ; python3 run_b_lattice.py B
+python3 run_b_lattice.py B                         # free family, n+m <= 5
+python3 run_b_lattice.py "R(0,0)" "R(1,0)" "R(0,1)" "R(1,1)" "R(2,0)" "R(0,2)" "R(2,1)" "R(1,2)" "R(2,2)"
+python3 run_b_lattice.py "R(3,0)" "R(0,3)" --nowitness   # witness search skipped (see notes)
 for i in 0 1 2; do python3 reach.py $i; done ; python3 run_b_single.py 5
+python3 check_single.py jvq ; python3 check_onset3.py 3 ; python3 check_onset3.py 4 ; python3 check_coprime.py
+python3 summarize.py                                # regenerates the lattice tables from results/b_lattice/*.json
 ```
+
+(The R regimes with o, c ≤ 2 use `--minbudget` = the b.1 result that no
+single ≤ 2-consonant cluster works, so their witness search starts at the
+packing lower bound; total wall time for everything is about 3 hours on
+4 cores.)
 
 ## (a) Reproduction of result (1): no solution under the English lists
 
@@ -236,9 +245,32 @@ the smallest number of non-English clusters any solution uses (exact-cover
 search with a cost budget).  "packing" is the structural bound of
 `structure.py` applied to the regime's lists (False ⇒ provably 0).
 
-| regime | prime words | packing | min foreign clusters | exact number of solutions |
-|---|---|---|---|---|
-<<LATTICE_A>>
+| regime | prime words | packing feasible | min non-English clusters | exact number of solutions | witness |
+|---|---|---|---|---|---|
+| R(0,0) | 16,243 | no (⇒ 0) | — | 0 | — |
+| R(1,0) | 16,243 | no (⇒ 0) | — | 0 | — |
+| R(0,1) | 16,641 | no (⇒ 0) | — | 0 | — |
+| R(1,1) | 16,641 | no (⇒ 0) | — | 0 | — |
+| R(2,0) | 108,593 | yes | 3 | 8,627,591,390 ≈ 8.63 × 10^09 | VE QA BZYC XJIWK DPURG MNOLFTHS |
+| R(0,2) | 40,546 | yes | 2 | 475,567,462 ≈ 4.76 × 10^08 | VE ZA JOBG DWYXQ FLUMPTS CHRINK |
+| R(2,1) | 110,624 | yes | 3 | 27,117,653,723 ≈ 2.71 × 10^10 | VE ZA BJUC XMONG DQYLFTHS PRIWK |
+| R(1,2) | 40,546 | yes | 2 | 475,567,462 ≈ 4.76 × 10^08 | VE ZA JOBG DWYXQ FLUMPTS CHRINK |
+| R(2,2) | 241,381 | yes | 2 | 20,886,836,221,201 ≈ 2.09 × 10^13 | ZA VE BJYG FLOXQ DWUMPTS CHRINK |
+| R(3,0) | 1,418,985 | yes | 2 or 3 (see note) | 949,086,562,609,181 ≈ 9.49 × 10^14 | VE QA BZYC XJIWK DPURG MNOLFTHS (the R(2,0) witness) |
+| R(0,3) | 435,022 | yes | 1 (b.1) | 19,884,222,065,476 ≈ 1.99 × 10^13 | ZA XEG DYJVQ FLOK BRIMPTS WHUNC (from b.1) |
+
+Notes on the R table.  "min non-English clusters" is exact where a number is
+given: the cost-aware packing DP (`structure.packing_min_foreign`) gives a
+lower bound and the exact-cover search found a witness attaining it.  R(1,0)
+adds nothing (every single consonant is already an English onset) and R(0,1)
+only adds the single codas j, q, v; both stay packing-infeasible.  R(1,2) is
+the same dictionary as R(0,2).  For R(0,3) the minimum is 1 by section b.1
+(a single 3-coda ending in q suffices, 0 is the English case).  For R(3,0)
+the minimum is 2 or 3: it is not 1 (no single 3-consonant onset works,
+`check_onset3.py 3`), the R(2,0) witness with three 2-letter foreign onsets
+is also an R(3,0) solution, and the exhaustive budget-2 search (two foreign
+onsets of ≤ 3 letters) was stopped after 42 CPU-minutes without finishing,
+so that case is left open.
 
 | regime (free family, one vowel per word) | prime words | exact number of solutions | witness |
 |---|---|---|---|
@@ -259,4 +291,31 @@ search with a cost budget).  "packing" is the structural bound of
 | F(4,1) | 523,930 | 76,380,875,883,311,234 ≈ 7.64 × 10^16 | E BU CDFZY HJLMIG NPQTOK VXRWAS |
 | F(5,0) | 1,396,507 | 128,575,945,396,019,880 ≈ 1.29 × 10^17 | BO CY DFMA GHJLTI KNPVSE QRXZWU |
 
-<<LATTICE_COMMENT>>
+**Reading the lattice.**
+
+* *Codas are the bottleneck, onsets are cheap.*  Relaxing only the codas to
+  arbitrary 2-consonant strings (R(0,2)) already gives 4.8 × 10⁸ solutions,
+  needing 2 foreign codas (one of them ending in q); relaxing only the onsets
+  to 2 consonants (R(2,0)) gives 8.6 × 10⁹ but needs three foreign onsets.
+  Neither R(1,1) nor the 1-letter relaxations help at all (packing bound).
+  The minimal elements of the R lattice with solutions are therefore R(2,0)
+  and R(0,2); counted in *added clusters*, the single 3-coda of b.1 (one
+  cluster, R(0,3) with budget 1) is the minimal relaxation.
+* *Why.*  Every word must end in a vowel or in c, g, k, q, s, w, while j, q,
+  v, x, z never appear in English odd codas; so under the English lists
+  j, q, v, z (and x) are pinned to five separate onset slots and the
+  remaining 15 consonants do not fit in the odd codas (max 17 consonants in
+  total, `structure.py`).  Any relaxation that frees one of those pins
+  (a coda ending in q, or an onset `bz`/`xj`) buys the missing capacity.
+* *Free family (the task's regime (2) is F(2,2)).*  Nothing with n + m ≤ 3
+  works (6 words × 3 consonants = 18 < 20).  All five regimes with
+  n + m = 4 have solutions, so F(2,2) is one of five minimal free regimes.
+  The counts are wildly asymmetric: F(4,0) (onsets only, every word ends in
+  its vowel, which is always coprime to 26) has 6.6 × 10¹⁵ solutions, F(0,4)
+  only 2.5 × 10¹¹, because a non-empty coda must end in one of just six
+  letters.  Counts grow monotonically along the lattice, as they must
+  (F(2,2) ⊂ F(3,2) ⊂ … ), which is a consistency check on the engine.
+* *The task's regime (2).*  R(2,2) (English lists plus all ≤ 2-consonant
+  clusters, 1–2 vowels) has 2.09 × 10¹³ solutions and needs 2 foreign
+  clusters; F(2,2) (exactly one vowel, no English clusters of length 3+)
+  has 1.13 × 10¹³, the number asked for in task (d).
