@@ -35,12 +35,22 @@ is stationary, and that bright fold is the bow.
 | `primary_bow_water` | The primary bow is seen between **41° and 43°** from the antisolar point (true value 42.03°) |
 | `secondary_bow_water` | The secondary bow between **50° and 52°** (true value 50.98°) |
 | `alexander_dark_band` | **No light** with one or two internal reflections leaves between 43° and 50°, which is why the sky between the bows is darker |
+| `colour_order` | **Colours**: a larger index (violet) gives a smaller primary bow and a larger secondary bow, so red is outside in the primary and inside in the secondary |
+| `primary_red`, `primary_violet` | Real water: primary bow at 42–43° for red (`n = 1.331`) and 40–41° for violet (`n = 1.343`) |
+| `secondary_red`, `secondary_violet` | Secondary bow at 50–51° (red) and 53–54° (violet) |
+| `primary_spread`, `secondary_spread` | The colours spread over more than 1° (primary) and more than 2° (secondary) |
+| `dark_band_of_red_le` | Red governs both edges of the dark band, so it holds for **every** colour from red (`n ≥ 1.331`) up |
 
 The numeric bounds need sin and cos to about four decimal places, and Mathlib's
 bounds stop at degree 3, so `TrigBounds.lean` proves Taylor bounds to degree 7
-(each from the previous one, by a derivative argument). All of this uses one
-index `n = 4/3`; the colours of a real rainbow come from `n` varying with
-wavelength.
+(each from the previous one, by a derivative argument). The colour theorems use
+water's index for red (`1.331`, about 663–694 nm) and violet (`1.343`, about
+402–410 nm). The ordering needs no calculus in `n`: a larger index bends every
+ray more, so the minimum deviation (the bow) grows too.
+
+The "dark" band is *darker*, not black: the theorems exclude refracted light
+reflected once or twice, while external reflection, higher-order bows,
+diffraction and the sun's disc still put some light there.
 
 ## Running it
 

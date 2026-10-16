@@ -30,8 +30,12 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
   `cos² i = (n² − 1)/(k(k+2))` is the unique strict minimum of the deviation;
   for water the bows sit at 41–43° and 50–52°, with Alexander's dark band
   between them.
-- ⬜ Rainbow colours: prove the bow angle moves monotonically with `n`, so red
-  and violet bows separate (dispersion).
+- ✅ Rainbow colours (`Colours.lean`, `Spectrum*.lean`, `VisibleBand.lean`): the
+  primary bow shrinks and the secondary grows with `n`, so red is outside the
+  primary and inside the secondary; real-water brackets for red and violet; the
+  dark band holds for every colour from red up.
+- ⬜ Rainbow width to 0.1°: tighter arcsin brackets would prove the ~1.7° and
+  ~3.1° band widths, not just more than 1° and 2°.
 - ⬜ Goldbach for even `N` up to some bound. It is a finite check, so this
   is doable. The full conjecture is open and won't be settled here, but
   formalising *exactly* what is known is honest work.
