@@ -14,7 +14,7 @@ number of perfect pangrams (engine, CRT over `nprimes` primes), the minimum
 number of non-English clusters any solution needs (exact-cover search with a
 cost budget) and one witness.
 
-usage: python3 run_b_lattice.py <regime> [<regime> ...] [--nprimes=N] [--nocount] [--minbudget=B]
+usage: python3 run_b_lattice.py <regime> [<regime> ...] [--nprimes=N] [--nocount] [--minbudget=B] [--nowitness]
        regime names like R(2,0) or F(1,3); 'A' / 'B' expand to the whole family.
 """
 import json, re, sys, time
@@ -74,7 +74,9 @@ def analyse(name):
         rec["packing_min_foreign"] = lo
         print(f"  packing lower bound on the number of non-English clusters: {lo}", flush=True)
     found = None
-    if rec["packing_feasible"] is not False and name.startswith("F"):
+    if "--nowitness" in sys.argv:
+        print("  witness search skipped (--nowitness)", flush=True)
+    elif rec["packing_feasible"] is not False and name.startswith("F"):
         # free regimes: almost every cluster is non-English, so the foreign-cluster
         # budget is meaningless; just find one witness.
         sols, nodes = exact_cover_c(plain, max_solutions=1, costs=costs, budget=12, tag=name)

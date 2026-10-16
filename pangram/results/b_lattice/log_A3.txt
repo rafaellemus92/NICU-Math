@@ -1,0 +1,2 @@
+
+=== R(0,3): 435,022 prime words (onsets 70, nuclei 36, codas 7261) [4s]
