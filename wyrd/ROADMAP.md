@@ -7,9 +7,7 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
 - ✅ The coupled encoding is reversible (`decode_encode`).
 - ✅ The 4296 solution is correct (`solution_isPangram`).
 - ✅ Every pangram has `N ≥ 1352` (`lower_bound`).
-- ⬜ **The ten primes in any pangram are distinct.** This follows from
-  "every letter exactly once" plus injectivity. It's a good first exercise,
-  using `List.Nodup` and `List.Perm.nodup_iff`.
+- ✅ The ten primes in any pangram are distinct (`primes_nodup`).
 - ⬜ **Every pangram has `N` even, and never uses the prime 2.** Hint: 2 is
   the only even prime, and it can appear in at most one pair. What parity do
   the other four pairs force on `N`? Work it out on paper first.

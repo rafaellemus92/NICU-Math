@@ -7,3 +7,5 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`) — never `sorryAx`
 #print axioms Wyrd.solution_names
 #print axioms Wyrd.solution_isPangram
 #print axioms Wyrd.lower_bound
+#print axioms Wyrd.primes_nodup
+#print axioms Wyrd.length_primesOf
