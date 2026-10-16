@@ -17,6 +17,12 @@ FULL = (1 << 26) - 1
 # (bijective-style) numeration; bases < 27 are injective on words of distinct
 # letters only in the sense of the fixed-length reading used here.
 BASE = int(os.environ.get("PANGRAM_BASE", "26"))
+# Digit assignment ("transliteration").  Default: alphabetical, A=1..Z=26.  The
+# environment variable PANGRAM_ORDER (a permutation of the 26 letters) gives
+# letter ORDER[i] the digit i+1; used only by run_order_scan.py.
+ORDER = os.environ.get("PANGRAM_ORDER", ALPHABET).lower()
+assert sorted(ORDER) == list(ALPHABET), "PANGRAM_ORDER must be a permutation of a-z"
+DIGIT = {ch: i + 1 for i, ch in enumerate(ORDER)}
 VOWEL_MASK = sum(1 << (ord(c) - 97) for c in VOWELS)
 CONS_MASK = FULL ^ VOWEL_MASK
 CONS_LIST = list(CONSONANTS)                      # 20 consonants in bit order
@@ -28,7 +34,7 @@ def value(word: str) -> int:
     """Bijective base-26 value, A=1..Z=26 (the task's numeration)."""
     v = 0
     for ch in word:
-        v = v * BASE + (ord(ch) - 96)
+        v = v * BASE + DIGIT[ch]
     return v
 
 

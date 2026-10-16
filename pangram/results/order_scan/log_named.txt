@@ -1,0 +1,1 @@
+alphabetical     prime words 16,243  final letters acegikoqsuwy   none (1,633,290 nodes)  [4.1s]

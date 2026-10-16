@@ -1,0 +1,9 @@
+{
+ "name": "alphabetical",
+ "order": "abcdefghijklmnopqrstuvwxyz",
+ "n_prime": 16243,
+ "witness": null,
+ "nodes": 1633290,
+ "final_letters": "acegikoqsuwy",
+ "seconds": 4.1
+}
