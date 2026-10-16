@@ -193,7 +193,10 @@ ordering of the k consonants.
 
 So **the smallest single addition is a 3-consonant coda**, and no 1- or
 2-consonant cluster (onset or coda) suffices.  All 100 working 3-clusters are
-codas ending in `q` <<K3_ONSET_NOTE>>: `q` is coprime to 26, so a coda ending
+codas ending in `q` (`check_onset3.py 3`: no 3-consonant *onset* works at all, 0 prime
+foreign words among 60,649 coverable configurations; the smallest single added
+*onset* that works has 4 consonants, e.g. `qvjx`, 7,728 such onsets, 23,754,356
+solutions, `check_onset3.py 4`): `q` is coprime to 26, so a coda ending
 in `q` is allowed arithmetically, and it lets two of the "onset-only" letters
 `j v x z` ride inside a coda, which is exactly what the packing bound said
 was missing.  The most productive additions are `jvq` (38,093 solutions),
