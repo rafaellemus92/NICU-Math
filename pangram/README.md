@@ -147,13 +147,28 @@ integer counts, and the all-ones version reproduces N₀ to 3 × 10⁻⁸).
 
 | regime | N₀ (pronounceable pangrams) | E_naive | E_refined | observed |
 |---|---|---|---|---|
-| English clusters (1–2 vowels) | <<N0_ENGLISH>> | <<E_NAIVE_ENGLISH>> | <<E_REFINED_ENGLISH>> | 0 |
+| English clusters (1–2 vowels) | 353,750,976,000 ≈ 3.54 × 10¹¹ | 7.06 × 10⁴ | **0 (exact)** | 0 |
 | free CC·V·CC (1 vowel) | 2.9706 × 10²¹ | 6.193 × 10¹⁴ | 1.108 × 10¹³ | 1.126 × 10¹³ |
 
 The refined first moment predicts the free-regime count to within 1.6 %
 (observed / E_refined = 1.016); the naive one is 55× too high because it
 ignores that half of all words are even and 1/13 are divisible by 13.
-<<ENGLISH_MOMENT_COMMENT>>
+For the English regime the naive first moment, N₀ × (average of Π 1/ln nᵢ)
+= 7.1 × 10⁴, would predict tens of thousands of solutions, so the observed 0
+is *not* a fluctuation of a fair model: the model is wrong.  The refined
+first moment is exactly 0, because the refined density vanishes on every
+word that ends in a letter not coprime to 26, and `check_coprime.py` proves
+(exact count, 0 mod a 31-bit prime, 137,556 of the 289,404 pronounceable
+words end in a coprime letter) that **no pronounceable pangram at all has
+every word ending in a letter coprime to 26** - the packing obstruction of
+`structure.py` again.  (`run_c_english.py` prints E_refined = -0.41: that is
+float64 round-off of an alternating inclusion–exclusion sum whose individual
+terms are ~10¹⁵; the exact value is 0.)  Average prime probability per
+pangram in the two regimes: E_naive/N₀ = 2.0 × 10⁻⁷ (English) and
+2.1 × 10⁻⁷ (free), so the regimes differ not in how likely a random
+pronounceable pangram is to be all-prime, but in whether the residue
+structure allows any at all: English N₀ is 10¹⁰ times smaller than the free
+N₀ *and* every one of its pangrams is killed by the mod-26 constraint.
 
 ## (b) Minimal relaxation
 
@@ -186,7 +201,14 @@ was missing.  The most productive additions are `jvq` (38,093 solutions),
 (each line is a complete perfect pangram of prime words; the first word
 carries the foreign coda):
 
-<<WITNESSES>>
+* ZA XEG DYJVQ FLOK BRIMPTS WHUNC — values 677 / 16,361 / 2,274,653 / 113,969 / 836,048,947 / 10,665,619
+* ZA XEG DYJVQ FONC BLIMPHS TRUWK — values 677 / 16,361 / 2,274,653 / 115,963 / 764,760,379 / 9,470,693
+* ZA XEG DYJVQ FLINC BUWK THROMPS — values 677 / 16,361 / 2,274,653 / 2,959,219 / 49,957 / 6,281,864,959
+
+(Checked by `check_single.py jvq`, which enumerates by exact cover *all*
+38,093 perfect pangrams whose only non-English cluster is the coda `jvq` -
+the same number the reach tables give for that cluster, an independent
+confirmation of the table machinery.)
 
 ### b.2 Lattice of regimes
 

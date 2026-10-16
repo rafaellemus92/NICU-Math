@@ -14,3 +14,6 @@
   (33s)
 
 === F(3,2): 458,401 prime words (onsets 7241, nuclei 6, codas 401) [4s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  witness search: solution (1,405 nodes)
+  witness: BI CY DGTA HLNOFK MZPUJQ XVWERS   values: 61 / 103 / 75,557 / 100,791,091 / 166,634,953 / 295,614,611

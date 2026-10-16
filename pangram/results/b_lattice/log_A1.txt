@@ -2,3 +2,6 @@
 === R(2,0): 108,593 prime words (onsets 413, nuclei 36, codas 175) [1s]
   packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
   packing lower bound on the number of non-English clusters: 3
+  budget 3 foreign clusters: solution (6,064,512 nodes)
+  witness: VE QA BZYC XJIWK DPURG MNOLFTHS   values: 577 / 443 / 53,381 / 11,149,877 / 2,123,791 / 108,922,176,707
+  foreign clusters: [('bz', ''), ('xj', ''), ('dp', '')]
