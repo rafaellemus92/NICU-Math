@@ -190,8 +190,9 @@ letters into English prime words.  `reach.py` computes, for each of the 21
 vowel subsets of size 4–5 and each consonant subset, the exact number of
 English-prime-word partitions (three moduli + CRT); `run_b_single.py` then
 tries every (nucleus, e, k-subset) whose complement is coverable and every
-ordering of the k consonants (`run_b_single.py 4` takes about a minute;
-k = 5 takes 35 minutes).
+ordering of the k consonants (`run_b_single.py 4` takes about a minute and
+writes `results/b_single_cluster.json`; k = 5 takes 35 minutes, and its
+summary line is kept in `results/b_single_k5.txt`).
 
 | k = length of the added cluster | (nucleus, e, consonant-set) with coverable complement | prime foreign words | distinct added clusters that work | solutions with exactly one foreign cluster |
 |---|---|---|---|---|
@@ -202,11 +203,14 @@ k = 5 takes 35 minutes).
 | 5 | 6,489,500 | 9,556,451 | 558,205 | 4,128,113,285 |
 
 So **the smallest single addition is a 3-consonant coda ending in `q`**, and
-no 1- or 2-consonant cluster (onset or coda) suffices.  The two short cases
-fail for different reasons: with k = 1 there is not even a letter packing
-(0 coverable complements, as the capacity bound predicts), whereas with
-k = 2 there are 2,011 coverable configurations but not one of the foreign
-words they allow is prime.  Among the 100 working 3-codas, 68 contain one of
+no 1- or 2-consonant cluster (onset or coda) suffices.  Both short cases
+fail structurally, not by a primality coincidence: with k = 1 there is not
+even a letter packing (0 coverable complements, as the capacity bound
+predicts); with k = 2 the reach tables list 2,011 coverable configurations,
+but every one of them puts the foreign cluster in the *onset* with an English
+coda ending in h, z, t, b or p (921 / 378 / 376 / 168 / 168 configurations),
+all even letters, so every candidate word is even; no coverable configuration
+with a foreign 2-coda exists at all.  Among the 100 working 3-codas, 68 contain one of
 `j v x z` and 32 do not (e.g. `dfq` 8,006 solutions, `bmq` 6,058, `bfq`
 5,986): what matters is that `q`, which is coprime to 26, can *end* a word,
 so `q` leaves the onset slot it is forced into by the English lists.  At
