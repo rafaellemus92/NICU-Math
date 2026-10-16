@@ -9,3 +9,5 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`) — never `sorryAx`
 #print axioms Wyrd.lower_bound
 #print axioms Wyrd.primes_nodup
 #print axioms Wyrd.length_primesOf
+#print axioms Wyrd.sum_even
+#print axioms Wyrd.two_not_mem

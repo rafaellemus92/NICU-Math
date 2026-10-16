@@ -8,13 +8,12 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
 - ✅ The 4296 solution is correct (`solution_isPangram`).
 - ✅ Every pangram has `N ≥ 1352` (`lower_bound`).
 - ✅ The ten primes in any pangram are distinct (`primes_nodup`).
-- ⬜ **Every pangram has `N` even, and never uses the prime 2.** Hint: 2 is
-  the only even prime, and it can appear in at most one pair. What parity do
-  the other four pairs force on `N`? Work it out on paper first.
+- ✅ Every pangram has `N` even and never uses the prime 2 (`sum_even`, `two_not_mem`).
 - ⬜ **4296 is the smallest `N`.** The Python script checks this by
   exhaustive search. To prove it in Lean, write the search as a Lean function,
   prove it *sound* (if it says "no pangram at N", there is none), then have
-  the kernel run it on every even `N` from 1352 to 4294. Making it fast
+  the kernel run it on every even `N` from 1352 to 4294 (odd `N` is ruled
+  out by `sum_even`). Making it fast
   enough for `decide +kernel` is the real challenge. `native_decide` would be
   quick but trusts the compiler, so it doesn't count here.
 - ⬜ **Plain base-26 has no pangram up to 18,250.** Same method as above.

@@ -14,6 +14,7 @@ Here no step is taken on trust: the Lean kernel checks every inference.
 | `solution_isPangram` | Those ten numbers are prime, each pair sums to 4296, and every letter appears exactly once | `Wyrd/Pangram.lean` |
 | `lower_bound` | **Any** five-pair prime pangram has sum ≥ 1352 | `Wyrd/Pangram.lean` |
 | `primes_nodup` | In **any** pangram, the ten primes are all different | `Wyrd/Distinct.lean` |
+| `sum_even`, `two_not_mem` | **Any** pangram has an even sum and never uses the prime 2 | `Wyrd/Parity.lean` |
 
 `Audit.lean` prints the axioms each theorem rests on. They are only Lean's
 standard ones: no `sorry` (an unfinished proof) and no `native_decide`
