@@ -37,3 +37,15 @@ import WyrdMathlib
 #print axioms Wyrd.BodyWater.free_water_deficit
 #print axioms Wyrd.BodyWater.water_fraction_falls
 #print axioms Wyrd.BodyWater.more_water_less_fat
+#print axioms Wyrd.PeriodicNS.div_v
+#print axioms Wyrd.PeriodicNS.quantities_v
+#print axioms Wyrd.PeriodicNS.quantities_smul
+#print axioms Wyrd.PeriodicNS.opposite_signs
+#print axioms Wyrd.PeriodicNS.same_spectrum
+#print axioms Wyrd.PeriodicNS.no_closure
+#print axioms Wyrd.PeriodicNS.no_spectral_closure
+#print axioms Wyrd.PeriodicNS.galerkin_enstrophy_bound
+#print axioms Wyrd.PeriodicNS.gronwall_variable
+#print axioms Wyrd.PeriodicNS.energy_vanishes_speed_blows
+#print axioms Wyrd.PeriodicNS.not_B_implies_D
+#print axioms Wyrd.PeriodicNS.D_and_B_consistent

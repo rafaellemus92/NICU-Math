@@ -19,6 +19,10 @@ These files compute the right-hand side exactly for explicit fields.
 
 All derivatives are Lean's `deriv`, taken one coordinate at a time, so nothing
 is hand-entered.
+
+`Field` here shadows Mathlib's `Field` class and `v` is a short public name, so
+refer to them as `Wyrd.PeriodicNS.Field` and `Wyrd.PeriodicNS.v` rather than
+opening the namespace.
 -/
 
 namespace Wyrd.PeriodicNS
@@ -81,7 +85,7 @@ noncomputable def gradSq (u : Field) : ℝ :=
     dx u.u2 x y z ^ 2 + dy u.u2 x y z ^ 2 + dz u.u2 x y z ^ 2 +
     dx u.u3 x y z ^ 2 + dy u.u3 x y z ^ 2 + dz u.u3 x y z ^ 2)
 
-/-- `D = ⟨|∇ω|²⟩`. -/
+/-- `D = ⟨|∇ω|²⟩`, with no factor `½` (so the balance reads `dZ/dt = S − νD`). -/
 noncomputable def palin (u : Field) : ℝ := u.curl.gradSq
 
 /-- Vortex stretching `S = ⟨Σᵢⱼ ωᵢ (∂ⱼ uᵢ) ωⱼ⟩`. -/

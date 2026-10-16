@@ -1,7 +1,9 @@
 import Mathlib
 
 /-!
-# Clay alternatives B and D: the quantifiers
+# Clay alternatives (B) and (D): the quantifiers
+
+(Here "(D)" is Clay's breakdown alternative, not the dissipation `D` of `Field.lean`.)
 
 Abstractly: `Smooth u₀ f` means "the solution from data `u₀` with force `f`
 exists and stays smooth for all time"; the zero force is admissible.
@@ -27,13 +29,19 @@ def AltD {Data Force : Type*} (admD : Data → Prop) (admF : Force → Prop) (Sm
 theorem not_B_implies_D {Data Force : Type*} (admD : Data → Prop) (admF : Force → Prop) (zero : Force)
     (hzero : admF zero) (Smooth : Data → Force → Prop) :
     ¬ AltB admD zero Smooth → AltD admD admF Smooth := by
-  sorry
+  intro hB
+  -- A failure of B gives admissible data that is not smooth under the zero force.
+  unfold AltB at hB
+  push Not at hB
+  obtain ⟨u₀, hu₀, hns⟩ := hB
+  exact ⟨u₀, zero, hu₀, hzero, hns⟩
 
 /-- **D does not imply ¬B**: a model where both hold (two data-free forces, `0` and `1`;
 smooth exactly when unforced). -/
 theorem D_and_B_consistent :
     AltB (fun _ : Unit => True) (0 : ℕ) (fun _ f => f = 0) ∧
       AltD (fun _ : Unit => True) (fun f : ℕ => f ≤ 1) (fun _ f => f = 0) := by
-  sorry
+  -- B: the unforced solution is smooth by definition; D: the force `1` breaks it.
+  exact ⟨fun _ _ => rfl, ⟨(), 1, trivial, le_refl _, one_ne_zero⟩⟩
 
 end Wyrd.PeriodicNS

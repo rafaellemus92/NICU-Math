@@ -72,6 +72,35 @@ Intrauterine Growth Aberration* (abdominalkey.com).
 | `water_fraction_falls` | Losing extracellular water after birth lowers the body's water fraction |
 | `more_water_less_fat` | At equal fat-free-mass hydration, more water means less fat, consistent with term SGA (more water) and LGA (more fat) infants |
 
+## Periodic Navier–Stokes (`WyrdMathlib/PeriodicNS/`)
+
+An explicit periodic field showing that **magnitude-only descriptions lose the
+information that decides vortex stretching**. Take
+`v = (sin y, sin z, cos x − cos(x + y))` on the `2π`-periodic cube, with every
+derivative computed by Lean's `deriv` and every average a genuine integral over
+`[0, 2π]³`.
+
+| Theorem | Statement |
+|---|---|
+| `div_v`, `curl_v`, `grad_v` | `v` is divergence-free, with vorticity `(sin(x+y) − cos z, sin x − sin(x+y), −cos y)` |
+| `quantities_v` | `E = 1`, `Z = 5/4`, `D = ⟨\|∇ω\|²⟩ = 7/2`, stretching `S = 1/4`, `⟨\|∇v\|²⟩ = 5/2` |
+| `quantities_smul`, `same_spectrum` | `±A v` share `E`, `Z`, `D` and every Fourier magnitude, but `S = ±A³/4` |
+| `opposite_signs`, `rates` | So `S − νD` has opposite signs once `A > 14ν` (`1/8` and `−3/8` at `A = 1`, `ν = 1/28`) |
+| `no_closure`, `no_spectral_closure` | `S − νD` is not a function of `(E, Z, D, ν)`, nor of all Fourier magnitudes plus `ν` |
+| `galerkin_enstrophy_bound` | A fixed Fourier cutoff gives `Z_K ≤ K² E_K(0)`: bounded, but worse as `K → ∞` |
+| `gronwall_variable` | `Z' ≤ a Z ⇒ Z(t) ≤ Z(0) exp ∫₀ᵗ a`: the step a regularity proof would use |
+| `energy_vanishes_speed_blows` | A shrinking core can carry vanishing energy while its speed blows up |
+| `not_B_implies_D`, `D_and_B_consistent` | Clay (B) failing gives (D); (D) with forcing does not refute (B) |
+
+**Not formalised:** the enstrophy balance `dZ/dt = S − νD` and local existence of
+smooth solutions (both standard; Mathlib has no Navier–Stokes theory). Turning
+`no_closure` into a statement about solutions needs them. The uniform stretching
+estimate that would make the Grönwall route prove regularity is the open problem
+itself and is not claimed. Context: OpenAI's September 2026 manuscript claims
+blow-up *with a smooth external force* (Clay's alternatives C/D); Clay's
+11 September 2026 statement says the problem has "apparently been settled" and
+that review is ongoing.
+
 ## Running it
 
 ```sh
