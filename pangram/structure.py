@@ -83,3 +83,33 @@ if __name__ == "__main__":
     for L in (1, 2, 3):
         report(sorted(set(ONSETS) | set(free_clusters(L))), CODAS, f"English + any onset of <= {L} consonants")
         report(ONSETS, sorted(set(CODAS) | set(free_clusters(L))), f"English + any coda of <= {L} consonants")
+
+
+def packing_min_foreign(onsets, codas, english_onsets, english_codas, max_words=6):
+    """
+    Lower bound for the number of NON-English clusters any solution must use:
+    dp[a][c][S] = minimum number of non-English items among a letter-disjoint
+    onsets and c odd codas covering the consonant set S exactly (INF if
+    impossible), a, c <= max_words.  Returns min over a, c of dp[a][c][ALL].
+    """
+    dp = np.full((max_words + 1, max_words + 1, NSC), INF, dtype=np.int8)
+    dp[0][0][0] = 0
+    S = np.arange(NSC, dtype=np.int64)
+    eo, ec = set(english_onsets), set(english_codas)
+    items = [(cmask(o), "on", o not in eo) for o in onsets if o] + \
+            [(cmask(c), "co", c not in ec) for c in codas if c and c[-1] in ODD]
+    for m, kind, foreign in items:
+        idx = S[(S & m) == 0]
+        tgt = idx | m
+        new = dp.copy()
+        add = 1 if foreign else 0
+        if kind == "on":
+            for a in range(max_words):
+                for c in range(max_words + 1):
+                    new[a + 1][c][tgt] = np.minimum(new[a + 1][c][tgt], dp[a][c][idx] + add)
+        else:
+            for a in range(max_words + 1):
+                for c in range(max_words):
+                    new[a][c + 1][tgt] = np.minimum(new[a][c + 1][tgt], dp[a][c][idx] + add)
+        dp = new
+    return int(dp[:, :, NSC - 1].min())

@@ -247,7 +247,7 @@ if __name__ == "__main__":
 
 
 # --------------------------------------------------- C exact cover driver ---
-def exact_cover_c(words, max_solutions=1, costs=None, budget=0, full=FULL, tag="tmp"):
+def exact_cover_c(words, max_solutions=1, costs=None, budget=0, full=FULL, tag="tmp", cap=None):
     """
     Same contract as exact_cover() but runs the bitset C program xcover
     (compiled from xcover.c).  Returns (solutions, nodes).
@@ -261,7 +261,9 @@ def exact_cover_c(words, max_solutions=1, costs=None, budget=0, full=FULL, tag="
     with open(path, "w") as f:
         for i, w in enumerate(words):
             f.write(f"{w[2]} {0 if costs is None else int(costs[i])}\n")
-    out = subprocess.run([exe, path, str(max_solutions), str(budget), str(full)],
+    if cap is None:
+        cap = max(sum(ch not in VOWELS for ch in w[0]) for w in words)
+    out = subprocess.run([exe, path, str(max_solutions), str(budget), str(full), str(cap)],
                          capture_output=True, text=True, check=True).stdout.splitlines()
     sols = [list(map(int, line.split())) for line in out if line and not line.startswith("nodes=")]
     nodes = int(out[-1].split()[0].split("=")[1])

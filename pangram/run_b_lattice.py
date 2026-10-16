@@ -20,7 +20,7 @@ usage: python3 run_b_lattice.py <regime> [<regime> ...] [--nprimes=N] [--nocount
 import json, re, sys, time
 from core import *
 from engine import exact_count
-from structure import packing_dp, NSC
+from structure import packing_dp, packing_min_foreign, NSC
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 nprimes = 3
@@ -60,11 +60,21 @@ def analyse(name):
     rec = {"regime": name, "n_onsets": len(onsets), "n_codas": len(codas), "n_nuclei": len(nucs), "n_prime": len(plain)}
     print(f"\n=== {name}: {len(plain):,} prime words (onsets {len(onsets)}, nuclei {len(nucs)}, codas {len(codas)}) "
           f"[{time.time()-t0:.0f}s]", flush=True)
-    dp = packing_dp(onsets, codas, max_words=6)
-    rec["packing_feasible"] = bool((dp[:, NSC - 1] <= 6).any())
-    print(f"  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: {rec['packing_feasible']}", flush=True)
+    n_items = len(onsets) + len(codas)
+    if n_items <= 8000:
+        dp = packing_dp(onsets, codas, max_words=6)
+        rec["packing_feasible"] = bool((dp[:, NSC - 1] <= 6).any())
+        print(f"  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: {rec['packing_feasible']}", flush=True)
+    else:
+        rec["packing_feasible"] = None      # too many clusters for the packing DP; the count decides
+        print("  packing bound: skipped (too many clusters)", flush=True)
+    lo = minbudget
+    if rec["packing_feasible"] and name.startswith("R") and n_items <= 1500:
+        lo = max(lo, packing_min_foreign(onsets, codas, ONSETS, CODAS))
+        rec["packing_min_foreign"] = lo
+        print(f"  packing lower bound on the number of non-English clusters: {lo}", flush=True)
     found = None
-    if rec["packing_feasible"] and name.startswith("F"):
+    if rec["packing_feasible"] is not False and name.startswith("F"):
         # free regimes: almost every cluster is non-English, so the foreign-cluster
         # budget is meaningless; just find one witness.
         sols, nodes = exact_cover_c(plain, max_solutions=1, costs=costs, budget=12, tag=name)
@@ -74,7 +84,7 @@ def analyse(name):
             rec["witness"] = [(words[i][0], words[i][1], words[i][3], words[i][4], costs[i]) for i in s]
             print("  witness:", show(plain, s))
     elif rec["packing_feasible"]:
-        for budget in range(minbudget, 13):
+        for budget in range(lo, 13):
             sols, nodes = exact_cover_c(plain, max_solutions=1, costs=costs, budget=budget, tag=name)
             print(f"  budget {budget} foreign clusters: {'solution' if sols else 'none'} ({nodes:,} nodes)", flush=True)
             if sols:
@@ -87,7 +97,7 @@ def analyse(name):
                 break
     rec["min_foreign_clusters"] = found
     if do_count:
-        if rec["packing_feasible"]:
+        if rec["packing_feasible"] is not False:
             cnt, M = exact_count(plain, nprimes=nprimes)
             rec["count"] = cnt[0]
         else:

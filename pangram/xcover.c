@@ -1,5 +1,5 @@
 /* Exact cover of the 26 letters by dictionary words (bitset Algorithm X).
-   usage: xcover <wordfile> <max_solutions> <budget> [full_mask]
+   usage: xcover <wordfile> <max_solutions> <budget> [full_mask] [max_consonants_per_word]
    wordfile lines: "<mask> <cost>" (decimal). Branches on the uncovered letter
    with the fewest available words.  Prints each solution as a list of
    0-based word indices, then "nodes=... solutions=...".
@@ -15,6 +15,9 @@ static u64 *bits_letter[26];     /* words containing letter b */
 static u64 *bits_costle;         /* [k][W]: words with cost <= k */
 static uint32_t *wmask; static int *wcost; static int maxcost;
 static long long nodes = 0, nsol = 0, maxsol; static int full = (1<<26)-1;
+static int cap = 26;             /* max consonants per word: prune if the uncovered
+                                    consonants exceed cap * uncovered vowels */
+static const int VOW = (1<<0)|(1<<4)|(1<<8)|(1<<14)|(1<<20)|(1<<24);   /* a e i o u y */
 static int chosen[64];
 static u64 *stack;               /* avail bitsets per depth */
 static void rec(int depth, int covered, int left){
@@ -26,6 +29,9 @@ static void rec(int depth, int covered, int left){
         return;
     }
     u64 *avail = stack + (size_t)depth*W;
+    {   int unc = full & ~covered;
+        int nv = __builtin_popcount(unc & VOW), ncn = __builtin_popcount(unc & ~VOW);
+        if(nv == 0 || ncn > cap * nv) return; }
     int best=-1, bestc=1<<30;
     for(int b=0;b<26;b++){
         if(covered>>b & 1) continue;
@@ -56,6 +62,7 @@ int main(int argc, char**argv){
     if(argc<4){ fprintf(stderr,"usage\n"); return 1; }
     FILE*f=fopen(argv[1],"r"); maxsol=atoll(argv[2]); int budget=atoi(argv[3]);
     if(argc>4) full=atoi(argv[4]);
+    if(argc>5) cap=atoi(argv[5]);
     int cap=1<<16; wmask=malloc(cap*4); wcost=malloc(cap*4); N=0; maxcost=0;
     unsigned long long m; int c;
     while(fscanf(f,"%llu %d",&m,&c)==2){ if(N==cap){cap*=2; wmask=realloc(wmask,cap*4); wcost=realloc(wcost,cap*4);} wmask[N]=(uint32_t)m; wcost[N]=c; if(c>maxcost)maxcost=c; N++; }
