@@ -19,3 +19,7 @@ Inviscid 1D Hou-Luo model on an adaptive mesh: N=16384 L=128
     t=0.812018 max|w|=      21.9 x*=1.095e-04 hmin=8.16e-07 x*/hmin= 134.1 tail= 3.5e-12 dt= 7.8e-05 (1244.3s)
     remesh #2 at t=0.821349: r=3.108e-03 hmin=2.10e-07 x*/hmin=186
     remesh #3 at t=0.829728: r=7.754e-04 hmin=5.40e-08 x*/hmin=187
+    remesh #4 at t=0.835127: r=1.928e-04 hmin=1.38e-08 x*/hmin=187
+    t=0.835853 max|w|=     80.28 x*=2.024e-06 hmin=1.38e-08 x*/hmin= 146.9 tail= 1.4e-12 dt= 2.0e-05 (1322.6s)
+    remesh #5 at t=0.838552: r=4.815e-05 hmin=3.53e-09 x*/hmin=187
+    remesh #6 at t=0.840726: r=1.204e-05 hmin=9.08e-10 x*/hmin=187
