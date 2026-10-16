@@ -194,12 +194,16 @@ Not part of the fixed task (which keeps base 26), but it isolates the
 value(w) = Σ dᵢ·b^(k−i) obeys two congruences at once:
 
 * b^k ≡ 0 (mod b) for k ≥ 1, so **value ≡ last digit (mod b)**: a prime word
-  must end in a letter whose digit is coprime to b (φ(b)/b of the digits);
+  of two or more letters must end in a letter whose digit is coprime to b
+  (φ(b)/b of the digits);
 * b ≡ 1 (mod b−1), so **value ≡ sum of the digits (mod b−1)**: a prime word's
-  digit sum must be coprime to b−1.  For an odd base that makes every prime
-  word's digit sum odd, and since the 26 letters sum to 351 (odd), a perfect
-  pangram of prime words must then consist of an **odd number of words**
-  (3 or 5), which the English clusters cannot pack.
+  digit sum must be coprime to b−1 (again for values above b−1; the
+  one-letter word E = 5 is the only exception met in the scan, e.g. it is
+  prime in bases 25, 30 and 31 although 5 divides b or b−1 there).  For an
+  odd base that makes every multi-letter prime word's digit sum odd, and
+  since the 26 letters sum to 351 (odd), a perfect pangram of prime words
+  must then consist of an **odd number of words** (3 or 5, allowing for E),
+  which the English clusters cannot pack.
 
 `congruences.py` tabulates both filters; `PANGRAM_BASE=b python3
 run_base_scan.py` reruns the English-cluster regime (same lists, 1–2 vowels,
@@ -219,11 +223,14 @@ engine count (two moduli):
 
 Every count is exact (engine, two 31-bit moduli, far above the bound N₀ of
 that base's dictionary), and every 0 was also obtained by the exhaustive
-exact-cover search (`witness: None`), independently of the engine.
+exact-cover search (`witness: None`), independently of the engine.  The base-26 row is the task's own result (`run_a_english.py`,
+`run_c_english.py`); `summarize_bases.py` inserts it next to the scanned
+bases.
 
 So no base escapes: even bases lose half the final letters to the first
-congruence (base 26 keeps 12 of 26, base 24 only 9, base 30 only 7), odd and
-prime bases lose nothing there but are forced by the second congruence into
+congruence (base 26 keeps 12 of 26, base 24 only 9, base 30 only 7); odd
+bases keep most of them (25 keeps 21, 27 keeps 18) and the prime bases 29 and
+31 keep all 26, but every odd base is forced by the second congruence into
 3- or 5-word pangrams.  A "physically motivated" base, whatever it is, is
 still a base; only *which* words the two congruences strike changes.  In
 base 26 the second congruence is the mild rule "digit sum not divisible by 5"
