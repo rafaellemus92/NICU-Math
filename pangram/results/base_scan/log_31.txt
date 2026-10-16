@@ -2,3 +2,6 @@ base 31: 16,357 prime words; final letters coprime to 31: abcdefghijklmnopqrstuv
   witness: None  (84,769,038 nodes)
     block products: 169
     mod 2147483647: [0]  (144.9s)
+    block products: 169
+    mod 2147483629: [0]  (139.4s)
+  exact number of perfect pangrams of prime words, base 31: 0  (437s)

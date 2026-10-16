@@ -206,7 +206,20 @@ run_base_scan.py` reruns the English-cluster regime (same lists, 1–2 vowels,
 digits A=1..Z=26) in base b, with an exhaustive exact-cover search and the
 engine count (two moduli):
 
-<<BASE_TABLE>>
+| base b | b | b−1 | admissible final letters | word count | prime words | perfect pangrams | witness |
+|---|---|---|---|---|---|---|---|
+| 24 | 2·2·2·3 | 23 | aegkmqswy (9) | 3..6 | 23,271 | **0** | — |
+| 25 | 5·5 | 2·2·2·3 | abcdfghiklmnpqrsuvwxz (21) | odd (3 or 5) | 17,856 | **0** | — |
+| 26 | 2·13 | 5·5 | acegikoqsuwy (12) | 3..6 | 16,243 | **0** | — |
+| 27 | 3·3·3 | 2·13 | abdeghjkmnpqstvwyz (18) | odd (3 or 5) | 21,728 | **0** | — |
+| 28 | 2·2·7 | 3·3·3 | aceikmoqswy (11) | 3..6 | 17,912 | **0** | — |
+| 29 | 29 | 2·2·7 | abcdefghijklmnopqrstuvwxyz (26) | odd (3 or 5) | 16,489 | **0** | — |
+| 30 | 2·3·5 | 29 | agkmqsw (7) | 3..6 | 27,435 | **0** | — |
+| 31 | 31 | 2·3·5 | abcdefghijklmnopqrstuvwxyz (26) | odd (3 or 5) | 16,357 | **0** | — |
+
+Every count is exact (engine, two 31-bit moduli, far above the bound N₀ of
+that base's dictionary), and every 0 was also obtained by the exhaustive
+exact-cover search (`witness: None`), independently of the engine.
 
 So no base escapes: even bases lose half the final letters to the first
 congruence (base 26 keeps 12 of 26, base 24 only 9, base 30 only 7), odd and
