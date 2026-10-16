@@ -34,7 +34,7 @@ static void rec(int depth, int covered, int left){
         if(nv == 0 || ncn > cap * nv) return; }
     int best=-1, bestc=1<<30;
     for(int b=0;b<26;b++){
-        if(covered>>b & 1) continue;
+        if((covered>>b & 1) || !(full>>b & 1)) continue;   /* letters outside `full` are never needed */
         int c=0; u64 *lb = bits_letter[b];
         for(int i=0;i<W;i++) c += __builtin_popcountll(avail[i] & lb[i]);
         if(c < bestc){ bestc=c; best=b; if(c==0) return; }
