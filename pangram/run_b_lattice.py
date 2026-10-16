@@ -14,7 +14,7 @@ number of perfect pangrams (engine, CRT over `nprimes` primes), the minimum
 number of non-English clusters any solution needs (exact-cover search with a
 cost budget) and one witness.
 
-usage: python3 run_b_lattice.py <regime> [<regime> ...] [--nprimes N] [--nocount]
+usage: python3 run_b_lattice.py <regime> [<regime> ...] [--nprimes=N] [--nocount] [--minbudget=B]
        regime names like R(2,0) or F(1,3); 'A' / 'B' expand to the whole family.
 """
 import json, re, sys, time
@@ -28,6 +28,10 @@ for a in sys.argv[1:]:
     if a.startswith("--nprimes"):
         nprimes = int(a.split("=")[1])
 do_count = "--nocount" not in sys.argv
+minbudget = 0
+for a in sys.argv[1:]:
+    if a.startswith("--minbudget"):
+        minbudget = int(a.split("=")[1])   # budgets below this are already excluded (run_b_single.py)
 FAMILY_A = ["R(0,0)", "R(1,0)", "R(0,1)", "R(1,1)", "R(2,0)", "R(0,2)", "R(2,1)", "R(1,2)", "R(2,2)", "R(3,0)", "R(0,3)"]
 FAMILY_B = ["F(1,1)", "F(2,1)", "F(1,2)", "F(3,0)", "F(0,3)", "F(2,2)", "F(3,1)", "F(1,3)", "F(4,0)", "F(0,4)",
             "F(3,2)", "F(2,3)", "F(4,1)", "F(1,4)", "F(5,0)", "F(0,5)"]
@@ -60,8 +64,17 @@ def analyse(name):
     rec["packing_feasible"] = bool((dp[:, NSC - 1] <= 6).any())
     print(f"  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: {rec['packing_feasible']}", flush=True)
     found = None
-    if rec["packing_feasible"]:
-        for budget in range(0, 13):
+    if rec["packing_feasible"] and name.startswith("F"):
+        # free regimes: almost every cluster is non-English, so the foreign-cluster
+        # budget is meaningless; just find one witness.
+        sols, nodes = exact_cover_c(plain, max_solutions=1, costs=costs, budget=12, tag=name)
+        print(f"  witness search: {'solution' if sols else 'none'} ({nodes:,} nodes)", flush=True)
+        if sols:
+            s = sols[0]
+            rec["witness"] = [(words[i][0], words[i][1], words[i][3], words[i][4], costs[i]) for i in s]
+            print("  witness:", show(plain, s))
+    elif rec["packing_feasible"]:
+        for budget in range(minbudget, 13):
             sols, nodes = exact_cover_c(plain, max_solutions=1, costs=costs, budget=budget, tag=name)
             print(f"  budget {budget} foreign clusters: {'solution' if sols else 'none'} ({nodes:,} nodes)", flush=True)
             if sols:

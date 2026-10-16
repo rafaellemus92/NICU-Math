@@ -1,0 +1,3 @@
+
+=== F(2,2): 34,587 prime words (onsets 401, nuclei 6, codas 401) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True

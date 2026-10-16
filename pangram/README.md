@@ -69,3 +69,140 @@ python3 run_c_english.py
 python3 run_b_lattice.py A ; python3 run_b_lattice.py B
 for i in 0 1 2; do python3 reach.py $i; done ; python3 run_b_single.py 5
 ```
+
+## (a) Reproduction of result (1): no solution under the English lists
+
+`python3 run_a_english.py` (13 s):
+
+| quantity | value |
+|---|---|
+| pronounceable words (onset+nucleus+coda, distinct letters) | 289,404 |
+| of which prime (the dictionary) | **16,243** |
+| prime words by length 1/2/3/4/5/6/7/8/9 | 1 / 74 / 392 / 1,504 / 3,904 / 5,667 / 3,657 / 975 / 69 |
+| prime words with 1 / 2 vowels | 3,142 / 13,101 |
+| exact-cover search nodes (bitset Algorithm X, `xcover.c`) | 2,805,970 |
+| perfect pangrams of prime words | **0** |
+
+The dictionary is 16,243 words rather than 4,644 because my lists are
+larger (every plural `-s` coda such as `lks`, `mpts`, `ngths` is included, and
+both orders of a two-vowel nucleus are allowed).  The search is exhaustive;
+`run_c_english.py` recomputes the same count (0) with the completely different
+inclusion–exclusion engine as a cross-check.
+
+**Why it is impossible, independently of which numbers are prime**
+(`structure.py`).  Since 26^k ≡ 0 (mod 26), the value of a word is congruent
+to its last letter mod 26, so a prime word of two or more letters ends in a
+letter coprime to 26: `a c e g i k o q s u w y`.  Hence every non-empty coda of
+a prime word ends in `c g k q s w` ("odd coda"); only 90 of the 174 non-empty
+English codas qualify, and none of them contains `j q v z` (only `xts`/`xths`
+contain `x`).  A perfect pangram has at most 6 words (one or two vowels each),
+so the 20 consonants must be exactly covered by ≤ 6 letter-disjoint English
+onsets plus ≤ 6 letter-disjoint odd codas.  A subset DP over the 2²⁰
+consonant subsets shows that the most such a configuration can hold is
+**17 consonants** (`structure.py`), three short of 20.  So result (1) is a
+packing obstruction: the letters `j q v z` can only be onsets, each word has
+one onset, and the odd codas are too short to absorb the rest.  Every prime
+word in the dictionary indeed ends in a letter coprime to 26, and `j q v z`
+occur only in onsets (printed by `run_a_english.py`).
+
+## (d) Exact count under the free CC·V·CC rule
+
+Regime (2) of the task: onset = any 0–2 distinct consonants, nucleus = one
+vowel, coda = any 0–2 distinct consonants.  `python3 run_d_free_count.py` (42 s):
+
+| quantity | value |
+|---|---|
+| pronounceable words | 786,846 |
+| prime words | **34,587** (by length 1/2/3/4/5: 1 / 67 / 883 / 4,401 / 29,235) |
+| perfect pangrams, unordered sets of 6 words | **11,261,264,735,669** ≈ 1.126 × 10¹³ |
+| as ordered sequences (× 6!) | 8,108,110,609,681,680 |
+
+The count is exact: the engine evaluates the disjoint-union product of the six
+per-vowel word tables at the full consonant set by inclusion–exclusion with a
+rank variable, modulo three 31-bit primes, and recombines by CRT (the answer
+is far below the 9.9 × 10²⁷ CRT modulus).  Two independent confirmations:
+
+* `freedp.c` (a plain stage-by-stage DP over 2²⁰ consonant subsets, 64-bit
+  integers, no inclusion–exclusion) prints the same `11261264735669`;
+* with primality switched off the engine returns exactly the closed form
+  N₀ = 20!·[x²⁰](1+x+x²)¹² = 20!·1221 = 2,970,573,351,983,677,440,000
+  (`python3 engine.py`).
+
+Every solution has exactly six words (each word has exactly one vowel) and
+every word ends in a letter coprime to 26; the task's example
+XWOZC TVYRQ KJUMS LFE BPI HDANG is one of the 1.1 × 10¹³.
+
+## (c) First-moment estimates
+
+For a set of pangrams P (primality ignored) the first moment is
+E = Σ_{p∈P} Π_{w∈p} P(w prime).  Two densities are used:
+
+* naive: P(n prime) = 1/ln n;
+* refined: the value is ≡ last letter (mod 26), so P = 0 unless the last
+  letter is coprime to 26, and then P = (26/φ(26))/ln n = (13/6)/ln n.
+
+Both sums are computed exactly over all pangrams by the same engine with
+float weights (`engine.weighted_sum`; the 0/1-weight version reproduces the
+integer counts, and the all-ones version reproduces N₀ to 3 × 10⁻⁸).
+
+| regime | N₀ (pronounceable pangrams) | E_naive | E_refined | observed |
+|---|---|---|---|---|
+| English clusters (1–2 vowels) | <<N0_ENGLISH>> | <<E_NAIVE_ENGLISH>> | <<E_REFINED_ENGLISH>> | 0 |
+| free CC·V·CC (1 vowel) | 2.9706 × 10²¹ | 6.193 × 10¹⁴ | 1.108 × 10¹³ | 1.126 × 10¹³ |
+
+The refined first moment predicts the free-regime count to within 1.6 %
+(observed / E_refined = 1.016); the naive one is 55× too high because it
+ignores that half of all words are even and 1/13 are divisible by 13.
+<<ENGLISH_MOMENT_COMMENT>>
+
+## (b) Minimal relaxation
+
+### b.1 Add a single cluster to the English lists
+
+`reach.py` + `run_b_single.py`.  A solution with exactly one non-English
+cluster is one word `f+nucleus+e` or `e+nucleus+f` (e an English cluster or
+empty, f a string of k distinct consonants) plus a partition of the other
+letters into English prime words.  `reach.py` computes, for each of the 21
+vowel subsets of size 4–5 and each consonant subset, the exact number of
+English-prime-word partitions (three moduli + CRT); `run_b_single.py` then
+tries every (nucleus, e, k-subset) whose complement is coverable and every
+ordering of the k consonants.
+
+| k = length of the added cluster | (nucleus, e, consonant-set) with coverable complement | prime foreign words | distinct added clusters that work | solutions with exactly one foreign cluster |
+|---|---|---|---|---|
+| 1 | 0 | 0 | 0 | 0 |
+| 2 | 2,011 | 0 | 0 | 0 |
+| 3 | 80,801 | 1,599 | **100** | **946,514** |
+| 4 | 1,041,654 | 213,826 | 15,022 | 92,916,257 |
+| 5 | <<K5>> | | | |
+
+So **the smallest single addition is a 3-consonant coda**, and no 1- or
+2-consonant cluster (onset or coda) suffices.  All 100 working 3-clusters are
+codas ending in `q` <<K3_ONSET_NOTE>>: `q` is coprime to 26, so a coda ending
+in `q` is allowed arithmetically, and it lets two of the "onset-only" letters
+`j v x z` ride inside a coda, which is exactly what the packing bound said
+was missing.  The most productive additions are `jvq` (38,093 solutions),
+`vzq` (37,750), `vjq` (34,951), `jxq` (29,656), `zxq` (28,703).  Witnesses
+(each line is a complete perfect pangram of prime words; the first word
+carries the foreign coda):
+
+<<WITNESSES>>
+
+### b.2 Lattice of regimes
+
+`run_b_lattice.py`.  R(o,c) = English lists plus *all* consonant strings of
+length ≤ o as onsets and ≤ c as codas (nucleus 1–2 vowels); F(n,m) = the
+free family of the task (onset ≤ n, one vowel, coda ≤ m).  "min foreign" is
+the smallest number of non-English clusters any solution uses (exact-cover
+search with a cost budget).  "packing" is the structural bound of
+`structure.py` applied to the regime's lists (False ⇒ provably 0).
+
+| regime | prime words | packing | min foreign clusters | exact number of solutions |
+|---|---|---|---|---|
+<<LATTICE_A>>
+
+| regime (free family) | prime words | packing | exact number of solutions |
+|---|---|---|---|
+<<LATTICE_B>>
+
+<<LATTICE_COMMENT>>

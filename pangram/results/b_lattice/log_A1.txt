@@ -1,0 +1,3 @@
+
+=== R(2,0): 108,593 prime words (onsets 413, nuclei 36, codas 175) [1s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
