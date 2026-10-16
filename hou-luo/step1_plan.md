@@ -134,7 +134,7 @@ stopped because it *reached the target*, none for loss of resolution):
 | N = 4096, L = 96 | 10041 | 0.844444 | 0.8445131 | 1.0002 | 3.001 | 1.7e−10 | 16 |
 | N = 4096, L = 192 | 10006 | 0.844444 | 0.8445131 | 1.0002 | 3.001 | 1.8e−10 | 15 |
 | N = 8192 | 10030 | 0.844444 | 0.8445131 | 1.0003 | 3.001 | 2.3e−10 | 15 |
-| N = 16384 | N16384_WMAX | N16384_T | N16384_TFIT | N16384_P | N16384_C | N16384_TAIL | N16384_REM |
+| N = 16384 | 10022 | 0.844444 | 0.844444FIT | 1.0002 | 3.001 | 0.844444AIL | 14 |
 
 T agrees to 7 digits across every resolution, time step, remesh rule and map
 steepness. Over the last two decades (max|ω| 100 → 1e4) the fit gives

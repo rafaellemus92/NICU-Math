@@ -47,6 +47,29 @@
       "T_last_2_decades": 0.8445159765128943,
       "p_last_2_decades": 1.0057244762549988,
       "c_last_2_decades": 3.020335862725243
+    },
+    {
+      "N": 16384,
+      "L": 128.0,
+      "cfl": 0.5,
+      "dt_scale": 1.0,
+      "remesh_cells": 48,
+      "remesh_target": 192,
+      "status": "reached max|omega| target 10000",
+      "t_final": 0.8444441901296392,
+      "wmax_final": 10021.817085506034,
+      "xstar_final": 1.0211848095671338e-12,
+      "hmin_final": 1.7794935612281574e-14,
+      "tail_max": 2.7530183398969864e-10,
+      "n_remesh": 14,
+      "steps": 10334,
+      "seconds": 1594.4811580181122,
+      "T_last_decade": 0.8445130953221588,
+      "p_last_decade": 1.0002470853195808,
+      "c_last_decade": 3.000716412578893,
+      "T_last_2_decades": 0.8445159522308535,
+      "p_last_2_decades": 1.0056205200687474,
+      "c_last_2_decades": 3.020026338858616
     }
   ]
 }

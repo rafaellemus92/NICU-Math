@@ -23,3 +23,18 @@ Inviscid 1D Hou-Luo model on an adaptive mesh: N=16384 L=128
     t=0.835853 max|w|=     80.28 x*=2.024e-06 hmin=1.38e-08 x*/hmin= 146.9 tail= 1.4e-12 dt= 2.0e-05 (1322.6s)
     remesh #5 at t=0.838552: r=4.815e-05 hmin=3.53e-09 x*/hmin=187
     remesh #6 at t=0.840726: r=1.204e-05 hmin=9.08e-10 x*/hmin=187
+    remesh #7 at t=0.842106: r=3.008e-06 hmin=2.33e-10 x*/hmin=187
+    t=0.842208 max|w|=       300 x*=3.828e-08 hmin=2.33e-10 x*/hmin= 164.0 tail= 2.2e-12 dt= 5.3e-06 (1401.1s)
+    remesh #8 at t=0.842983: r=7.512e-07 hmin=6.01e-11 x*/hmin=186
+    remesh #9 at t=0.843540: r=1.874e-07 hmin=1.55e-11 x*/hmin=186
+    remesh #10 at t=0.843895: r=4.669e-08 hmin=3.98e-12 x*/hmin=186
+    t=0.843899 max|w|=      1123 x*=7.250e-10 hmin=3.98e-12 x*/hmin= 182.1 tail= 8.1e-12 dt= 1.4e-06 (1479.6s)
+    remesh #11 at t=0.844120: r=1.161e-08 hmin=1.03e-12 x*/hmin=185
+    remesh #12 at t=0.844263: r=2.881e-09 hmin=2.64e-13 x*/hmin=185
+    t=0.844348 max|w|=      4170 x*=1.416e-11 hmin=2.64e-13 x*/hmin=  53.7 tail= 1.0e-10 dt= 5.1e-07 (1544.0s)
+    remesh #13 at t=0.844354: r=7.197e-10 hmin=6.85e-14 x*/hmin=185
+    remesh #14 at t=0.844411: r=1.793e-10 hmin=1.78e-14 x*/hmin=184
+  N=16384  L=128 t=0.84444419  max|omega|=   10021.8  steps=10334  remeshes=14  tail_max=2.8e-10  (1594.5s)  reached max|omega| target 10000
+  last_1_decades: T = 0.8445131  p = 1.0002  c = 3.001 c0 = 3.001  (max|omega| 1e+03 .. 1e+04, max rel resid 8.3e-04)
+  last_2_decades: T = 0.8445160  p = 1.0056  c = 3.020 c0 = 3.020  (max|omega| 100 .. 1e+04, max rel resid 3.7e-02)
+Wrote step1_N16384.json and step1_N16384.npz
