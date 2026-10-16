@@ -181,7 +181,8 @@ letters into English prime words.  `reach.py` computes, for each of the 21
 vowel subsets of size 4–5 and each consonant subset, the exact number of
 English-prime-word partitions (three moduli + CRT); `run_b_single.py` then
 tries every (nucleus, e, k-subset) whose complement is coverable and every
-ordering of the k consonants.
+ordering of the k consonants (`run_b_single.py 4` takes about a minute;
+k = 5 takes 35 minutes).
 
 | k = length of the added cluster | (nucleus, e, consonant-set) with coverable complement | prime foreign words | distinct added clusters that work | solutions with exactly one foreign cluster |
 |---|---|---|---|---|
@@ -189,7 +190,7 @@ ordering of the k consonants.
 | 2 | 2,011 | 0 | 0 | 0 |
 | 3 | 80,801 | 1,599 | **100** | **946,514** |
 | 4 | 1,041,654 | 213,826 | 15,022 | 92,916,257 |
-| 5 | <<K5>> | | | |
+| 5 | 6,489,500 | 9,556,451 | 558,205 | 4,128,113,285 |
 
 So **the smallest single addition is a 3-consonant coda ending in `q`**, and
 no 1- or 2-consonant cluster (onset or coda) suffices.  The two short cases

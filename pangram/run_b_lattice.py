@@ -94,7 +94,10 @@ def analyse(name):
                 print("  witness:", show(plain, s))
                 print("  foreign clusters:", [x for x in [(o if o not in ONSET_SET else "", c if c not in CODA_SET else "")
                                               for (_, _, o, c, _) in rec["witness"]] if x != ("", "")])
+                rec["witness_foreign"] = sum(x[4] for x in rec["witness"])
                 break
+    if found is not None and found >= 12:
+        found = None            # budget search skipped (--minbudget=12): only the witness's count is known
     rec["min_foreign_clusters"] = found
     if do_count:
         if rec["packing_feasible"] is not False:
