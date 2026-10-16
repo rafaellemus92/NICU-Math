@@ -92,13 +92,25 @@ theorem hasDerivAt_field_line (g : ℝ) (v : ℝ × ℝ × ℝ) :
 derivative is the linear system. -/
 theorem hasFDerivAt_field (g : ℝ) :
     ∃ L : ℝ × ℝ × ℝ →L[ℝ] ℝ × ℝ × ℝ, HasFDerivAt (field g) L 0 ∧ ∀ v, L v = linField g v := by
-  sorry
+  have hd : DifferentiableAt ℝ (field g) 0 := by
+    unfold field cap
+    fun_prop (disch := positivity)
+  refine ⟨fderiv ℝ (field g) 0, hd.hasFDerivAt, fun v => ?_⟩
+  have hline : HasDerivAt (fun t : ℝ => t • v) v 0 := by
+    simpa using (hasDerivAt_id (0:ℝ)).smul_const v
+  have hcomp : HasDerivAt (fun t : ℝ => field g (t • v)) (fderiv ℝ (field g) 0 v) 0 := by
+    have h0 : HasFDerivAt (field g) (fderiv ℝ (field g) 0) ((0:ℝ) • v) := by
+      simpa using hd.hasFDerivAt
+    exact h0.comp_hasDerivAt (x := (0:ℝ)) hline
+  exact hcomp.unique (hasDerivAt_field_line g v)
 
 /-- The linear system is the Shared Air system matrix (`a = 1/30`, `b = 1/20`, `d = 1/4`,
 `r = 1/25`, `q = 1/10`, `h = 3/40`) acting on the state. -/
 theorem linField_eq_sysMatrix (g : ℝ) (p : ℝ × ℝ × ℝ) :
     (sysMatrix (1 / 30) (1 / 20) (1 / 4) (1 / 25) (1 / 10) (3 / 40) g).mulVec ![(p.1 : ℂ), p.2.1, p.2.2] =
       ![((linField g p).1 : ℂ), (linField g p).2.1, (linField g p).2.2] := by
-  sorry
+  ext i
+  fin_cases i <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_three, sysMatrix, linField] <;> ring
 
 end Wyrd.SharedAir

@@ -101,6 +101,30 @@ blow-up *with a smooth external force* (Clay's alternatives C/D); Clay's
 11 September 2026 statement says the problem has "apparently been settled" and
 that review is ongoing.
 
+## Shared Air (`WyrdMathlib/SharedAir/`)
+
+An audit of the *Shared Air* mother–infant model's equations, not of its
+biology. The perceived world, linearised at zero input and zero noise, is
+`x' = −a x − z + r g y`, `y' = −b y + q g x`, `z' = −d z + h g x` with the
+model's coefficients `a = 1/30`, `b = 1/20`, `d = 1/4`, `r q = 1/250`, `h = 3/40`.
+
+| Theorem | Statement |
+|---|---|
+| `hasFDerivAt_field`, `linField_eq_sysMatrix` | That linear system really is the Fréchet derivative of the model's nonlinear field (cap and cubic terms included) at rest |
+| `optimal_coupling`, `optimum_bounds` | At zero delay there is exactly one best coupling `g* ∈ (0.08035, 0.08036)`, with decay rate `−s*`, `s* ∈ (−0.048271, −0.048270)` |
+| `stable_iff`, `gc_bounds` | At zero delay the rest state is stable exactly when `g < g_c = 15/8 + √2265/24 ≈ 3.858` |
+| `delay_unstable`, `unstable_every_delay` | Above `g_c` it is unstable for **every** delay |
+| `same_synchrony_different_future_24`, `synchrony_rates` | Two 24-cell populations with the same synchrony `‖Z₁‖ = 1/2` whose synchrony changes at different rates (`K/4` and `0`): one number cannot predict its own future |
+| `hasDerivAt_freeEnergy`, `equilibrium_eq`, `equilibrium_exists` | Osmotic water flow is a gradient flow: free energy never increases, and equilibrium means equal osmolality everywhere |
+| `aggregate_counterexample` | Equal total cell volume can carry different net water flux |
+| `contrast_pos_without_coupling` | A noisier control adult makes `corr(infant, mom) − corr(infant, control)` positive with **no** bond at all |
+| `averaged_stable_equilibrium_iff`, `two_to_one_moments` | First-order averaged 2:1 locking holds iff `\|Δ\| < k`. A perfect 2:1 lock has first moment 0 and second moment 1 |
+
+**Delay caveat (numerical, not Lean):** below `g_c` delay can still destabilise.
+Two independent methods (imaginary-axis crossing, Chebyshev collocation)
+give `τ ≈ 1.8356 s` at `g = 3` and `τ ≈ 4.7613 s` at `g = 1`. The zero-delay results
+must not be read as statements about the delayed model.
+
 ## Running it
 
 ```sh

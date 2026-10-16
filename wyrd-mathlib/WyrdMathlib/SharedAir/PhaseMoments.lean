@@ -166,17 +166,34 @@ theorem same_synchrony_different_future_24 (K : ℝ) :
 theorem hasDerivAt_Z1_vel {m : ℕ} {K t : ℝ} {θ : ℝ → Fin m → ℝ}
     (h : ∀ j, HasDerivAt (fun s => θ s j) (vel K (θ t) j) t) :
     HasDerivAt (fun s => Z1 (θ s)) (Z1dot K (θ t)) t := by
-  sorry
+  -- `hasDerivAt_Z1` with `θ'ⱼ = vel K (θ t) j` is literally `Z1dot`
+  unfold Z1dot
+  exact hasDerivAt_Z1 h
 
 /-- Where `Z` is real and positive, the synchrony `R = |Z|` changes at rate `Re Z'`. -/
 theorem hasDerivAt_norm_of_real_pos {Z : ℝ → ℂ} {Z' : ℂ} {t r : ℝ} (hZ : HasDerivAt Z Z' t)
     (hr : 0 < r) (hval : Z t = r) : HasDerivAt (fun s => ‖Z s‖) Z'.re t := by
-  sorry
+  -- `‖Z‖ = √(‖Z‖²)`, and `‖Z‖²` has derivative `2 ⟪Z, Z'⟫`
+  have hnorm : ‖Z t‖ = r := by rw [hval, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr]
+  have hne : ‖Z t‖ ^ 2 ≠ 0 := by rw [hnorm]; positivity
+  have h1 := hZ.norm_sq.sqrt hne
+  have hfun : (fun s => √(‖Z s‖ ^ 2)) = fun s => ‖Z s‖ :=
+    funext fun s => Real.sqrt_sq (norm_nonneg _)
+  rw [hfun] at h1
+  convert h1 using 1
+  -- at `Z t = r`: `2 ⟪r, Z'⟫ / (2 r) = Re Z'`
+  rw [Real.sqrt_sq (norm_nonneg _), hnorm, Complex.inner, hval, Complex.conj_ofReal,
+    Complex.re_mul_ofReal]
+  field_simp
 
 /-- For `K ≠ 0` the two futures really differ. -/
 theorem different_future_of_ne {K : ℝ} (hK : K ≠ 0) :
     Z1 confA = Z1 confB ∧ Z1dot K confA ≠ Z1dot K confB := by
-  sorry
+  obtain ⟨h1, h2, h3⟩ := same_synchrony_different_future K
+  refine ⟨h1, ?_⟩
+  rw [h2, h3]
+  have hK' : (K : ℂ) ≠ 0 := by exact_mod_cast hK
+  exact div_ne_zero hK' (by norm_num)
 
 /-- **Same synchrony, different synchronisation rate**: along any trajectories through
 configurations A and B, the synchrony `R = |Z₁|` is `1/2` for both, but it changes at
@@ -186,6 +203,22 @@ theorem synchrony_rates {K t : ℝ} {θA θB : ℝ → Fin 4 → ℝ} (hA0 : θA
     (hB : ∀ j, HasDerivAt (fun s => θB s j) (vel K (θB t) j) t) :
     ‖Z1 (θA t)‖ = 1 / 2 ∧ ‖Z1 (θB t)‖ = 1 / 2 ∧
       HasDerivAt (fun s => ‖Z1 (θA s)‖) (K / 4) t ∧ HasDerivAt (fun s => ‖Z1 (θB s)‖) 0 t := by
-  sorry
+  obtain ⟨_, hA', hB'⟩ := same_synchrony_different_future K
+  -- both first moments equal the real number `1/2`
+  have eA : Z1 (θA t) = ((1 / 2 : ℝ) : ℂ) := by rw [hA0, moments_A.1]; push_cast; ring
+  have eB : Z1 (θB t) = ((1 / 2 : ℝ) : ℂ) := by rw [hB0, moments_B.1]; push_cast; ring
+  have hpos : (0 : ℝ) < 1 / 2 := by norm_num
+  have nh : ‖((1 / 2 : ℝ) : ℂ)‖ = 1 / 2 := by
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hpos]
+  refine ⟨by rw [eA, nh], by rw [eB, nh], ?_, ?_⟩
+  · have hd := hasDerivAt_Z1_vel hA
+    rw [hA0, hA'] at hd
+    have := hasDerivAt_norm_of_real_pos hd hpos eA
+    convert this using 1
+    simp
+  · have hd := hasDerivAt_Z1_vel hB
+    rw [hB0, hB'] at hd
+    have := hasDerivAt_norm_of_real_pos hd hpos eB
+    rwa [Complex.zero_re] at this
 
 end Wyrd.SharedAir

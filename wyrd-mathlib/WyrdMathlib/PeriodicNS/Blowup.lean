@@ -20,7 +20,8 @@ Proved here, about these power laws only:
   divergence the Beale–Kato–Majda criterion requires of any blow-up.
 
 This is arithmetic about the stated exponents. It does **not** prove that a
-solution with these scalings exists, which is the open Millennium problem. The
+solution with these scalings exists; that existence is open, and a smooth
+finite-energy example would settle the Millennium problem in the blow-up direction. The
 λ tables on the slides (CCF, IPM, Boussinesq) are high-precision numerical
 solutions, not proofs.
 -/

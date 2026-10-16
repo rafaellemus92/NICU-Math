@@ -131,6 +131,27 @@ theorem equilibrium_exists {m : ℕ} {K n : Fin m → ℝ} {nE W : ℝ} (hn : �
     (hW : 0 < W) :
     (∀ i, 0 < W * n i / (nE + ∑ j, n j)) ∧ 0 < VE W (fun i => W * n i / (nE + ∑ j, n j)) ∧
       ∀ i, flux K n nE W (fun i => W * n i / (nE + ∑ j, n j)) i = 0 := by
-  sorry
+  have hS : 0 < nE + ∑ j, n j := by
+    have := Finset.sum_nonneg (fun j (_ : j ∈ Finset.univ) => (hn j).le)
+    linarith
+  -- each cell volume is positive
+  have hv : ∀ i, 0 < W * n i / (nE + ∑ j, n j) := fun i => div_pos (mul_pos hW (hn i)) hS
+  -- outside water is `W n_E / N`
+  have hVE : VE W (fun i => W * n i / (nE + ∑ j, n j)) = W * nE / (nE + ∑ j, n j) := by
+    simp only [VE]
+    rw [← Finset.sum_div, ← Finset.mul_sum]
+    field_simp
+    ring
+  have hWne := hW.ne'
+  have hSne := hS.ne'
+  refine ⟨hv, by rw [hVE]; exact div_pos (mul_pos hW hnE) hS, fun i => ?_⟩
+  -- both osmolalities equal `N / W`
+  have hni := (hn i).ne'
+  have hnEne := hnE.ne'
+  have h1 : n i / (W * n i / (nE + ∑ j, n j)) = (nE + ∑ j, n j) / W := by
+    field_simp
+  have h2 : nE / (W * nE / (nE + ∑ j, n j)) = (nE + ∑ j, n j) / W := by
+    field_simp
+  simp only [flux, hVE, h1, h2, sub_self, mul_zero]
 
 end Wyrd.SharedAir

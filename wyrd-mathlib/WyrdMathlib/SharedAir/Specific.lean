@@ -49,7 +49,7 @@ theorem gc_sharedAir : gc (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) = 15 / 8 
   rw [hD, Real.sqrt_mul (by norm_num), Real.sqrt_sq (by norm_num)]
   ring
 
-/-- **The optimum, numerically**: the best dominant eigenvalue `s*` lies in
+/-- **The zero-delay optimum, numerically**: the best dominant eigenvalue `s*` lies in
 `(−0.048271, −0.048270)` and the optimal gain `g* = G(s*)` in `(0.08035, 0.08036)`. -/
 theorem optimum_bounds {s : ℝ} (hs : s ∈ Set.Ioo (-(1 / 20) : ℝ) (-(1 / 30)))
     (hH : H (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) s = 0) :
@@ -105,9 +105,9 @@ theorem unstable_every_delay {g τ : ℝ} (hg : 15 / 8 + Real.sqrt 2265 / 24 < g
   exact delay_unstable (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     hg0 hτ hP
 
-/-- The optimum exists (and is unique) for these coefficients. -/
+/-- At zero delay, the optimum exists (and is unique) for these coefficients. -/
 theorem exists_optimum :
     ∃! s, s ∈ Set.Ioo (-(1 / 20) : ℝ) (-(1 / 30)) ∧ H (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) s = 0 := by
-  sorry
+  exact existsUnique_root_H hyp_sharedAir
 
 end Wyrd.SharedAir

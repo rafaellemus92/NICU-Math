@@ -80,6 +80,9 @@ theorem delay_unstable {a b d c h g τ : ℝ} (ha : 0 < a) (hb : 0 < b) (hd : 0 
 /-- The real characteristic function is the delayed determinant at real `s`, with `c = r q`. -/
 theorem Dd_eq_det (a b d r q h g τ s : ℝ) :
     (Dd a b d (r * q) h g τ s : ℂ) = (delayMatrix a b d r q h g τ (s : ℂ)).det := by
-  sorry
+  rw [det_delayMatrix]
+  unfold Dd
+  push_cast
+  ring
 
 end Wyrd.SharedAir

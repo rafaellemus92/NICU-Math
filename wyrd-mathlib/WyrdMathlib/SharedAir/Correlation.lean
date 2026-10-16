@@ -71,6 +71,7 @@ theorem contrast_pos_without_coupling : 0 < corr X M - corr X O := by
 
 /-- The three signals have mean zero, so `corr` is the Pearson correlation. -/
 theorem signals_mean_zero : E X = 0 ∧ E M = 0 ∧ E O = 0 := by
-  sorry
+  -- each is a finite sum over Bool⁴ of sums of ±1 values that cancels
+  refine ⟨?_, ?_, ?_⟩ <;> norm_num [E, coin, X, M, O]
 
 end Wyrd.SharedAir

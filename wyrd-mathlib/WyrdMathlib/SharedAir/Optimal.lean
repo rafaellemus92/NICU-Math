@@ -19,7 +19,8 @@ Stronger coupling eventually destabilises: at zero delay, the equilibrium is
 stable (all real parts negative) exactly when `g < g_c`.
 
 **Delay changes the stability range.** Only the instability for `g > g_c`
-survives every delay (`Delay.lean`). Below `g_c`, delay can destabilise.
+survives every delay (`Delay.lean` proves it whenever `P(0, g) < 0`;
+`Specific.lean` turns that into `g > g_c` for the Shared Air coefficients). Below `g_c`, delay can destabilise.
 Numerically (two independent root searches, not a Lean proof), with the Shared
 Air coefficients: at `g = 3` stability is lost at `τ ≈ 1.84 s`, and at `g = 1` at
 `τ ≈ 4.76 s`. So the zero-delay range must not be transferred to `τ > 0`.
@@ -60,7 +61,7 @@ private theorem Optimal_root_ge {a b d c h g t : ℝ} (hp : Hyp a b d c h) (hg :
     intermediate_value_Icc htS (Optimal_P_cont a b d c h g).continuousOn ⟨ht, hPS⟩
   exact ⟨s, hs.1, hPs⟩
 
-/-- **Unique finite optimal coupling.** -/
+/-- **Unique finite optimal coupling** (zero-delay spectral rate). -/
 theorem optimal_coupling {a b d c h : ℝ} (hp : Hyp a b d c h) {s₀ : ℝ}
     (hs₀ : s₀ ∈ Set.Ioo (-b) (-a)) (hH : H a b d c h s₀ = 0) :
     0 < G b d c h s₀ ∧

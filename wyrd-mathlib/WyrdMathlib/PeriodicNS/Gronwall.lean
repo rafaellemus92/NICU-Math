@@ -52,4 +52,48 @@ theorem stretching_estimate_step {S D Zv a ν δ : ℝ} (hν : 0 ≤ ν) (hδ : 
   have h1 : 0 ≤ δ * ν * D := mul_nonneg (mul_nonneg hδ hν) hD
   nlinarith
 
+/-- **Grönwall on a finite interval**, for quantities that exist only on `[0, T]`
+(as for a solution up to its maximal time). -/
+theorem gronwall_variable_Icc {Z Z' a : ℝ → ℝ} {T : ℝ} (ha : ContinuousOn a (Set.Icc 0 T))
+    (hZ : ∀ t ∈ Set.Icc 0 T, HasDerivWithinAt Z (Z' t) (Set.Icc 0 T) t)
+    (hle : ∀ t ∈ Set.Icc 0 T, Z' t ≤ a t * Z t) {t : ℝ} (ht : t ∈ Set.Icc 0 T) :
+    Z t ≤ Z 0 * Real.exp (∫ s in (0 : ℝ)..t, a s) := by
+  obtain ⟨ht0, htT⟩ := ht
+  -- `A u = ∫₀ᵘ a`, with `A' = a` within `[0, T]` by the fundamental theorem of calculus.
+  set A : ℝ → ℝ := fun u => ∫ s in (0 : ℝ)..u, a s with hAdef
+  have hA : ∀ u ∈ Set.Icc (0 : ℝ) T, HasDerivWithinAt A (a u) (Set.Icc 0 T) u := by
+    intro u hu
+    have : Fact (u ∈ Set.Icc (0 : ℝ) T) := ⟨hu⟩
+    have hsub : Set.uIcc 0 u ⊆ Set.Icc (0 : ℝ) T := by
+      rw [Set.uIcc_of_le hu.1]; exact Set.Icc_subset_Icc le_rfl hu.2
+    have hint : IntervalIntegrable a MeasureTheory.volume 0 u :=
+      (ha.mono hsub).intervalIntegrable
+    have hmeas : StronglyMeasurableAtFilter a (nhdsWithin u (Set.Icc 0 T)) :=
+      ha.stronglyMeasurableAtFilter_nhdsWithin measurableSet_Icc u
+    exact intervalIntegral.integral_hasDerivWithinAt_right hint hmeas (ha u hu)
+  -- The integrating factor: `g = Z · exp(−A)`.
+  set g : ℝ → ℝ := fun u => Z u * Real.exp (-A u) with hgdef
+  have hg : ∀ u ∈ Set.Icc (0 : ℝ) T, HasDerivWithinAt g
+      (Z' u * Real.exp (-A u) + Z u * (Real.exp (-A u) * (-a u))) (Set.Icc 0 T) u :=
+    fun u hu => (hZ u hu).mul ((hA u hu).neg.exp)
+  -- `g' = (Z' − a Z) exp(−A) ≤ 0` on `[0, T]`, so `g` is antitone there.
+  have hanti : AntitoneOn g (Set.Icc 0 T) := by
+    refine antitoneOn_of_hasDerivWithinAt_nonpos (convex_Icc 0 T)
+      (fun u hu => (hg u hu).continuousWithinAt)
+      (fun u hu => (hg u (interior_subset hu)).mono interior_subset) ?_
+    intro u hu
+    have h1 := hle u (interior_subset hu)
+    have h2 := Real.exp_pos (-A u)
+    nlinarith
+  have hgt : g t ≤ g 0 :=
+    hanti ⟨le_rfl, ht0.trans htT⟩ ⟨ht0, htT⟩ ht0
+  have hA0 : A 0 = 0 := by simp [hAdef]
+  simp only [hgdef, hA0, neg_zero, Real.exp_zero, mul_one] at hgt
+  -- Multiply back by `exp(A t) > 0`.
+  have hE := Real.exp_pos (A t)
+  have key : Z t = Z t * Real.exp (-A t) * Real.exp (A t) := by
+    rw [mul_assoc, ← Real.exp_add, neg_add_cancel, Real.exp_zero, mul_one]
+  calc Z t = Z t * Real.exp (-A t) * Real.exp (A t) := key
+    _ ≤ Z 0 * Real.exp (A t) := mul_le_mul_of_nonneg_right hgt hE.le
+
 end Wyrd.PeriodicNS
