@@ -1,0 +1,9 @@
+{
+ "name": "random_128",
+ "order": "wugcrdxznfstoybjikvapelqmh",
+ "n_prime": 20371,
+ "witness": null,
+ "nodes": 9882004,
+ "final_letters": "bgilmnprsvwx",
+ "seconds": 23.4
+}

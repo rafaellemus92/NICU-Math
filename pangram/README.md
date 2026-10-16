@@ -53,6 +53,7 @@ is re-checked against the lists by `structure.py`).
 | `run_a_english.py` | task (a) |
 | `run_b_lattice.py` | task (b), lattice of relaxations (mixed regimes R(o,c) and free regimes F(n,m)) |
 | `reach.py`, `run_b_single.py` | task (b), the smallest *single* cluster whose addition creates a solution |
+| `orders.py`, `run_order_scan.py`, `analyze_orders.py` | digit-assignment (transliteration) experiment: physically motivated orders and 200 random controls |
 | `congruences.py`, `run_base_scan.py`, `summarize_bases.py` | base-dependence experiment: the two congruences and the English regime in bases 24–31 |
 | `resolve_r30.py`, `resolve_r30_witness.py`, `resolve_r30_count.py` | task (b), the R(3,0) case: packing bound, witness with two foreign onsets, exact count by number of foreign onsets |
 | `run_c_english.py` | task (c), English regime |
@@ -74,6 +75,7 @@ python3 run_b_lattice.py "R(3,0)" "R(0,3)" --nowitness   # witness search skippe
 for i in 0 1 2; do python3 reach.py $i; done ; python3 run_b_single.py 5
 python3 check_single.py jvq ; python3 check_onset3.py 3 ; python3 check_onset3.py 4 ; python3 check_coprime.py
 python3 resolve_r30.py ; python3 resolve_r30_witness.py ; python3 resolve_r30_count.py 2
+python3 run_order_scan.py named --count ; python3 run_order_scan.py random 0 200 ; python3 analyze_orders.py
 python3 summarize.py                                # regenerates the lattice tables from results/b_lattice/*.json
 ```
 
@@ -237,6 +239,59 @@ base 26 the second congruence is the mild rule "digit sum not divisible by 5"
 (26 ≡ 1 mod 25), which is why it was invisible until now; `congruences.py`
 checks that none of the 16,243 prime words violates it (the one exception is
 E = 5 itself).
+
+## The transliteration is the mechanism (digit-assignment experiment)
+
+The task fixes A=1 … Z=26.  That assignment, not the English clusters and
+not the base, is what makes the English regime empty.  `run_order_scan.py`
+keeps everything else fixed (English lists, 1–2 vowels, base 26) and changes
+only which letter gets which digit (`PANGRAM_ORDER`).  Four assignments
+built from the physics the thesis talks about are in `orders.py`:
+
+* `breath_path`: the nucleus first (vowels by jaw opening, i.e. first
+  formant: a o e u i y), then the consonants in the order the breath meets
+  their place of articulation on the way out (glottal h, velar k g c q x,
+  postalveolar j, alveolar t d n s z l r, labiodental f v, bilabial p b m w);
+* `lips_first`: the same path read inward, vowels last;
+* `acoustic_up` / `acoustic_down`: letters by the dominant spectral energy
+  of their usual sound, ascending (nasals lowest, sibilants highest) and
+  descending.
+
+| assignment | letter order (digit 1 … 26) | letters that can end a prime word | prime words | perfect pangrams | witness |
+|---|---|---|---|---|---|
+| alphabetical | `abcdefghijklmnopqrstuvwxyz` | acegikoqsuwy (vowels aeiouy) | 16,243 | **0** | — |
+| breath_path | `aoeuiyhkgcqxjtdnszlrfvpbmw` | adefghilmpqs (vowels aei) | 22,176 | **3,457** | ZOF VEL JAMP QYWD GNIXTH BRUCKS |
+| lips_first | `wmbpvfrlzsndtjxqcgkhyiueoa` | bcknoruvwxyz (vowels ouy) | 8,569 | **1,268** | JO VEX SQYMB DWIGN FLUTZ PHRACK |
+| acoustic_up | `mnwbdguovalrheiyjpkqctzxfs` | cdfijklmuvwz (vowels iu) | 9,108 | **2,168** | VEC JAF XIGM SQULTZ BYWD PHRONK |
+| acoustic_down | `sfxztcqkpjyiehrlavougdbwnm` | abgnopqrstxy (vowels aoy) | 22,940 | **3,813** | JA ZUMB VOGHT QINX FLYCKS DWERP |
+
+Every count is exact (engine, two moduli) and every witness was re-verified
+under its own digit map (letters once each, all values prime, every cluster
+English).  As a control, 200 random assignments (`run_order_scan.py random`,
+seeds 0–199; `analyze_orders.py`): **125 of 200 (62 %) admit solutions**.
+What decides it is parity.  A letter can end a prime word only if its digit
+is coprime to 26 (odd, not 13), and there are 12 such digits.  The Latin
+alphabet puts all six vowels on odd positions (a e i o u y = 1 5 9 15 21 25),
+so only 6 of the 12 usable digits remain for consonants, and they fall on
+c g k q s w while the consonants that actually end English codas (t n d r l
+p b f h x z) are all even; j q v x z are then pinned to onsets and the
+packing bound of `structure.py` bites.  In the random population the effect
+is monotone:
+
+| vowels on usable digits | assignments | with solutions |
+|---|---|---|
+| 0–1 | 24 | 20 |
+| 2 | 57 | 46 |
+| 3 | 70 | 40 |
+| 4 | 40 | 17 |
+| 5 | 8 | 2 |
+| 6 (the alphabetical pattern) | 1 | 0 |
+
+So the honest statement of the "mechanism" is: value ≡ last digit (mod 26)
+plus value ≡ digit sum (mod 25), applied to a transliteration in which every
+vowel is odd.  Any of the physically motivated transliterations above breaks
+that coincidence and the English clusters then yield a few thousand
+solutions; none of them makes "prime" mean anything physical.
 
 ## (b) Minimal relaxation
 
