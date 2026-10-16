@@ -1,0 +1,91 @@
+=== P1: beta = 0 ===
+ amps=(1, 0, 1, 1): Z_n harmonics for n=0..10: max|m| = 1; violations: {}  (0.5s)
+ amps=(2, 0, 5, 7): Z_n harmonics for n=0..10: max|m| = 1; violations: {}  (0.5s)
+ amps=(Fraction(3, 2), 0, Fraction(-1, 3), 2): Z_n harmonics for n=0..10: max|m| = 1; violations: {}  (0.5s)
+ structure (alpha,gamma,delta)=(2,5,7), U_0..U_8 unpruned: all kz=0: True; u2==0: True; u1 = alpha e^(-nu t) sin y exactly: True; u3 only in (kx,m) in {(1,0),(-1,0),(1,1),(-1,-1)}: True; u3 linear in (gamma,delta): True
+=== P2(a): grading d + e = n + 2 (scale amplitudes by lam) ===
+ grading d+e=n+2 holds for all n<=9, all m, lam in (2,-3/5): True
+=== P2(b): amplitude monomial of the m=2 coefficient at n=6,7 (and m=3 at n=9,10) ===
+ amps=(2, 3, 5, 7) n=6 m=2: z = -317863/3456 ; unit*a^2b^2g^2d^2 = -317863/3456 ; equal: True
+ amps=(2, 3, 5, 7) n=7 m=2: z = (1450883/2304)*nu ; unit*a^2b^2g^2d^2 = (1450883/2304)*nu ; equal: True
+ amps=(2, 3, 5, 7) n=8 m=2: z = 187463110112237/304234444800 + (-254135/192)*nu^2 ; unit*a^2b^2g^2d^2 = 7035947189629/152117222400 + (-254135/192)*nu^2 ; equal: False
+ amps=(2, 3, 5, 7) n=9 m=3: z = -149673572713/480370176 ; unit*a^3b^2g^3d^3 = -149673572713/480370176 ; equal: True
+ amps=(2, 3, 5, 7) n=10 m=3: z = (160620975738503/45635166720)*nu ; unit*a^3b^2g^3d^3 = (160620975738503/45635166720)*nu ; equal: True
+ amps=(1, 2, 1, 3) n=6 m=2: z = -6487/86400 ; unit*a^2b^2g^2d^2 = -6487/86400 ; equal: True
+ amps=(1, 2, 1, 3) n=7 m=2: z = (207269/403200)*nu ; unit*a^2b^2g^2d^2 = (207269/403200)*nu ; equal: True
+ amps=(1, 2, 1, 3) n=8 m=2: z = 174144302023/6901614720000 + (-7261/6720)*nu^2 ; unit*a^2b^2g^2d^2 = 7035947189629/186343597440000 + (-7261/6720)*nu^2 ; equal: False
+ amps=(1, 2, 1, 3) n=9 m=3: z = -21381938959/1961511552000 ; unit*a^3b^2g^3d^3 = -21381938959/1961511552000 ; equal: True
+ amps=(1, 2, 1, 3) n=10 m=3: z = (22945853676929/186343597440000)*nu ; unit*a^3b^2g^3d^3 = (22945853676929/186343597440000)*nu ; equal: True
+ amps=(Fraction(1, 2), Fraction(-2, 3), Fraction(3, 4), Fraction(5, 7)) n=6 m=2: z = -6487/97542144 ; unit*a^2b^2g^2d^2 = -6487/97542144 ; equal: True
+ amps=(Fraction(1, 2), Fraction(-2, 3), Fraction(3, 4), Fraction(5, 7)) n=7 m=2: z = (207269/455196672)*nu ; unit*a^2b^2g^2d^2 = (207269/455196672)*nu ; equal: True
+ amps=(Fraction(1, 2), Fraction(-2, 3), Fraction(3, 4), Fraction(5, 7)) n=8 m=2: z = 1474146443522747/94247761559106355200 + (-36305/37933056)*nu^2 ; unit*a^2b^2g^2d^2 = 7035947189629/210374467765862400 + (-36305/37933056)*nu^2 ; equal: False
+ amps=(Fraction(1, 2), Fraction(-2, 3), Fraction(3, 4), Fraction(5, 7)) n=9 m=3: z = -21381938959/24802042515554304 ; unit*a^3b^2g^3d^3 = -21381938959/24802042515554304 ; equal: True
+ amps=(Fraction(1, 2), Fraction(-2, 3), Fraction(3, 4), Fraction(5, 7)) n=10 m=3: z = (22945853676929/2356194038977658880)*nu ; unit*a^3b^2g^3d^3 = (22945853676929/2356194038977658880)*nu ; equal: True
+=== P2(c): exact univariate polynomial structure of z_(n,m) in each amplitude, n<=9 ===
+  alpha done (95.1s)
+  beta done (94.5s)
+  gamma done (91.9s)
+  delta done (92.3s)
+  n=0,m=0,e=0: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=1,m=0,e=1: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=1,m=1,e=0: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=2,m=0,e=0: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=2,m=0,e=2: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=2,m=1,e=1: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=3,m=0,e=1: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=3,m=0,e=3: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=3,m=1,e=0: degrees present alpha:[1]; beta:[2]; gamma:[1]; delta:[1]
+  n=3,m=1,e=2: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=4,m=0,e=0: degrees present alpha:[0, 2]; beta:[2, 4]; gamma:[0, 2]; delta:[0, 2]
+  n=4,m=0,e=2: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=4,m=0,e=4: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=4,m=1,e=1: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=4,m=1,e=3: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=5,m=0,e=1: degrees present alpha:[0, 2, 4]; beta:[0, 2, 4]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=5,m=0,e=3: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=5,m=0,e=5: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=5,m=1,e=0: degrees present alpha:[1, 3]; beta:[2, 4]; gamma:[1, 3]; delta:[1, 3]
+  n=5,m=1,e=2: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=5,m=1,e=4: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=6,m=0,e=0: degrees present alpha:[0, 2, 4]; beta:[2, 4, 6]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=6,m=0,e=2: degrees present alpha:[0, 2, 4]; beta:[0, 2, 4]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=6,m=0,e=4: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=6,m=0,e=6: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=6,m=1,e=1: degrees present alpha:[1, 3]; beta:[2, 4]; gamma:[1, 3]; delta:[1, 3]
+  n=6,m=1,e=3: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=6,m=1,e=5: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=6,m=2,e=0: degrees present alpha:[2]; beta:[2]; gamma:[2]; delta:[2]
+  n=7,m=0,e=1: degrees present alpha:[0, 2, 4]; beta:[2, 4, 6]; gamma:[0, 2, 4]; delta:[0, 2, 4, 6]
+  n=7,m=0,e=3: degrees present alpha:[0, 2, 4]; beta:[0, 2, 4]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=7,m=0,e=5: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=7,m=0,e=7: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=7,m=1,e=0: degrees present alpha:[1, 3, 5]; beta:[2, 4, 6]; gamma:[1, 3, 5]; delta:[1, 3, 5]
+  n=7,m=1,e=2: degrees present alpha:[1, 3, 5]; beta:[0, 2, 4]; gamma:[1, 3]; delta:[1, 3]
+  n=7,m=1,e=4: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=7,m=1,e=6: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=7,m=2,e=1: degrees present alpha:[2]; beta:[2]; gamma:[2]; delta:[2]
+  n=8,m=0,e=0: degrees present alpha:[0, 2, 4, 6]; beta:[2, 4, 6, 8]; gamma:[0, 2, 4, 6]; delta:[0, 2, 4, 6]
+  n=8,m=0,e=2: degrees present alpha:[0, 2, 4, 6]; beta:[0, 2, 4, 6]; gamma:[0, 2, 4, 6]; delta:[0, 2, 4, 6]
+  n=8,m=0,e=4: degrees present alpha:[0, 2, 4]; beta:[0, 2, 4]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=8,m=0,e=6: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=8,m=0,e=8: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=8,m=1,e=1: degrees present alpha:[1, 3, 5]; beta:[2, 4, 6]; gamma:[1, 3, 5]; delta:[1, 3, 5]
+  n=8,m=1,e=3: degrees present alpha:[1, 3, 5]; beta:[0, 2, 4]; gamma:[1, 3]; delta:[1, 3]
+  n=8,m=1,e=5: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=8,m=1,e=7: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=8,m=2,e=0: degrees present alpha:[2, 4]; beta:[2, 4]; gamma:[2, 4]; delta:[2, 4]
+  n=8,m=2,e=2: degrees present alpha:[2]; beta:[2]; gamma:[2]; delta:[2]
+  n=9,m=0,e=1: degrees present alpha:[0, 2, 4, 6]; beta:[2, 4, 6, 8]; gamma:[0, 2, 4, 6]; delta:[0, 2, 4, 6, 8]
+  n=9,m=0,e=3: degrees present alpha:[0, 2, 4, 6]; beta:[0, 2, 4, 6]; gamma:[0, 2, 4, 6]; delta:[0, 2, 4, 6]
+  n=9,m=0,e=5: degrees present alpha:[0, 2, 4]; beta:[0, 2, 4]; gamma:[0, 2, 4]; delta:[0, 2, 4]
+  n=9,m=0,e=7: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=9,m=0,e=9: degrees present alpha:[0, 2]; beta:[0, 2]; gamma:[0, 2]; delta:[0, 2]
+  n=9,m=1,e=0: degrees present alpha:[1, 3, 5, 7]; beta:[2, 4, 6, 8]; gamma:[1, 3, 5, 7]; delta:[1, 3, 5, 7]
+  n=9,m=1,e=2: degrees present alpha:[1, 3, 5]; beta:[2, 4, 6]; gamma:[1, 3, 5]; delta:[1, 3, 5]
+  n=9,m=1,e=4: degrees present alpha:[1, 3, 5]; beta:[0, 2, 4]; gamma:[1, 3]; delta:[1, 3]
+  n=9,m=1,e=6: degrees present alpha:[1, 3]; beta:[0, 2]; gamma:[1]; delta:[1]
+  n=9,m=1,e=8: degrees present alpha:[1]; beta:[0]; gamma:[1]; delta:[1]
+  n=9,m=2,e=1: degrees present alpha:[2, 4]; beta:[2, 4]; gamma:[2, 4]; delta:[2, 4]
+  n=9,m=2,e=3: degrees present alpha:[2]; beta:[2]; gamma:[2]; delta:[2]
+  n=9,m=3,e=0: degrees present alpha:[3]; beta:[2]; gamma:[3]; delta:[3]
+ P2 counting violations (min degree / parity rules): []

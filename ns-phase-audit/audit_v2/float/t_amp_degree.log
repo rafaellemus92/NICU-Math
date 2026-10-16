@@ -1,0 +1,75 @@
+alpha time 93.56293988227844
+beta time 92.4537296295166
+gamma time 91.84045362472534
+delta time 92.49194383621216
+noise floor (degrees k > n+2, provably zero): 1.2071481865007263e-15
+
+degrees present (|coef| > 1e-12) per variable, for m=0..4
+n= 0 m=0: a:[0, 2]  b:[0, 2]  g:[0, 2]  d:[0, 2]
+n= 1 m=0: a:[0, 2]  b:[0, 2]  g:[0, 2]  d:[0, 2]
+n= 1 m=1: a:[1]  b:[0]  g:[1]  d:[1]
+n= 2 m=0: a:[0, 2]  b:[0, 2]  g:[0, 2]  d:[0, 2]
+n= 2 m=1: a:[1]  b:[0]  g:[1]  d:[1]
+n= 3 m=0: a:[0, 2]  b:[0, 2]  g:[0, 2]  d:[0, 2]
+n= 3 m=1: a:[1]  b:[0, 2]  g:[1]  d:[1]
+n= 4 m=0: a:[0, 2]  b:[0, 2, 4]  g:[0, 2]  d:[0, 2]
+n= 4 m=1: a:[1, 3]  b:[0, 2]  g:[1]  d:[1]
+n= 5 m=0: a:[0, 2, 4]  b:[0, 2, 4]  g:[0, 2, 4]  d:[0, 2, 4]
+n= 5 m=1: a:[1, 3]  b:[0, 2, 4]  g:[1, 3]  d:[1, 3]
+n= 6 m=0: a:[0, 2, 4]  b:[0, 2, 4, 6]  g:[0, 2, 4]  d:[0, 2, 4]
+n= 6 m=1: a:[1, 3]  b:[0, 2, 4]  g:[1, 3]  d:[1, 3]
+n= 6 m=2: a:[2]  b:[2]  g:[2]  d:[2]
+n= 7 m=0: a:[0, 2, 4]  b:[0, 2, 4, 6]  g:[0, 2, 4]  d:[0, 2, 4, 6]
+n= 7 m=1: a:[1, 3, 5]  b:[0, 2, 4, 6]  g:[1, 3, 5]  d:[1, 3, 5]
+n= 7 m=2: a:[2]  b:[2]  g:[2]  d:[2]
+n= 8 m=0: a:[0, 2, 4, 6]  b:[0, 2, 4, 6, 8]  g:[0, 2, 4, 6]  d:[0, 2, 4, 6]
+n= 8 m=1: a:[1, 3, 5]  b:[0, 2, 4, 6]  g:[1, 3, 5]  d:[1, 3, 5]
+n= 8 m=2: a:[2, 4]  b:[2, 4]  g:[2, 4]  d:[2, 4]
+n= 9 m=0: a:[0, 2, 4, 6]  b:[0, 2, 4, 6, 8]  g:[0, 2, 4, 6]  d:[0, 2, 4, 6, 8]
+n= 9 m=1: a:[1, 3, 5, 7]  b:[0, 2, 4, 6, 8]  g:[1, 3, 5, 7]  d:[1, 3, 5, 7]
+n= 9 m=2: a:[2, 4]  b:[2, 4]  g:[2, 4]  d:[2, 4]
+n= 9 m=3: a:[3]  b:[2]  g:[3]  d:[3]
+n=10 m=0: a:[0, 2, 4, 6, 8]  b:[0, 2, 4, 6, 8, 10]  g:[0, 2, 4, 6, 8]  d:[0, 2, 4, 6, 8]
+n=10 m=1: a:[1, 3, 5, 7]  b:[0, 2, 4, 6, 8]  g:[1, 3, 5, 7]  d:[1, 3, 5, 7]
+n=10 m=2: a:[2, 4, 6]  b:[2, 4, 6]  g:[2, 4, 6]  d:[2, 4, 6]
+n=10 m=3: a:[3]  b:[2]  g:[3]  d:[3]
+n=11 m=0: a:[0, 2, 4, 6, 8]  b:[0, 2, 4, 6, 8, 10]  g:[0, 2, 4, 6, 8]  d:[0, 2, 4, 6, 8, 10]
+n=11 m=1: a:[1, 3, 5, 7, 9]  b:[0, 2, 4, 6, 8, 10]  g:[1, 3, 5, 7, 9]  d:[1, 3, 5, 7, 9]
+n=11 m=2: a:[2, 4, 6]  b:[2, 4, 6]  g:[2, 4, 6]  d:[2, 4, 6]
+n=11 m=3: a:[3, 5]  b:[2, 4]  g:[3, 5]  d:[3, 5]
+n=12 m=0: a:[0, 2, 4, 6, 8, 10]  b:[0, 2, 4, 6, 8, 10, 12]  g:[0, 2, 4, 6, 8, 10]  d:[0, 2, 4, 6, 8, 10]
+n=12 m=1: a:[1, 3, 5, 7, 9]  b:[0, 2, 4, 6, 8, 10]  g:[1, 3, 5, 7, 9]  d:[1, 3, 5, 7, 9]
+n=12 m=2: a:[2, 4, 6, 8]  b:[2, 4, 6, 8]  g:[2, 4, 6, 8]  d:[2, 4, 6, 8]
+n=12 m=3: a:[3, 5]  b:[2, 4]  g:[3, 5]  d:[3, 5]
+n=12 m=4: a:[4]  b:[2]  g:[4]  d:[4]
+
+violations of: deg_{alpha,gamma,delta} >= |m|, = m mod 2; deg_beta even, >=2 if |m|>=2 : none
+
+leading single-monomial checks (coefficient of X^k at generic others):
+ c_{6,2}: alpha^2 coef = -2.394944734952e-03  max|other degrees| = 5.5e-18
+ c_{6,2}: beta^2 coef = -1.205257818619e-03  max|other degrees| = 5.4e-18
+ c_{6,2}: gamma^2 coef = -9.914532948189e-04  max|other degrees| = 3.8e-18
+ c_{6,2}: delta^2 coef = -3.272916936934e-03  max|other degrees| = 1.5e-17
+ c_{7,2}: alpha^2 coef = +8.198778880872e-04  max|other degrees| = 3.6e-18
+ c_{7,2}: beta^2 coef = +4.126041910317e-04  max|other degrees| = 2.0e-18
+ c_{7,2}: gamma^2 coef = +3.394110192316e-04  max|other degrees| = 1.8e-18
+ c_{7,2}: delta^2 coef = +1.120440145017e-03  max|other degrees| = 7.4e-18
+ c_{9,3}: alpha^3 coef = -1.061569323936e-04  max|other degrees| = 4.5e-18
+ c_{9,3}: beta^2 coef = -4.434155446163e-05  max|other degrees| = 1.7e-18
+ c_{9,3}: gamma^3 coef = -2.827570919799e-05  max|other degrees| = 1.3e-18
+ c_{9,3}: delta^3 coef = -1.695928705810e-04  max|other degrees| = 6.7e-18
+ c_{10,3}: alpha^3 coef = +5.995865660181e-05  max|other degrees| = 1.2e-17
+ c_{10,3}: beta^2 coef = +2.504462004703e-05  max|other degrees| = 7.1e-18
+ c_{10,3}: gamma^3 coef = +1.597044582722e-05  max|other degrees| = 4.2e-18
+ c_{10,3}: delta^3 coef = +9.578800423116e-05  max|other degrees| = 3.0e-17
+ c_{12,4}: alpha^4 coef = -9.002229979160e-07  max|other degrees| = 1.7e-17
+ c_{12,4}: beta^2 coef = -3.120978304294e-07  max|other degrees| = 6.8e-18
+ c_{12,4}: gamma^4 coef = -1.542778691781e-07  max|other degrees| = 7.6e-18
+ c_{12,4}: delta^4 coef = -1.681237538251e-06  max|other degrees| = 3.9e-17
+
+ c62: alpha^2 coef / (beta^2 gamma^2 delta^2) = -0.002085583847736618  vs -6487/3110400 = -0.0020855838477366255
+ c62: beta^2 coef / (alpha^2 gamma^2 delta^2)  = -0.002085583847736609
+ c62: gamma^2 coef / (alpha^2 beta^2 delta^2)  = -0.0020855838477366125
+ c62: delta^2 coef / (alpha^2 beta^2 gamma^2)  = -0.00208558384773662
+ c93: alpha^3 coef / (beta^2 gamma^3 delta^3) = -0.00010093283217484938  vs unit-amplitude c93 = -0.00010093283217484565
+ c72: alpha^2 coef / (nu beta^2 gamma^2 delta^2) = 0.014279444995590782  vs 207269/14515200 = 0.014279444995590829

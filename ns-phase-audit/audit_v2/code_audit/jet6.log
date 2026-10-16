@@ -1,0 +1,35 @@
+order 0: keys=8, max nu-degree in U_n=0, elapsed=0.0s
+order 1: keys=28, max nu-degree in U_n=1, elapsed=0.0s
+order 2: keys=68, max nu-degree in U_n=2, elapsed=0.0s
+order 3: keys=190, max nu-degree in U_n=3, elapsed=0.1s
+order 4: keys=472, max nu-degree in U_n=4, elapsed=0.2s
+order 5: keys=974, max nu-degree in U_n=5, elapsed=0.9s
+order 6: keys=1814, max nu-degree in U_n=6, elapsed=3.4s
+[t^0] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=+0: (5/4)*nu^0
+[t^1] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-1: (1/8)*nu^0
+   m=+0: (-7/2)*nu^1
+   m=+1: (1/8)*nu^0
+[t^2] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-1: (-5/8)*nu^1
+   m=+0: (5/8)*nu^0 + (11/2)*nu^2
+   m=+1: (-5/8)*nu^1
+[t^3] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-1: (-1/24)*nu^0 + (17/12)*nu^2
+   m=+0: (-145/36)*nu^1 + (-19/3)*nu^3
+   m=+1: (-1/24)*nu^0 + (17/12)*nu^2
+[t^4] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-1: (1/16)*nu^1 + (-49/24)*nu^3
+   m=+0: (-3/80)*nu^0 + (41/3)*nu^2 + (35/6)*nu^4
+   m=+1: (1/16)*nu^1 + (-49/24)*nu^3
+[t^5] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-1: (2869/86400)*nu^0 + (239/480)*nu^2 + (43/20)*nu^4
+   m=+0: (-25289/48600)*nu^1 + (-2963/90)*nu^3 + (-67/15)*nu^5
+   m=+1: (2869/86400)*nu^0 + (239/480)*nu^2 + (43/20)*nu^4
+[t^6] Z, Laurent coefficients in exp(i m phi), as polynomials in nu:
+   m=-2: (-6487/3110400)*nu^0
+   m=-1: (-908723/3110400)*nu^1 + (-769/288)*nu^3 + (-107/60)*nu^5
+   m=+0: (8500748131/210161952000)*nu^0 + (145723/23328)*nu^2 + (3767/60)*nu^4 + (131/45)*nu^6
+   m=+1: (-908723/3110400)*nu^1 + (-769/288)*nu^3 + (-107/60)*nu^5
+   m=+2: (-6487/3110400)*nu^0
