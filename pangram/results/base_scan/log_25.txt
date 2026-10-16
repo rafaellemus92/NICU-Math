@@ -1,1 +1,4 @@
 base 25: 17,856 prime words; final letters coprime to 25: abcdfghiklmnpqrsuvwxz (21 of 26); prime words by last letter: {'a': 50, 'b': 665, 'c': 678, 'd': 868, 'e': 1, 'f': 487, 'g': 554, 'h': 2318, 'i': 41, 'k': 1086, 'l': 449, 'm': 795, 'n': 1015, 'p': 689, 'r': 168, 's': 6737, 'u': 54, 'w': 236, 'x': 358, 'z': 607}
+  witness: None  (191,987,219 nodes)
+    block products: 169
+    mod 2147483647: [0]  (138.3s)
