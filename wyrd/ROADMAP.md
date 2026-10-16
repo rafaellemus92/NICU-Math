@@ -9,14 +9,13 @@ Goals in rough order of difficulty. ✅ = proved, ⬜ = open.
 - ✅ Every pangram has `N ≥ 1352` (`lower_bound`).
 - ✅ The ten primes in any pangram are distinct (`primes_nodup`).
 - ✅ Every pangram has `N` even and never uses the prime 2 (`sum_even`, `two_not_mem`).
-- ⬜ **4296 is the smallest `N`.** The Python script checks this by
-  exhaustive search. To prove it in Lean, write the search as a Lean function,
-  prove it *sound* (if it says "no pangram at N", there is none), then have
-  the kernel run it on every even `N` from 1352 to 4294 (odd `N` is ruled
-  out by `sum_even`). Making it fast
-  enough for `decide +kernel` is the real challenge. `native_decide` would be
-  quick but trusts the compiler, so it doesn't count here.
-- ⬜ **Plain base-26 has no pangram up to 18,250.** Same method as above.
+- ✅ 4296 is the smallest `N` (`smallest_pangram_sum`). A kernel-run search over
+  all 1,472 remaining even sums, proved complete. No `native_decide`.
+- ⬜ **Plain base-26 has no pangram up to 18,250.** Same method as the
+  minimality proof, with the plain encoding swapped in. Expect a longer kernel
+  run: about 8,450 sums, with larger primes.
+- ⬜ **Speed up the minimality check.** Letter sets as bitmasks would make
+  the kernel search much faster, but the proofs would need lemmas about bits.
 
 ## Beyond
 

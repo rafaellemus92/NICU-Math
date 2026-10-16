@@ -11,3 +11,5 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`) — never `sorryAx`
 #print axioms Wyrd.length_primesOf
 #print axioms Wyrd.sum_even
 #print axioms Wyrd.two_not_mem
+#print axioms Wyrd.no_smaller_pangram
+#print axioms Wyrd.smallest_pangram_sum

@@ -15,6 +15,7 @@ Here no step is taken on trust: the Lean kernel checks every inference.
 | `lower_bound` | **Any** five-pair prime pangram has sum ≥ 1352 | `Wyrd/Pangram.lean` |
 | `primes_nodup` | In **any** pangram, the ten primes are all different | `Wyrd/Distinct.lean` |
 | `sum_even`, `two_not_mem` | **Any** pangram has an even sum and never uses the prime 2 | `Wyrd/Parity.lean` |
+| `smallest_pangram_sum` | **4296 is the smallest possible sum**: a pangram exists there and none exists below | `Wyrd/Smallest.lean` |
 
 `Audit.lean` prints the axioms each theorem rests on. They are only Lean's
 standard ones: no `sorry` (an unfinished proof) and no `native_decide`
@@ -33,7 +34,7 @@ was accepted. You can also paste a file into <https://live.lean-lang.org>.
 ```sh
 curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh
 cd experiments/wyrd
-lake build                 # checks every proof (~10 s)
+lake build                 # checks every proof (~10 min on 4 cores, mostly the 1,472-sum search)
 lake env lean Audit.lean   # lists the axioms used
 ```
 
@@ -51,9 +52,28 @@ proof to see the goal that is still open.
 - `simp` rewrites with known lemmas. `induction` and pattern-matching
   definitions (`| [] => … | d :: ds => …`) are proof by induction.
 
+## How "4296 is the smallest" is proved
+
+The bounds above leave the even sums 1352 … 4294: 1,472 cases. For each one,
+Lean's kernel runs a search and finds no pangram. `Wyrd/Minimal.lean` proves
+the search is *complete* (`ec_complete`): if a pangram existed, the search would
+find it. So "found nothing" really means "there is nothing".
+
+The kernel is slow and doesn't remember intermediate results, so three pieces
+of data are precomputed. None of them is trusted, because the kernel re-checks
+each one:
+
+- `Wyrd/MinimalData.lean` (from `scripts/gen_candidates.py`) lists every
+  candidate prime, plus a packed table of names. The kernel checks that every
+  number left out has a reason to be (`VB_complete`), and that the packed
+  names equal `encode` (`nameOf_all`).
+- `Wyrd/MinimalTable*.lean` (from `scripts/GenTables.lean`) store each sum's
+  candidate pairs. The kernel recomputes each list and compares
+  (`checkEntry`).
+
 ## Notes
 
-- This uses core Lean only, with no Mathlib, so it builds in seconds. Mathlib
+- This uses core Lean only, with no Mathlib. Mathlib
   (Lean's maths library) will be needed for deeper number theory. Adding it is
   one line in `lakefile.toml`.
 - `IsPrime` is defined here because core Lean has none. `primeB_sound` proves
