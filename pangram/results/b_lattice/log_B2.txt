@@ -17,3 +17,7 @@
   packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
   witness search: solution (1,405 nodes)
   witness: BI CY DGTA HLNOFK MZPUJQ XVWERS   values: 61 / 103 / 75,557 / 100,791,091 / 166,634,953 / 295,614,611
+  exact number of perfect pangrams: 16,417,633,268,700,800
+  (107s)
+
+=== F(2,3): 453,441 prime words (onsets 401, nuclei 6, codas 7241) [4s]
