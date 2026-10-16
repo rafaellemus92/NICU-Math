@@ -53,6 +53,7 @@ is re-checked against the lists by `structure.py`).
 | `run_a_english.py` | task (a) |
 | `run_b_lattice.py` | task (b), lattice of relaxations (mixed regimes R(o,c) and free regimes F(n,m)) |
 | `reach.py`, `run_b_single.py` | task (b), the smallest *single* cluster whose addition creates a solution |
+| `resolve_r30.py`, `resolve_r30_witness.py`, `resolve_r30_count.py` | task (b), the R(3,0) case: packing bound, witness with two foreign onsets, exact count by number of foreign onsets |
 | `run_c_english.py` | task (c), English regime |
 | `run_d_free_count.py`, `freedp.c` | task (d) and task (c) for the free regime; `freedp.c` is an independent second implementation of the count |
 
@@ -71,6 +72,7 @@ python3 run_b_lattice.py "R(0,0)" "R(1,0)" "R(0,1)" "R(1,1)" "R(2,0)" "R(0,2)" "
 python3 run_b_lattice.py "R(3,0)" "R(0,3)" --nowitness   # witness search skipped (see notes)
 for i in 0 1 2; do python3 reach.py $i; done ; python3 run_b_single.py 5
 python3 check_single.py jvq ; python3 check_onset3.py 3 ; python3 check_onset3.py 4 ; python3 check_coprime.py
+python3 resolve_r30.py ; python3 resolve_r30_witness.py ; python3 resolve_r30_count.py 2
 python3 summarize.py                                # regenerates the lattice tables from results/b_lattice/*.json
 ```
 
@@ -265,7 +267,7 @@ search with a cost budget).  "packing" is the structural bound of
 | R(2,1) | 110,624 | yes | 3 | 27,117,653,723 ≈ 2.71 × 10^10 | VE ZA BJUC XMONG DQYLFTHS PRIWK |
 | R(1,2) | 40,546 | yes | 2 | 475,567,462 ≈ 4.76 × 10^08 | VE ZA JOBG DWYXQ FLUMPTS CHRINK |
 | R(2,2) | 241,381 | yes | 2 | 20,886,836,221,201 ≈ 2.09 × 10^13 | ZA VE BJYG FLOXQ DWUMPTS CHRINK |
-| R(3,0) | 1,418,985 | yes | 2 or 3 (see note) | 949,086,562,609,181 ≈ 9.49 × 10^14 | VE QA BZYC XJIWK DPURG MNOLFTHS (the R(2,0) witness) |
+| R(3,0) | 1,418,985 | yes | **2** | 949,086,562,609,181 ≈ 9.49 × 10^14 | QZXENCTS VO MI DWU PHYLK BJFARG (foreign onsets `qzx`, `bjf`) |
 | R(0,3) | 435,022 | yes | 1 (b.1) | 19,884,222,065,476 ≈ 1.99 × 10^13 | ZA XEG DYJVQ FLOK BRIMPTS WHUNC (from b.1) |
 
 Notes on the R table.  "min non-English clusters" is exact where a number is
@@ -275,11 +277,16 @@ adds nothing (every single consonant is already an English onset) and R(0,1)
 only adds the single codas j, q, v; both stay packing-infeasible.  R(1,2) is
 the same dictionary as R(0,2).  For R(0,3) the minimum is 1 by section b.1
 (a single 3-coda ending in q suffices, 0 is the English case).  For R(3,0)
-the minimum is 2 or 3: it is not 1 (no single 3-consonant onset works,
-`check_onset3.py 3`), the R(2,0) witness with three 2-letter foreign onsets
-is also an R(3,0) solution, and the exhaustive budget-2 search (two foreign
-onsets of ≤ 3 letters) was stopped after 42 CPU-minutes without finishing,
-so that case is left open.
+the minimum is exactly 2 (`resolve_r30.py`, `resolve_r30_witness.py`): it is
+not 1 (no single 3-consonant onset works, `check_onset3.py 3`), the
+set-deduplicated packing DP gives the lower bound 2, and fixing one foreign
+word and solving the complement with budget 1 finds
+QZXENCTS VO MI DWU PHYLK BJFARG (values 144,860,269,703 / 587 / 347 / 3,323 /
+7,469,447 / 28,439,119; foreign onsets `qzx` and `bjf`, every coda English:
+`ncts` as in instincts, `lk`, `rg`) on the first candidate tried - the
+generic exact-cover search had simply wandered.  The exact number of R(3,0)
+solutions with exactly two non-English onsets is in `results/r30_by_cost.json`
+(`resolve_r30_count.py`): <<R30_TWO>>.
 
 | regime (free family, one vowel per word) | prime words | exact number of solutions | witness |
 |---|---|---|---|

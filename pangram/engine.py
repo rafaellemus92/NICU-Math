@@ -113,13 +113,14 @@ def build_G(words, weight_fn, mod=None, max_cost=0, dtype=None):
     return G
 
 
-def _mul(P, Q, mod, zmax):
+def _mul(P, Q, mod, zmax, xmax=None):
     """Pointwise (over S) product of 2-variable polynomials P[x][z][S], Q[x][z][S],
-    truncated to x-degree P.shape[0]-1 (same for both) and z-degree zmax."""
-    X = P.shape[0]
-    R = np.zeros((X, min(zmax, P.shape[1] + Q.shape[1] - 2) + 1, NS), dtype=P.dtype)
-    for xi in range(X):
-        for xj in range(X - xi):
+    truncated to x-degree xmax (default: P's x-degree) and z-degree zmax."""
+    if xmax is None:
+        xmax = P.shape[0] - 1
+    R = np.zeros((min(xmax, P.shape[0] + Q.shape[0] - 2) + 1, min(zmax, P.shape[1] + Q.shape[1] - 2) + 1, NS), dtype=P.dtype)
+    for xi in range(P.shape[0]):
+        for xj in range(min(Q.shape[0], xmax - xi + 1)):
             for zi in range(P.shape[1]):
                 if not P[xi, zi].any():
                     continue
@@ -134,14 +135,15 @@ def _mul(P, Q, mod, zmax):
     return R
 
 
-def count_partitions(G, mod=None, verbose=False):
+def count_partitions(G, mod=None, verbose=False, max_cost=None):
     """
     Returns array res[cost] = sum over vowel partitions pi of count(pi) with
     x-degree cost, i.e. the number (or weighted sum) of alphabet partitions
-    into dictionary words with exactly `cost` foreign clusters.
+    into dictionary words with exactly `cost` foreign clusters, for
+    cost = 0..max_cost (default: the largest per-word cost present).
     Products over blocks are shared along a DFS over vowel partitions.
     """
-    X = max(A.shape[0] for A in G.values())
+    X = max(A.shape[0] for A in G.values()) if max_cost is None else max_cost + 1
     dtype = next(iter(G.values())).dtype
     sign = np.where((NC - popcount_table()) % 2 == 0, 1, -1).astype(dtype)
     total = np.zeros(X, dtype=np.float64 if mod is None else object)
@@ -172,12 +174,12 @@ def count_partitions(G, mod=None, verbose=False):
             if P is None:
                 rec(rest, G[B])
             elif rest:
-                rec(rest, _mul(P, G[B], mod, NC))
+                rec(rest, _mul(P, G[B], mod, NC, X - 1))
             else:
                 # leaf: only the z^20 coefficient of P * G[B] is needed
                 Q = G[B]
-                for xi in range(X):
-                    for xj in range(X - xi):
+                for xi in range(P.shape[0]):
+                    for xj in range(min(Q.shape[0], X - xi)):
                         acc = None
                         for zi in range(P.shape[1]):
                             zj = NC - zi
@@ -213,15 +215,17 @@ def crt(residues, mods):
     return x % M, M
 
 
-def exact_count(words, max_cost=0, nprimes=3, verbose=False, weight_fn=None):
-    """Exact integer count(s) of alphabet partitions into `words` (by cost)."""
+def exact_count(words, max_cost=0, nprimes=3, verbose=False, weight_fn=None, word_cost_max=None):
+    """Exact integer count(s) of alphabet partitions into `words` (by cost).
+    word_cost_max: largest per-word cost to load (default max_cost); the
+    total cost is tracked up to max_cost."""
     if weight_fn is None:
         weight_fn = lambda w, v: 1
     res = []
     for p in PRIMES[:nprimes]:
         t0 = time.time()
-        G = build_G(words, weight_fn, mod=p, max_cost=max_cost)
-        r = count_partitions(G, mod=p, verbose=verbose)
+        G = build_G(words, weight_fn, mod=p, max_cost=max_cost if word_cost_max is None else word_cost_max)
+        r = count_partitions(G, mod=p, verbose=verbose, max_cost=max_cost)
         res.append([int(x) for x in r])
         if verbose:
             print(f"    mod {p}: {res[-1]}  ({time.time()-t0:.1f}s)")
