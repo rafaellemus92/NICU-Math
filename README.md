@@ -26,6 +26,8 @@ python3 experiments/coupled_prime26_pangram.py          # coupled, ~0.2s
 python3 experiments/coupled_prime26_pangram.py --plain  # plain, no solution
 ```
 
+Formal proofs of these facts (in Lean 4) live in [`wyrd/`](wyrd/).
+
 Caveat: the coupling rule was chosen after the plain search failed, so the
 result shows that *a* simple reversible naming yields a pangram, not that
 primes "want" to spell the alphabet.
