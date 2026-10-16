@@ -15,6 +15,7 @@ Here no step is taken on trust: the Lean kernel checks every inference.
 | `lower_bound` | **Any** five-pair prime pangram has sum ≥ 1352 | `Wyrd/Pangram.lean` |
 | `primes_nodup` | In **any** pangram, the ten primes are all different | `Wyrd/Distinct.lean` |
 | `sum_even`, `two_not_mem` | **Any** pangram has an even sum and never uses the prime 2 | `Wyrd/Parity.lean` |
+| `primes_infinite` | **There are infinitely many primes** (Euclid) | `Wyrd/Euclid.lean` |
 | `smallest_pangram_sum` | **4296 is the smallest possible sum**: a pangram exists there and none exists below | `Wyrd/Smallest.lean` |
 
 `Audit.lean` prints the axioms each theorem rests on. They are only Lean's
