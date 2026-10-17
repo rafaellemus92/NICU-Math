@@ -100,6 +100,7 @@ packages; audit in [`../ns-phase-audit`](../ns-phase-audit)):
 | `quantities_vphi`, `growth_iff` | `E = 1`, `Z = 5/4`, `D = 7/2` for every `φ`, but `S = cos φ / 4`. So `S − νD > 0` exactly when `cos φ > 14ν/A` |
 | `zero_growth_at_pi_div_three`, `neg_v_translate` | `φ = π/3` has zero initial growth at `ν = 1/28`, and `−v` is `u_π` shifted by `(π, π, π)` |
 | `rotShift_vphi`, `mirror_fixes_vphi`, `quantities_even` | A rotation by `π` about `z` plus a shift maps `u_φ` to `u_{−φ}`, and a mirror fixes `u_φ` |
+| `quantities_vScaled`, `no_power_law_bound`, `fitted_law_fails` | Rescaling every spatial argument by an integer `k` keeps `E = 1` but gives `Z = 5k²/4`, `D = 7k⁴/2`, `S = k³/4`. So no bound `S ≤ C Z^a D^b` with `2a + 4b < 3` is universal; the fitted `Z^0.75 D^0.2` law fails like `k^0.7` (test suggested by ChatGPT) |
 | `not_before`, `at_first_order`, `order_seven_m_two` | The counting core of the harmonic selection rules: given the 2D-3C fact, a `cos mφ` term (`\|m\| ≥ 2`) in the enstrophy Taylor series cannot appear before `t^{3\|m\|}`. There it is `ν`-free; at `t⁷` the `cos 2φ` term is `∝ ν` |
 
 **Not formalised:** the enstrophy balance `dZ/dt = S − νD` and local existence of

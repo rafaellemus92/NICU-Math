@@ -7,3 +7,4 @@ import WyrdMathlib.PeriodicNS.Blowup
 import WyrdMathlib.PeriodicNS.PhaseFamily
 import WyrdMathlib.PeriodicNS.SelectionRules
 import WyrdMathlib.PeriodicNS.PhaseSymmetry
+import WyrdMathlib.PeriodicNS.Scaling

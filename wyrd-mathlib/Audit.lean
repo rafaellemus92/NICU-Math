@@ -131,3 +131,9 @@ import WyrdMathlib
 #print axioms Wyrd.PeriodicNS.rotShift_vphi
 #print axioms Wyrd.PeriodicNS.mirror_fixes_vphi
 #print axioms Wyrd.PeriodicNS.quantities_even
+#print axioms Wyrd.PeriodicNS.vScaled_one
+#print axioms Wyrd.PeriodicNS.div_vScaled
+#print axioms Wyrd.PeriodicNS.quantities_vScaled
+#print axioms Wyrd.PeriodicNS.ratio_vScaled
+#print axioms Wyrd.PeriodicNS.no_power_law_bound
+#print axioms Wyrd.PeriodicNS.fitted_law_fails
