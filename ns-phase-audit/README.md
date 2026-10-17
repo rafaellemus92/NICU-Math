@@ -61,11 +61,11 @@ Everything both sides compute agrees.
 - **Proved, for `v = u_0`:** `E = 1`, `Z = 5/4`, `D = 7/2`, `S = 1/4`. Derivatives come from Lean `deriv`, and averages are genuine integrals.
 - **Proved, sign flip:** `±A v` share `E`, `Z`, `D` and every Fourier magnitude, but `S = ±A³/4` (`no_closure`, `no_spectral_closure`).
 - **Also proved:** a Galerkin cutoff bound, a variable-coefficient Grönwall lemma, and the Clay B/D quantifier logic.
-- **Statements only, proofs in progress.** These files still contain `sorry` and are **not** part of the default build:
-  - `PeriodicNS/PhaseFamily.lean`: `S(u_φ) = cos φ/4`, with `E, Z, D` independent of φ.
-  - `PeriodicNS/PhaseSymmetry.lean`: your rotation-plus-translation map sends `u_φ` to `u_{−φ}`.
-  - `PeriodicNS/SelectionRules.lean`: the arithmetic core of P2.
-  - `Limits/*.lean`: a separate project on the Shared Air model's limits.
+- **Proved, phase family** (`PeriodicNS/PhaseFamily.lean`): `S(u_φ) = cos φ/4`, with `E, Z, D` independent of φ; zero initial growth at `φ = π/3` (`ν = 1/28`); `−v` is a translate of `u_π`.
+- **Proved, symmetry** (`PeriodicNS/PhaseSymmetry.lean`): your rotation-plus-translation map sends `u_φ` to `u_{−φ}`, and a mirror map fixes `u_φ`.
+- **Proved, counting core of P2** (`PeriodicNS/SelectionRules.lean`): per-axis balance plus the grading force `n ≥ 3|m|`, `e = 0` and the exact monomial at `n = 3|m|`, and `e = 1` for `|m| = 2` at `n = 7`. P1 and the recurrence's monomial structure are inputs, proved on paper in `AUDIT.md` §4.2, not in Lean.
+- `Limits/*.lean` is a separate, fully proved project on the Shared Air model's limits.
+- Every file builds with no `sorry`. `Audit.lean` prints the axioms of 130 theorems: only `propext`, `Classical.choice` and `Quot.sound`.
 
 No time-dependent claim (Taylor jets, simulations) is a Lean theorem.
 
