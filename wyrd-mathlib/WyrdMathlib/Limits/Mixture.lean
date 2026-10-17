@@ -25,8 +25,8 @@ model
   mother is what separates `p` from `q`.
 * `three_conditions_miss_interaction`, `four_conditions_identify_interaction`:
   if the paths interact (`+ i · perceived · contact`), those three are not
-  enough. Adding mom apart (out of the room, or at the bedside asleep)
-  completes the 2 × 2 design and identifies everything.
+  enough. Adding mom apart (at the bedside asleep; out of the room too, if leaving
+  is assumed not to change the alike part `r`) completes the 2 × 2 design and identifies everything.
 
 What mathematics cannot do is pick the numbers: `r, p, q, i` come only from
 recordings. Additivity itself is an assumption, and the interaction model is the
@@ -54,7 +54,8 @@ def bedsideAwake : Cond := ⟨1, 0⟩
 def skinAwake : Cond := ⟨1, 1⟩
 /-- Skin-to-skin, mom asleep. -/
 def skinAsleep : Cond := ⟨0, 1⟩
-/-- Mom apart: out of the room, or at the bedside asleep. -/
+/-- Mom apart: at the bedside asleep (or out of the room, if that leaves the alike part
+`r` unchanged). -/
 def apart : Cond := ⟨0, 0⟩
 
 /-- Any single-condition result is reproduced exactly by the pure alike world. -/

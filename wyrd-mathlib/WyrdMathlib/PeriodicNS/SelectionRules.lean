@@ -26,8 +26,9 @@ This file proves the **arithmetic** that follows:
 * `at_first_order`: at `n = 3|m|` (`|m| ≥ 2`), necessarily `e = 0`
   (viscosity-independent). The term is then exactly `α^|m| β² γ^|m| δ^|m|`, with
   no opposite-sign pairs;
-* `order_seven_m_two`: for `|m| = 2` at order 7, `e = 1` and `d = 8`. So the
-  `cos 2φ` coefficient of `[t⁷] Z` is a constant times `ν` and vanishes for Euler;
+* `order_seven_m_two`: for `|m| = 2` at order 7, `e = 1` and `d = 8`. So (given P1 and
+  the recurrence structure, see below) the `cos 2φ` coefficient of `[t⁷] Z` is a
+  constant times `ν` and vanishes for Euler;
 * `euler_parity`: for `ν = 0` (`e = 0`), only `n ≡ m (mod 2)` survives.
 
 **Not formalised here** (proved on paper in the audit report, and checked by
@@ -72,27 +73,40 @@ end Counts
 
 theorem deg_ge_of_beta {c : Counts} (h : c.Balanced) (hb : 0 < c.bp + c.bm) :
     3 * c.harm.natAbs + 2 ≤ c.deg := by
-  sorry
+  obtain ⟨h1, h2, h3⟩ := h
+  simp only [Counts.harm, Counts.deg] at *
+  omega
 
 theorem deg_parity {c : Counts} (h : c.Balanced) : ((c.deg : ℤ) - c.harm) % 2 = 0 := by
-  sorry
+  obtain ⟨h1, h2, h3⟩ := h
+  simp only [Counts.harm, Counts.deg] at *
+  omega
 
 theorem not_before {c : Counts} {n e : ℕ} (h : c.Balanced) (hb : 0 < c.bp + c.bm)
     (hg : c.deg + e = n + 2) : 3 * c.harm.natAbs ≤ n := by
-  sorry
+  have := deg_ge_of_beta h hb
+  omega
 
 theorem at_first_order {c : Counts} {n e : ℕ} (h : c.Balanced) (hb : 0 < c.bp + c.bm)
     (hg : c.deg + e = n + 2) (hn : n = 3 * c.harm.natAbs) :
     e = 0 ∧ c.bp = 1 ∧ c.bm = 1 ∧ c.ap + c.am = c.harm.natAbs ∧
       c.gp + c.gm = c.harm.natAbs ∧ c.dp + c.dm = c.harm.natAbs := by
-  sorry
+  have h0 := deg_ge_of_beta h hb
+  obtain ⟨h1, h2, h3⟩ := h
+  simp only [Counts.harm, Counts.deg] at *
+  omega
 
 theorem order_seven_m_two {c : Counts} {e : ℕ} (h : c.Balanced) (hb : 0 < c.bp + c.bm)
     (hm : c.harm.natAbs = 2) (hg : c.deg + e = 7 + 2) : e = 1 ∧ c.deg = 8 := by
-  sorry
+  have h0 := deg_ge_of_beta h hb
+  have hp := deg_parity h
+  obtain ⟨h1, h2, h3⟩ := h
+  simp only [Counts.harm, Counts.deg] at *
+  omega
 
 theorem euler_parity {c : Counts} {n : ℕ} (h : c.Balanced) (hg : c.deg + 0 = n + 2) :
     ((n : ℤ) - c.harm) % 2 = 0 := by
-  sorry
+  have hp := deg_parity h
+  omega
 
 end Wyrd.PeriodicNS

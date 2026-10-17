@@ -33,14 +33,25 @@ noncomputable def mirror (u : Field) : Field :=
    fun x y z => -u.u3 (x + π) y (-z - π)⟩
 
 theorem rotShift_vphi (φ : ℝ) : rotShift (vphi φ) = vphi (-φ) := by
-  sorry
+  have h1 : ∀ y : ℝ, -sin (-y) = sin y := fun y => by rw [sin_neg]; ring
+  have h2 : ∀ z : ℝ, -sin (z + π) = sin z := fun z => by rw [sin_add_pi]; ring
+  have h3 : ∀ x y : ℝ, cos (-x) - cos (-x + -y + φ) = cos x - cos (x + y + -φ) := fun x y => by
+    rw [cos_neg, show -x + -y + φ = -(x + y + -φ) by ring, cos_neg]
+  simp only [rotShift, vphi, h1, h2, h3]
 
 theorem mirror_fixes_vphi (φ : ℝ) : mirror (vphi φ) = vphi φ := by
-  sorry
+  have h2 : ∀ z : ℝ, sin (-z - π) = sin z := fun z => by
+    rw [show -z - π = -(z + π) by ring, sin_neg, sin_add_pi]; ring
+  have h3 : ∀ x y : ℝ, -(cos (x + π) - cos (x + π + y + φ)) = cos x - cos (x + y + φ) :=
+    fun x y => by
+      rw [cos_add_pi, show x + π + y + φ = (x + y + φ) + π by ring, cos_add_pi]; ring
+  simp only [mirror, vphi, h2, h3]
 
 theorem quantities_even (φ : ℝ) :
     (vphi (-φ)).energy = (vphi φ).energy ∧ (vphi (-φ)).enstrophy = (vphi φ).enstrophy ∧
       (vphi (-φ)).palin = (vphi φ).palin ∧ (vphi (-φ)).stretching = (vphi φ).stretching := by
-  sorry
+  obtain ⟨hE, hZ, hD, hS⟩ := quantities_vphi φ
+  obtain ⟨hE', hZ', hD', hS'⟩ := quantities_vphi (-φ)
+  exact ⟨by rw [hE, hE'], by rw [hZ, hZ'], by rw [hD, hD'], by rw [hS, hS', cos_neg]⟩
 
 end Wyrd.PeriodicNS

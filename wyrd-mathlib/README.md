@@ -92,6 +92,16 @@ derivative computed by Lean's `deriv` and every average a genuine integral over
 | `energy_vanishes_speed_blows` | A shrinking core can carry vanishing energy while its speed blows up |
 | `not_B_implies_D`, `D_and_B_consistent` | Clay (B) failing gives (D); (D) with forcing does not refute (B) |
 
+**The phase family** `u_φ = (sin y, sin z, cos x − cos(x + y + φ))` (from the lab
+packages; audit in [`../ns-phase-audit`](../ns-phase-audit)):
+
+| Theorem | Statement |
+|---|---|
+| `quantities_vphi`, `growth_iff` | `E = 1`, `Z = 5/4`, `D = 7/2` for every `φ`, but `S = cos φ / 4`. So `S − νD > 0` exactly when `cos φ > 14ν/A` |
+| `zero_growth_at_pi_div_three`, `neg_v_translate` | `φ = π/3` has zero initial growth at `ν = 1/28`, and `−v` is `u_π` shifted by `(π, π, π)` |
+| `rotShift_vphi`, `mirror_fixes_vphi`, `quantities_even` | A rotation by `π` about `z` plus a shift maps `u_φ` to `u_{−φ}`, and a mirror fixes `u_φ` |
+| `not_before`, `at_first_order`, `order_seven_m_two` | The counting core of the harmonic selection rules: given the 2D-3C fact, a `cos mφ` term (`\|m\| ≥ 2`) in the enstrophy Taylor series cannot appear before `t^{3\|m\|}`. There it is `ν`-free; at `t⁷` the `cos 2φ` term is `∝ ν` |
+
 **Not formalised:** the enstrophy balance `dZ/dt = S − νD` and local existence of
 smooth solutions (both standard; Mathlib has no Navier–Stokes theory). Turning
 `no_closure` into a statement about solutions needs them. The uniform stretching
@@ -124,6 +134,25 @@ model's coefficients `a = 1/30`, `b = 1/20`, `d = 1/4`, `r q = 1/250`, `h = 3/40
 Two independent methods (imaginary-axis crossing, Chebyshev collocation)
 give `τ ≈ 1.8356 s` at `g = 3` and `τ ≈ 4.7613 s` at `g = 1`. The zero-delay results
 must not be read as statements about the delayed model.
+
+## What the Shared Air model can't tell you (`WyrdMathlib/Limits/`)
+
+The model's own list of limits, turned into theorems where mathematics has
+something exact to say.
+
+| Limit | Theorems | What is proved |
+|---|---|---|
+| Ratios other than n:1 | `lockIndex_eq_one`, `lockIndex_eq_zero`, `three_two_looks_like_three_one`, `five_three_hidden`, `resonant_average_vanishes`, `model_forcing_misses_n_m` | Under a perfect `n:m` lock the `k`-th harmonic index is 1 if `n ∣ k`, else 0. It counts bands, not ratios: 3:2 reads exactly like 3:1, and 5:3 and 4:3 are invisible to the 2nd and 3rd harmonics. For every periodic pulse shape, forcing through `sin θ` has zero first-order average along any `n:m` orbit with `m > 1` |
+| Direction of influence | `calming_reverses_lag`, `mirroring_keeps_lag`, `room_leaks_when_unmatched`, `room_cancels_iff` | Same leader, opposite assumed sign of response: the correlation peak moves from "mom first" to "infant first". A control whose exposure is timed differently produces a lag signal with no bond |
+| Which world is real | `alike_explains_any_one_condition`, `two_conditions_never_enough`, `additive_identified`, `three_conditions_miss_interaction`, `four_conditions_identify_interaction` | One or two bedside conditions never identify the mixture. Bedside-awake, skin-awake and skin-asleep do (the sleeping mother separates the paths). With interaction, the full 2 × 2 design is needed |
+| How many sessions | `sessions_chebyshev`, `sessions_enough` | A distribution-free Chebyshev bound: error `≤ δ` once `n ≥ 4σ²/(δΔ²)` |
+| Arousal is one number | `no_coactivation`, `vagal_determined_by_symp` | Sympathetic drive above rest forces vagal tone below rest; co-activation is unrepresentable |
+| Clinical values | `q10_per_degree`, `chest_warmth_bpm`, `warming_after_twelve_minutes`, `resting_rate_not_identifiable` | The stated numbers agree: 8.2% per °C, about 3.9 bpm at 140 bpm, 83.5% warmed after 12 min. Resting rate cannot separate the cells' own rate from vagal tone |
+| Whose good | `mom_untouched_iff`, `infant_best_moves_mom` | Mom stays at rest exactly when `g = 0`, while the system's best recovery needs `g* > 0`. No coupling serves both; the objective is a choice |
+| Test 4's second state | `only_rest_without_cap`, `only_rest_upto_two`, `coarousal_exists_above_two`, `coarousal_stable_at_three`, `cubic_hurwitz` | Without the capacity limit, rest is the only equilibrium on the whole sweep `0 ≤ g ≤ 3`. With it, rest is still the only one up to `g = 2`; a co-arousal equilibrium appears by `g = 2.1`, and at `g = 3` it is linearly stable, so the pair is bistable |
+
+Not mathematics, and not claimed: which world is real (only recordings decide),
+life before birth and the placenta, and any number as a clinical value.
 
 ## Running it
 

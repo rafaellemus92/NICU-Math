@@ -104,7 +104,7 @@ theorem resting_rate_not_identifiable {ω V₀ : ℝ} (hω : 0 < ω) (hV : 0 < V
   · exact div_pos (mul_pos hω hk) hk'
   · linarith
   · linarith
-  · field_simp
+  · rw [div_mul_eq_mul_div, div_mul_eq_mul_div, div_eq_iff hk'.ne']
     ring
 
 end Wyrd.Limits

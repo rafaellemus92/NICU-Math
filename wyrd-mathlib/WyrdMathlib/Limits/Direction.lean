@@ -11,8 +11,8 @@ signals (frequency `ω`) and the cross-covariance over one period:
 
   `c(h) = ⟨X(t) Y(t + h)⟩`,  `X` = infant, `Y` = mom.
 
-Covariance and correlation differ only by a positive factor, so they have the
-same sign and the same peak.
+For these stationary sinusoids, covariance and correlation differ only by a
+positive factor, so they have the same sign and the same peak (not formalised).
 
 * `xcov_sin`: for `X = α sin(ω(t − d₁))`, `Y = β sin(ω(t − d₂))`,
   `c(h) = (α β / 2) cos(ω (h + d₁ − d₂))`.
@@ -25,7 +25,7 @@ same sign and the same peak.
   response changed.
 * `room_leaks_when_unmatched`: no bond at all; infant, mom and a control adult
   all follow the room with delays `d₁, d₂, d₃`. If the control's delay differs
-  from mom's, the contrast is positive at some lag. A timing mismatch alone makes
+  from mom's (by less than a period), the contrast is positive at some lag. A timing mismatch alone makes
   a bond-free "signal".
 * `room_cancels_iff`: the contrast vanishes at every lag exactly when the
   delays match modulo the period.
