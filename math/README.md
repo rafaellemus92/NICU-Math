@@ -42,7 +42,7 @@ it is, how certain it is, and where to find it.
 | [`phase-family-perturbation/`](phase-family-perturbation/) | Finite-b experiments and sampled smallness estimates | Checked numerically; radius uncertified |
 | [`oscillation/`](oscillation/) | Lock maps and Fourier-triad coherence | Standard identities and numerical checks; clinical analogy only |
 | [`../navier_stokes/`](../navier_stokes/), [`../web/`](../web/) | Respiratory claim audit and synthetic teaching tools | Standard / Refuted / Open / Synthetic, per claim |
-| [`speech-motivations/`](speech-motivations/) | Speech-inspired research motivation | Analogy, not an implemented speech model |
+| [`speech-motivations/`](speech-motivations/) | Speech-inspired research motivation | Correspondence: analogy, not an implemented speech model |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
 
 ---

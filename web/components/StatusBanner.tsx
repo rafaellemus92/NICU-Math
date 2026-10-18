@@ -1,8 +1,8 @@
 'use client'
 
 // Status banner shared by every page of the site. The labels are the ones used
-// across math/README.md ("Status labels"): Proved in Lean | Checked numerically |
-// Audit | Open. In AGENTS.md's vocabulary these pages are hypotheses and
+// across math/README.md ("Status labels"), including Standard, Refuted, Open
+// and Synthetic. In AGENTS.md's vocabulary these pages are hypotheses and
 // synthetic teaching models, never proofs or clinical evidence.
 
 const STATUS_LABELS_URL =

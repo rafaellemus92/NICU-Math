@@ -2,6 +2,10 @@
 > Dates, passes, pending-review language and paths below describe that session.
 > Use [README.md](README.md) for current scratch-only commands and
 > [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+> For current Millennium-problem context see [RESULTS §8](RESULTS.md#8-context-the-navierstokes-millennium-problem-in-2026);
+> the v2 upload is now [`../../inputs/periodic_ns_lab_v2_audit.zip`](../../inputs/periodic_ns_lab_v2_audit.zip).
+> Historical exclusions below describe PR15 only; the consolidated tree includes
+> `requirements.txt`, `results/earlier_runs/`, and the broader letters/Shared Air material.
 
 # Results: the enstrophy Taylor jet of a phase family of Navier–Stokes flows
 
@@ -319,7 +323,7 @@ and checked them with independent code. The package's code was not modified.
 | Energy never increases | **Pass** in 45 trajectories, but this is automatic for this kind of truncated model; it checks the bookkeeping, not accuracy | `audit_csv_audit.txt` |
 | An interior optimum needs a cos 2φ term | **Partly**: the algebra is right but it only constrains the truncated series (Section 6) | — |
 
-Earlier evidence is retained in the pinned source, not recopied here: [source earlier_runs](https://github.com/rafaellemus92/NICU-Math/blob/77916bb51ea88ea6e1b2cddd2cd6e9309993383f/navier-stokes-jet/results/earlier_runs).
+Earlier evidence is now retained in [`results/earlier_runs/`](results/earlier_runs/) as well as the pinned source: [source earlier_runs](https://github.com/rafaellemus92/NICU-Math/blob/77916bb51ea88ea6e1b2cddd2cd6e9309993383f/navier-stokes-jet/results/earlier_runs).
 
 **Reproducibility gaps found.** The archive leaves out the saved flow states, so some tables need
 reruns. No packaged script writes `spatial_comparison.csv` or `curvature_crossing.csv`.

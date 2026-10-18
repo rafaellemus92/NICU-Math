@@ -2,6 +2,10 @@
 > Dates, passes, pending-review language and paths below describe that session.
 > Use [README.md](README.md) for current scratch-only commands and
 > [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+> For current Millennium-problem context see [RESULTS §8](RESULTS.md#8-context-the-navierstokes-millennium-problem-in-2026);
+> the v2 upload is now [`../../inputs/periodic_ns_lab_v2_audit.zip`](../../inputs/periodic_ns_lab_v2_audit.zip).
+> Historical exclusions below describe PR15 only; the consolidated tree includes
+> `requirements.txt`, `results/earlier_runs/`, and the broader letters/Shared Air material.
 
 # navier-stokes-jet
 
@@ -46,7 +50,7 @@ normalizing trailing polynomial zeros; it does not regenerate order 12.
 | `tests/test_jet.py` | fast pytest suite |
 | `results/series.json` | c[n, m](ν) for n ≤ 14: Z = Σ c[n,m](ν) tⁿ e^{imφ} (cosine coefficient = 2c) |
 | `results/*.log`, `*.txt`, `*.json` | outputs of the scripts above |
-| Source `results/earlier_runs/` | Not recopied; see the pinned source links in RESULTS.md |
+| Source `results/earlier_runs/` | Excluded in PR15; now retained in [`results/earlier_runs/`](results/earlier_runs/) |
 
 ## Historical run recipes (scratch copy only)
 

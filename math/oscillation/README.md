@@ -170,7 +170,7 @@ script keeps that comparison.
   "locks"; the Kuramoto analogy is to the order parameter as a measure of
   cancellation, not to the Kuramoto equations.
 - R is one number per field. The lab's exact obstruction
-  ([`../inputs/helical_lab_phase_organization_prediction_and_exact_obstruction.pdf`](https://github.com/rafaellemus92/NICU-Math/blob/0c3fe5d167059856ed78ec343ed99bf31114e7a1/math/inputs/helical_lab_phase_organization_prediction_and_exact_obstruction.pdf))
+  ([Helical lab exact-obstruction PDF in pinned source history (not shipped here)](https://github.com/rafaellemus92/NICU-Math/blob/0c3fe5d167059856ed78ec343ed99bf31114e7a1/math/inputs/helical_lab_phase_organization_prediction_and_exact_obstruction.pdf))
   shows that no finite set of such t = 0 numbers can determine the enstrophy
   curve, and the lab's forecast test found no held-out gain from its six
   channels. Nothing here overturns either result.

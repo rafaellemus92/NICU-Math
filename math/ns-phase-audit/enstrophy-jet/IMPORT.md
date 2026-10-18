@@ -2,6 +2,10 @@
 > Dates, passes, pending-review language and paths below describe that session.
 > Use [README.md](README.md) for current scratch-only commands and
 > [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+> For current Millennium-problem context see [RESULTS §8](RESULTS.md#8-context-the-navierstokes-millennium-problem-in-2026);
+> the v2 upload is now [`../../inputs/periodic_ns_lab_v2_audit.zip`](../../inputs/periodic_ns_lab_v2_audit.zip).
+> Historical exclusions below describe PR15 only; the consolidated tree includes
+> `requirements.txt`, `results/earlier_runs/`, and the broader letters/Shared Air material.
 
 > Historical PR15 import record, retained with commands relocated to the canonical
 > `math/ns-phase-audit/enstrophy-jet/` folder. Source map paths refer to that
@@ -19,8 +23,8 @@ No whole-branch merge. The source authors/AI credits remain in RESULTS.md.
 
 ## Selection and adaptations
 
-`navier-stokes-jet/` is relocated under `math/`, excluding its dependency
-manifest and duplicative earlier-run archive. The complete coefficient table is
+PR15 relocated `navier-stokes-jet/` under `math/`, initially excluding its dependency
+manifest and earlier-run archive; both are present in this consolidated folder. The complete coefficient table is
 kept for self-contained reproduction, including the intentional 0–12 overlap.
 Shared Air audit/tools/results are selectively relocated to `math/shared-air/`;
 HTML, manifest, app-writing regeneration tool, machine-specific browser tool/log

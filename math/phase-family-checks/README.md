@@ -127,8 +127,8 @@ Verified:
   the three energy inequalities at the chosen integer s ≥ 4. The canonical
   proof cites Kato–Ponce and first-derivative Sobolev control, sufficient for
   s ≥ 3; s ≥ 4 is retained for the stated theorem and radius figures, not
-  forced by a second-derivative embedding requirement. Poincaré has constant 1;
-  the Riccati comparison, which is exact.
+  forced by a second-derivative embedding requirement. Poincaré has constant 1,
+  and the Riccati comparison is exact.
 - The equations for q₁, q₂, q₃, the bounds with one derivative lost per level, the
   remainder equation, the estimate for e, the observable expansion with six
   stretching slots, and the translation parity. The b⁴ term is genuine:
@@ -180,10 +180,11 @@ Corrections and caveats:
   The package README discloses most of this.
 - Historical review correction: the canonical note now cites Kato–Ponce;
   first-derivative control suffices for these inequalities at s ≥ 3. The
-  earlier second-derivative requirement was unnecessarily strong; the shift-norm L and the majorant L_j
-  share a letter; the (1+n²) weight fails the shift bound at n = 1 and the
-  appendix's (2+n²) weight is the right one; "independent of the Galerkin
-  cutoff" is true but unargued.
+  earlier second-derivative requirement was unnecessarily strong. Other
+  historical observations: the shift norm L and the majorant L_j share a letter;
+  the (1+n²) weight fails the shift bound at n = 1, whereas the appendix's
+  (2+n²) weight is the right one. The historical review found the claim
+  "independent of the Galerkin cutoff" true but unargued.
 - On this folder's own numbers: the K = N//3 boundary aliasing of the first
   solver changes E, Z and the cos 2φ coefficient by at most 6.5e-5 relative at
   T = 1 and is sub-dominant to resolution at T = 8; the earlier numbers stand.

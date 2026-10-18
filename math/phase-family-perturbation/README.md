@@ -262,7 +262,8 @@ the least by t = 4; the restored mode does not cause this.
 
 The canonical all-time note gives an unrefereed paper argument applying known
 large-solution stability, with symbolic constants. The sampled sufficient
-smallness estimates here are conservative and uncertified; there is no basis
+smallness estimates here are uncertified: sampled norms are not rigorous upper
+bounds. There is no basis
 for saying that a theorem is “wrong by eighty orders.” A ceiling on a
 sufficient-condition threshold is an upper bound, not a usable sufficient
 radius or a stability boundary. Finite-b simulations do not determine any of

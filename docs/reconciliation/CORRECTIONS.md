@@ -20,7 +20,7 @@ production deployment and retirement of source PRs remain separate decisions.
 | 7. Standard label absent | Added Standard, Refuted and Synthetic definitions to the linked math legend. Standard means established result under assumptions, not novelty or a Lean certificate. |
 | 8. Missing Helical payloads | Source path, byte size and SHA256 documented for all three omitted files, read from pinned 0c3fe5d. Available in source history, absent from selected working tree; no licensed payload import. Optional ensemble rerun requires a verified authorized ZIP and writes to a fresh scratch path. |
 | 9. Novelty statement | Removed “new part” assertion; explicit response calculation does not establish novelty. |
-| Favicon | Restored PR18's inline SVG icon metadata and standalone Shared Air data icon without changing model code or dependencies. Browser checks confirm icons and no resource 404s. |
+| Favicon | Restored PR18's inline SVG icon metadata and standalone Shared Air data icon without changing model code or dependencies. Browser checks confirm icons and no resource 404s. The current full page hash and icon-only change are documented in the Shared Air README; fresh [quick_check.rerun.txt](../../math/shared-air/results/checks/quick_check.rerun.txt) verifies all 16 fields while the original log stays historical. |
 | PR7 hosting corrections | Historical root-FastAPI success distinguished from current Next.js target; separate API deployment requires its own review. Historical decision boundary and authorized PR19 preview status clarified. |
 | PR15 handoff/authorization | Restored historical selective-import section and its authorization limits, with canonical link and explicit historical pending-review context. |
 | Import record dates/banners | IMPORT*.md labelled historical PR15 narratives; current guide and this fresh-validation record linked. Historical passes are not represented as new runs. |
@@ -37,9 +37,12 @@ For the finite-b quotient `(O_b−O₀)/b²`, the deviation from the variational
 coefficient is expected to be O(b²), corresponding to an O(b⁴) **raw** remainder.
 Changing b from 1/4 to 1 multiplies b² by 16; an approximately sixteenfold
 quotient-error increase is an empirical observation outside the proved regime.
-The separate raw-remainder ratios near 16 on halving b are quartic checks,
-not b² scaling. Their values (including finite-time ratios near 15.3–15.9)
-must be interpreted using the stated normalization, not relabelled wholesale.
+In [`crosscheck_variational.out.txt`](../../math/phase-family-perturbation/results/crosscheck_variational.out.txt),
+the m = 1–3 E/Z/S entries give approximately 15.3–15.9 for
+`abs(Q(1)−O₂) / abs(Q(1/4)−O₂)`, where `Q(b)=(O_b−O₀)/b²`
+and O₂ is the archived variational coefficient (T = 0.5, N = 24).
+These are b² quotient-deviation checks. The separate raw-remainder ratios
+near 16 on halving b are quartic checks with a different normalization.
 Smooth discrete-map asymptotics do not certify the all-time PDE estimates.
 
 The checked ceilings 7.1421232402e−22 and 1.6265634771e−80 remain upper bounds
@@ -58,7 +61,11 @@ status after review; this local record does not presume it.
 The original delivery bundle lacked that commit and five blobs, as independently
 confirmed using a bare clone of the original bundle. It remains unchanged.
 `recovered-source-77916bb.bundle` is a supplemental complete-history bundle;
-`git bundle verify` passes. A future full package must include this supplement.
+`git bundle verify` passes. It is outside the repository at
+`/workspace/reconciliation-delivery/recovered-source-77916bb.bundle`: 11,685,895 bytes,
+SHA256 `5a2fdded5b91b1476f8bdd5b89cf66ad11884e5042f066378b1852c587459cf4`.
+This metadata describes the local deliverable, not an uploaded download.
+A future full package must include this supplement.
 The existing 110 archive hashes, source maps, Next/React manifests/lockfile and
 root `nano hybrid.patch` are unchanged.
 
@@ -68,7 +75,7 @@ Same Python 3.12.14 environment and pinned runtime dependencies as the original
 integration. Logs: `/tmp/nicu-correction-evidence/` plus web build/type/test logs
 under `/tmp/nicu-correction-*.log`.
 
-- Jet suite: **18 passed**, including six strengthened import guard cases.
+- Jet suite: **18 passed**, including six import guard cases: four strengthened and two unchanged.
 - Respiratory/physiology: **138 passed**, including the 41 physiology cases.
 - Offline suite: **12 passed**, no skips.
 - Phase-response suite: **9 passed**.
@@ -90,3 +97,16 @@ Exact correction-commit review and hosted results are reported in the PR handoff
 No long numerical campaign, local Lean kernel build, production deployment or
 clinical validation is claimed. Existing e55d74e hosted success does not validate
 this follow-up commit until its own checks run.
+
+## Final provenance follow-up
+
+Base: `2c482a55cd0aa6b35b755bc38ec3f3c6048719f6`. Updated only documentation,
+a banner comment and a separately named quick-check rerun log. Corrected source
+links, historical import exclusions, sampled-bound wording and normalization.
+The rerun matches all 16 fields; all 110 archived hashes remain unchanged.
+Broader suites above were run for the preceding correction, not repeated here.
+
+Subsequent authorization: after these corrections, independent review and green
+checks, the user authorized normal PR19 merge and verification of the resulting
+production deployment, provided main has not materially drifted. Source branches,
+tags and older PRs are to remain intact. This records permission, not completion.

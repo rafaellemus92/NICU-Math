@@ -99,9 +99,10 @@ page's file in `web/public/shared-air/`. A write test on a scratch copy gave a b
 `NODE_PATH` at an existing install; the path above is this container's. Pass a directory as the
 first argument to save screenshots.
 
-The page's sha256 is `e9017600…cd04` (printed by `quick_check.js`). It changed from `b5249de8…e295`
-on 18 October with text edits only (AUDIT.md section 7); no model code changed, and the stored
-results reproduce as before.
+The current page's SHA256 is `c40aca8feba99972edcd9300361b73071146a04cd0e7a3161e792427faf24236`,
+recorded in [`results/checks/quick_check.rerun.txt`](results/checks/quick_check.rerun.txt).
+The historical [`quick_check.txt`](results/checks/quick_check.txt) retains the audited
+`e9017600…cd04` hash; the subsequent change only restored the data favicon, with no model-code change.
 
 ## Publish status
 

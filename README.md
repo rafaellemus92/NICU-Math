@@ -122,6 +122,10 @@ deployment are changed by this reconciliation.
 ## Web application and focused physiology checks
 
 The existing Next.js application lives in `web/`, including `/shared-air`.
+The page source is [`web/public/shared-air/index.html`](web/public/shared-air/index.html);
+the production URL is https://nicu-math.vercel.app/shared-air. This branch
+describes the reviewed repository tree; production follows deployed main and
+may differ until integration and deployment are separately approved.
 Run `npm ci` and `npm run build` there. No separate lint script or ESLint
 configuration is present; `next build` performs the configured build checks.
 The Python API and Streamlit interface above remain separate services.
