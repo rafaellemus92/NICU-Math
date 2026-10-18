@@ -1,0 +1,18 @@
+amplitudes a = c = d = 1.0
+=== nu = 0.03571, phi = 0 (the cos phi = +1 member; other phases below)
+  ||grad u0||_inf: max 4.102 at t = 2.40;  at t=0 2.449;  at T 6.25e-07;  ||u0||_inf max 2.000;  ||grad^2 u0||_inf max 12.568 at t = 3.30
+  I1 = int ||grad u0||_inf dt = 44.239  (L^2 amplification bound exp(I1) = 1e19.2)
+  int ||grad^2 u0||_inf dt = 93.264
+  int (2G - nu) dt, G = 2||grad u0||_inf + ||grad^2 u0||_inf:  total 349.2;  max over t 357.4 at t = 143.50;  log10 Phi_max = 155.2
+  log10 J = log10 int Phi^2 = 312.1
+     t=   1: ||grad u0||_inf 3.386 ||grad^2 u0||_inf 5.984  int_0^t ||grad u0||_inf 2.90  log10 Phi(t) 8.6
+     t=   2: ||grad u0||_inf 4.047 ||grad^2 u0||_inf 10.023  int_0^t ||grad u0||_inf 6.67  log10 Phi(t) 22.2
+     t=   5: ||grad u0||_inf 2.279 ||grad^2 u0||_inf 8.595  int_0^t ||grad u0||_inf 17.25  log10 Phi(t) 71.1
+     t=  10: ||grad u0||_inf 0.907 ||grad^2 u0||_inf 2.033  int_0^t ||grad u0||_inf 24.01  log10 Phi(t) 99.4
+     t=  20: ||grad u0||_inf 0.493 ||grad^2 u0||_inf 0.695  int_0^t ||grad u0||_inf 30.50  log10 Phi(t) 120.8
+     t=  50: ||grad u0||_inf 0.168 ||grad^2 u0||_inf 0.169  int_0^t ||grad u0||_inf 39.54  log10 Phi(t) 144.8
+     t= 100: ||grad u0||_inf 0.028 ||grad^2 u0||_inf 0.028  int_0^t ||grad u0||_inf 43.45  log10 Phi(t) 154.3
+     t= 200: ||grad u0||_inf 0.001 ||grad^2 u0||_inf 0.001  int_0^t ||grad u0||_inf 44.22  log10 Phi(t) 154.7
+     t= 400: ||grad u0||_inf 0.000 ||grad^2 u0||_inf 0.000  int_0^t ||grad u0||_inf 44.24  log10 Phi(t) 151.7
+  phi = 1.571: max ||grad u0||_inf 3.377, I1 = 46.964, int (2G - nu) = 367.5
+  phi = 3.142: max ||grad u0||_inf 3.856, I1 = 45.492, int (2G - nu) = 351.8

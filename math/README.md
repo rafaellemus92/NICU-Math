@@ -30,6 +30,7 @@ it is, how certain it is, and where to find it.
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
 | [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
 | [`oscillation/`](oscillation/) | Phase locking: the Adler equation, the circle map (Arnold tongues) and vortex-stretching triads as a Kuramoto-type sum | Checked numerically |
+| [`phase-family-perturbation/`](phase-family-perturbation/) | The phase family without its sin z mode (two harmonics for all time), the b² law when the mode returns, and what an explicit perturbation bound costs | Checked numerically (one reviewed analytic argument) |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
 
 ---
@@ -440,6 +441,38 @@ has the definitions, the tables and the limits.
   This is an identity at one instant on given data, not a dynamics: periodic
   Navier–Stokes has no linear dispersion, so nothing "locks", and nothing here
   bears on regularity or on the lab's negative forecast result.
+
+---
+
+## 8. The phase family with and without its sin z mode (18 October)
+
+**Checked numerically**, around one analytic argument that was reviewed
+independently. Folder [`phase-family-perturbation/`](phase-family-perturbation/).
+
+- **Without the sin z mode**, u₀ = (a sin y, 0, c cos x − d cos(x + y + φ)):
+  the shear decouples, the vertical velocity obeys a linear advection–diffusion
+  equation that preserves its single x-mode, so E, Z and S have exactly the
+  form A(t) + B(t) cos φ for all time, not only through the Taylor orders of the
+  audit's statement P1. For ν = 0, Z = (a² + c² + 2d²)/4 + (acd/4) t cos φ +
+  (a²(c² + d²)/8) t², checked to 4e-15; with ν = 1/28 every higher harmonic is
+  below 2e-15.
+- **With it**, b → −b is the translation z → z + π, so the averages are even
+  in b and the higher harmonics are O(b²). Wavevector counting makes the
+  leading terms single monomials, −(6487/1555200) a²b²c²d² t⁶ for cos 2φ and
+  a³b²c³d³ times the audit's t⁹ coefficient for cos 3φ, confirmed as exact
+  rationals by the audit's jet with generic amplitudes; b⁴ enters at t⁸.
+  Simulations at b = 1, 1/2, 1/4 give ratios 4.00 at t = 0.1.
+- **The perturbative bound.** For ν > 0 the b = 0 flow decays, so its gradient
+  is integrable in time (∫‖∇u₀‖_∞ = 44 at unit amplitudes) and the standard
+  stability theorem for global strong solutions gives one b₀ for all time, not
+  one per finite horizon. Written out with explicit constants (Poincaré,
+  an Agmon constant 0.47 from lattice sums, Grönwall, a Bernoulli comparison),
+  the admissible range at ν = 1/28 is |b| < 10⁻⁸⁰ at unit amplitudes and
+  2.5·10⁻⁹ at a = c = d = 0.1, while the simulation runs b = 1 without
+  trouble and the measured amplification of a small perturbation is a factor
+  426 in enstrophy against the bound's 10⁷¹. The gap is the Grönwall factor,
+  not the quantifiers; closing it needs a computed bound on the linearized
+  propagator, not a better inequality.
 
 ---
 
