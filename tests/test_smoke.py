@@ -25,6 +25,35 @@ class OfflineAPI(unittest.TestCase):
         self.client.__exit__(None, None, None)
         self.network.stop()
 
+    def test_homepage_scope_and_resource_links(self):
+        from html.parser import HTMLParser
+
+        class PageParser(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.links = []
+                self.tags = []
+
+            def handle_starttag(self, tag, attrs):
+                self.tags.append(tag)
+                if tag == 'a':
+                    self.links.append(dict(attrs).get('href'))
+
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('text/html', response.headers['content-type'])
+        parser = PageParser()
+        parser.feed(response.text)
+        self.assertEqual(set(parser.links), {'#content', '/docs', '/healthz'})
+        self.assertEqual(parser.tags.count('h1'), 1)
+        self.assertFalse({'form', 'input', 'iframe', 'script'} & set(parser.tags))
+        for text in ['NICU-Math', 'Offline mode', 'Synthetic research and education only',
+                     'Do not enter patient data', 'unvalidated',
+                     'Streamlit research interface runs separately and is not hosted at this endpoint']:
+            self.assertIn(text, response.text)
+        self.assertEqual(self.client.get('/docs').status_code, 200)
+        self.assertEqual(self.client.get('/healthz').status_code, 200)
+
     def test_compatibility_entrypoint(self):
         from main import app as compatibility_app
         self.assertIs(compatibility_app, app)

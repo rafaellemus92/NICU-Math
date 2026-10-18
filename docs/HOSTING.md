@@ -1,4 +1,4 @@
-# Hosting assessment — no deployment performed
+# Hosting assessment — automatic preview observed
 
 ## What failed on current main
 
@@ -12,7 +12,8 @@ The user also supplied a preview-build diagnosis for branch commit `a93da83`:
 `PYTHON_REQUIREMENTS_PARSE_ERROR` at the root `-r requirements-offline.txt` include.
 The included file existed; the parser reason was not established. This branch now
 uses a flat root manifest, with a regression check against the service manifests.
-This removes that reported parser input, but the hosted build has not been rerun.
+Automatic deployment status for `53353b7` subsequently succeeded. No manual
+deployment was run. The user confirmed hosted `/healthz` reports offline/ok.
 The supplied report is distinct from the main-branch invalid-package failure.
 
 ## FastAPI and Streamlit are separate services
@@ -43,6 +44,16 @@ this entire repository, math artifacts and UI should be bundled into a function.
 Local Uvicorn/Streamlit and Compose are the supported development paths documented
 here. No Vercel credentials, project settings, build commands, environment values,
 rewrites or deployment hooks were inspected or changed. No `vercel deploy`, hosted
-preview or production deployment was requested. Keep document serving disabled.
+production deployment was requested. Authorized branch pushes triggered the existing
+automatic preview integration; those results were observed without changing settings.
+Keep document serving disabled.
 Do not treat a successful local dependency resolution or API health response as
 proof of Streamlit hosting, production security or clinical validity.
+
+## Homepage follow-up
+
+The API now serves a simple HTML introduction at `/`, with `/docs` and `/healthz`
+links and synthetic-research limitations. It is not the Streamlit application.
+Local desktop/mobile rendering and API/UI health checks passed; see HANDOFF.md.
+Direct preview requests from this environment are blocked by the network proxy
+(403), so local render checks do not claim hosted browser verification.

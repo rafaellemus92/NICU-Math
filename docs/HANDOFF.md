@@ -1,7 +1,41 @@
 # Startup and collaboration handoff — 2026-10-18
 
 
-## Current reconciliation of PRs #3, #5 and #7
+## Homepage follow-up (current)
+
+Implementation owner: Codex. Base: `53353b71517191a43e031a8687aea17cf759d514`.
+Branch: `codex/startup-collaboration`; target is the commit containing this section
+(exact SHA recorded in PR #7 and delivery). User authorized a minimal FastAPI
+homepage, local checks, commit/push and observation of automatic checks. No manual
+deployment, settings changes or merge is authorized.
+
+Before this change `/` returned 404 while `/healthz` and `/docs` worked locally.
+The user also confirmed hosted `/healthz` returned offline/ok. Added a responsive,
+dependency-free HTML homepage with links to documentation and health, explicit
+synthetic-only limitations, and a clear explanation that Streamlit runs separately.
+No forms, uploads, credentials, external page assets or services added.
+
+Passed for this change:
+- Optional environment unittest discovery: **11 passed**.
+- Offline-only `.venv` unittest discovery: **9 passed, 2 optional PDF tests skipped**.
+- `python -m compileall -q api ui tests` and `git diff --check`.
+- Live local API homepage, documentation and health, and Streamlit health: HTTP 200.
+- Chromium/Playwright at 1440x1000 and 390x844: no horizontal overflow, one h1,
+  keyboard skip/docs focus, working health navigation, no external page requests.
+  Screenshots reviewed at `/tmp/nicu-home-desktop.png` and
+  `/tmp/nicu-home-mobile.png` (temporary evidence, not repository artifacts).
+
+No new local test failures. Prior networked Docker build DNS blocker remains;
+Docker builds, math suites and optional external services were not rerun for this
+HTML-only change. No clinical validation or independent Claude review performed.
+
+At base `53353b7`, automatic Lean build, Vercel Agent Review (zero suggestions),
+Vercel Preview Comments and Vercel deployment status all succeeded. Those are
+historical results, not checks of this new commit. Current-commit automatic results
+will be recorded in PR #7 and delivery after push. Direct preview HTTP access from
+this environment is blocked (proxy 403), so hosted rendering is not verified here.
+
+## Reconciliation of PRs #3, #5 and #7 (base 53353b7)
 
 Implementation owner: Codex. User authorized reconciliation/testing/pushing on
 `codex/startup-collaboration` and updating draft #7, not merging to main, closing

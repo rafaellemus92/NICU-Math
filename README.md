@@ -18,7 +18,9 @@ In a second terminal:
 ```
 STREAMLIT_BROWSER_GATHER_USAGE_STATS=false .venv/bin/python -m streamlit run ui/app.py --server.address 127.0.0.1
 ```
-Open http://localhost:8501. `/healthz` reports `status: ok`, `mode: offline`.
+Open http://localhost:8501 for Streamlit. The API homepage at http://localhost:8000
+links to `/docs` and `/healthz` and explains the synthetic-only scope. It does not
+host Streamlit. `/healthz` reports `status: ok`, `mode: offline`.
 Scenario endpoints run synthetic computations; `/search` and `/answer` return 503
 in offline mode. No upload interface or static document serving is enabled.
 Dependency installation needs network on first setup; running scenarios does not.

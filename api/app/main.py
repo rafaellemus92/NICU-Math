@@ -3,6 +3,8 @@ from contextlib import asynccontextmanager
 import os
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
+from .homepage import render_homepage
 from .bayes import router as bayes_router
 
 # Fail closed: only an explicit 0 enables legacy external services.
@@ -35,3 +37,8 @@ else:
 @app.get("/healthz", summary="Health check")
 def healthz():
     return {"status": "ok", "mode": "offline" if OFFLINE else "evidence"}
+
+
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def homepage():
+    return render_homepage(OFFLINE)
