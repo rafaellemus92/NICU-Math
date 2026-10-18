@@ -4,8 +4,9 @@ FastAPI lives in `api/app/`, Streamlit in `ui/app.py`, and the existing math
 archive in `math/`. Root `main.py` remains a compatibility API entrypoint. Start in **offline mode**: no API key, Postgres, PDF library,
 model download or paid API call is needed. Do not enter patient data. Existing
 scenario coefficients are unvalidated toy models, not treatment recommendations.
-The intended next research scope is respiratory mechanics and neonatal hemodynamics;
-this startup repair does not implement or validate those mechanistic models.
+The integrated `physiology/` track includes a closed-form two-compartment
+passive-emptying teaching model. Broader respiratory and hemodynamic models remain
+future work; none of these models is validated for patient care.
 
 ## Local startup
 Use Python 3.11 or 3.12, from repository root:
