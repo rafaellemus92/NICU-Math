@@ -1,0 +1,28 @@
+Inviscid run (nu = 0):
+  N=8192   nu=0.0e+00  t=0.761169  max|omega|=     9.433  steps=3894   (10.8s)  stopped: grid can no longer resolve the solution
+  reciprocal-plot blowup time T ~ 0.90395
+  growth exponent p ~ 1.016  (max|omega| ~ (T-t)^-p; scaling predicts 1)
+  width exponent  c ~ 4.318  (width ~ (T-t)^c)
+
+Viscous sweep (run to t = 1.3):
+  N=8192   nu=3.0e-03  t=1.300000  max|omega|=     3.334  steps=6850   (19.0s)  reached t_end
+  N=8192   nu=1.0e-03  t=1.300000  max|omega|=     4.011  steps=6891   (18.8s)  reached t_end
+  N=8192   nu=3.0e-04  t=1.300000  max|omega|=     4.852  steps=6901   (19.0s)  reached t_end
+  N=8192   nu=1.0e-04  t=1.300000  max|omega|=     5.761  steps=6903   (18.4s)  reached t_end
+  N=8192   nu=3.0e-05  t=1.300000  max|omega|=     6.977  steps=6904   (18.8s)  reached t_end
+  nu=3.0e-03: peak max|omega| = 4.954 at t = 0.8355
+  nu=1.0e-03: peak max|omega| = 6.283 at t = 0.8395
+  nu=3.0e-04: peak max|omega| = 7.88 at t = 0.8462
+  nu=1.0e-04: peak max|omega| = 9.616 at t = 0.8515
+  nu=3.0e-05: peak max|omega| = 11.99 at t = 0.8553
+  peak max|omega| ~ nu^-0.190
+
+Grid-convergence check (inviscid):
+  N=4096   nu=0.0e+00  t=0.739349  max|omega|=      7.86  steps=1869   (2.4s)  stopped: grid can no longer resolve the solution
+  N=4096: T ~ 0.92572, p ~ 1.011, c ~ 4.274
+  N=16384  nu=0.0e+00  t=0.778431  max|omega|=     11.45  steps=8031   (42.0s)  stopped: grid can no longer resolve the solution
+  N=16384: T ~ 0.88120, p ~ 1.016, c ~ 4.128
+
+Wrote baseline_check.json
+Wrote baseline_check.png
+EXIT 0

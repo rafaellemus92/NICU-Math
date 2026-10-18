@@ -1,0 +1,44 @@
+exact-data internal checks (sym, parity, d_min, nu-degree, energy identity): violations = []
+
+(1) exact vs float tables  [t^n] Laurent c_{n,m}, all n<=12, all m in DFT range
+  nu=0     disc A: max abs diff 1.14e-15 at (0, 15); max rel diff on nonzero exact entries 7.77e-11 at (12, -4, -9.345147146365456e-07)
+  nu=0     disc B: max abs diff 2.07e-15 at (0, 18); max rel diff on nonzero exact entries 3.95e-11 at (12, 4, -9.345147146365456e-07)
+  nu=1/28  disc A: max abs diff 1.14e-15 at (0, 15); max rel diff on nonzero exact entries 5.62e-11 at (12, 4, -9.345147146365456e-07)
+  nu=1/28  disc B: max abs diff 2.07e-15 at (0, 18); max rel diff on nonzero exact entries 5.53e-11 at (12, 4, -9.345147146365456e-07)
+  nu=1/7   disc A: max abs diff 1.14e-15 at (0, 15); max rel diff on nonzero exact entries 6.45e-11 at (12, -4, -9.345147146365456e-07)
+  nu=1/7   disc B: max abs diff 2.07e-15 at (0, 18); max rel diff on nonzero exact entries 8.66e-11 at (12, -4, -9.345147146365456e-07)
+
+(2) exact vs float complex-nu DFT coefficients a[n,e,m] (r=1/2: noise ~ 5e-14 * 2^e)
+  largest r^e-scaled differences:
+    1.00e-13 n=12 m=0 e=6 exact=2951.38071255188 float=2951.38071255187
+    6.40e-14 n=11 m=0 e=5 exact=-863.605453381865 float=-863.605453381863
+    4.85e-14 n=12 m=0 e=15 exact=0 float=1.28056854009628e-09
+    4.05e-14 n=12 m=15 e=6 exact=0 float=-2.0810425197729e-12
+    4.04e-14 n=12 m=-15 e=6 exact=0 float=-2.1014821442135e-12
+    3.93e-14 n=12 m=0 e=4 exact=274.871932933394 float=274.871932933394
+  largest relative diffs on exact nonzero entries:
+    3.42e-09 n=12 m=0 e=12 exact=0.0175191064079953 float=0.0175191063481179
+    6.14e-10 n=12 m=-1 e=11 exact=-0.0240804874138207 float=-0.0240804873990328
+    5.95e-10 n=11 m=0 e=11 exact=-0.0525765592432259 float=-0.0525765592119569
+    4.91e-10 n=12 m=1 e=11 exact=-0.0240804874138207 float=-0.0240804874019886
+    3.88e-10 n=12 m=4 e=0 exact=-9.34514714636546e-07 float=-9.34514714273528e-07
+
+(3) exact vs package exact jets (Fraction equality)
+  exact_time_series.json   nu=1/28  orders 0..6: mismatches 0 []
+  node_0.json              nu=0     orders 0..6: mismatches 0 []
+  node_1.json              nu=1/28  orders 0..6: mismatches 0 []
+  node_2.json              nu=1/14  orders 0..6: mismatches 0 []
+  node_3.json              nu=1/7   orders 0..6: mismatches 0 []
+  node_4.json              nu=2/7   orders 0..6: mismatches 0 []
+  node_5.json              nu=1/2   orders 0..6: mismatches 0 []
+  node_6.json              nu=1     orders 0..6: mismatches 0 []
+
+(4) exact vs audit formal-nu jet6.json: mismatches 0 []
+
+quoted-value spot checks:
+  z62 = [Fraction(-6487, 3110400), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)]  z72 = [Fraction(0, 1), Fraction(207269, 14515200), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)]  z82 = [Fraction(7035947189629, 6708369507840000), Fraction(0, 1), Fraction(-7261, 241920), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)]
+  z60(nu=0) float= 0.04044855907600249  (float report 0.040448559076002492)
+  z93 = [Fraction(-21381938959, 211843247616000), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)] -0.00010093283217484565  (float LD -1.0093283217484565624e-4)
+  z10,3 slope 0.0011401604940471464  (float LD 1.1401604940471467415e-3)
+  z12,4 = -9.345147146365456e-07  (float LD -9.345147146365418e-7)
+  z71(nu=0) = -0.01409342007417534

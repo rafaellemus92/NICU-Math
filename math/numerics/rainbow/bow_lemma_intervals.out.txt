@@ -1,0 +1,24 @@
+n=1331/1000, k=1: cos^2 i = 257187/1000000, sin^2 r = 742813/1771561
+n=1343/1000, k=1: cos^2 i = 267883/1000000, sin^2 r = 732117/1803649
+n=1331/1000, k=2: cos^2 i = 771561/8000000, sin^2 r = 7228439/14172488
+n=1343/1000, k=2: cos^2 i = 803649/8000000, sin^2 r = 7196351/14429192
+primary red: proved-lemma interval [42.353, 42.388] deg  (stated (42,43))  margins lo=0.353 hi=0.612 conservative-ok=True
+primary violet: proved-lemma interval [40.635, 40.669] deg  (stated (40,41))  margins lo=0.635 hi=0.331 conservative-ok=True
+secondary red: proved-lemma interval [50.121, 50.626] deg  (stated (50,51))  margins lo=0.121 hi=0.374 conservative-ok=True
+secondary violet: proved-lemma interval [53.238, 53.743] deg  (stated (53,54))  margins lo=0.238 hi=0.257 conservative-ok=True
+  n=1.331 k=1: a=r=0.704342 b=pi/2-i=0.531859
+  n=1.343 k=1: a=r=0.690743 b=pi/2-i=0.544013
+  n=1.331 k=2: a=r=0.795432 b=pi/2-i=0.315778
+  n=1.343 k=2: a=r=0.784134 b=pi/2-i=0.322510
+width primary from lemma intervals: [1.684, 1.753]
+width secondary from lemma intervals: [2.613, 3.621]
+
+external reflection: D_ext = pi - 2i, angle from antisolar = 2i -> covers [0,180] incl. 43..50
+k=0: antisolar angles span [97.41,180.00] deg, enters 43-50 band: False
+k=1: antisolar angles span [0.00,42.37] deg, enters 43-50 band: False caustic at 42.37 deg
+k=2: antisolar angles span [50.37,180.00] deg, enters 43-50 band: False caustic at 50.37 deg
+k=3: antisolar angles span [0.00,179.98] deg, enters 43-50 band: True caustic at 137.53 deg
+k=4: antisolar angles span [0.09,180.00] deg, enters 43-50 band: True caustic at 137.24 deg
+k=5: antisolar angles span [0.00,179.99] deg, enters 43-50 band: True caustic at 52.92 deg
+k=6: antisolar angles span [0.11,180.00] deg, enters 43-50 band: True caustic at 30.90 deg
+k=7: antisolar angles span [0.00,179.98] deg, enters 43-50 band: True caustic at 114.41 deg

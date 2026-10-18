@@ -1,0 +1,7 @@
+g=3 tau=0: rightmost roots ['-0.0129+0.0000i', '-0.1602-0.4263i']
+g=3 tau=1.5: rightmost roots ['-0.0121+0.0000i', '-0.0273-0.4402i']
+g=3 tau=2.0: rightmost roots ['+0.0119-0.4219i', '+0.0119+0.4219i']
+g=1 tau=1.5: rightmost roots ['-0.0379+0.0000i', '-0.0904+0.2639i']
+g=1 tau=5.0: rightmost roots ['+0.0035-0.2197i', '+0.0035+0.2197i']
+g=3: stability lost at tau ≈ 1.8356
+g=1: stability lost at tau ≈ 4.7613

@@ -22,3 +22,16 @@
 - `uvicorn app.main:app --app-dir api/app --reload`
 - `pip install -r ui/requirements.txt`
 - `streamlit run ui/app.py`
+
+## Math lab (math/)
+
+The `math/` folder is separate from the app above: nothing in the app uses it.
+It holds Lean 4 proofs, audits and numerical checks done with Claude in
+October 2026: the coupled prime-26 pangram (smallest sum 4296, proved in Lean),
+Lean + Mathlib proofs about the rainbow, body water, the Shared Air model and
+periodic Navier–Stokes fields, an audit of ChatGPT's Navier–Stokes phase lab,
+a physics and biology fact-check, a 1D Hou–Luo blowup lab, and the prime-word
+perfect-pangram search (formerly `pangram/` at the root).
+
+Start with [`math/README.md`](math/README.md). CI builds both Lean projects on
+push ([`.github/workflows/lean.yml`](.github/workflows/lean.yml)).

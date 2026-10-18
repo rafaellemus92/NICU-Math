@@ -1,0 +1,11 @@
+{
+ "regime": "F(2,1)",
+ "n_onsets": 401,
+ "n_codas": 21,
+ "n_nuclei": 6,
+ "n_prime": 2966,
+ "packing_feasible": false,
+ "min_foreign_clusters": null,
+ "count": 0,
+ "seconds": 6
+}

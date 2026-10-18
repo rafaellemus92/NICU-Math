@@ -1,0 +1,13 @@
+state-space det == D(s): OK
+tau=0 max Re at g=3: -0.012858900903468407  g=4: 0.002250036315985913
+tau=0 stability threshold g* = 3.8580006723817983  roots there: [-1.66666667e-01+0.47385187j -1.66666667e-01-0.47385187j
+ -6.87527360e-18+0.j        ]
+constant-term (s=0) roots in g: [ 3.85800067 -0.10800067]
+
+=== g = 1.0: imaginary-axis crossings ===
+w = 0.223749, |z| = 1.000000000000, taus/direction/|D|: [(np.float64(4.76127), np.float64(1.0), np.float64(9.975249209774493e-18)), (np.float64(32.84271), np.float64(1.0), np.float64(1.0837684048456245e-17)), (np.float64(60.92414), np.float64(1.0), np.float64(1.5618909777130713e-17))]
+smallest crossing tau: (np.float64(4.761271577453111), np.float64(0.22374871965153537), np.float64(1.0))
+
+=== g = 3.0: imaginary-axis crossings ===
+w = 0.428787, |z| = 1.000000000000, taus/direction/|D|: [(np.float64(1.83559), np.float64(1.0), np.float64(3.3682237275240583e-17)), (np.float64(16.48897), np.float64(1.0), np.float64(9.356256436389293e-17)), (np.float64(31.14235), np.float64(1.0), np.float64(2.8714782907777404e-17))]
+smallest crossing tau: (np.float64(1.8355853001211138), np.float64(0.4287874422160821), np.float64(1.0))

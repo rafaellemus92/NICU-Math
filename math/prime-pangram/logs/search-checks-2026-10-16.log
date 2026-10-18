@@ -1,0 +1,90 @@
+=== make ===
+gcc -O2 -o pairs scratchpad/pairs.c
+gcc -O2 -DTESTMODE=1 -o pairs_test scratchpad/pairs_test.c
+gcc -O2 -o diff scratchpad/diff.c
+gcc -O2 -o pack scratchpad/pack.c
+gcc -O2 -o pang scratchpad/pang.c -lm
+In function 'sieve',
+    inlined from 'build_w' at scratchpad/pang.c:25:26:
+scratchpad/pang.c:16:70: warning: writing 2 bytes into a region of size 1 [-Wstringop-overflow=]
+   16 | static void sieve(uint64_t lim){ LIM=lim; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                               ~~~~~~~^~~~~~~~~~
+scratchpad/pang.c:16:48: note: destination object of size 1 allocated by 'calloc'
+   16 | static void sieve(uint64_t lim){ LIM=lim; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                ^~~~~~~~~~~~~
+gcc -O2 -o pangdp scratchpad/pangdp.c -lm
+In function 'sieve',
+    inlined from 'main' at scratchpad/pangdp.c:42:26:
+scratchpad/pangdp.c:12:61: warning: writing 2 bytes into a region of size 1 [-Wstringop-overflow=]
+   12 | static void sieve(uint64_t lim){ comp=calloc(lim,1); comp[0]=comp[1]=1; for(uint64_t i=2;i*i<lim;i++) if(!comp[i]) for(uint64_t j=i*i;j<lim;j+=i) comp[j]=1; }
+      |                                                      ~~~~~~~^~~~~~~~~~
+scratchpad/pangdp.c:12:39: note: destination object of size 1 allocated by 'calloc'
+   12 | static void sieve(uint64_t lim){ comp=calloc(lim,1); comp[0]=comp[1]=1; for(uint64_t i=2;i*i<lim;i++) if(!comp[i]) for(uint64_t j=i*i;j<lim;j+=i) comp[j]=1; }
+      |                                       ^~~~~~~~~~~~~
+gcc -O2 -o brute scratchpad/brute.c
+scratchpad/brute.c: In function 'main':
+scratchpad/brute.c:47:84: warning: writing 2 bytes into a region of size 1 [-Wstringop-overflow=]
+   47 |   K=atoi(argv[1]); lim=1; for(int i=0;i<K;i++) lim*=26; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                                             ~~~~~~~^~~~~~~~~~
+scratchpad/brute.c:47:62: note: destination object of size 1 allocated by 'calloc'
+   47 |   K=atoi(argv[1]); lim=1; for(int i=0;i<K;i++) lim*=26; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                              ^~~~~~~~~~~~~
+gcc -O2 -o enumfull scratchpad/enumfull.c
+scratchpad/enumfull.c: In function 'main':
+scratchpad/enumfull.c:39:108: warning: writing 2 bytes into a region of size 1 [-Wstringop-overflow=]
+   39 |   K=atoi(argv[1]); int secs=atoi(argv[2]); lim=1; for(int i=0;i<K;i++) lim*=26; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                                                                     ~~~~~~~^~~~~~~~~~
+scratchpad/enumfull.c:39:86: note: destination object of size 1 allocated by 'calloc'
+   39 |   K=atoi(argv[1]); int secs=atoi(argv[2]); lim=1; for(int i=0;i<K;i++) lim*=26; comp=calloc(lim,1); comp[0]=comp[1]=1;
+      |                                                                                      ^~~~~~~~~~~~~
+
+real	0m1.890s
+user	0m1.384s
+sys	0m0.282s
+=== ./pairs 40000 ===
+time 0.2s; N values reaching cover stage: 17324
+5-pair solutions: 0 over 0 distinct N (min N=2147483647, max N=0); 4-pair (8-word) covers: 0
+5-pair solutions by N mod 10: [0]=0 [1]=0 [2]=0 [3]=0 [4]=0 [5]=0 [6]=0 [7]=0 [8]=0 [9]=0
+
+real	0m0.207s
+user	0m0.201s
+sys	0m0.005s
+=== ./diff 20000 ===
+D=204: YSH->ZAD (16699->16903) MWF->NEB (8689->8893) JUP->KCL (6619->6823) GX->OT (179->383) IV->QR (229->433)  | sum of letter values of the five smaller words = 190, 10D mod 25 = 15, that sum mod 25 = 15
+D=258: KQR->LAP (7193->7451) BUF->CED (1201->1459) MWJ->NGH (8693->8951) IV->ST (229->487) OZ->YX (389->647)  | sum of letter values of the five smaller words = 180, 10D mod 25 = 5, that sum mod 25 = 5
+D=534: UGL->VAZ (13687->14221) CB->WP (53->587) ED->YR (107->641) NQF->OKT (9209->9743) HSJ->IMX (5209->5743)  | sum of letter values of the five smaller words = 115, 10D mod 25 = 15, that sum mod 25 = 15
+time 26.3s
+D<=20000: solutions 3 over 3 distinct D
+
+real	0m26.724s
+user	0m26.293s
+sys	0m0.007s
+=== ./brute ===
+brute [ABCDEFGHIJKL:5][5 words] = 27152
+brute [ABCDEFGHIJKL:4][4 words] = 73155
+brute [ABCDEFGHIJKL:3][3 words] = 30128
+brute [ABCDEFGHIJKLM:5][5 words] = 122443
+
+real	0m0.692s
+user	0m0.679s
+sys	0m0.001s
+=== python3 tests/test_solutions.py ===
+ok   each side is a multiple of 25 (10125 = 25*405)
+ok   D=204: ten primes, all five differences equal 204
+ok   D=204: perfect pangram
+ok   D=204: letter-sum of smaller words = 10*D (mod 25)  [190 = 15 mod 25]
+ok   D=258: ten primes, all five differences equal 258
+ok   D=258: perfect pangram
+ok   D=258: letter-sum of smaller words = 10*D (mod 25)  [180 = 5 mod 25]
+ok   D=534: ten primes, all five differences equal 534
+ok   D=534: perfect pangram
+ok   D=534: letter-sum of smaller words = 10*D (mod 25)  [115 = 15 mod 25]
+ok   equal-sum near miss: four pairs summing to 10146
+ok   equal-sum near miss leaves exactly C M Q R U Y
+ok   ...and no fifth pair over those letters sums to 10146
+
+0 failure(s)
+
+real	0m0.029s
+user	0m0.023s
+sys	0m0.007s

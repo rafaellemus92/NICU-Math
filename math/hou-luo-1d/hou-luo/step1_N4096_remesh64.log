@@ -1,0 +1,33 @@
+Inviscid 1D Hou-Luo model on an adaptive mesh: N=4096 L=128
+    t=0.000000 max|w|=         0 x*=0.000e+00 hmin=1.23e-05 x*/hmin=   0.0 tail= 0.0e+00 dt= 1.0e-02 (   0.0s)
+    t=0.228336 max|w|=     1.438 x*=2.154e-01 hmin=1.23e-05 x*/hmin=17452.7 tail= 4.7e-12 dt= 5.7e-04 (  14.0s)
+    t=0.323626 max|w|=     2.053 x*=1.811e-01 hmin=1.23e-05 x*/hmin=14676.7 tail= 4.1e-12 dt= 4.1e-04 (  27.8s)
+    t=0.398242 max|w|=      2.56 x*=1.475e-01 hmin=1.23e-05 x*/hmin=11950.8 tail= 3.5e-12 dt= 3.4e-04 (  42.3s)
+    t=0.463129 max|w|=     3.039 x*=1.149e-01 hmin=1.23e-05 x*/hmin=9308.9 tail= 4.1e-12 dt= 3.1e-04 (  56.4s)
+    t=0.522782 max|w|=     3.538 x*=8.392e-02 hmin=1.23e-05 x*/hmin=6800.9 tail= 4.6e-12 dt= 2.9e-04 (  71.6s)
+    t=0.579766 max|w|=     4.111 x*=5.556e-02 hmin=1.23e-05 x*/hmin=4503.0 tail= 4.8e-12 dt= 2.8e-04 (  86.6s)
+    t=0.635874 max|w|=     4.856 x*=3.125e-02 hmin=1.23e-05 x*/hmin=2532.7 tail= 7.1e-12 dt= 2.8e-04 ( 100.3s)
+    t=0.692533 max|w|=     6.025 x*=1.306e-02 hmin=1.23e-05 x*/hmin=1058.6 tail= 2.7e-12 dt= 2.9e-04 ( 115.4s)
+    t=0.750953 max|w|=     8.603 x*=2.963e-03 hmin=1.23e-05 x*/hmin= 240.2 tail= 1.6e-12 dt= 3.0e-04 ( 130.7s)
+    remesh #1 at t=0.783289: r=9.871e-03 hmin=2.60e-06 x*/hmin=299
+    remesh #2 at t=0.807415: r=1.948e-03 hmin=5.33e-07 x*/hmin=309
+    t=0.811513 max|w|=     21.58 x*=1.148e-04 hmin=5.33e-07 x*/hmin= 215.5 tail= 5.8e-13 dt= 2.3e-04 ( 149.5s)
+    remesh #3 at t=0.822431: r=3.864e-04 hmin=1.09e-07 x*/hmin=310
+    remesh #4 at t=0.831481: r=7.644e-05 hmin=2.22e-08 x*/hmin=310
+    remesh #5 at t=0.836824: r=1.522e-05 hmin=4.57e-09 x*/hmin=310
+    t=0.837083 max|w|=     93.48 x*=1.279e-06 hmin=4.57e-09 x*/hmin= 279.8 tail= 6.8e-13 dt= 5.1e-05 ( 173.0s)
+    remesh #6 at t=0.839977: r=3.031e-06 hmin=9.41e-10 x*/hmin=310
+    remesh #7 at t=0.841837: r=6.029e-07 hmin=1.94e-10 x*/hmin=309
+    t=0.842826 max|w|=     409.7 x*=1.500e-08 hmin=1.94e-10 x*/hmin=  77.4 tail= 6.8e-12 dt= 1.4e-05 ( 192.8s)
+    remesh #8 at t=0.842934: r=1.197e-07 hmin=3.99e-11 x*/hmin=308
+    remesh #9 at t=0.843581: r=2.370e-08 hmin=8.22e-12 x*/hmin=308
+    remesh #10 at t=0.843963: r=4.683e-09 hmin=1.69e-12 x*/hmin=307
+    t=0.844129 max|w|=      1797 x*=1.769e-10 hmin=1.69e-12 x*/hmin= 104.5 tail= 3.2e-11 dt= 2.9e-06 ( 213.7s)
+    remesh #11 at t=0.844189: r=9.223e-10 hmin=3.49e-13 x*/hmin=306
+    remesh #12 at t=0.844322: r=1.810e-10 hmin=7.18e-14 x*/hmin=305
+    remesh #13 at t=0.844400: r=3.537e-11 hmin=1.48e-14 x*/hmin=304
+    t=0.844426 max|w|=      7945 x*=2.049e-12 hmin=1.48e-14 x*/hmin= 138.5 tail= 1.4e-10 dt= 6.4e-07 ( 233.2s)
+  N=4096   L=128 t=0.84444428  max|omega|=   10034.8  steps=2830  remeshes=13  tail_max=3.1e-10  (235.2s)  reached max|omega| target 10000
+  last_1_decades: T = 0.8445131  p = 1.0002  c = 3.001 c0 = 3.001  (max|omega| 1.01e+03 .. 1e+04, max rel resid 8.1e-04)
+  last_2_decades: T = 0.8445160  p = 1.0057  c = 3.020 c0 = 3.020  (max|omega| 101 .. 1e+04, max rel resid 3.7e-02)
+Wrote step1_N4096_remesh64.json and step1_N4096_remesh64.npz

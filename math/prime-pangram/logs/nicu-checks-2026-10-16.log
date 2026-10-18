@@ -1,0 +1,64 @@
+=== compile helpers ===
+freedp.c: In function 'main':
+freedp.c:19:65: warning: ignoring return value of 'fscanf' declared with attribute 'warn_unused_result' [-Wunused-result]
+   19 |         for(int i=0;i<n;i++){ unsigned long long m; unsigned c; fscanf(f,"%llu %u",&m,&c); tm[i]=(unsigned)m; tc[i]=c; }
+      |                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+real	0m0.340s
+user	0m0.273s
+sys	0m0.055s
+=== python3 core.py ===
+self-test ok
+
+real	0m0.352s
+user	0m0.486s
+sys	0m0.022s
+=== python3 engine.py ===
+    block products: 6
+    mod 2147483587: [755467047]  (19.0s)
+engine N0 = 2,970,573,351,983,677,440,000   closed form = 2,970,573,351,983,677,440,000   match = True
+float engine N0 = 2.970573e+21  rel.err = 3.02e-08
+
+real	1m5.738s
+user	0m46.185s
+sys	0m18.377s
+=== python3 run_a_english.py ===
+pronounceable words (onset+nucleus+coda, distinct letters): 289,404
+prime words: 16,243
+  by length: {1: 1, 2: 74, 3: 392, 4: 1504, 5: 3904, 6: 5667, 7: 3657, 8: 975, 9: 69}
+  by number of vowels: {1: 3142, 2: 13101}
+  last letters of prime words: {'a': 81, 'c': 1097, 'e': 82, 'g': 902, 'i': 81, 'k': 1853, 'o': 92, 's': 11543, 'u': 88, 'w': 345, 'y': 79}
+  letters that occur in at least one prime word: abcdefghijklmnopqrstuvwxyz
+
+Exhaustive exact-cover search (bitset Algorithm X, xcover.c) over the prime dictionary ...
+  search nodes: 1,633,290   perfect pangrams found: 0
+
+Structural checks:
+  every prime word ends in a letter coprime to 26: True
+  'j': in onset of 409 prime words, in coda of 0 prime words
+  'q': in onset of 465 prime words, in coda of 0 prime words
+  'v': in onset of 408 prime words, in coda of 0 prime words
+  'x': in onset of 388 prime words, in coda of 248 prime words
+  'z': in onset of 407 prime words, in coda of 0 prime words
+
+done in 7.0s; prime dictionary written to results/english_prime_words.txt
+
+real	0m7.282s
+user	0m7.143s
+sys	0m0.061s
+=== python3 structure.py ===
+  x: in onsets ['x'], in odd codas ['xts', 'xths']
+  z: in onsets ['z'], in odd codas []
+
+English lists: all 20 consonants coverable by <=6 onsets + <=6 odd codas: False; max coverable consonants: 17 (with j,q,v,x,z all placed: 17)
+
+English + any onset of <= 1 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: False; max coverable consonants: 17 (with j,q,v,x,z all placed: 17)
+English + any coda of <= 1 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: False; max coverable consonants: 18 (with j,q,v,x,z all placed: 18)
+English + any onset of <= 2 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: True; max coverable consonants: 20 (with j,q,v,x,z all placed: 20)
+English + any coda of <= 2 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: True; max coverable consonants: 20 (with j,q,v,x,z all placed: 20)
+English + any onset of <= 3 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: True; max coverable consonants: 20 (with j,q,v,x,z all placed: 20)
+English + any coda of <= 3 consonants: all 20 consonants coverable by <=6 onsets + <=6 odd codas: True; max coverable consonants: 20 (with j,q,v,x,z all placed: 20)
+
+real	2m20.758s
+user	2m16.378s
+sys	0m2.150s
