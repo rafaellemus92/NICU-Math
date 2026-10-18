@@ -135,7 +135,9 @@ def _run_model(req: ScenarioRequest, model_fn) -> ScenarioResponse:
         "outcome_name": sim.name,
         "summary": _summarize(sim.p),
         **_hist(sim.p),
-        "assumptions": sim.assumptions,
+        "assumptions": {**sim.assumptions,
+                        "validation_status": "unvalidated toy model",
+                        "scope": "synthetic research and education only; not treatment guidance"},
     }
     if req.return_samples:
         payload["samples_preview"] = sim.p[:100].tolist()

@@ -5,12 +5,12 @@ from pathlib import Path
 from typing import Iterable, List, Dict, Any
 
 from openai import OpenAI
-from api.app.db import get_conn, ensure_schema
-from api.app.search import _pgvector_literal
+from .db import get_conn, ensure_schema
+from .search import _pgvector_literal
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
-_client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+_client = OpenAI(api_key=OPENAI_API_KEY) if os.getenv("NICU_OFFLINE", "1") == "0" and OPENAI_API_KEY else None
 
 def _iter_pdf_paths(library_dir: Path) -> Iterable[Path]:
     yield from (Path(p) for p in glob.glob(str(library_dir / "**" / "*.pdf"), recursive=True))

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+library/
+*.pdf
+.pytest_cache/
+*.PDF
+venv/
+*.egg-info/
+.coverage
+htmlcov/
+.streamlit/secrets.toml
