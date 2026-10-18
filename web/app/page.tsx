@@ -20,7 +20,7 @@ const regimes = [
     lines: [
       'γ ≈ 25 mN/m at equilibrium, near 0 when the surface is compressed on expiration',
       'Laplace pressure P = 2γ/r stays small as r shrinks',
-      'Alveolar flow: Re ≪ 1 (Stokes regime)',
+      'Alveolar flow: Re ≪ 1 (Stokes regime), with or without surfactant',
       'Alveoli stay open. The baby breathes.',
     ],
   },
@@ -95,7 +95,7 @@ export default function Home() {
         </p>
 
         <div style={{ ...card, marginBottom: 16 }}>
-          <Eq>{"\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u} \\cdot \\nabla)\\mathbf{u} = -\\frac{1}{\\rho}\\nabla p + \\nu \\Delta \\mathbf{u} + \\mathbf{f}"}</Eq>
+          <div style={{ fontSize: 'clamp(12px, 3.6vw, 16px)' }}><Eq>{"\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u} \\cdot \\nabla)\\mathbf{u} = -\\frac{1}{\\rho}\\nabla p + \\nu \\Delta \\mathbf{u} + \\mathbf{f}"}</Eq></div>
           <Eq>{"\\nabla \\cdot \\mathbf{u} = 0"}</Eq>
         </div>
 
@@ -188,7 +188,9 @@ export default function Home() {
             where <K>{"p_{\\text{ext}}"}</K> is the pressure in the liquid lining and <K>{"\\kappa"}</K> is
             the curvature of <K>{"\\Gamma"}</K>, the sum of its principal curvatures
             (so <K>{"\\kappa = 2/r"}</K> on a sphere of radius <K>{"r"}</K>, which gives <K>{"P = 2\\gamma/r"}</K>).
-            For moving fluid the condition also includes the viscous normal stress. Define
+            For moving fluid the condition also includes the viscous normal stress. A closed domain of
+            incompressible gas keeps its volume, so a model of an alveolus that empties also needs an
+            open boundary at its duct (see Step 6 of the Argument). Define
             the <em>surface-tension parameter</em>, the largest Laplace pressure measured against the
             viscous pressure scale <K>{"\\rho\\nu^2/L^2"}</K>:
           </p>
@@ -225,7 +227,9 @@ export default function Home() {
           Clinical Translation
         </h2>
         <p style={{ color: '#b0b0be', lineHeight: 1.7, marginBottom: 16 }}>
-          Each symbol in the question has a clinical counterpart. The correspondence is an analogy, not
+          Each symbol in the question, and two more (the dynamic compliance <K>{"C_{\\text{dyn}}"}</K>,
+          used in the demo, and the enstrophy <K>{"\\Xi = \\|\\omega\\|_{L^2}^2"}</K>, from the Argument
+          page), has a clinical counterpart. The correspondence is an analogy, not
           an identity. A bedside ventilator recording (pressure, flow and volume at the airway opening,
           sampled for example at 100 Hz) gives compliance and resistance for the respiratory system as a whole. It does
           not measure surface tension, alveolar curvature or the flow inside the lung,
@@ -296,10 +300,12 @@ export default function Home() {
             <strong style={{ color: '#b0b0be' }}>The Millennium problem, briefly.</strong>{' '}
             On 8 September 2026 OpenAI posted a paper, with a proof formalized in the Lean proof
             checker, of finite-time blow-up for 3D Navier-Stokes driven by a smooth external force; the
-            paper says this establishes Clay&rsquo;s statement (C). On 11 September the Clay Institute
+            paper says this establishes Clay&rsquo;s statement (C) and, as its Corollary 10.6, the periodic
+            statement (D). On 11 September the Clay Institute
             spoke of the problem having &ldquo;apparently been settled&rdquo; and said its prize process
             &ldquo;is deliberately unhurried&rdquo;; its problem page still lists the problem as
-            &ldquo;Active&rdquo;. The unforced question remains open. Sourced wording and links:{' '}
+            &ldquo;Active&rdquo; (checked 18 October 2026). The unforced questions,
+            Clay&rsquo;s (A) and (B), remain open. Sourced wording and links:{' '}
             <a href={`${REPO}/ns-phase-audit/enstrophy-jet/RESULTS.md`} style={link}>RESULTS.md &sect;8</a>.
           </p>
         </div>
@@ -322,7 +328,7 @@ export default function Home() {
       }}>
         {[
           { href: '/proof', label: 'The Argument', desc: '7 steps, each labelled: standard result, conjecture or analogy' },
-          { href: '/demo', label: 'Interactive Demo', desc: 'A toy model of ventilator waveforms, sorted into clinical categories' },
+          { href: '/demo', label: 'Interactive Demo', desc: 'A toy model of ventilator waveforms, sorted into illustrative compliance categories' },
           { href: '/shared-air', label: 'Shared Air', desc: 'The mother–infant breathing model' },
         ].map(l => (
           <a key={l.href} href={l.href} style={{

@@ -48,6 +48,8 @@ P.S. Ecclesiastes' refrain word hevel, usually translated "vanity," literally me
   governed by surface tension and P = 2γ/r, not a Navier-Stokes singularity. That matches
   [`../README.md`](../README.md#what-remains-open) ("This work does not touch the Millennium
   problem"). What remains: before sending, check that the deployed root shows the corrected pages.
+  An overlapping rewrite of the same pages is open as draft PR #16 (`codex/correct-fluid-claims`,
+  stacked on draft PR #14), so check whichever version is live.
 - [ ] **Keep faith, Navier-Stokes and QED for a later reply.** They are not in this email, and they
   should stay out until he writes back.
 

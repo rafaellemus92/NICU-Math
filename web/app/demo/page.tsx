@@ -19,7 +19,7 @@ const card = {
 }
 
 // Display names for the toy model's four waveform categories. The keys come from lib/ns.ts;
-// they are clinical waveform categories, not distances from a PDE singularity.
+// they are illustrative compliance categories, not distances from a PDE singularity.
 const LABELS: Record<Classification, string> = {
   smooth: 'Normal',
   approaching: 'Stiffening',
@@ -95,7 +95,7 @@ export default function DemoPage() {
       </h1>
       <p style={{ color: '#888899', fontSize: 15, marginBottom: 32, lineHeight: 1.6, maxWidth: 640 }}>
         A toy model of ventilator waveforms. Compliance falls breath by breath, surfactant can be given,
-        and each breath is sorted into one of four clinical waveform categories. The data are synthetic,
+        and each breath is sorted into one of four illustrative compliance categories. The data are synthetic,
         from a simple resistance&ndash;compliance model: not patient data, and not a Navier-Stokes
         simulation. The categories say nothing about how close any PDE solution is to a singularity.
         Adjust parameters below. Click on the compliance chart to inspect any breath.

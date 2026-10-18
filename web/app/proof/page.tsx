@@ -39,6 +39,7 @@ const STEPS: ProofStepData[] = [
       'Leray (1934): weak solutions and the energy inequality on ℝ³',
       'Hopf (1951): the same in bounded domains',
       'Solonnikov (1977): viscous fluid bounded by a free surface, local solvability',
+      'Beale (1981): free-surface Navier–Stokes without surface tension, local existence',
       'Beale (1984): viscous surface waves with surface tension',
     ],
   },
@@ -72,12 +73,12 @@ const STEPS: ProofStepData[] = [
     clinical:
       'The decision to give surfactant is made mainly on oxygen need and signs of respiratory distress, not on a computed threshold of a parameter like Λ.',
     changed:
-      'The earlier version used Step 2 and Young\'s inequality to claim that the energy stays bounded if and only if γ·κ_max is bounded, and that it becomes unbounded when alveoli collapse. That does not follow: a bound that weakens is not a blow-up, and the identity above shows the energy stays bounded.',
+      'The earlier version used Step 2 and Young\'s inequality to claim that the energy stays bounded if and only if γ·κ_max is bounded, and that it becomes unbounded when alveoli collapse. That does not follow: a bound that weakens is not a blow-up, and the identity above shows the energy stays bounded by its initial value plus the external work W_ext.',
     refs: ['Beale (1984): energy identity with surface energy'],
   },
   {
     number: 4,
-    title: 'Enstrophy Control Under the Critical Threshold',
+    title: 'Enstrophy Control Below a Threshold?',
     status: 'conjecture',
     statementTeX: [
       String.raw`\text{known: }\;\frac{d}{dt}\Xi + \nu\|\nabla\omega\|^2 \leq \frac{C}{\nu^3}\,\Xi^3, \qquad \Xi = \|\omega\|_{L^2}^2`,
@@ -104,7 +105,7 @@ const STEPS: ProofStepData[] = [
       String.raw`\int_0^T \|\omega\|_{L^\infty}\,dt < \infty \;\Longrightarrow\; \text{the smooth solution continues past } T \quad \text{(BKM)}`,
     ],
     approach:
-      'Both are continuation criteria for smooth solutions in a fixed domain: a smooth solution can only stop being smooth at T if the quantity on the left becomes infinite there. The first follows from local existence in H¹ (Leray\'s lower bound on the blow-up rate). The second is the Beale–Kato–Majda criterion, proved on ℝ³. This step is conditional: it would give regularity only if Step 4 held. It has not been extended here to the free-boundary problem.',
+      'Both are continuation criteria for smooth solutions in a fixed domain: a smooth solution can only stop being smooth at T if the quantity on the left becomes infinite there. The first follows from local existence in H¹ (Leray\'s lower bound on the blow-up rate). The second is the Beale–Kato–Majda criterion, proved on ℝ³ for the Euler equations; the same criterion holds for Navier–Stokes. This step is conditional: it would give regularity only if Step 4 held. It has not been extended here to the free-boundary problem.',
     clinical:
       'The ventilator measures flow and pressure at the airway opening, one number at each instant. It cannot see vorticity inside the lung, so no bedside signal is a proxy for ‖ω‖∞.',
     changed:
@@ -117,13 +118,13 @@ const STEPS: ProofStepData[] = [
   },
   {
     number: 6,
-    title: 'Blowup Construction (Converse Direction)',
+    title: 'The Converse Direction: Blow-up Above a Threshold?',
     status: 'conjecture',
     statementTeX: [
       String.raw`\Lambda(t^*) \geq \Lambda^* \;\overset{?}{\Longrightarrow}\; \|\nabla u(t)\|_{L^2} \to \infty \text{ as } t \to t^*`,
     ],
     approach:
-      'No construction exists. A closed sphere of incompressible fluid cannot shrink, because its volume is conserved: a collapsing alveolus empties through its duct, so a model needs an open boundary. The 1/r growth in 2γ/r is a property of the formula; a real alveolus closes at finite size. Free surfaces can form genuine singularities, such as the pinch-off of a liquid thread, but those are singularities of the interface, not the Millennium question. Tao (2016) proves blow-up for an averaged equation, not Navier–Stokes, and Hou & Luo (2014) is numerical evidence for the Euler equations.',
+      'No construction exists. A closed sphere of incompressible fluid cannot shrink, because its volume is conserved: a collapsing alveolus empties through its duct, so a model needs an open boundary. The 1/r growth in 2γ/r is a property of the formula; a real alveolus closes at finite size. Free surfaces can form genuine singularities, such as the pinch-off of a liquid thread, but those are singularities of the interface, not the Millennium question. Tao (2016) proves blow-up for an averaged equation, not Navier–Stokes, and Luo & Hou (2014) is numerical evidence for the Euler equations.',
     clinical:
       'Atelectasis is real and measurable: falling compliance, rising oxygen need, a ground-glass chest X-ray. It is not a blow-up. The alveolus closes at finite size, pressures stay finite, and nothing becomes infinite. Collapse is governed by surface tension, the Laplace law and tissue mechanics.',
     changed:
@@ -132,12 +133,12 @@ const STEPS: ProofStepData[] = [
       'Rayleigh (1917): collapse of a spherical cavity in a liquid',
       'Eggers (1997): free-surface breakup and its singularities',
       'Tao (2016): blow-up for an averaged Navier–Stokes equation',
-      'Hou & Luo (2014): potential singularity of 3D Euler, numerical',
+      'Luo & Hou (2014): potential singularity of 3D axisymmetric Euler with a boundary, numerical',
     ],
   },
   {
     number: 7,
-    title: 'Regularization Restores Smoothness',
+    title: 'Does Lowering γ Restore Smoothness?',
     status: 'conjecture',
     statementTeX: [
       String.raw`\gamma \downarrow \text{ at } t_1,\;\Lambda(t)<\Lambda^*\;\text{for } t>t_1,\;u(t_1)\in L^2 \;\overset{?}{\Longrightarrow}\; u \in C^\infty(\Omega \times (t_1,\infty))`,
@@ -145,7 +146,7 @@ const STEPS: ProofStepData[] = [
     approach:
       'As stated, this would give smoothness at every later time from L² data, which in three dimensions is the open problem itself. What is known: from L² data, Leray–Hopf weak solutions exist for all time; on all of space with no force they are smooth after some finite time and at almost every time (Leray), and suitable weak solutions have a small singular set (Caffarelli, Kohn & Nirenberg). From data in critical spaces such as L³, smooth solutions exist for a short time, and for all time if the data are small (Kato; Giga & Miyakawa).',
     clinical:
-      'Surfactant replacement is one of the best-tested treatments in neonatology. After a dose, oxygen need often falls within minutes, and compliance improves more slowly; many NICU clinicians have watched that change. In the analogy the "singular" regime returns to the "smooth" one. In the lung, alveoli reopen and stay open.',
+      'This is the clinical miracle of surfactant therapy. Surfactant replacement is one of the best-tested treatments in neonatology. After a dose, oxygen need often falls within minutes, and compliance improves more slowly; many NICU clinicians have watched that change. In the analogy the "singular" regime returns to the "smooth" one. In the lung, alveoli reopen and stay open.',
     changed:
       'The earlier version said standard parabolic regularity smooths L² data instantly. That is not known for 3D Navier–Stokes.',
     refs: [
@@ -441,8 +442,8 @@ export default function ProofPage() {
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
           {[
             ['Bounded domain', 'Finite lung volume. The Millennium problem is posed on all of space or the periodic cube, so results here would not transfer to it.'],
-            ['Low Reynolds number', 'Re falls from a few hundred to about a thousand in a newborn\'s trachea to well below 1 in the alveoli, where the flow is close to Stokes flow.'],
-            ['One collapse mechanism', 'Surface tension in the alveolar lining, through the Laplace law, together with tissue mechanics. It causes collapse at finite size, not a singularity of the flow.'],
+            ['Reynolds number falls along the airway tree', 'Re is a few hundred to about a thousand in a newborn\'s trachea and falls to well below 1 in the alveoli, where the flow is close to Stokes flow.'],
+            ['A dominant collapse mechanism in RDS', 'Surface tension in the alveolar lining, through the Laplace law, together with tissue mechanics. It causes collapse at finite size, not a singularity of the flow.'],
             ['A real intervention', 'Exogenous surfactant lowers γ, and PEEP or CPAP holds alveoli open: the mechanism is well understood.'],
             ['High-resolution clinical data', 'Ventilator waveforms (pressure, flow and volume at the airway opening, sampled for example at 100 Hz) give the compliance of the respiratory system as a whole.'],
             ['A case study', 'One baby\'s recording (N = 1) can show decline and recovery around a surfactant dose: a case to model, not a population result.'],
