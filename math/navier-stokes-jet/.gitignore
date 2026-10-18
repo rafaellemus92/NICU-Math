@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.tmp
+# default outputs of "python3 taylor_exact.py N" (results/series.json is the kept n<=14 run)
+results/series_n*.json

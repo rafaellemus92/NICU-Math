@@ -1,0 +1,34 @@
+constants: a=1/30 b=1/20 d=1/4 r=0.04 q=0.1 h=0.075 c=0.004000
+
+1. No delay (tau = 0): slowest decay rate rho(g)
+   rho at g = 0, 1, 3, 4: 0.033333, 0.038554, 0.012859, -0.002250
+   g* closed form 0.0803558863  rho(g*) = -s* 0.0482709206  | numerical maximum at 0.080356 rho 0.0482709206
+   g_c closed form 3.8580006724  15/8 + sqrt(2265)/24 = 3.8580006724  rho just below/above: 1.57e-8 -1.57e-8
+   max rho over 0 < g < g_c: 0.048271  mom alone (b = 1/20): 0.050000  ratio to rho(0): 1.4481
+   rho(g) < rho(0) for g > h(b-a)/(c(d-a)) = 1.4423 ; check rho(1.44), rho(1.45): 0.033361 0.033240
+
+2. With delay: rightmost root of D(s, g, tau)
+   tau 1.5 : slowest rate peaks at g = 0.0747 rate 0.04827 ; rho(1) = 0.03788
+   tau 1.5 : rest state first loses stability at g = 3.8580 (real root through 0, the static limit g_c)
+   tau 3 : slowest rate peaks at g = 0.0695 rate 0.04827 ; rho(1) = 0.03719
+   tau 3 : rest state first loses stability at g = 1.6117 (oscillatory: omega 0.3031 rad/s, period 20.7 s)
+
+3. Equilibria of the noise-free model (rest is Ai = Am = 0)
+   with the soothing cap: a second pair of equilibria appears at g = 2.0689 (saddle-node)
+   g 2.5: (Ai 0.000, Am 0.000, cap 1.000, stable) (Ai 0.217, Am 0.844, cap 0.473, unstable) (Ai 1.497, Am 2.343, cap 0.104, stable)
+   g 3: (Ai 0.000, Am 0.000, cap 1.000, stable) (Ai 0.104, Am 0.555, cap 0.675, unstable) (Ai 1.914, Am 2.791, cap 0.076, stable)
+   with cap = 1: equilibria other than rest for g < g_c: g 1: 0, g 2: 0, g 3: 0, g 3.8: 0
+
+4. Deterministic recovery (last exit from the band), g = 0 .. 3 in steps of 0.01
+   tau 0.02 : heel stick, infant band: fastest at g = 2.98 (4.00 s); times at g = 0, 1, 2, 3: 38.36, 6.26, 4.56, 4.00
+   tau 0.02 : alarm, pair norm below 0.2232: fastest at g = 0.18 (15.16 s); times at g = 0, 0.08, 0.5, 1, 2: 16.90, 15.60, 16.44, 19.08, 34.16
+   tau 0.02 : alarm, pair norm below 0.1: fastest at g = 0.14 (31.24 s); times at g = 0, 0.08, 0.5, 1, 2: 37.20, 31.90, 33.72, 40.14, 65.24
+   tau 0.02 : alarm, pair norm below 0.03: fastest at g = 0.11 (56.22 s); times at g = 0, 0.08, 0.5, 1, 2: 70.12, 56.62, 61.06, 71.32, 110.98
+   tau 1.5 : heel stick, infant band: fastest at g = 1.73 (5.46 s); times at g = 0, 1, 2, 3: 38.36, 6.80, 20.68, 18.84
+   tau 1.5 : alarm, pair norm below 0.2232: fastest at g = 0.18 (15.28 s); times at g = 0, 0.08, 0.5, 1, 2: 16.90, 15.70, 16.92, 18.78, 32.54
+   tau 1.5 : alarm, pair norm below 0.1: fastest at g = 0.14 (31.24 s); times at g = 0, 0.08, 0.5, 1, 2: 37.20, 31.84, 33.54, 40.54, 65.82
+   tau 1.5 : alarm, pair norm below 0.03: fastest at g = 0.11 (56.18 s); times at g = 0, 0.08, 0.5, 1, 2: 70.12, 56.50, 61.36, 72.00, 113.50
+
+real	0m11.576s
+user	0m11.405s
+sys	0m0.063s
