@@ -1,0 +1,24 @@
+N=24 K=7
+phi=0.000000000 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=1.78e-15 dZ/dt(0)=0.125000000000000 exact=0.125000000000000 diff=-1.53e-16 dE/dt+2nuZ=-2.78e-17 <u.N>=-6.15e-18 palin=1.750000000000
+phi=0.500000000 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=1.33e-15 dZ/dt(0)=0.094395640472593 exact=0.094395640472593 diff=-1.39e-16 dE/dt+2nuZ=0.00e+00 <u.N>=-4.61e-18 palin=1.750000000000
+phi=0.971073032 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=1.33e-15 dZ/dt(0)=0.016103519280301 exact=0.016103519280301 diff=-4.86e-17 dE/dt+2nuZ=-1.39e-17 <u.N>=-2.30e-17 palin=1.750000000000
+phi=1.570796327 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=1.55e-15 dZ/dt(0)=-0.125000000000000 exact=-0.125000000000000 diff=-6.94e-17 dE/dt+2nuZ=-2.78e-17 <u.N>=-3.50e-17 palin=1.750000000000
+phi=2.159844949 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=2.00e-15 dZ/dt(0)=-0.263892558183606 exact=-0.263892558183606 diff=-5.55e-17 dE/dt+2nuZ=-5.55e-17 <u.N>=-6.55e-17 palin=1.750000000000
+phi=3.141592654 E0=1.000000000000000 Z0=1.250000000000000 |div|max=0.00e+00 IC err=2.11e-15 dZ/dt(0)=-0.375000000000000 exact=-0.375000000000000 diff=1.11e-16 dE/dt+2nuZ=0.00e+00 <u.N>=-2.49e-18 palin=1.750000000000
+IC phi=0.7: max|rot - conv| = 7.84e-17 (max|rot|=2.50e-01); <u.N> = -1.46e-17; div N = 1.78e-16
+random: max|rot - conv| = 2.20e-17 (max|rot|=3.03e-02); <u.N> = 8.67e-19; div N = 1.29e-16
+exact Taylor-Green 2D (k^2=2): T=2.0 max|u-u_exact|=1.44e-15 (|u_exact|max=0.867), div=5.72e-17
+exact TG (y,z) k=3: T=2.0 max|u-u_exact|=3.18e-13 (|u_exact|max=0.276), div=9.75e-17
+exact ABC Beltrami: T=2.0 max|u-u_exact|=1.78e-15 (|u_exact|max=1.583), div=1.81e-32
+Beltrami2 check: max|curl u - sqrt2 u| = 3.69e-16 or -sqrt2: 1.41e+00
+exact Beltrami |k|^2=2 mixture: T=2.0 max|u-u_exact|=3.55e-15 (|u_exact|max=1.724), div=7.18e-17
+energy budget phi=0.5, T=4: E(T)=0.444884010101, E(0)-2nu*int Z = 0.444884009993, diff=1.08e-10
+  t=1.0: dE/dt + 2 nu Z = 1.39e-17, max|div| = 4.52e-17
+  t=2.0: dE/dt + 2 nu Z = -1.39e-16, max|div| = 1.14e-16
+  t=3.0: dE/dt + 2 nu Z = 0.00e+00, max|div| = 1.06e-16
+  t=4.0: dE/dt + 2 nu Z = -2.78e-17, max|div| = 1.03e-16
+dt=0.02: Z(2)=2.2553157832082
+dt=0.01: Z(2)=2.2553157108912
+dt=0.005: Z(2)=2.2553157061028
+dt=0.0025: Z(2)=2.2553157057954
+diffs: 7.232e-08 4.788e-09 3.073e-10; ratios 15.10 15.58; Richardson-est error at dt=0.005: 3.28e-10

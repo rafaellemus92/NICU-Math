@@ -1,0 +1,78 @@
+
+======== 1 ZINC SPARK ========
+20e9 Zn atoms = 2e+10/6.02214e+23 = 3.321e-14 mol = 33.2 fmol
+mass = 3.321e-14 mol x 65.38 g/mol = 2.171e-12 g = 2.17 pg
+
+======== 2 IODINE / THYROID ========
+T4: MW = 776.874 (ChEBI 776.872); iodine mass = 4x126.90447 = 507.618; iodine mass fraction = 65.3%
+T3: MW = 650.977 (ChEBI 650.976); iodine mass = 3x126.90447 = 380.713; iodine mass fraction = 58.5%
+Z of DRI trace elements: [('F', 9), ('Cr', 24), ('Mn', 25), ('Fe', 26), ('Cu', 29), ('Zn', 30), ('Se', 34), ('Mo', 42), ('I', 53)] -> max: I
+Qian 2005: 0.83 SD x 15 = 12.45 ; 0.58 SD x 15 = 8.7
+Bougma 2013: 0.46 SD x 15 = 6.9 ; 0.68 SD x 15 = 10.2
+
+======== 3 TRISOMY: DNA SIZE vs GENE DOSAGE ========
+[GRCh38.p14] haploid autosomes = 2,875,001,522; 46,XX = 2*2,875,001,522 + 2*156,040,895 = 6,062,084,834 bp; 46,XY = 5,963,271,354 bp
+   chr13: 114,364,328 bp = 114.4 Mb; extra copy / 46,XX genome = 114,364,328/6,062,084,834 = 1.89%  (vs 46,XY: 1.92%)
+   chr18: 80,373,285 bp = 80.4 Mb; extra copy / 46,XX genome = 80,373,285/6,062,084,834 = 1.33%  (vs 46,XY: 1.35%)
+   chr21: 46,709,983 bp = 46.7 Mb; extra copy / 46,XX genome = 46,709,983/6,062,084,834 = 0.77%  (vs 46,XY: 0.78%)
+   chr22: 50,818,468 bp = 50.8 Mb; extra copy / 46,XX genome = 50,818,468/6,062,084,834 = 0.84%  (vs 46,XY: 0.85%)
+   chr9: 138,394,717 bp = 138.4 Mb; extra copy / 46,XX genome = 138,394,717/6,062,084,834 = 2.28%  (vs 46,XY: 2.32%)
+   chr16: 90,338,345 bp = 90.3 Mb; extra copy / 46,XX genome = 90,338,345/6,062,084,834 = 1.49%  (vs 46,XY: 1.51%)
+   chrX: 156,040,895 bp = 156.0 Mb; extra copy / 46,XX genome = 156,040,895/6,062,084,834 = 2.57%  (vs 46,XY: 2.62%)
+[T2T-CHM13v2.0] haploid autosomes = 2,900,555,906; 46,XX = 2*2,900,555,906 + 2*154,259,566 = 6,109,630,944 bp; 46,XY = 6,017,831,407 bp
+   chr13: 113,566,686 bp = 113.6 Mb; extra copy / 46,XX genome = 113,566,686/6,109,630,944 = 1.86%  (vs 46,XY: 1.89%)
+   chr18: 80,542,538 bp = 80.5 Mb; extra copy / 46,XX genome = 80,542,538/6,109,630,944 = 1.32%  (vs 46,XY: 1.34%)
+   chr21: 45,090,682 bp = 45.1 Mb; extra copy / 46,XX genome = 45,090,682/6,109,630,944 = 0.74%  (vs 46,XY: 0.75%)
+   chr22: 51,324,926 bp = 51.3 Mb; extra copy / 46,XX genome = 51,324,926/6,109,630,944 = 0.84%  (vs 46,XY: 0.85%)
+   chr9: 150,617,247 bp = 150.6 Mb; extra copy / 46,XX genome = 150,617,247/6,109,630,944 = 2.47%  (vs 46,XY: 2.50%)
+   chr16: 96,330,374 bp = 96.3 Mb; extra copy / 46,XX genome = 96,330,374/6,109,630,944 = 1.58%  (vs 46,XY: 1.60%)
+   chrX: 154,259,566 bp = 154.3 Mb; extra copy / 46,XX genome = 154,259,566/6,109,630,944 = 2.52%  (vs 46,XY: 2.56%)
+Ensembl 116 protein-coding genes: nuclear total = 20,094 (MT 13)
+   chr13: 322 genes = 1.60% of nuclear coding genes; density = 322/114.4 Mb = 2.82 genes/Mb
+   chr18: 267 genes = 1.33% of nuclear coding genes; density = 267/80.4 Mb = 3.32 genes/Mb
+   chr21: 221 genes = 1.10% of nuclear coding genes; density = 221/46.7 Mb = 4.73 genes/Mb
+   chr22: 447 genes = 2.22% of nuclear coding genes; density = 447/50.8 Mb = 8.80 genes/Mb
+   chr9: 776 genes = 3.86% of nuclear coding genes; density = 776/138.4 Mb = 5.61 genes/Mb
+   chr16: 856 genes = 4.26% of nuclear coding genes; density = 856/90.3 Mb = 9.48 genes/Mb
+   chrX: 867 genes = 4.31% of nuclear coding genes; density = 867/156.0 Mb = 5.56 genes/Mb
+chr16 vs chr13: length ratio 0.79, gene ratio 2.66
+chrX vs chr21: length ratio 3.34, gene ratio 3.92
+chrX vs chr13: length ratio 1.36
+If ~15% of 867 X coding genes escape XCI -> ~130 genes with extra dosage in 47,XXX (vs 221 for +21)
+T21 maternal origin: 184/193 = 95.3%; paternal 9/193 = 4.7%
+
+======== 4 STRONG FORCE vs CHEMISTRY ========
+Yukawa range hbar/(m_pi c) = 197.3269804/139.57039 = 1.414 fm
+Bohr radius = 52,918 fm -> a0 / range = 37,429
+B(12C) = (6*1.00782503223 + 6*1.00866491606 - 12) u * 931.49410372 MeV/u = 92.162 MeV; per nucleon = 7.680 MeV
+per-nucleon nuclear binding / hydrogen ionization (Ry) = 7.680e+06 eV / 13.60569312299 eV = 5.64e+05
+proton: (2*2.16+4.7) / 938.27208943 = 9.02/938.272 = 0.96% of mass from quark rest masses
+neutron: (2.16+2*4.7) / 939.56542194 = 11.56/939.565 = 1.23%
+RERF F1 stable aberrations: exposed 18/8322 = 0.22%; control 25/7976 = 0.31%
+
+======== 5 TOPOLOGY: GENUS = CYCLE RANK OF TUBE GRAPH (exterior = one vertex) ========
+  mouth+anus only                                     : E= 2 V= 2 C=1 -> genus = E-V+C = 1
+  + nostrils                                          : E= 6 V= 4 C=1 -> genus = E-V+C = 3
+  + nostrils + 4 lacrimal puncta                      : E=12 V= 6 C=1 -> genus = E-V+C = 7
+  + Eustachian tubes, intact eardrums                 : E=14 V= 8 C=1 -> genus = E-V+C = 7
+  female: + vagina/uterus/2 tubes/peritoneum          : E=15 V= 8 C=1 -> genus = E-V+C = 8
+  both eardrums perforated / ear tubes (male)         : E=16 V= 8 C=1 -> genus = E-V+C = 9
+  imperforate anus (no GI exit) + nostrils + puncta   : E=11 V= 6 C=1 -> genus = E-V+C = 6
+  bilateral choanal atresia (male, with puncta)       : E=10 V= 6 C=1 -> genus = E-V+C = 5
+
+======== 5b ENTERIC NEURONS ========
+  Michel 2022: 1.68e+08 / 8.61e+10 = 0.20% of brain neuron count
+  Furness 2014 low: 2e+08 / 8.61e+10 = 0.23% of brain neuron count
+  Furness 2014 high: 6e+08 / 8.61e+10 = 0.70% of brain neuron count
+
+======== 6 GRAVITATIONAL TIME DILATION AT HUMAN SCALES ========
+  h = 0.33 m: dt/t = g h / c^2 = 9.80665*0.33/299792458^2 = 3.601e-17; per year 1.14 ns; over 80 yr 91 ns
+  h = 1.0 m: dt/t = g h / c^2 = 9.80665*1.0/299792458^2 = 1.091e-16; per year 3.44 ns; over 80 yr 275 ns
+  Kerr 2014: 59 analysed of 66 consented -> 89% retained
+  Xu 2023: 2 of 4 patients showed gamma surge = 50%
+
+======== 3b AUTOSOME RANKINGS (viable full trisomies = 13, 18, 21) ========
+fewest coding genes: [('21', 221), ('18', 267), ('13', 322), ('22', 447), ('20', 548)]
+shortest: [('21', 46.7), ('22', 50.8), ('19', 58.6), ('20', 64.4), ('18', 80.4), ('17', 83.3)]
+chr13 length rank among autosomes (1 = shortest): 10
+chr19: 58.617616 Mb, 1479 coding genes

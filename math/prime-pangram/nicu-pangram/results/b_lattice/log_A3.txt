@@ -1,0 +1,6 @@
+
+=== R(0,3): 435,022 prime words (onsets 70, nuclei 36, codas 7261) [4s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  witness search skipped (--nowitness)
+  exact number of perfect pangrams: 19,884,222,065,476
+  (488s)

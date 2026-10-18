@@ -11,7 +11,7 @@ os.environ.pop('OPENAI_API_KEY', None)
 os.environ.pop('NICU_OPENAI_KEY', None)
 
 from fastapi.testclient import TestClient
-from main import app
+from api.app.main import app
 
 
 class OfflineAPI(unittest.TestCase):
@@ -24,6 +24,10 @@ class OfflineAPI(unittest.TestCase):
     def tearDown(self):
         self.client.__exit__(None, None, None)
         self.network.stop()
+
+    def test_compatibility_entrypoint(self):
+        from main import app as compatibility_app
+        self.assertIs(compatibility_app, app)
 
     def test_health_and_disabled_evidence(self):
         self.assertEqual(self.client.get('/healthz').json(), {'status': 'ok', 'mode': 'offline'})
@@ -62,7 +66,7 @@ class DefaultModeSmoke(unittest.TestCase):
         result = subprocess.run([sys.executable, '-c',
             "import socket; from unittest.mock import patch; "
             "guard = patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden')); "
-            "guard.start(); import main, sys; "
+            "guard.start(); import api.app.main as main, sys; "
             "assert main.OFFLINE; assert 'openai' not in sys.modules; "
             "assert 'psycopg' not in sys.modules"],
             env=settings, capture_output=True, text=True, timeout=15)
@@ -82,7 +86,7 @@ class StreamlitSmoke(unittest.TestCase):
         with patch.object(requests.Session, 'get', side_effect=requests.ConnectionError('offline test')), \
              patch.object(requests.Session, 'post', return_value=response), \
              patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden')):
-            page = AppTest.from_file('app.py').run(timeout=15)
+            page = AppTest.from_file('ui/app.py').run(timeout=15)
             page.text_input[0].set_value('Synthetic question')
             next(button for button in page.button if button.label == 'Search & Answer').click().run()
             self.assertEqual(len(page.exception), 0)
@@ -98,7 +102,7 @@ class StreamlitSmoke(unittest.TestCase):
         with patch.object(requests.Session, 'get', side_effect=requests.ConnectionError('offline test')), \
              patch.object(requests.Session, 'post', side_effect=requests.ConnectionError('offline test')), \
              patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden')):
-            page = AppTest.from_file('app.py').run(timeout=15)
+            page = AppTest.from_file('ui/app.py').run(timeout=15)
             self.assertEqual(len(page.exception), 0)
             self.assertIn('Synthetic research', page.warning[0].value)
             next(button for button in page.button if button.label == 'Run').click().run()

@@ -1,0 +1,73 @@
+m_p c^2 = 1.67262192595e-27 kg / 1.782661921e-36 kg/eV = 938.272090 MeV
+u c^2   = 931.4941 MeV
+
+=== (1) Higgs, W, Z, weak range, Navier-Stokes scale ===
+M_H/m_p = 125.13/0.938272 = 133.4 proton masses
+H lifetime (central): hbar/Gamma = 6.582120e-16 eV s / 3.00e+06 eV = 2.194e-22 s ; c*tau = 65.8 fm = 6.58e-14 m
+H lifetime (Gamma+1sig): hbar/Gamma = 6.582120e-16 eV s / 4.50e+06 eV = 1.463e-22 s ; c*tau = 43.9 fm = 4.39e-14 m
+H lifetime (Gamma-1sig): hbar/Gamma = 6.582120e-16 eV s / 2.30e+06 eV = 2.862e-22 s ; c*tau = 85.8 fm = 8.58e-14 m
+Higgs VEV v = (sqrt2*G_F)^(-1/2) = (1.41421*1.1663787e-05)^(-1/2) = 246.220 GeV
+M_W/v = 0.3264, M_Z/v = 0.3704
+weak range W: hbar c / M_W c^2 = 197.3269804 MeV fm / 80362.5 MeV = 2.4555e-03 fm = 2.4555e-18 m
+weak range Z: 197.3269804 / 91187.9 = 2.1640e-03 fm = 2.1640e-18 m
+water number density at 37 C: 993.33*6.022141e+23/0.0180153 = 3.3205e+28 m^-3 ; mean spacing n^(-1/3) = 3.111 A
+ratio O-O peak / W range = 2.80e-10/2.4555e-18 = 1.140e+08
+ratio mean spacing / W range = 1.267e+08
+G_F*E^2 at E=m_p: 1.1664e-05*9.3827e-01^2 = 1.027e-05 ; alpha = 7.29735e-03 ; ratio = 1.41e-03
+G_F*E^2 at E=13.6 eV: 1.1664e-05*1.3606e-08^2 = 2.159e-21 ; alpha = 7.29735e-03 ; ratio = 2.96e-19
+
+=== (2) Unification / proton decay ===
+tau/B(p->e+pi0) > 2.4e+34 yr ; / age of universe 1.380e+10 yr = 1.74e+24
+nucleons in 70 kg ~ 70/1.660539e-27 = 4.215e+28
+upper bound on p->e+pi0 decays/yr in 70 kg (even if every nucleon were a proton): 4.215e+28/2.4e+34 = 1.76e-06 per yr
+gauge bosons = dim SU(3)+dim SU(2)+dim U(1) = 8+3+1 = 12
+
+=== (3) 3 x 4 ===
+N_nu = 2.984 +- 0.0082: (3 - N)/sigma = 1.95 sigma
+N_nu = 2.9963 +- 0.0074: (3 - N)/sigma = 0.50 sigma
+flavour types: 4x3 = 12
+counting colour: (2 quarks x 3 + 2 leptons) x 3 = 24; with antiparticles = 48
+Weyl fermions per generation 6+3+3+2+1 = 15; x3 = 45; with nu_R = 48
+  Nc=1: sum_doublets Y = Nc*1/3 + -1 = -2/3 ; sum of Q per generation = Nc*(2/3-1/3) + (0-1) = -2/3
+  Nc=2: sum_doublets Y = Nc*1/3 + -1 = -1/3 ; sum of Q per generation = Nc*(2/3-1/3) + (0-1) = -1/3
+  Nc=3: sum_doublets Y = Nc*1/3 + -1 = 0 ; sum of Q per generation = Nc*(2/3-1/3) + (0-1) = 0
+  Nc=4: sum_doublets Y = Nc*1/3 + -1 = 1/3 ; sum of Q per generation = Nc*(2/3-1/3) + (0-1) = 1/3
+  n=1 generations: CKM angles n(n-1)/2 = 0, CP phases (n-1)(n-2)/2 = 0
+  n=2 generations: CKM angles n(n-1)/2 = 1, CP phases (n-1)(n-2)/2 = 0
+  n=3 generations: CKM angles n(n-1)/2 = 3, CP phases (n-1)(n-2)/2 = 1
+  n=4 generations: CKM angles n(n-1)/2 = 6, CP phases (n-1)(n-2)/2 = 3
+asymptotic freedom 33-2nf>0 -> nf <= 16 -> generations <= 8
+
+=== (4) spin-1/2 ===
+SU(2) U(2pi) =
+ [[-1.  0.]
+ [ 0. -1.]] 
+SU(2) U(4pi) =
+ [[1. 0.]
+ [0. 1.]]
+SO(3) R(2pi) =
+ [[ 1.  0.  0.]
+ [-0.  1.  0.]
+ [ 0.  0.  1.]]
+Rauch 1978: alpha = 716.8 +- 3.8 deg vs 720: (720-716.8)/3.8 = 0.84 sigma
+thermal de Broglie wavelength (70 kg human, 310.0 K): h/sqrt(2 pi m k T) = 4.829e-25 m
+thermal de Broglie wavelength (free electron, 310.0 K): h/sqrt(2 pi m k T) = 4.233e-09 m
+
+=== (5) dark matter in a 70-L body ===
+rho=0.2 GeV/cm^3: 0.2*70000 = 1.400e+04 GeV = 2.496e-23 kg = 1.492e+04 m_p ; fraction of 70 kg = 3.57e-25
+rho=0.3 GeV/cm^3: 0.3*70000 = 2.100e+04 GeV = 3.744e-23 kg = 2.238e+04 m_p ; fraction of 70 kg = 5.35e-25
+rho=0.4 GeV/cm^3: 0.4*70000 = 2.800e+04 GeV = 4.991e-23 kg = 2.984e+04 m_p ; fraction of 70 kg = 7.13e-25
+rho=0.47 GeV/cm^3: 0.47*70000 = 3.290e+04 GeV = 5.865e-23 kg = 3.506e+04 m_p ; fraction of 70 kg = 8.38e-25
+rho=0.55 GeV/cm^3: 0.55*70000 = 3.850e+04 GeV = 6.863e-23 kg = 4.103e+04 m_p ; fraction of 70 kg = 9.80e-25
+rho=0.6 GeV/cm^3: 0.6*70000 = 4.200e+04 GeV = 7.487e-23 kg = 4.476e+04 m_p ; fraction of 70 kg = 1.07e-24
+  if m_chi = 1.0 GeV: N = 0.4*70000/1.0 = 28000 particles in the body at any instant (rho=0.4)
+  if m_chi = 40.0 GeV: N = 0.4*70000/40.0 = 700 particles in the body at any instant (rho=0.4)
+  if m_chi = 100.0 GeV: N = 0.4*70000/100.0 = 280 particles in the body at any instant (rho=0.4)
+time to cross 1 m at v_c = 233 km/s: 4.29e-06 s
+  mu_N=10.858 GeV, mu_n=0.9168 GeV, sigma_N = 2.2e-48*16^2*(10.858/0.9168)^2 = 7.901e-44 cm^2
+  N_T = 2.635e+27 O-16 nuclei, n_chi = 0.01 cm^-3, v = 2.33e+07 cm/s
+  rate < 4.85e-11 /s = 1.53e-03 /yr -> < 1 scatter per 653 yr
+
+=== (1b) how much of a proton's mass is Higgs-generated quark mass ===
+uud: 2*2.16 + 4.7 = 9.02 MeV ; / m_p 938.272 MeV = 0.96 %
+NS for water uses only rho = 993.33 kg/m^3 and mu = 691.304 uPa s ; kinematic nu = 6.959e-07 m^2/s

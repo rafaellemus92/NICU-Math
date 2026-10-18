@@ -1,0 +1,10 @@
+# compiled binaries (rebuild with `make`)
+/pairs
+/pairs_test
+/diff
+/pack
+/pang
+/pangdp
+/brute
+/enumfull
+__pycache__/

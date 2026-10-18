@@ -1,5 +1,9 @@
--r requirements-offline.txt
-# Optional legacy evidence/PDF tools; not needed for offline startup or smoke tests.
+# Flat combined manifest for parsers that reject -r includes.
+# Keep synchronized with api/requirements.txt + ui/requirements.txt; tests enforce this.
+fastapi==0.112.2
+uvicorn==0.30.6
+pydantic==2.9.1
+numpy==2.0.2
 psycopg[binary]==3.2.3
 pgvector==0.3.4
 python-multipart==0.0.9
@@ -9,3 +13,7 @@ openai>=1.40.0
 pdfminer.six==20251230
 pdfplumber==0.11.9
 pypdf==5.0.1
+streamlit==1.39.0
+requests==2.32.3
+pandas==2.2.3
+altair==5.4.1

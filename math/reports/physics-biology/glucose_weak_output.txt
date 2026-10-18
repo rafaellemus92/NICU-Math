@@ -1,0 +1,59 @@
+======================================================================
+(1) GLUCOSE C6H12O6 from 12C, 1H, 16O
+protons 96, neutrons 84, electrons 96, nucleons 180
+valence up = 2*96+84 = 276; valence down = 96+2*84 = 264; total 540 = 3*180
+molecule mass = 6*12 + 12*1.00782503223 + 6*15.99491461957 = 180.06338810 u = 167727.984 MeV = 167.7280 GeV
+valence quark rest mass = 276*2.16 + 264*4.7 = 1836.96 MeV  -> 1.095% (range 1.073-1.118%)
+electron mass = 96*0.51099895069 = 49.056 MeV -> 0.0292%
+free nucleons = 96*938.27208943 + 84*939.56542194 = 168997.616 MeV -> 100.757%
+nucleons minus valence quark masses (QCD dynamics) = 167160.66 MeV -> 99.662%
+free p+n+e sum = 169046.672 MeV; minus molecule = binding (nuclear+atomic) 1318.688 MeV -> 0.7862%
+m_n = 1.0086649161 u; B(12C) = 92.162 MeV (7.6801/nucleon); B(16O) = 127.619 MeV (7.9762/nucleon)
+nuclear binding in molecule = 6*B(12C)+6*B(16O) = 1318.686 MeV -> 0.7862% of molecule mass; remainder (atomic e- binding etc.) 0.0013 MeV
+proton valence quark fraction = 9.02/938.272 = 0.961%; neutron 11.56/939.565 = 1.230%
+dcH solid, NIST -2805.0: per molecule 29.07 eV; E/(m c^2) = 2.805e+06 / (0.180063*c^2=1.6183e+16) = 1.733e-10
+dG'0 -2870 (Tran & Unden 1998 via BioNumbers): per molecule 29.75 eV; E/(m c^2) = 2.87e+06 / (0.180063*c^2=1.6183e+16) = 1.773e-10
+  using 180.156 g/mol: 2.805e6/(0.180156*c^2) = 1.732e-10
+2000 kcal/day = 8.368 MJ -> dm = E/c^2 = 9.311e-11 kg = 93.1 ng/day
+======================================================================
+(2) RESPIRATORY QUOTIENT
+glucose C6H12O6+6O2->6CO2+6H2O: RQ = 6/6 = 1.0000; O2 not returned as CO2 = 0.0%
+palmitate C16H32O2+23O2->16CO2+16H2O: RQ = 16/23 = 0.6957; O2 not returned as CO2 = 30.4%
+albumin C72H112N18O22S+77O2->63CO2+... (OpenAnesthesia): RQ = 63/77 = 0.8182; O2 not returned as CO2 = 18.2%
+metabolic water: glucose 6*18.015/180.156 = 0.600 g/g; palmitate 16*18.015/256.43 = 1.124 g/g
+sat vapour density 37C = 43.9 g/m3, 34C = 37.5 g/m3; inspired 20C/50%RH = 8.6 g/m3
+VE = 0.5 L x 12/min x 1440 = 8.64 m3/day -> water loss 304 g/day (37C sat) / 250 g/day (34C sat)
+dead space 2 mL/kg x 70 kg = 140 mL; 150/500 tidal = 30%
+======================================================================
+(3) WEAK DECAYS IN A 70 kg BODY (ICRP 23 Reference Man: K 140 g, C 16000 g)
+K-40 atoms = 140*0.000117/39.0983*NA = 2.5229e+20 (16.74 mg); lambda=1.7600e-17/s; A = 4440 Bq; specific 31.72 Bq/gK
+C-14 specific activity = 1.176e-12*NA/12.011*ln2/(5700 y) = 0.2272 Bq/gC; x16000 g = 3635 Bq; with 0.226 Bq/g: 3616 Bq
+   carbon 12600 g -> 2863 Bq
+   carbon 16000 g -> 3635 Bq
+antineutrinos: 4440*0.8928 + 3635 = 7600/s = 6.566e+08/day
+neutrinos (K-40 EC): 4440*0.1072 = 476/s = 4.113e+07/day
+total = 8076/s = 6.977e+08/day ; HPS 5000 Bq K-40 variant total = 7.461e+08/day
+K-40 beta-minus decays/day = 3.425e+08; K-40 1461 keV gammas ~ EC branch 476/s
+C per bp 19.0: C atoms/diploid nucleus 1.161e+11; 14C atoms 0.137; decays/nucleus/yr 1.660e-05
+C per bp 20.0: C atoms/diploid nucleus 1.222e+11; 14C atoms 0.144; decays/nucleus/yr 1.748e-05
+nucleated, Sender 2016: 3.00e+12 cells -> 1.399e+05 DNA 14C decays/day, 1.62/s, 80-yr total 4.09e+09
+all cells incl. RBC, Sender 2016: 3.00e+13 cells -> 1.399e+06 DNA 14C decays/day, 16.20/s, 80-yr total 4.09e+10
+Bianconi 2013 all cells: 3.72e+13 cells -> 1.735e+06 DNA 14C decays/day, 20.09/s, 80-yr total 5.07e+10
+per stem cell: 1.70e-05 14C decays/yr vs ~40 SNVs/yr (Blokzijl 2016) -> ratio 4.3e-07
+======================================================================
+(4) SOLAR NEUTRINOS
+B16-GS98 total flux = 6.5368e+10 cm^-2 s^-1; pp share 91.5%
+cross-check: 2*L/(26.1 MeV) = 1.831e+38 nu/s; flux at 1 AU = 6.510e+10 cm^-2 s^-1
+area 0.5 m^2: 3.27e+14 /s through body; per day 2.82e+19
+area 1.0 m^2: 6.54e+14 /s through body; per day 5.65e+19
+electrons in listed elements (70.07 kg): 2.316e+28; Z/A = 0.5488; scaled to 70 kg 2.313e+28
+pp nu-e scattering, all nu_e: 5.98e+10*1.16e-45*2.313e+28 = 1.605e-06/s = 0.139/day = 50.6/yr = 4051/80yr
+pp nu-e scattering, all nu_mu/tau: 5.98e+10*3.30e-46*2.313e+28 = 4.565e-07/s = 0.039/day = 14.4/yr = 1153/80yr
+Borexino PC (C9H12) electrons per 100 t = 3.3069e+31
+pp 134 cpd/100t: x (2.313e+28/3.307e+31) = 0.0937/day in 70 kg; 34/yr; 2739/80 yr
+pp+7Be+pep 134+48.3+2.43: x (2.313e+28/3.307e+31) = 0.1292/day in 70 kg; 47/yr; 3776/80 yr
+P(interact) per pp nu over 20 cm: 3.343e+23*1.16e-45*20 = 7.8e-21
+P(interact) per pp nu over 30 cm: 3.343e+23*1.16e-45*30 = 1.2e-20
+KCL worksheet: 1e35 nu/s -> 3.44e11 m^-2 s^-1 vs B16 6.54e+14 m^-2 s^-1 (ratio 1900); their lifetime P = 0.086
+K-40 beta decays per day / solar nu interactions per day = 3.425e+08/0.094 = 3.7e+09
+body's own nu per day x P(~7.7e-21) = 5.4e-12 self-interactions/day (order of magnitude only)

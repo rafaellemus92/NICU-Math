@@ -7,3 +7,9 @@ __pycache__/
 library/
 *.pdf
 .pytest_cache/
+*.PDF
+venv/
+*.egg-info/
+.coverage
+htmlcov/
+.streamlit/secrets.toml

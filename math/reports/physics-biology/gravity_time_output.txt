@@ -1,0 +1,44 @@
+== (2) Gravitational time dilation, weak field: df/f = g*dh/c^2 ==
+c^2 = 8.987552e+16 m^2/s^2
+80 Julian years = 80*365.25*86400 = 2.524608e+09 s
+  g_n 9.80665      h=1.00 m: g*h/c^2 = 9.80665*1.0/8.987552e+16 = 1.0911e-16;  over 80 yr: 2.7547e-07 s = 275.5 ns
+  g_n 9.80665      h=1.70 m: g*h/c^2 = 9.80665*1.7/8.987552e+16 = 1.8549e-16;  over 80 yr: 4.6830e-07 s = 468.3 ns
+  g 9.80 (Chou)    h=1.00 m: g*h/c^2 = 9.8*1.0/8.987552e+16 = 1.0904e-16;  over 80 yr: 2.7528e-07 s = 275.3 ns
+  g 9.80 (Chou)    h=1.70 m: g*h/c^2 = 9.8*1.7/8.987552e+16 = 1.8537e-16;  over 80 yr: 4.6798e-07 s = 468.0 ns
+  g equator 9.780  h=1.00 m: g*h/c^2 = 9.78*1.0/8.987552e+16 = 1.0882e-16;  over 80 yr: 2.7472e-07 s = 274.7 ns
+  g equator 9.780  h=1.70 m: g*h/c^2 = 9.78*1.7/8.987552e+16 = 1.8499e-16;  over 80 yr: 4.6703e-07 s = 467.0 ns
+  g pole 9.83      h=1.00 m: g*h/c^2 = 9.83*1.0/8.987552e+16 = 1.0937e-16;  over 80 yr: 2.7613e-07 s = 276.1 ns
+  g pole 9.83      h=1.70 m: g*h/c^2 = 9.83*1.7/8.987552e+16 = 1.8593e-16;  over 80 yr: 4.6941e-07 s = 469.4 ns
+per day, 1.7 m: 16.03 ps/day
+time for head-feet (1.7 m) offset to reach 1 us: 5.391e+09 s = 171 yr
+time for head-feet offset to reach 1 s: 5.391e+15 s = 1.708e+08 yr
+
+== Chou et al. 2010 check (33 cm) ==
+predicted 9.80*0.33/c^2 = 3.598e-17  vs measured (4.1 +/- 1.6)e-17 -> diff = 0.31 sigma
+inferred height from measured: 4.1e-17*c^2/9.80 = 37.6 cm (paper: 37 +/- 15 cm)
+per metre: 9.80/c^2 = 1.090e-16 (paper: ~1.1e-16 per m)
+33 cm over 79 yr: 89.7 ns (NIST release: ~90 ns over 79 yr)
+33 cm over 80 yr: 90.8 ns (NIST release: ~90 ns over 79 yr)
+
+== Bothwell et al. 2022 check (per mm) ==
+predicted g*1mm/c^2 (g=9.80) = 1.090e-19 per mm (paper: 1.09e-19/mm)
+measured 9.8(2.3)e-20/mm: ratio meas/pred = 0.90 +/- 0.21; deviation = 0.48 sigma
+implied g from measured gradient: 8.81 +/- 2.07 m/s^2
+
+== Context: whole potential wells (weak field, phi/c^2) ==
+Earth surface vs infinity: GM/(R c^2) = 3.9860e+14/(6.3710e+06*8.9876e+16) = 6.9613e-10; over 80 yr = 1.76 s
+Sun's potential at 1 AU: GM/(AU c^2) = 9.8706e-09; over 80 yr = 24.9 s
+Ratio head-feet (1.7 m) to Earth-surface well: 2.66e-07
+
+== Velocity time dilation for comparison: v^2/(2c^2) ==
+  v= 1.0 m/s: 5.563e-18
+  v=10.0 m/s: 5.563e-16
+
+== (3) Wow! signal numbers ==
+HI 21-cm: lambda = c/f = 21.106 cm; E = h f = 5.874 micro-eV
+  Kraus 1994: f-f_HI = -50.2 kHz -> radio-convention v_r = +10.6 km/s
+  Ehman 1998: f-f_HI = +49.8 kHz -> radio-convention v_r = -10.5 km/s
+  Mendez 2025: f-f_HI = +320.2 kHz -> radio-convention v_r = -67.6 km/s
+6EQUJ5 code (A=10..Z=35): {'6': 6, 'E': 14, 'Q': 26, 'U': 30, 'J': 19, '5': 5}
+duration: 6 samples x 12 s = 72 s (10 s integration + ~2 s processing each)
+Big Ear channel width 10 kHz -> fractional bandwidth 10e3/1.4204e+09 = 7.04e-06

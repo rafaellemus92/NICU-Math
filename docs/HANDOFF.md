@@ -1,6 +1,95 @@
 # Startup and collaboration handoff — 2026-10-18
 
-## Current follow-up: independent review corrections
+
+## Current reconciliation of PRs #3, #5 and #7
+
+Implementation owner: Codex. User authorized reconciliation/testing/pushing on
+`codex/startup-collaboration` and updating draft #7, not merging to main, closing
+other PRs or deploying. Independent Codex findings from the earlier review remain
+credited below; this reconciliation has not yet received independent review.
+
+### Inspected remote snapshots
+
+- main: `7ddd793ff940d0a32f1cdc43d5992fb9fc15fe3c` (math consolidation).
+- PR #3: `b80ba850441bd9c1c1c41d6dd7a3c9aefbd6239f` (`claude/baseline-restructure`).
+- PR #5: `2a9b9a87d0916535eab8139a0239b20740a193d1` (`claude/research-spine`).
+- Our pre-reconciliation head: `a93da8389ed12b256cbde5fbd421a22b40429abd`.
+
+Merged current main into this review branch, resolving the README overlap by
+retaining both startup instructions and the math index. The final merge commit
+hash is reported in the delivery/PR. There is no force push or merge into main.
+
+### Integration decisions and remaining differences
+
+| Source | Retained/adapted | Deliberately not adopted |
+| --- | --- | --- |
+| main | Entire `math/` tree and existing Lean workflow, byte-for-byte. | No rewriting of mathematical claims or research artifacts. |
+| PR #3 | `api/app` and `ui` boundaries, relative API imports, separate minimal service Dockerfiles/dependencies, removal of tracked root bytecode and useful ignore rules. | Required keys/DB on startup, PDF serving/library mount, obsolete UI pins, unused heavyweight packages and removal of `nano hybrid.patch`. The patch is preserved. |
+| PR #5 | RESEARCH.md, track ledgers/scaffolds, shared-instrument plan, claim tiers, pre-registration, preservation of negative results and cross-AI handoffs. | Assertions that unlanded scripts/libraries already exist or prove results, stale PR/path references, mandatory credentials, and conflicting AI-specific policies. |
+| PR #7 | Tested offline default, compatible PDF pins, no dead document links, synthetic-only labels, regression checks and handoff. | Previous flat application layout; root main.py remains only a compatibility re-export. |
+
+AGENTS.md is shared guidance; CLAUDE.md imports it and adds nonconflicting workflow
+notes. RESEARCH.md frames convergence as a hypothesis/motivation, not a universal
+mathematical or physiological link. Existing source-branch clinical reference
+notes are explicitly unverified, not promoted to evidence. Planned exact/model
+work remains planned; no patient studies, datasets or uploaded documents added.
+PR #6 is separate and not integrated. Other PRs remain open and need their authors
+to reconcile any remaining differences; do not merge #3/#5 blindly after #7.
+
+The root requirements manifest is now flat and checked against the per-service
+manifests. It removes both main's invalid package names and the `-r` input rejected
+in the user-supplied Vercel preview diagnosis. Local convenience manifests still
+use pip includes. See HOSTING.md: FastAPI build support does not demonstrate
+Streamlit hosting. No Vercel project/configuration/credentials were changed.
+
+### Validation of reconciled tree
+
+Passed:
+- Fresh `/tmp/nicu-reconcile-optional` venv: resolution and install of
+  `requirements.txt` + `requirements-test.txt`; after flattening, repeated
+  `pip install --dry-run --ignore-installed -r requirements.txt`, install and
+  `pip check`, all successful.
+- `NICU_OFFLINE=1 /tmp/nicu-reconcile-optional/bin/python -m unittest discover -s tests -v`:
+  **10 passed, zero skipped**. Includes package/compatibility imports, flat-root
+  manifest parity, offline API/scenario/UI checks and optional synthetic PDF tests.
+- Offline-only `.venv`: **8 passed, 2 optional PDF tests skipped**.
+- `python -m compileall -q api ui tests`, `docker compose config --quiet`,
+  `git diff --cached --check origin/main`.
+- Live canonical `uvicorn api.app.main:app` and `streamlit run ui/app.py`:
+  HTTP 200 for both health endpoints and synthetic scenario; processes stopped.
+- `python math/prime-pangram/search/tests/test_solutions.py`: 17 fast checks,
+  zero failures. Full research sweeps and proofs are not inferred from this.
+- `git diff --exit-code origin/main -- math .github/workflows/lean.yml`:
+  unchanged research tree/workflow. The user's existing patch is preserved.
+- Python 3.11 container runtime via temporary offline-wheel builds: both health
+  endpoints HTTP 200; real UI-to-API AppTest scenario rendered four summary
+  metrics without errors; `pip check` passed in each service. Local project
+  `nicu-reconcile` containers/network stopped and removed after checks.
+
+Failed/environment limitation:
+- A staged whitespace check against the old branch tip reports pre-existing
+  whitespace in main's imported math artifacts. The review diff against current
+  main passes; those artifacts are deliberately preserved byte-for-byte.
+- Standard Compose build and separate `docker build --network=host` attempts
+  failed at pip because of container DNS. This remains a standard-build blocker.
+- To isolate runtime from DNS, downloaded binary Python 3.11 wheels on the host
+  (`pip download --only-binary=:all: --python-version 311 --implementation cp
+  --abi cp311 --platform manylinux2014_x86_64 -r requirements-offline.txt`).
+  Temporary Dockerfiles under /tmp added a wheelhouse COPY and replaced only the
+  pip install with `--no-index --find-links=/wheels`. Built with `--network=none`
+  and named build context `wheelhouse=/tmp/nicu-wheels311`; used those images for
+  `docker compose -p nicu-reconcile up --no-build`. No wheelhouse or alternate
+  build configuration committed; normal networked Docker builds are not claimed
+  to pass. Streamlit bare-mode/Altair warnings were nonfatal.
+
+Not run: Vercel build/deployment or production verification, Postgres/schema and
+external evidence integration, paid APIs, full numerical sweeps/Lean proof builds
+(`lake` not installed), PR #6 tests, clinical validation or whole-stack security
+audit. Empty track scaffolds have no runnable research suite and are not counted
+as passing tests. The existing Lean workflow is preserved, not manually dispatched.
+
+## Earlier review corrections (historical)
+
 
 - Implementation owner: Codex. The two findings below were reported by an
   **independent Codex review**, not Claude. Claude has not been contacted.

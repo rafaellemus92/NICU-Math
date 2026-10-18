@@ -6,6 +6,8 @@
 **/*.pyc
 **/*.pdf
 library
-pangram
+math
 tests
 docs
+**/*.PDF
+.streamlit

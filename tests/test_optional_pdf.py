@@ -14,7 +14,7 @@ from packaging.requirements import Requirement
                      'Optional PDF dependencies are not installed')
 class OptionalPDFSmoke(unittest.TestCase):
     def test_pdf_pins_match_installed_dependency_contract(self):
-        requirements = Path('requirements.txt').read_text().splitlines()
+        requirements = Path('api/requirements.txt').read_text().splitlines()
         for line in requirements:
             if line.startswith(('pdfplumber==', 'pdfminer.six==')):
                 req = Requirement(line)
