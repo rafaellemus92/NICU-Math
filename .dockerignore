@@ -1,0 +1,13 @@
+.git
+.venv
+.env
+.env.*
+**/__pycache__
+**/*.pyc
+**/*.pdf
+library
+math
+tests
+docs
+**/*.PDF
+.streamlit

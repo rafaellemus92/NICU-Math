@@ -1,0 +1,88 @@
+# fluids/CLAIMS.md — the ledger
+
+Every claim in `fluids/` lives in exactly one tier below. Nothing
+merges without a tier assignment. See [`../RESEARCH.md`](../RESEARCH.md)
+§3 for the tier definitions.
+
+---
+
+## Mathematical results
+
+*(Statements with proof, assumptions, and boundary cases. Point to
+the reference or the file carrying the proof.)*
+
+- *(none yet; file them here with proof as new work lands)*
+
+## Proposed exact computations (not verified on this branch)
+
+*(Deterministic scripts whose output verifies the claim. Each entry:
+one-line claim, script path, test path, commit SHA where it last
+passed.)*
+
+- **The φ-family of divergence-free periodic flows u^φ = (sin y,
+  sin z, cos x − cos(x+y+φ)) is divergence-free, has φ-independent
+  mean energy E, has zero total mean helicity H for every φ, and has
+  mean vortex stretching S(0) = ¼ cos φ.** This shows that two flows
+  can share the summary statistics E and H yet differ in current
+  stretching S by a fixed amount — the reduced state (E, H) does not
+  determine S. Script: `exact/phi_family.py`. Test:
+  `tests/fluids/test_phi_family.py`. *Proposed implementation is in PR #6, not integrated or verified here.*
+
+The formulas above are imported proposals from PR #5, not a new proof in this
+reconciliation. Neither named script/test exists on this branch.
+
+## Numerical evidence
+
+*(Each entry: pre-registered hypothesis, path to plan.md, path to
+results, preserved outcome regardless of sign.)*
+
+- *(none yet; pre-register in `numerical/<slug>/plan.md` before running)*
+
+## Proposed mechanisms (motivations; not established links)
+
+*(One paragraph each; name what would make it testable.)*
+
+- **Phase organization among triadic interactions is the mechanism
+  controlling accumulation of vortex stretching, not amplitudes
+  alone.** Testable by (i) exact constructions showing that identical
+  Fourier magnitudes can produce different Ṡ, and (ii) numerical
+  studies measuring whether specific triad-phase features add
+  predictive power over spectrum-and-current-stretching baselines on
+  held-out flows.
+
+- **Persistent favorable phase alignment among the small subset of
+  helical triads carrying the energy flux (per Kang–Protas–Bustamante
+  2021, [arXiv:2105.09425](https://arxiv.org/abs/2105.09425)) sustains
+  stretching bursts; sufficiently rapid phase drift forces
+  stationary-phase cancellation.** Testable by tracking amplitude-
+  weighted triad phases during stretching bursts and quantifying
+  persistence length. Mathematical route: a stationary-phase /
+  integration-by-parts bound on ∫ B cos Ψ dt in intervals where Ψ̇
+  stays bounded away from zero.
+
+- **DNA ribbon topology (Călugăreanu–White–Fuller Lk = Tw + Wr) and
+  Moffatt vortex-tube helicity share topological invariants, which
+  suggests geometric diagnostics (writhe-like measures on vorticity
+  tubes) worth tracking alongside algebraic ones.** Testable by
+  constructing a tube-geometry diagnostic for simulated flows and
+  checking whether it adds predictive value for stretching bursts
+  beyond the helical-triad diagnostics.
+
+## Contradicted / unresolved
+
+*(Negative results preserved; superseded claims kept with their
+superseding SHA. Never deleted.)*
+
+- *(none yet)*
+
+---
+
+## Convention
+
+When a claim moves tiers (e.g., a proposed mechanism becomes an exact
+computation), **move the line, don't duplicate it.** Reference the PR
+that moved it in the commit message.
+
+When a claim is contradicted, move it to **Contradicted / unresolved**
+with a one-line note on what showed it wrong, and link the superseding
+work.
