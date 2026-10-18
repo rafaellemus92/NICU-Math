@@ -1,8 +1,8 @@
 'use client'
 
 const links = [
-  { href: '/', label: 'Conjecture' },
-  { href: '/proof', label: 'Proof' },
+  { href: '/', label: 'Overview' },
+  { href: '/proof', label: 'Argument' },
   { href: '/demo', label: 'Demo' },
   { href: '/shared-air', label: 'Shared Air' },
 ]
@@ -23,9 +23,9 @@ export default function Nav() {
           color: '#c9a96e', textDecoration: 'none', fontFamily: 'Georgia, serif',
           fontSize: 18, fontWeight: 600, letterSpacing: '-0.02em',
         }}>
-          NS ; Regularity
+          NS ; Neonatal Lung
         </a>
-        <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 20, rowGap: 6 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 16, rowGap: 6 }}>
           {links.map(l => (
             <a key={l.href} href={l.href} style={{
               color: '#888899', textDecoration: 'none', fontSize: 14,

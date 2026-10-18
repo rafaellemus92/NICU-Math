@@ -39,15 +39,15 @@ P.S. Ecclesiastes' refrain word hevel, usually translated "vanity," literally me
   the corrected page, deployed from
   [`../../web/public/shared-air/index.html`](../../web/public/shared-air/index.html). Before sending,
   check that it opens without a login and on a phone.
-- [ ] **Check the rest of the site.** The [link] page has no links to the rest of the site, but its
-  root, https://nicu-math.vercel.app/, still shows the earlier "Navier-Stokes Regularity in the
-  Neonatal Lung" pages from PR #8 (`web/app/page.tsx`, `web/app/proof/page.tsx`,
-  `web/app/layout.tsx`). They call that work "a conditional regularity result" and say
-  Navier-Stokes blowup is "observed" in the lung. That does not match
+- [ ] **Check the rest of the site.** The [link] page has no links to the rest of the site, but he
+  may still open its root, https://nicu-math.vercel.app/. The earlier "Navier-Stokes Regularity in
+  the Neonatal Lung" pages from PR #8 were corrected on 18 October (`web/app/page.tsx`,
+  `web/app/proof/page.tsx`, `web/app/demo/page.tsx`, `web/app/layout.tsx`). They now call the lung
+  picture an analogy and a modelling programme, give every step of the argument a status label
+  (standard result, conjecture or analogy), and say that alveolar collapse is a clinical event
+  governed by surface tension and P = 2γ/r, not a Navier-Stokes singularity. That matches
   [`../README.md`](../README.md#what-remains-open) ("This work does not touch the Millennium
-  problem") or the item below about keeping Navier-Stokes out of this email. Either revise those
-  pages first (call the Laplace-pressure mapping P = 2γ/r an analogy: alveolar collapse is a
-  clinical event, not a Navier-Stokes singularity), or send knowing that he may find them.
+  problem"). What remains: before sending, check that the deployed root shows the corrected pages.
 - [ ] **Keep faith, Navier-Stokes and QED for a later reply.** They are not in this email, and they
   should stay out until he writes back.
 

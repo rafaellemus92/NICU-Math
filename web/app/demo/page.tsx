@@ -18,11 +18,20 @@ const card = {
   padding: 24,
 }
 
-const LEGEND: { key: Classification; label: string; desc: string }[] = [
-  { key: 'smooth', label: 'Smooth', desc: '‖u‖_{H¹} bounded — solution regular, viscous dissipation dominates surface tension forcing.' },
-  { key: 'approaching', label: 'Approaching', desc: '‖u‖_{H¹} growing — compliance declining, approaching the critical threshold.' },
-  { key: 'critical', label: 'Critical', desc: 'Near blowup threshold — intervention needed to prevent finite-time singularity.' },
-  { key: 'singular', label: 'Singular', desc: 'Compliance near zero — alveolar collapse — the Laplace pressure 2γ/r diverges.' },
+// Display names for the toy model's four waveform categories. The keys come from lib/ns.ts;
+// they are clinical waveform categories, not distances from a PDE singularity.
+const LABELS: Record<Classification, string> = {
+  smooth: 'Normal',
+  approaching: 'Stiffening',
+  critical: 'Critical',
+  singular: 'Collapse',
+}
+
+const LEGEND: { key: Classification; desc: string }[] = [
+  { key: 'smooth', desc: 'C_dyn at or above 1.0 mL/cmH₂O: the lung inflates easily at the set pressure.' },
+  { key: 'approaching', desc: 'C_dyn between 0.3 and 1.0 mL/cmH₂O and not falling fast: a stiffer lung, a smaller tidal volume at the same pressure.' },
+  { key: 'critical', desc: 'C_dyn between 0.3 and 1.0 and falling by more than 0.1 mL/cmH₂O per breath, or below 0.3 but recovering: the point where a clinician would act.' },
+  { key: 'singular', desc: 'C_dyn below 0.3 mL/cmH₂O and not recovering: the waveform pattern of widespread alveolar collapse (atelectasis). Pressures stay finite; nothing diverges.' },
 ]
 
 export default function DemoPage() {
@@ -85,7 +94,10 @@ export default function DemoPage() {
         Interactive Demonstration
       </h1>
       <p style={{ color: '#888899', fontSize: 15, marginBottom: 32, lineHeight: 1.6, maxWidth: 640 }}>
-        Synthetic ventilator waveform analysis — observe the transition between regularity and blowup.
+        A toy model of ventilator waveforms. Compliance falls breath by breath, surfactant can be given,
+        and each breath is sorted into one of four clinical waveform categories. The data are synthetic,
+        from a simple resistance&ndash;compliance model: not patient data, and not a Navier-Stokes
+        simulation. The categories say nothing about how close any PDE solution is to a singularity.
         Adjust parameters below. Click on the compliance chart to inspect any breath.
       </p>
 
@@ -166,7 +178,7 @@ export default function DemoPage() {
             Analysis Summary
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
-            <StatTile label="Final state" value={summary.final} color={CLASSIFICATION_COLORS[summary.final]} />
+            <StatTile label="Final category" value={LABELS[summary.final]} color={CLASSIFICATION_COLORS[summary.final]} />
             <StatTile label="C̄ (first 10)" value={summary.meanFirst.toFixed(3)} unit="mL/cmH₂O" />
             <StatTile label="C̄ (last 10)" value={summary.meanLast.toFixed(3)} unit="mL/cmH₂O" />
             <StatTile label="Slope" value={summary.slope.toFixed(5)} unit="per breath" />
@@ -175,7 +187,7 @@ export default function DemoPage() {
             {(Object.keys(summary.counts) as Classification[]).map(k => (
               <span key={k} style={{ fontSize: 13, color: '#888899' }}>
                 <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 4, background: CLASSIFICATION_COLORS[k], marginRight: 6 }} />
-                {k}: <span style={{ color: '#e8e8ed' }}>{summary.counts[k]}</span>
+                {LABELS[k]}: <span style={{ color: '#e8e8ed' }}>{summary.counts[k]}</span>
               </span>
             ))}
           </div>
@@ -185,7 +197,7 @@ export default function DemoPage() {
       {/* Legend */}
       <div style={{ ...card }}>
         <div style={{ color: '#888899', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>
-          Classification Legend
+          Waveform Categories (toy model)
         </div>
         <div style={{ display: 'grid', gap: 12 }}>
           {LEGEND.map(l => (
@@ -195,12 +207,17 @@ export default function DemoPage() {
                 background: CLASSIFICATION_COLORS[l.key], marginTop: 4, flexShrink: 0,
               }} />
               <div>
-                <span style={{ color: '#e8e8ed', fontSize: 14, fontWeight: 500 }}>{l.label}</span>
+                <span style={{ color: '#e8e8ed', fontSize: 14, fontWeight: 500 }}>{LABELS[l.key]}</span>
                 <span style={{ color: '#888899', fontSize: 13, marginLeft: 8 }}>{l.desc}</span>
               </div>
             </div>
           ))}
         </div>
+        <p style={{ color: '#888899', fontSize: 13, lineHeight: 1.6, margin: '16px 0 0' }}>
+          The thresholds are illustrative, not clinical cut-offs. In the toy model surfactant restores
+          compliance within about 15 breaths; in real babies oxygen need often falls within minutes,
+          and compliance improves more slowly.
+        </p>
       </div>
     </div>
   )
