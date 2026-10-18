@@ -15,6 +15,9 @@ it is, how certain it is, and where to find it.
 | **Proved in Lean** | A Lean 4 proof that the Lean kernel has checked. The audit files confirm it uses no `sorry` (an unfinished proof) and no `native_decide` (trusting compiled code instead of the kernel). |
 | **Checked numerically** | A script recomputes the result. This is evidence, not proof. |
 | **Audit** | A review of claims made elsewhere (ChatGPT's packages, the Shared Air model, the user's own ideas), with a verdict for each claim. |
+| **Standard** | An established analytical result or identity under stated assumptions; not a claim of new proof or a Lean certificate. |
+| **Refuted** | A specified deduction contradicted by an argument or counterexample under its assumptions; not merely open. |
+| **Synthetic** | An unvalidated teaching model or generated fixture, not clinical evidence. |
 | **Open** | Not proved and not claimed. |
 | **Correspondence** | Letters and notes written with AI help ([`letters/`](letters/)). Not results; each claim carries its own source, and physics verdicts defer to [`reports/`](reports/). |
 | **Source material** | The user's uploads, kept as uploaded ([`inputs/`](inputs/)): inputs to the proofs and audits, not results. |
@@ -35,6 +38,11 @@ it is, how certain it is, and where to find it.
 | [`letters/`](letters/) | A draft email to Steven Strogatz and its plain-language companion, `words.md`, whose physics verdicts defer to `reports/` | Correspondence, not an audit (draft, not sent); its few derived numbers are checked numerically |
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
 | [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
+| [`phase-family-checks/`](phase-family-checks/) | Distinct AI review scripts and archived checks, including superseded radius estimates | Checked numerically / Audit; no human peer review |
+| [`phase-family-perturbation/`](phase-family-perturbation/) | Finite-b experiments and sampled smallness estimates | Checked numerically; radius uncertified |
+| [`oscillation/`](oscillation/) | Lock maps and Fourier-triad coherence | Standard identities and numerical checks; clinical analogy only |
+| [`../navier_stokes/`](../navier_stokes/), [`../web/`](../web/) | Respiratory claim audit and synthetic teaching tools | Standard / Refuted / Open / Synthetic, per claim |
+| [`speech-motivations/`](speech-motivations/) | Speech-inspired research motivation | Analogy, not an implemented speech model |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
 
 ---
@@ -381,8 +389,8 @@ folder guide is [`ns-phase-audit/README.md`](ns-phase-audit/README.md).
     flow stays smooth for all time, and that E, Z, S differ from their b = 0
     values by b² E2, b² Z2, b² S2 plus an error of order b⁴ that decays in
     time. This is an instance of classical stability results for 2D-3C flows
-    (Ponce–Racke–Sideris–Titi 1994; Gallagher 1997); the new part is the
-    explicit b² response.
+    (Ponce–Racke–Sideris–Titi 1994; Gallagher 1997). The package gives an
+    explicit b² response calculation; novelty has not been established.
   - Its sections 1 and 5 are a written paper proof (not refereed) of P1 at the
     solution level, for all time and for E, Z and S.
   - The radius is tiny: at a = c = d = 1, ν = 1/28 the proof's own condition

@@ -252,34 +252,29 @@ b = 1/4 value is 0.98 at t = 0.5, 0.92 at t = 1, 0.76 at t = 2, 0.51 at t = 3,
 0.20 at t = 4). And the restored mode does sustain stretching for a while:
 at b = 1/4 the φ-averaged stretching at t = 8 is three times the base flow's,
 and the accumulated extra stretching over [0, 20] is 0.94, a third of the base
-flow's 2.62; at b = 1 it is 4.2, more than the base flow's own. Everything
-decays by t ≈ 15, and nothing grows. One more observation that belongs to the
+flow's 2.62; at b = 1 it is 4.2, more than the base flow's own. The reported observables decrease by t ≈ 15 in these sampled runs;
+this does not exclude earlier transient growth or certify continuum decay. One more observation that belongs to the
 reduced family itself: the cos φ coefficient of Z changes sign near t = 3.4
 at b = 0, so the member that gains enstrophy fastest at first (cos φ = 1) has
 the least by t = 4; the restored mode does not cause this.
 
 ### 3.5 What this says about the next step
 
-The perturbative theorem is true, and for ν > 0 it is uniform in time. Its
-explicit constants, obtained the standard way, are wrong by eighty orders of
-magnitude at the amplitudes of the ensemble and still by nine at a = 0.1.
-The loss is not in the quantifiers. It is in the two places where the energy
-method replaces the actual evolution by a worst case: the Grönwall factor
-exp ∫ G, which treats the linearized operator around u₀ as if it amplified
-gradients at the rate of its sup norm at every instant, and the Young step
-that turns the cubic term into β y³ with β ∝ ν⁻³. Neither can be repaired by a
-cleverer inequality of the same kind. What would close the gap is a computed
-bound on the linearized propagator around u₀ (a rigorous-numerics enclosure of
-its norm, which the measured amplification puts near 20 in amplitude rather
-than 10⁶⁵), in place of exp ∫ G; with that, the cubic term is handled by the
-same Bernoulli step with a sane constant. That is a concrete, bounded project, and
-it is the only route I can see from this family to a statement about b = 1.
+The canonical all-time note gives an unrefereed paper argument applying known
+large-solution stability, with symbolic constants. The sampled sufficient
+smallness estimates here are conservative and uncertified; there is no basis
+for saying that a theorem is “wrong by eighty orders.” A ceiling on a
+sufficient-condition threshold is an upper bound, not a usable sufficient
+radius or a stability boundary. Finite-b simulations do not determine any of
+these quantities. A rigorously enclosed linearized propagator is a possible
+future approach to sharper estimates; the measured amplification is not such
+an enclosure and does not establish that this approach reaches b = 1.
 
 ## 6. Cross-check with the all-time phase response note
 
 A separate package, "all-time phase response" (Codex, 18 October; branch
 `codex/all-time-phase-response`, folder `math/all-time-phase-response/`),
-proves the same small-b statement with symbolic constants and, instead of
+presents an unrefereed paper argument for the small-b statement with symbolic constants and, instead of
 finite-b simulations, integrates the variational equations for the first and
 second coefficients q₁, q₂ directly and reports the φ-harmonics of the b²
 coefficients (E₂, Z₂, S₂) at T = 0.5, N = 24, twelve phases. Its nine tests
@@ -300,18 +295,28 @@ and the b = 0 baseline. Ratio of this folder's value to the archive's:
 | m = 2 (cos 2φ) | 0.999 | 0.998 | 0.998 | 0.979 | 0.974 | 0.965 |
 | m = 3 (cos 3φ) | 0.997 | 0.997 | 0.996 | 0.957 | 0.948 | 0.937 |
 
-Two independent methods, a finite-difference in b of the full equations and
-a direct solution of the variational equations, agree on every harmonic of
-every observable to 0.5% at b = 1/4, and the departure at b = 1 is sixteen
-times larger, which is the b⁴ term the theorem predicts. The values in
+The finite-b quotient (O_b − O₀)/b² and the variational coefficient agree
+within about 0.5% in this stored comparison at b = 1/4. Moving from b = 1/4
+to b = 1 multiplies b² by 16, so roughly sixteenfold growth of the quotient's
+deviation is consistent with an O(b²) normalized error (an O(b⁴) raw remainder).
+This is empirical finite-grid scaling, not a theorem prediction at b = 1,
+which lies outside the theorem's justified smallness regime. Likewise the
+separate ratios near 16 obtained by halving b in raw remainders test quartic
+local behavior of a smooth discrete map, not an all-time or continuum bound. The values in
 `results/crosscheck_variational.out.txt` are the ones in this table.
 
 ## Running
 
-From this folder; Python 3 with numpy, except the exact jet and the
-cross-check, which need only the standard library.
+The commands below are historical reproduction recipes, not a request for a
+new campaign. Some scripts write fixed paths internally. First copy this whole
+folder into a fresh scratch directory; all redirected and internally written
+outputs then stay outside the repository. Keep the original archive unchanged.
+Python 3 with numpy; the exact jet and cross-check use the standard library.
 
 ```sh
+phase_scratch=$(mktemp -d /tmp/nicu-phase-rerun.XXXXXX)
+cp -R math/phase-family-perturbation "$phase_scratch/study"  # from repository root
+cd "$phase_scratch/study"
 python3 reduced_family.py > results/reduced_family.out.txt          # 1 min
 python3 full_family_dns.py 24 0.03571428571428571 1.0 0.002 1.0 0.5 0.25 0.0 > results/full_family_dns.log   # 5 min
 SAVE=0.5 OUT=results/long_b.json python3 full_family_dns.py 24 0.03571428571428571 20.0 0.005 0.25 1.0 > results/long_b.log
@@ -336,8 +341,8 @@ The saved outputs were produced with Python 3.11.17 and numpy 2.4.6.
   summed lattice sum with a margin, and no truncation or tail error is
   enclosed. So "|b| < 10⁻⁸⁰" is what the evaluated chain gives, not a
   certified radius; a certification requires rigorous enclosures; no ordering of the unknown true radius follows from these sampled estimates. The
-  simulations show b = 1 is fine on the interval computed, which is not a
-  statement about any radius either.
+  finite-grid simulations remain resolved on the computed interval at b = 1;
+  that is neither a continuum certificate nor a statement about a radius.
 - Harmonics in the initial phase φ are one-parameter information. Bounding
   them does not bound fine spatial scales, and nothing here bears on the
   regularity problem.

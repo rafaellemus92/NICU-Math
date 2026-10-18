@@ -38,6 +38,9 @@ def test_cli_rejects_corrupted_reference(tmp_path, script, args):
     path.write_text(json.dumps(ref))
     bad = subprocess.run(command, capture_output=True, text=True)
     assert bad.returncode == 1, bad.stdout + bad.stderr
+    diagnostic = '1 mismatches' if script == 'exact_single_nu.py' else 'tolerance 1.0e-10: FAIL'
+    assert diagnostic in bad.stdout, bad.stdout + bad.stderr
+    assert 'Traceback' not in bad.stderr
 
 
 def test_float_nonfinite_and_tolerance_boundary():
@@ -57,5 +60,9 @@ def test_cli_rejects_missing_order(tmp_path, script, args):
     del ref['orders']['1']
     path = tmp_path / 'incomplete.json'
     path.write_text(json.dumps(ref))
-    run = subprocess.run([sys.executable, str(ROOT / script), *args, '--series', str(path)], capture_output=True)
-    assert run.returncode != 0
+    run = subprocess.run([sys.executable, str(ROOT / script), *args, '--series', str(path)], capture_output=True, text=True)
+    expected_code = 1 if script == 'exact_single_nu.py' else 2
+    diagnostic = 'missing order' if script == 'exact_single_nu.py' else 'series must contain every requested order'
+    assert run.returncode == expected_code, run.stdout + run.stderr
+    assert diagnostic in run.stdout + run.stderr
+    assert 'Traceback' not in run.stderr

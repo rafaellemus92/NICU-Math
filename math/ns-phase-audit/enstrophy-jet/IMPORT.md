@@ -1,3 +1,8 @@
+> Historical PR15 record from a9aaf1f, referring to source 77916bb.
+> Dates, passes, pending-review language and paths below describe that session.
+> Use [README.md](README.md) for current scratch-only commands and
+> [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+
 > Historical PR15 import record, retained with commands relocated to the canonical
 > `math/ns-phase-audit/enstrophy-jet/` folder. Source map paths refer to that
 > original import, not the combined tree. Fresh validation is in
@@ -35,7 +40,7 @@ Every source-derived file is mapped to its full source Git blob in
 [SOURCE_FILES.json](SOURCE_FILES.json). Imported historical outputs remain
 historical; the file map makes any local adaptations inspectable against source.
 
-## Fresh validation (2026-10-18)
+## Historical PR15 validation (2026-10-18)
 
 Environment: Python 3.12.14, numpy 2.5.4, python-flint 0.9.0, pytest 9.1.1;
 Node v24.19.0. Temporary venv `/tmp/flow-venv`; no dependency manifest changes.

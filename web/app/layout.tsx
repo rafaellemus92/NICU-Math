@@ -6,6 +6,10 @@ import Nav from '@/components/Nav'
 export const metadata: Metadata = {
   title: 'Respiratory Mechanics: Models and Conjectures',
   description: 'Synthetic respiratory teaching models and a fluid-dynamics claim audit: standard identities, refuted deductions and open gaps. Not validated for patient care.',
+  // An inline icon, so browsers do not request a missing /favicon.ico.
+  icons: {
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0f'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='%23c9a96e'%3E;%3C/text%3E%3C/svg%3E",
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

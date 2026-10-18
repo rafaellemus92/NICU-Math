@@ -36,7 +36,11 @@ and 5 are a written paper proof (not refereed) of the passive-scalar lemma for a
 | `show_series.py` | prints the t⁶, t⁷, t⁸ polynomials, checks the rules, shows partial sums |
 | `long_jet.py` | float jet to t⁴⁰, to see how the coefficients grow |
 | `compare_audit_v2.py` | checks `results/series.json` against `../audit_v2/exact/z12_unit.json` (n ≤ 12) |
-| `tests/test_jet.py` | fast pytest suite |
+| `tests/test_jet.py` | original fast mathematical checks |
+| `tests/test_import_guards.py` | six import guard/overlap cases; combined suite has 18 cases |
+| `IMPORT.md` | historical PR15 scope and validation, with canonical-path updates |
+| `SOURCE_FILES.json` | 46 original source-blob mappings; old destinations describe PR15 |
+| `IMPORT_README.md`, `IMPORT_RESULTS.md` | historical PR15 narratives, not the current run guide |
 | `results/series.json` | Laurent c\[n, m\](ν) for n ≤ 14: Z = Σ c\[n,m\](ν) tⁿ e^{imφ} (cosine coefficient = 2c) |
 | `results/*.log`, `*.txt`, `*.json` | outputs of the scripts above |
 | `results/earlier_runs/` | logs from earlier runs that used ChatGPT's package (see its README) |
@@ -44,10 +48,13 @@ and 5 are a written paper proof (not refereed) of the passive-scalar lemma for a
 ## How to run
 
 Run everything from this folder (`cd math/ns-phase-audit/enstrophy-jet` from the repository
-root). Python 3.11 or later; tested on 3.13.
+root). Python 3.11 or later; reconciliation tested on Python 3.12.14.
 
+    jet_scratch=$(mktemp -d /tmp/nicu-jet-rerun.XXXXXX)
+    cp -R .. "$jet_scratch/ns-phase-audit"
+    cd "$jet_scratch/ns-phase-audit/enstrophy-jet"  # protect archive from scripts with fixed output paths
     pip install -r requirements.txt
-    python3 -m pytest -q tests                    # 12 tests, about 4 s
+    python3 -m pytest -q tests                    # 18 tests, about 6 s
     python3 show_series.py                        # t^6, t^7, t^8 in readable form, < 1 s
     python3 show_series.py --all > results/series_summary.txt   # + rule checks and partial sums
     python3 compare_audit_v2.py > results/compare_audit_v2.log   # < 1 s
@@ -58,10 +65,16 @@ Regenerate or cross-check the results (times on one core of the machine used her
     python3 taylor_exact.py 14                    # 10.5 min; writes results/series_n14.json,
                                                   # which matches results/series.json except timings
     python3 exact_single_nu.py 1/28 8 --series results/series.json   # 4 s; 0 mismatches
-    python3 float_check.py > results/float_check.log   # 16 s
+    python3 float_check.py --phases 36 > results/float_check.rerun.log
     python3 decompose.py                          # 3 s; results/decompose.log, decompose.json
     python3 leaf_check.py 9 > results/leaf_check.log   # 21 s
     python3 long_jet.py                           # 2.5 min, about 2 GB RAM; results/long_jet.json
+
+The archived `float_check.log` records a historical 32-phase run. At nmax=14,
+the hardened guard requires an even phase count strictly greater than 32;
+36 is the current default. Do not overwrite that archived log or present a
+new 36-phase run as its byte-for-byte reproduction. No long rerun is needed
+for the focused pytest suite.
 
 `show_series.py` and `compare_audit_v2.py` need only the standard library. The others need
 `python-flint` (exact rational polynomials) or `numpy`; the tests need `pytest`.

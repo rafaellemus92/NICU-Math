@@ -13,6 +13,12 @@ an endorsement of clinical validity. No patient data or licensed full texts belo
 | Respiratory mechanics and neonatal hemodynamics | Future synthetic research scope / hypotheses | No validated mechanistic model or new proof supplied by this repair. Specify equations, units, boundary/initial conditions and falsifiable predictions before experiments. |
 | Two-compartment passive emptying | Analytically derived closed form; floating evaluation verified at machine precision; unvalidated teaching model | `physiology/two_compartment.py`, `physiology/two_compartment.md`, `tests/physiology/test_two_compartment.py`; source PR #13 at `49c5f82889b0535ab7272aaaafa03842cbda574e`. Equal total compliance and initial excess volume do not determine the trajectory. No patient-specific inference. |
 | Phase-sensitive dynamics | Hypotheses only | Clinical observations may motivate questions; a clinical finite-time transition is not a PDE singularity. No established bridge to pangram calculations and no claim to solve Navier–Stokes regularity. |
+| Phase-family checks | Numerical evidence / AI audit | `math/phase-family-checks/`: distinct preserved scripts/logs, with corrected radius caveats. |
+| Phase-family perturbation | Finite-grid numerical evidence | `math/phase-family-perturbation/`: observed finite-b behavior; sampled smallness constants are uncertified. |
+| Oscillation | Standard identities / numerical checks | `math/oscillation/`: lock maps and triad coherence; no established clinical/PDE equivalence. |
+| Respiratory claim audit and site | Standard / refuted / open / synthetic, per claim | `navier_stokes/`, `web/`: counterexamples remain refutations; `/outline`, `/proof` redirect. |
+| Speech motivations | Analogy / proposed research | `math/speech-motivations/`: no speech model implemented. |
+| Canonical all-time response | Unrefereed paper argument / finite-grid checks | `math/all-time-phase-response/`: application of known stability, not proven novelty or a certified numerical radius. |
 | Legacy evidence retrieval | Unvalidated application pipeline | `api/app/search.py`, `api/app/answer.py`, `api/app/ingest*.py`, `api/app/schema.sql`. Disabled in default startup. Retrieval, citations, ingestion variants and DB schema compatibility require separate integration review. |
 
 For each new item record: claim ID and category; precise statement; assumptions and

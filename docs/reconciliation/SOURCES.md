@@ -16,3 +16,29 @@
 | `claude/phase-locking-9k2m` | `0c3fe5d167059856ed78ec343ed99bf31114e7a1` | 16 files changed, 2370 insertions(+), 1860 deletions(-) |
 | `codex/physiology-two-compartment` | `49c5f82889b0535ab7272aaaafa03842cbda574e` | 776 files changed, 1090 insertions(+), 206496 deletions(-) |
 | `claude/new-session-sbrl43` | `a5e20d3c51fb4da586b3a7ceaf22b806b77ff942` | Two commits on PR17; homepage, smoke tests and handoff only |
+
+## Older PR15 source recovered during correction review
+
+`SOURCE_FILES.json` records 46 mappings to commit
+`77916bb51ea88ea6e1b2cddd2cd6e9309993383f`. That commit was not reachable
+from the 14 originally pinned branch refs; the original delivery bundle did
+**not** contain it or the five blobs listed below. The imported/adapted copies
+do not substitute for byte-identical source preservation.
+
+An exact-SHA fetch from origin recovered the full commit. All 46 source paths
+were verified against the map's Git blob IDs. With the user's additional
+authorization it will be protected by the non-release archival tag
+`archive/research-source-77916bb-20261018` (no force update). Publication status
+and tag-object ID are reported in the correction handoff, not assumed here.
+
+| Original path | Blob missing from original bundle |
+|---|---|
+| `navier-stokes-jet/README.md` | `54d4e0279f311b6b4db0ed12cbe4819aa22623bc` |
+| `navier-stokes-jet/RESULTS.md` | `13a4b19803726d3b21380b19ba4a5eccc069dad4` |
+| `shared-air/AUDIT.md` | `1be316b8ac396272acc747723a656ebd641ce8bb` |
+| `shared-air/README.md` | `83d6c77b97832ccac9acff916efee27b8ce54cc0` |
+| `shared-air/tools/load.js` | `df358a8bab9358fdf5536c0e25e59477d5efd04f` |
+
+The original bundle is retained unchanged for audit. A supplemental verified
+source bundle accompanies the correction handoff. No source manifest hashes
+were rewritten.

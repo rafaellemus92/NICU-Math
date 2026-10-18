@@ -1,3 +1,8 @@
+> Historical PR15 record from a9aaf1f, referring to source 77916bb.
+> Dates, passes, pending-review language and paths below describe that session.
+> Use [README.md](README.md) for current scratch-only commands and
+> [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+
 # Results: the enstrophy Taylor jet of a phase family of Navier–Stokes flows
 
 This file explains what was computed, what it shows, and what it cannot show.
@@ -6,7 +11,7 @@ Every number points to a file in this folder or to a cited source.
 
 > Imported historical narrative from source SHA
 > `77916bb51ea88ea6e1b2cddd2cd6e9309993383f`; “rerun”, “pass” and source
-> timings below describe that source session. Current coverage is in IMPORT.md.
+> timings below describe that source session. Historical PR15 coverage is in IMPORT.md; current checks are in the correction review linked above.
 > Lower-order results overlap the existing phase audit. The structural argument
 > is a non-refereed mathematical sketch, not a newly certified theorem.
 

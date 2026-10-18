@@ -35,19 +35,17 @@ P.S. Ecclesiastes' refrain word hevel, usually translated "vanity," literally me
   [12]. This is not confirmed. If you are not sure, cut the clause and end with "Thank you for Sync."
 - [ ] **Fill every bracket**: [role], [hospital], [link], [your On Point conversation on October 13],
   [Full name, credentials] and [Role, unit, institution]. No bracket should be left in the email.
-- [ ] **Put the live Shared Air page in [link]**: https://nicu-math.vercel.app/shared-air. That is
-  the corrected page, deployed from
-  [`../../web/public/shared-air/index.html`](../../web/public/shared-air/index.html). Before sending,
-  check that it opens without a login and on a phone.
-- [ ] **Check the rest of the site.** The [link] page has no links to the rest of the site, but its
-  root, https://nicu-math.vercel.app/, still shows the earlier "Navier-Stokes Regularity in the
-  Neonatal Lung" pages from PR #8 (`web/app/page.tsx`, `web/app/proof/page.tsx`,
-  `web/app/layout.tsx`). They call that work "a conditional regularity result" and say
-  Navier-Stokes blowup is "observed" in the lung. That does not match
-  [`../README.md`](../README.md#what-remains-open) ("This work does not touch the Millennium
-  problem") or the item below about keeping Navier-Stokes out of this email. Either revise those
-  pages first (call the Laplace-pressure mapping P = 2γ/r an analogy: alveolar collapse is a
-  clinical event, not a Navier-Stokes singularity), or send knowing that he may find them.
+- [ ] **Verify the intended Shared Air URL before sending.** The production address
+  is https://nicu-math.vercel.app/shared-air; this working tree contains
+  [`../../web/public/shared-air/index.html`](../../web/public/shared-air/index.html).
+  A tree or preview build does not establish which commit production serves.
+  Check the actual destination without a login and on a phone.
+- [ ] **Check the rest of the deployed site against this tree.** The consolidated
+  tree has a claim-audit homepage, `/outline`, and a `/proof` redirect to
+  `/outline`. It distinguishes standard identities, refuted deductions, open
+  gaps and synthetic models; it does not identify clinical collapse with a PDE
+  singularity. Confirm those changes are deployed before describing the live
+  site. PR #19 is a review branch, not evidence of a production merge.
 - [ ] **Keep faith, Navier-Stokes and QED for a later reply.** They are not in this email, and they
   should stay out until he writes back.
 

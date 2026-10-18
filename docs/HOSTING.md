@@ -37,17 +37,19 @@ The user also supplied a preview-build diagnosis for branch commit `a93da83`:
 `PYTHON_REQUIREMENTS_PARSE_ERROR` at the root `-r requirements-offline.txt` include.
 The included file existed; the parser reason was not established. This branch now
 uses a flat root manifest, with a regression check against the service manifests.
-Automatic deployment status for `53353b7` subsequently succeeded. No manual
-deployment was run. The user confirmed hosted `/healthz` reports offline/ok.
+Automatic deployment status for `53353b7` succeeded under the earlier root
+FastAPI configuration, before the switch to `web/`. The user confirmed
+`/healthz` was offline/ok there. Neither observation validates the current
+Next.js target; no manual deployment was run.
 The supplied report is distinct from the main-branch invalid-package failure.
 
 ## FastAPI and Streamlit are separate services
 
 - API: `api.app.main:app`; root `main.py` re-exports the same app for compatibility.
   Default offline startup needs only `api/requirements-offline.txt` and makes no
-  paid API or DB calls. Vercel documents FastAPI discovery from root `main.py` or
-  `app/main.py`. Actual project root, framework detection, bundle size, runtime
-  limits and installed dependencies still need an authorized hosting review.
+  paid API or DB calls. The earlier FastAPI deployment used root `main.py`;
+  that historical discovery path does not host the API from the current
+  `web/` Next.js target. Any separate API deployment needs its own review.
   [Vercel FastAPI documentation](https://vercel.com/docs/frameworks/backend/fastapi).
 - UI: `streamlit run ui/app.py` starts its own server with browser sessions and
   persistent WebSocket communication. A FastAPI function export does not start
@@ -64,7 +66,7 @@ optional PDF/DB packages. It is not a minimal function deployment manifest. An
 API-only hosting configuration should be assessed separately rather than assuming
 this entire repository, math artifacts and UI should be bundled into a function.
 
-## Current decision boundary
+## Historical decision boundary (before PR19 publication)
 
 Local Uvicorn/Streamlit and Compose are the supported development paths documented
 here. No Vercel credentials, project settings, build commands, environment values,
@@ -90,3 +92,11 @@ document. Its linked `/docs` Swagger UI loads assets from cdn.jsdelivr.net and
 a favicon from fastapi.tiangolo.com. Historical API preview success predates
 the change to the `web/` Next.js root; it does not validate this site's hosting.
 See [the original review record](reconciliation/pr7-review.md).
+
+## PR19 publication and correction boundary
+
+The user subsequently authorized PR19 publication and automatic preview checks.
+At e55d74e both hosted Lean workflows and Vercel preview/review checks passed;
+this is not production deployment or independent hosted-browser verification.
+The current follow-up corrects reviewed content; main merge, production
+deployment and retirement of source PRs remain unauthorized.

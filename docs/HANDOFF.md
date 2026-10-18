@@ -1,6 +1,13 @@
 # Startup and collaboration handoff — 2026-10-18
 
-## Consolidated local review (current)
+## PR19 independent-review corrections (current)
+
+Owner: Codex. Base e55d74e336270f5a5c3ae52c45a78c6523ef9347.
+See [correction dispositions and fresh verification](reconciliation/CORRECTIONS.md).
+Authorized: bounded correction/push, existing PR19 updates, automatic preview/CI
+and source archival tag. No main merge, production deployment or source PR retirement.
+
+## Consolidated local review (historical e55d74e)
 
 Owner: Codex; base efff6a5b43d699c22eb6bef8c0ce666837d3d785; isolated branch
 `codex/reconcile-research-review`. The [review record](reconciliation/REVIEW.md)
@@ -551,3 +558,18 @@ Historical startup status above is retained for chronology. Subsequent user
 authorization permitted publication, and the repository is intentionally public.
 Current scoped work remains synthetic-only; no patient data, secrets or
 restricted source PDFs may be published. No merge or manual deployment is authorized.
+
+
+## Selective flow research import (historical PR15 record)
+
+Owner: Codex; branch `codex/import-flow-research`. Fixed base
+`ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`; target
+`codex/integrate-research-workspace`. User authorized selective import,
+focused checks, commit/push and a draft PR, with no merge/manual deployment.
+Full scope, source SHA, provenance map, validation and deferred-runtime estimate:
+[import record](../math/ns-phase-audit/enstrophy-jet/IMPORT.md). No global guidance or app
+changes. Exact-commit independent review is pending and will be recorded in the
+PR; human integration remains required.
+
+The pending-review wording above is historical; the PR15 independent review
+and later integration decisions are recorded in the reconciliation review.

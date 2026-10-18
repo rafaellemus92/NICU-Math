@@ -19,7 +19,7 @@ arousal, `z` soothing) after an infant disturbance `x(0) = 1`, `y(0) = 0`:
   spectral rate, not the source's Test 4 statistic, and `g*` is not the
   coupling that brings the infant back fastest: after this very disturbance
   (a heel stick), recovery to within 10 bpm is fastest at much larger `g`,
-  `g = 2.98` (the edge of the swept range 0–3) at zero delay and `1.73` at
+  `g = 2.98` (the edge of the swept range 0–3) at `τ = 0.02 s` (the simulator’s one-step minimum delay) and `1.73` at
   `τ = 1.5 s` (noise-free; checked numerically, not proved here;
   `math/shared-air/AUDIT.md` §3). The theorem's name keeps the older wording.
 

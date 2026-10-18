@@ -4,13 +4,13 @@
 in it is clinical advice. It holds the lock-map mathematics behind the
 neonatal coupled-oscillator brief as runnable code with exact tests, and one
 bridge from that mathematics to the periodic Navier–Stokes phase experiments
-of the Helical Lab ([`../inputs/`](../inputs/)).
+of the Helical Lab (source metadata and missing working-tree inputs below).
 
 | File | What it does | Needs |
 |---|---|---|
 | [`locking.py`](locking.py) | The Adler equation and the sine circle map: lock condition, fixed phase, recovery rate, slip period, winding number, Lyapunov exponent, Arnold tongue edges, continued fractions | standard library |
 | [`test_locking.py`](test_locking.py) | 11 checks of `locking.py` against the exact results in its docstring | standard library |
-| [`triads.py`](triads.py) | Vortex stretching as a sum over Fourier triads, and the coherence of its terms, on the Helical Lab ensemble | numpy, the ZIP in `../inputs/` |
+| [`triads.py`](triads.py) | Vortex stretching as a sum over Fourier triads, and the coherence of its terms, on the Helical Lab ensemble | numpy; source ensemble ZIP absent from this working tree |
 | [`test_triads.py`](test_triads.py) | Exact check of `triads.py` on the phase family u_φ of section 2.6 of the main index (E = 1, Z = 5/4, D = 7/2, S = cos φ/4) | numpy |
 | [`results/triad_coherence.json`](results/triad_coherence.json) | Output of `triads.py` on the 63 cases of part 1 of 4 | — |
 
@@ -189,10 +189,12 @@ python3 test_locking.py          # 11 checks, prints ALL PASS; 1.7 s
 python3 locking.py               # the neonatal example; instant
 python3 test_triads.py           # the phase family to 2e-15; 2 s
 
-# The ensemble ZIP is other people's code: extract it into its own new folder
-# and run with -I so nothing is imported from it.
-mkdir -p /tmp/helical && unzip -q ../inputs/helical_lab_quartic_phase_experiment_part1of4.zip -d /tmp/helical
-python3 -I triads.py /tmp/helical/helical_lab/results/phase3/ensemble results/triad_coherence.json 4   # 4 workers, about 7 min
+# Optional ensemble reproduction requires an authorized copy of the source ZIP.
+# It is NOT present under ../inputs in this selected tree. No download is implied.
+# Set HELICAL_ARCHIVE to your verified copy; compare its SHA256 with the table below.
+helical_scratch=$(mktemp -d /tmp/nicu-helical-rerun.XXXXXX)
+unzip -q "$HELICAL_ARCHIVE" -d "$helical_scratch"
+python3 -I triads.py "$helical_scratch/helical_lab/results/phase3/ensemble" "$helical_scratch/triad_coherence.rerun.json" 4
 ```
 
 The saved JSON was produced with Python 3.11.17 and numpy 2.4.6.
@@ -201,3 +203,18 @@ The additional uploaded PDFs/ensemble ZIP on the source branch were not copied
 into this consolidation; their licensing was not established. The optional ZIP
 command above requires that original source artifact and is not a smoke test.
 The scripts and previously saved numerical results are retained.
+
+## Omitted source payloads and reproducibility
+
+The following payloads exist in source commit
+`0c3fe5d167059856ed78ec343ed99bf31114e7a1` (and its preserved git history),
+but are absent from this working tree. Their licensing is unestablished; no
+new PDF/archive import was made. The saved triad output remains historical
+evidence; rerunning the ensemble requires the original ZIP. The standalone
+phase-family tests need only the checked-in code and NumPy.
+
+| Source path | Bytes | SHA256 |
+|---|---:|---|
+| `math/inputs/helical_lab_phase_information_and_vortex_stretching.pdf` | 39354 | `cf51ebbaf638b0410eace4f6887386681c0df9d05092e887ed757da6a3a6d82b` |
+| `math/inputs/helical_lab_phase_organization_prediction_and_exact_obstruction.pdf` | 329124 | `e0b086f0d3eeacb8880532abf526894f7a415c37fd545f499951c4362fc6976c` |
+| `math/inputs/helical_lab_quartic_phase_experiment_part1of4.zip` | 7185558 | `9bb1b6ddcd92265dc11eb4f5c2d3621d6314c9c1705728740ef202cfd1a75415` |

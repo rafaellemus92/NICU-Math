@@ -1,3 +1,8 @@
+> Historical PR15 record from a9aaf1f, referring to source 77916bb.
+> Dates, passes, pending-review language and paths below describe that session.
+> Use [README.md](README.md) for current scratch-only commands and
+> [the correction review](../../../docs/reconciliation/CORRECTIONS.md) for fresh checks.
+
 # navier-stokes-jet
 
 Exact Taylor series in time of the enstrophy (mean-square vorticity) for a one-parameter family
@@ -5,7 +10,7 @@ of 3D Navier–Stokes flows on the periodic cube, with no forcing:
 
     u(x, 0) = (sin y, sin z, cos x − cos(x + y + φ)),   viscosity ν.
 
-ChatGPT's package `periodic_ns_lab_v2` (not included) claimed that the enstrophy first depends
+ChatGPT's package `periodic_ns_lab_v2` (not included in the original standalone import) claimed that the enstrophy first depends
 on cos 2φ at order t⁶, with coefficient −6487/1555200 for every ν. This folder checks that claim
 with three independent programs. It extends the series to t¹⁴, with every coefficient an exact
 polynomial in ν, and explains its structure with two selection rules. It also measures how far
@@ -15,14 +20,14 @@ in time the series can be trusted: not far. **Read `RESULTS.md` for the findings
 
 Selective import from `claude/breath-rhythm-ns-jet` at
 `77916bb51ea88ea6e1b2cddd2cd6e9309993383f`. See
-[IMPORT.md](IMPORT.md) for provenance, fresh validation and runtime estimates.
+[IMPORT.md](IMPORT.md) for provenance, historical PR15 validation and runtime estimates.
 All supplied `results/` logs and tables are **historical source artifacts**, not
 new runs. The mathematical argument is a **non-refereed sketch**. No rigorous
 Taylor remainder, finite-time optimum conclusion or series-divergence theorem
 is established. No clinical or speech model is implemented here.
 
 The same phase family, lower-order coefficients and selection-rule argument
-already live in `../ns-phase-audit/`. Orders 13–14 and these reproduction tools
+already live in the adjacent `../audit_v2/`. Orders 13–14 and these reproduction tools
 are incremental; orders 0–12 are retained within the complete reference table
 so the checks can run. The overlap test compares both stored E and Z exactly,
 normalizing trailing polynomial zeros; it does not regenerate order 12.
@@ -43,7 +48,7 @@ normalizing trailing polynomial zeros; it does not regenerate order 12.
 | `results/*.log`, `*.txt`, `*.json` | outputs of the scripts above |
 | Source `results/earlier_runs/` | Not recopied; see the pinned source links in RESULTS.md |
 
-## How to run
+## Historical run recipes (scratch copy only)
 
 From this folder (Python 3.11 or later; tested on 3.13):
 
