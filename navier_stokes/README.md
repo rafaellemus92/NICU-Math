@@ -77,7 +77,9 @@ be at least 300 ms apart. The detected onset is the first sample of a
 confirmed high run. No interior ground-truth boundaries are used. Unknown
 initial high phases and trailing cycles are discarded; explicitly known
 complete synthetic edges are retained. Cropped records must clear the edge
-flags. Cycle timestamps now retain the recording origin. Flat pressure gives
+flags. Cycle timestamps now retain the recording origin. The old `flow_threshold`
+argument is removed; `min_phase_seconds` and `min_cycle_seconds` are keyword-only
+to prevent old positional flow thresholds from silently changing units. Flat pressure gives
 no cycles; nonfinite/misaligned waveforms are rejected. This detector assumes
 distinct pressure phases and is not validated for spontaneous breathing,
 variable baselines, high-frequency ventilation, or clinical recordings.

@@ -86,6 +86,7 @@ def load_csv_waveform(
 
 def segment_breaths(
     recording: WaveformRecording,
+    *,
     min_phase_seconds: float = 0.04,
     min_cycle_seconds: float = 0.3,
 ) -> List[BreathCycle]:
@@ -131,7 +132,7 @@ def segment_breaths(
     dwell = max(1, int(np.ceil(min_phase_seconds / dt)))
     separation = max(1, int(np.ceil(min_cycle_seconds / dt)))
     onsets = []
-    armed, low_run, high_run = True, 0, 0
+    armed, low_run, high_run = recording.starts_at_cycle_boundary, 0, 0
     for i, pressure_i in enumerate(pressure):
         if not armed:
             low_run = low_run + 1 if pressure_i <= lower else 0

@@ -122,3 +122,28 @@ def test_descriptive_decay_fit_and_offset():
 def test_invalid_generator_domain(kwargs):
     with pytest.raises(ValueError):
         generate_synthetic_waveform(**kwargs)
+
+
+def test_perturbed_unknown_leading_inspiration_is_discarded():
+    full = generate_synthetic_waveform(n_breaths=5, noise_level=0)
+    cropped = replace(full, **{name: getattr(full, name)[20:].copy()
+                              for name in ('time', 'pressure', 'flow', 'volume')},
+                      starts_at_cycle_boundary=False, ends_at_cycle_boundary=False)
+    cropped.pressure[0] = 14.0  # below upper threshold, not a confirmed low phase
+    cycles = segment_breaths(cropped)
+    np.testing.assert_allclose([c.time[0] for c in cycles], [1.5, 3, 4.5])
+
+
+def test_unknown_record_starting_in_expiration_can_arm_next_onset():
+    full = generate_synthetic_waveform(n_breaths=5, noise_level=0)
+    cropped = replace(full, **{name: getattr(full, name)[100:]
+                              for name in ('time', 'pressure', 'flow', 'volume')},
+                      starts_at_cycle_boundary=False, ends_at_cycle_boundary=False)
+    cycles = segment_breaths(cropped)
+    np.testing.assert_allclose([c.time[0] for c in cycles], [1.5, 3, 4.5])
+
+
+def test_old_positional_flow_threshold_cannot_become_a_duration():
+    full = generate_synthetic_waveform(n_breaths=2, noise_level=0)
+    with pytest.raises(TypeError):
+        segment_breaths(full, .5)

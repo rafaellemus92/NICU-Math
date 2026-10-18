@@ -24,7 +24,7 @@ minimum/handoff corrections. No convexity theorem, renderer hardening, web
 consumer changes, dependency changes, or unrelated research runs.
 Validation at the repair implementation:
 - `/tmp/nicu-integration-venv/bin/python -m pytest -q -s tests/navier_stokes tests/physiology`:
-  **135 passed in 1.02s** (63 new pipeline cases, 31 prior claim corrections,
+  **138 passed** (66 new pipeline cases, 31 prior claim corrections,
   41 physiology cases). NumPy 2.0.2 / SciPy 1.18.1; ODE errors unchanged at
   7.981e−11 and 2.604e−11. No periodic-flow/Lean or unrelated research suite run.
 - `NICU_OFFLINE=1 /tmp/nicu-integration-venv/bin/python -m unittest
@@ -35,8 +35,13 @@ Validation at the repair implementation:
   not rerun for this Python/docs-only follow-up.
 - Before/after metrics, noise bias and tested detector limits are recorded in
   `navier_stokes/CLAIMS.md`; the 0.8609 default noisy descriptor is not C=1.0.
-Independent review of the exact implementation commit is requested before push;
-its outcome and automatic checks will be reported in the draft PR.
+Independent review of `2943d08312d0d9e8920488240b9147f904933c53` confirmed
+RC sampling/fit consistency and found one unknown-leading-edge bug. A regression
+reproduced the extra partial cycle at t=0.21 s; unknown edges now require a
+confirmed low phase before onset detection. Timing options are keyword-only to
+prevent old positional flow thresholds from silently becoming seconds. Two new
+regressions failed before these fixes; all 138 cases then passed. Final exact
+follow-up review and automatic checks are reported in the draft PR.
 
 
 ## Fluid/respiratory claim correction (completed draft PR #16)

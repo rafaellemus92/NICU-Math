@@ -122,3 +122,11 @@ complete acquisition-edge cycles; unknown edges are conservatively discarded.
 
 `[10,8,6,4,0.1]` now returns unresolved with no exponent/horizon instead of the
 fabricated horizon 7.5. Resolved fits remain descriptive extrapolations only.
+
+Independent review found that an unknown leading high phase preceded by a single
+below-upper-threshold sample could be misclassified as an onset. A cropped
+fixture reproduced an unwanted onset at 0.21 s. Unknown starts now require a
+confirmed low phase; the perturbed-leading and genuine low-to-high cases are
+covered. New timing parameters are keyword-only, avoiding silent reinterpretation
+of the former positional flow threshold. Final focused suite: 138 tests including
+66 pipeline, 31 prior claim-correction and 41 physiology cases.
