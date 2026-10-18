@@ -1,6 +1,59 @@
 # Startup and collaboration handoff — 2026-10-18
 
 
+## Fluid/respiratory claim correction (current follow-up)
+
+Owner: Codex. Branch: `codex/correct-fluid-claims`, based on exact integration
+commit `ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`. User authorized a separate
+correction-only draft PR targeting `codex/integrate-research-workspace`, plus
+commit/push and independent review. No merge, manual deployment or settings change.
+
+Scope: invalid deductions in Python/web proof outlines, synthetic waveform labels
+and diagnostic units, analytical sanity checks, focused tests, and correction
+ledger. See `navier_stokes/CLAIMS.md` for exact before/after statements and
+`navier_stokes/README.md` for derivations and limitations. No assertion about the
+current general Navier–Stokes problem status is made. The closed material sphere
+and static equilibrium arguments concern the explicitly stated unforced model.
+
+Preserved: periodic-flow/Lean artifacts, two-compartment result, Shared Air code
+and placeholder multipliers, dependency manifests and deployment configuration.
+No patient schema enablement, migration, access or removal; separate review needed.
+Legacy metadata/CSV parsing is not approved for patient-data use. Misleading
+Python helper names were replaced; external callers must migrate as documented.
+
+Validation so far:
+- `/tmp/nicu-integration-venv/bin/python -m pytest -q tests/navier_stokes`:
+  **31 passed in 0.17s**.
+- `node --experimental-strip-types --test web/tests/ns.test.mjs`: **4 passed**.
+  Node 24 emits a non-failing module-type inference warning; no manifest changes.
+- `NICU_OFFLINE=1 /tmp/nicu-integration-venv/bin/python -m unittest
+  tests.test_smoke tests.test_requirements tests.test_optional_pdf -v`:
+  **11 tests, OK** (1.476s); synthetic/offline, no external services.
+- Python compileall for navier_stokes/api/ui/tests and synthetic CLI demo passed.
+- Clean npm ci, Next.js 16.4.2 production build and TypeScript noEmit passed.
+- Browser checks and exact-commit independent review recorded in the follow-up below.
+
+Browser review (local production server, Chromium): all five routes /, /demo,
+/proof, /shared-air and /shared-air/index.html returned HTTP 200. Corrected labels,
+recovery checkbox/number, decay slider, proof expand/collapse and 390x844 mobile
+layout passed with zero page errors. The first harness assertion mismatched CSS
+uppercase text; corrected harness then passed. Independent reviewer found that
+negative/fractional recovery indices could throw during render. The follow-up
+clamps typed indices to finite integers within bounds; browser cases -1, 1.5,
+empty and 10000 passed without errors. Build and tsc passed again after the fix.
+The CLI now uses zero noise because the legacy flow-crossing segmenter overcounts
+noisy fixtures; this limitation is documented, not presented as clinical validation.
+
+Independent review of implementation `745e846634033478beadda96da27951660d93678`
+found the core mathematical corrections sound under stated assumptions and no
+changes to protected research/schema/dependency files. Exact follow-up review
+is requested before publication.
+
+No unrelated research runs, clinical validation, database tests or general PDE
+verification were performed. Numerical samples check the implementation of
+analytically derived identities, not universal propositions.
+
+
 ## Next.js security migration (current follow-up)
 
 Owner: Codex. Base: `8226201409adaf43e432398ad54ef522b5fade8f` on

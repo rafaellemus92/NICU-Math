@@ -3,15 +3,15 @@ import { useState } from 'react'
 import { K, Eq } from '@/components/Katex'
 
 const STATUS_COLORS: Record<string, string> = {
-  established: '#4ade80',
-  proposed: '#facc15',
-  open: '#ef4444',
+  identity: '#4ade80',
+  gap: '#facc15',
+  refuted: '#ef4444',
 }
 
 interface ProofStepData {
   number: number
   title: string
-  status: 'established' | 'proposed' | 'open'
+  status: 'identity' | 'gap' | 'refuted'
   statementTeX: string
   approach: string
   clinical: string
@@ -20,82 +20,82 @@ interface ProofStepData {
 
 const STEPS: ProofStepData[] = [
   {
-    number: 1,
-    title: 'Energy Inequality for Surface-Tension-Bounded Domains',
-    status: 'established',
-    statementTeX: String.raw`\frac{d}{dt}\|u\|^2 + 2\nu\|\nabla u\|^2 = \int_\Gamma \gamma\kappa(u \cdot n)\,dS`,
-    approach:
-      'Standard energy estimate by testing against u. The boundary integral arises from integration by parts with the dynamic pressure BC p|_Γ = p_ext + γκ (Laplace-Young). Classical when Γ is smooth.',
-    clinical:
-      'Energy inequality = total work of breathing must be balanced by viscous dissipation + surface tension work. Measurable: W_breathing = ∫P dV per cycle.',
-    refs: ['Leray (1934)', 'Solonnikov (1977)', 'Beale (1981)'],
+    "number": 1,
+    "title": "Specify the free-boundary problem",
+    "status": "gap",
+    "statementTeX": "T=-pI+2\\mu D(u),\\quad (T_{in}-T_{out})n=-\\gamma\\kappa n",
+    "approach": "A pressure-only boundary condition omits viscous traction. Specify the material kinematic condition, stress convention, forcing, initial compatibility, domain regularity and solution class before proposing a continuation theorem.",
+    "clinical": "Respiratory observations motivate a model; they do not supply these PDE hypotheses.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 2,
-    title: 'Surface Tension Work Bound',
-    status: 'established',
-    statementTeX: String.raw`\left|\int_\Gamma \gamma\kappa(u \cdot n)\,dS\right| \leq C \cdot \gamma \cdot \kappa_{\max} \cdot \|\nabla u\|_{L^2(\Omega)}`,
-    approach:
-      "Apply Hölder's inequality on the boundary integral, then the trace theorem to bound ||u||_{L²(Γ)} by ||u||_{H¹(Ω)}. The constant C depends on domain geometry.",
-    clinical:
-      'The maximum pressure a collapsing alveolus can exert on the airflow is bounded by γ/r_min (Laplace pressure). This is directly measurable on the ventilator.',
-    refs: ['Adams & Fournier (2003)', 'Temam (1977)'],
+    "number": 2,
+    "title": "Energy and trace estimates need hypotheses",
+    "status": "gap",
+    "statementTeX": "E=\\frac{\\rho}{2}\\int_{\\Omega(t)}|u|^2\\,dx+\\gamma|\\Gamma(t)|",
+    "approach": "For a smooth closed material interface with constant gamma, no body force and constant exterior pressure, surface work is accounted for by surface energy. A trace bound needs controlled geometry and the full H1 norm; dropping the L2 part requires extra conditions. Energy control alone does not establish the proposed regularity conclusion.",
+    "clinical": "Scalar pressure-volume work cannot replace a three-dimensional energy or gradient estimate.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 3,
-    title: 'Critical Threshold from the Energy Balance',
-    status: 'proposed',
-    statementTeX: String.raw`\frac{d}{dt}\|u\|^2 + \nu\|\nabla u\|^2 \leq \frac{C^2\gamma^2\kappa_{\max}^2}{4\nu}`,
-    approach:
-      "Substitute Step 2 into Step 1. Apply Young's inequality to absorb the gradient term. The RHS is bounded iff γ·κ_max < ∞, i.e., iff Λ < ∞. When γ·κ_max is bounded, energy dissipation dominates surface tension forcing. When γ·κ_max → ∞ (alveolar collapse), forcing overwhelms dissipation.",
-    clinical:
-      'This IS the clinical observation: when surfactant is present (γ low), the lung maintains stable breathing (energy bounded). When surfactant is absent and alveoli collapse (r→0, κ→∞), breathing fails (energy unbounded). The critical Λ* corresponds to the compliance threshold below which the baby needs surfactant.',
-    refs: ['Constantin & Foias (1988)', 'Caffarelli, Kohn & Nirenberg (1982)'],
+    "number": 3,
+    "title": "Vortex stretching remains uncontrolled",
+    "status": "gap",
+    "statementTeX": "\\int_\\Omega ((\\omega\\cdot\\nabla)u)\\cdot\\omega\\,dx",
+    "approach": "The earlier linear enstrophy inequality assumed a bound on this term that was never proved. Gronwall applies only after its coefficient is shown integrable, with the boundary terms also controlled. A bulk Reynolds number does not close this gap.",
+    "clinical": "No compliance threshold in this repository supplies the missing estimate.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 4,
-    title: 'Enstrophy Control Under the Critical Threshold',
-    status: 'proposed',
-    statementTeX: String.raw`\frac{d}{dt}\Xi + \nu\|\nabla\omega\|^2 \leq C(\Lambda^*)\,\Xi`,
-    approach:
-      'Take the curl of NS, test against ω. The vortex stretching term (ω·∇)u is bounded using the energy estimate from Step 3. Low Re helps: stretching is weak relative to viscous damping. By Gronwall: Ξ(t) ≤ Ξ(0)·exp(C·t), hence bounded.',
-    clinical:
-      'Enstrophy bounded = flow gradients stay smooth = no turbulent transition in the airway. Clinically Re ~ 1–100 in neonatal airways, far from turbulent (Re ~ 4000). The only blowup mechanism is the surface tension singularity, not turbulence.',
-    refs: ['Beale, Kato & Majda (1984)', 'Constantin (1990)'],
+    "number": 4,
+    "title": "The Sobolev deduction was false",
+    "status": "refuted",
+    "statementTeX": "H^1(\\Omega)\\hookrightarrow L^6(\\Omega)\\quad\\not\\Longrightarrow\\quad H^1(\\Omega)\\hookrightarrow L^\\infty(\\Omega)",
+    "approach": "In three dimensions, take a nonzero smooth compactly supported bump phi and f_epsilon(x)=epsilon^(-1/2) phi((x-x0)/epsilon), inside a fixed domain. Its L2 norm scales as epsilon, its gradient L2 norm stays constant, and its supremum grows as epsilon^(-1/2). Thus bounded H1 does not give the claimed Linfinity bound. A continuation criterion also needs its own domain and boundary assumptions.",
+    "clinical": "A temporal scalar-flow derivative is not spatial vorticity or enstrophy.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 5,
-    title: 'Regularity from Bounded Enstrophy (BKM Extension)',
-    status: 'proposed',
-    statementTeX: String.raw`\int_0^T \|\omega\|_\infty\,dt < \infty \;\Longrightarrow\; u \in C^\infty(\Omega \times [0,T])`,
-    approach:
-      'By the Beale-Kato-Majda criterion, bounded time-integrated vorticity implies smoothness. Bounded enstrophy (Step 4) combined with Sobolev embedding H¹ ↪ L⁶ (3D) gives ||ω||_∞ ≤ C·||ω||_{H¹}. The bootstrap: energy control → enstrophy control → L^∞ vorticity control → regularity.',
-    clinical:
-      'If the peak flow acceleration (proxy for vorticity) stays bounded across all breaths, the baby maintains stable respiration. This is what the enstrophy proxy monitors from the flow signal.',
-    refs: ['Beale, Kato & Majda (1984)', 'Escauriaza, Seregin & Šverák (2003)'],
+    "number": 5,
+    "title": "A closed incompressible material sphere cannot shrink",
+    "status": "identity",
+    "statementTeX": "\\frac{d|\\Omega(t)|}{dt}=\\int_{\\Gamma(t)}u\\cdot n\\,dS=\\int_{\\Omega(t)}\\nabla\\cdot u\\,dx=0",
+    "approach": "For a sphere this gives 4*pi*r^2*r_dot=0, hence r_dot=0 at positive radius. The former shrinking-sphere construction violated incompressibility plus the material boundary condition. An open, compressible or multiphase model requires different equations and assumptions.",
+    "clinical": "Atelectasis is not thereby identified with a singularity of this closed incompressible model.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 6,
-    title: 'Blowup Construction (Converse Direction)',
-    status: 'open',
-    statementTeX: String.raw`\Lambda(t^*) \geq \Lambda^* \;\Longrightarrow\; \|\nabla u(t)\|_{L^2} \to \infty \text{ as } t \to t^*`,
-    approach:
-      'Model a single collapsing alveolus as a shrinking sphere with Laplace-Young BC. As r(t) → 0, boundary velocity diverges ∝ 1/r² and the pressure field diverges ∝ 1/r. This is a constructive example, not abstract existence.',
-    clinical:
-      'This IS atelectasis. The alveolus collapses, pressure diverges, the baby cannot exchange gas. Clinically observable: compliance → 0, peak pressure → ∞ (ventilator limits), volume → 0. The "blowup" is real and measurable.',
-    refs: ['Tao (2016)', 'Hou & Luo (2014)'],
+    "number": 6,
+    "title": "Static spheres defeat a universal threshold claim",
+    "status": "identity",
+    "statementTeX": "u=0,\\quad p=p_{ext}+\\gamma\\kappa,\\quad\\kappa=2/r",
+    "approach": "With outward normal, stress T=-pI+2muD(u), and traction jump (T_in-T_out)n=-gamma*kappa*n, a stationary sphere satisfies the unforced equations for every positive constant gamma and radius. Its pressure is spatially constant. Arbitrarily large pressure-scale ratios therefore do not force every solution to blow up. This does not disprove an existential conjecture about other initial data.",
+    "clinical": "A pressure-scale ratio is not a clinical risk or intervention score.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
   },
   {
-    number: 7,
-    title: 'Regularization Restores Smoothness',
-    status: 'proposed',
-    statementTeX: String.raw`\gamma \downarrow \text{ at } t_1,\;\Lambda(t)<\Lambda^*\;\text{for } t>t_1,\;u(t_1)\in L^2 \;\Longrightarrow\; u \in C^\infty(\Omega \times (t_1,\infty))`,
-    approach:
-      'Use the energy inequality from Step 3 with the reduced γ. Energy dissipates faster than it is forced. Standard parabolic regularity gives instantaneous smoothing of L² data under NS when the forcing is subcritical. Key: u(t₁) need not be smooth — the NS operator itself smooths it.',
-    clinical:
-      'This is the clinical miracle of surfactant therapy. A baby in respiratory failure (singular regime) receives surfactant → within minutes, compliance improves, gas exchange restores, the baby breathes. The "singular solution" is regularized. Every NICU clinician has witnessed this transition.',
-    refs: ['Kato (1984)', 'Giga & Miyakawa (1985)'],
-  },
+    "number": 7,
+    "title": "Positive gamma reduction does not remove the radius limit",
+    "status": "identity",
+    "statementTeX": "\\gamma>0\\text{ fixed}:\\quad\\lim_{r\\to0^+}2\\gamma/r=+\\infty",
+    "approach": "Replacing gamma by a smaller positive constant changes the coefficient, not the divergence. Boundedness along a prescribed vanishing-radius path would require gamma(r)=O(r), or a radius bounded away from zero. Neither is proved here. No post-intervention smoothing theorem follows.",
+    "clinical": "No dose-response, patient-specific prediction or validated clinical tool is provided.",
+    "refs": [
+      "In-repository analytical derivation; see navier_stokes/README.md"
+    ]
+  }
 ]
 
 function Badge({ status }: { status: string }) {
@@ -216,7 +216,7 @@ function StepCard({
                 fontWeight: 600,
               }}
             >
-              Clinical Analog
+              Scope limit
             </div>
             <p style={{ color: '#b8b8c0', fontSize: 14, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
               {step.clinical}
@@ -263,11 +263,10 @@ export default function ProofPage() {
             letterSpacing: '-0.02em',
           }}
         >
-          Proof Outline
+          Conjecture and Gaps
         </h1>
         <p style={{ color: '#888899', fontSize: 17, lineHeight: 1.6, maxWidth: 680, margin: 0 }}>
-          Seven steps toward conditional regularity for Navier-Stokes with
-          surface-tension boundary conditions
+          An incomplete research proposal with invalid deductions corrected. No conditional regularity theorem is established here.
         </p>
       </div>
 
@@ -283,7 +282,7 @@ export default function ProofPage() {
         }}
       >
         <div style={{ display: 'flex', gap: 16 }}>
-          {(['established', 'proposed', 'open'] as const).map((s) => (
+          {(['identity', 'gap', 'refuted'] as const).map((s) => (
             <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span
                 style={{
@@ -342,76 +341,12 @@ export default function ProofPage() {
         />
       ))}
 
-      {/* What Makes This Tractable */}
-      <div style={{ marginTop: 56, marginBottom: 40 }}>
-        <h2
-          style={{
-            fontFamily: 'Georgia, serif',
-            fontSize: 24,
-            color: '#e8e8ed',
-            marginBottom: 20,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          What Makes This Tractable
-        </h2>
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {[
-            ['Bounded domain', 'Finite lung volume — no infinite-domain complications'],
-            ['Low Reynolds number', 'Re ~ 1–100 in neonatal airways, far from turbulence (Re ~ 4000)'],
-            ['Single blowup mechanism', 'Laplace pressure singularity at collapsing interfaces — identified and isolated'],
-            ['Measurable regularization', 'Exogenous surfactant is a tunable parameter that controls γ directly'],
-            ['High-resolution clinical data', 'Ventilator waveforms at 100 Hz with pressure, flow, and volume'],
-            ['Complete trajectory', 'N = 1 time series capturing approach to and retreat from the singularity'],
-          ].map(([title, desc], i) => (
-            <li
-              key={i}
-              style={{
-                display: 'flex',
-                gap: 14,
-                marginBottom: 14,
-                alignItems: 'flex-start',
-              }}
-            >
-              <span style={{ color: '#6b8afd', fontSize: 14, marginTop: 3, flexShrink: 0 }}>●</span>
-              <div>
-                <span style={{ color: '#e8e8ed', fontWeight: 600, fontSize: 15 }}>{title}</span>
-                <span style={{ color: '#888899', fontSize: 14 }}> — {desc}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* What This Is Not */}
-      <div
-        style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderRadius: 12,
-          padding: '24px 28px',
-          marginBottom: 48,
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: 'Georgia, serif',
-            fontSize: 20,
-            color: '#888899',
-            marginBottom: 12,
-          }}
-        >
-          What This Is Not
-        </h2>
-        <p style={{ color: '#888899', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
-          This is not a claim to solve the Millennium Problem in full generality.
-          It is a conditional regularity result for a physically restricted class
-          of NS problems where the blowup mechanism is identified, measurable,
-          and controllable. The value: it provides a concrete physical system where
-          NS regularity and blowup are <em>observed</em>, not hypothetical. The mathematics
-          of the observation may illuminate the general case.
-        </p>
-      </div>
+      <p style={{ color: '#b8b8c0', lineHeight: 1.7, marginTop: 32 }}>
+        Clinical observations are motivation, not evidence of PDE singularities.
+        The analytical identities above have explicit assumptions. Numerical samples check
+        their implementation only. This page does not assess the current status of a general
+        Navier–Stokes problem. Synthetic teaching use only; not validated for patient care.
+      </p>
     </div>
   )
 }

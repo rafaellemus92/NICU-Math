@@ -26,3 +26,10 @@ experiments catalogued in `math/README.md`; this reconciliation does not re-prov
 or certify those claims. `RESEARCH.md` and the `fluids/`, `physiology/` and
 `packages/stats/` scaffolds reconcile PR #5: planned artifacts and unverified
 reference notes are explicitly labeled. See their ledgers before citing a claim.
+
+## Fluid/respiratory claim correction
+
+See [navier_stokes/CLAIMS.md](../navier_stokes/CLAIMS.md) and its analytical
+derivations. This separates respiratory motivation, an incomplete conjecture,
+analytical sanity checks and synthetic numerical demonstrations. No changes to
+periodic-flow/Lean artifacts or the two-compartment result; no clinical validation.
