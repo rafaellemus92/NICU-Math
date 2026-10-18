@@ -9,7 +9,8 @@ passive-emptying teaching model. Broader respiratory and hemodynamic models rema
 future work; none of these models is validated for patient care.
 
 The web demo and `navier_stokes/` now distinguish synthetic waveforms from an
-incomplete conjecture. See [corrections and analytical checks](navier_stokes/README.md)
+incomplete conjecture. In the status labels used across `math/` they are
+**Open: a conjecture, not checked**; the analytical identities are standard. See [corrections and analytical checks](navier_stokes/README.md)
 and the [retired-claim ledger](navier_stokes/CLAIMS.md). No conditional regularity
 theorem or clinical-to-PDE equivalence is established by those tools.
 
@@ -90,8 +91,10 @@ It holds Lean 4 proofs, audits and numerical checks done with Claude in
 October 2026: the coupled prime-26 pangram (smallest sum 4296, proved in Lean),
 Lean + Mathlib proofs about the rainbow, body water, the Shared Air model and
 periodic Navier–Stokes fields, an audit of ChatGPT's Navier–Stokes phase lab,
-a physics and biology fact-check, a 1D Hou–Luo blowup lab, and the prime-word
-perfect-pangram search (formerly `pangram/` at the root).
+a physics and biology fact-check, a 1D Hou–Luo blowup lab, the prime-word
+perfect-pangram search (formerly `pangram/` at the root), Codex's all-time
+small-b phase response (`math/all-time-phase-response/`, analytic argument with
+symbolic constants) and the phase-family checks (`math/phase-family-checks/`).
 
 Start with [`math/README.md`](math/README.md). CI builds both Lean projects on
 push ([`.github/workflows/lean.yml`](.github/workflows/lean.yml)).

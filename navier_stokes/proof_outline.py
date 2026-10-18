@@ -1,5 +1,8 @@
 """Incomplete conjectural outline, with explicit gaps and analytical sanity checks.
 
+Status (labels of math/README.md): Open — a conjecture, not checked. Steps labelled
+"identity" are standard; "gap" steps are open; "refuted" steps were false deductions.
+
 This module makes no assertion about the current status of any general
 Navier-Stokes problem. Its corrections concern this repository's arguments.
 Nothing here is validated for patient care.

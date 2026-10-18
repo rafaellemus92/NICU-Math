@@ -10,6 +10,7 @@ import {
   type BreathResult,
   type Classification,
 } from '@/lib/ns'
+import StatusBanner from '@/components/StatusBanner'
 
 const card = {
   background: 'rgba(255,255,255,0.03)',
@@ -89,6 +90,10 @@ export default function DemoPage() {
         Prescribed, floored RC-shaped waveforms; not a Navier–Stokes solution or a treatment model. Compliance floors are 0.05 before noise and 0.02 after noise (mL/cmH₂O). Labels and dashed thresholds are illustrative, not clinical cutoffs. Not validated for patient care.
         Adjust parameters below. Click on the compliance chart to inspect any breath.
       </p>
+
+      <StatusBanner kind="synthetic">
+        Prescribed, floored RC-shaped waveforms with an arbitrary recovery schedule; the compliance labels are descriptive bins, not clinical states.
+      </StatusBanner>
 
       {/* Controls */}
       <div style={{ ...card, marginBottom: 24 }}>

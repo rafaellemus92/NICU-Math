@@ -25,11 +25,14 @@ it is, how certain it is, and where to find it.
 | [`wyrd/`](wyrd/) | Core Lean proofs: the pangram, Euclid, √2 | Proved in Lean |
 | [`wyrd-mathlib/`](wyrd-mathlib/) | Lean + Mathlib: the bridge to Mathlib, √2, the rainbow, body water, Shared Air, its limits, periodic Navier–Stokes | Proved in Lean |
 | [`ns-phase-audit/`](ns-phase-audit/) | Independent audit of ChatGPT's periodic Navier–Stokes lab v2 | Audit |
+| [`all-time-phase-response/`](all-time-phase-response/) | All-time small-b proof with symbolic constants; direct second variations and bounded refinement pilot | Analytic argument; numerical evidence (separated) |
 | [`numerics/`](numerics/) | 19 scripts that recompute numbers used in the theorems and audits | Checked numerically |
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
 | [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
+| [`phase-family-checks/`](phase-family-checks/) | Checks of the β = 0 reduction, the b² phase response, Codex's second-order response, and the PR #17 compliance table | Checked numerically |
+| [`../navier_stokes/`](../navier_stokes/), [`../web/`](../web/) | The surfactant conjecture and the site (PRs #8, #16, #17): respiratory motivation, an incomplete conjecture with its gaps, synthetic demos | Open: a conjecture, not checked |
 
 ---
 
@@ -467,6 +470,28 @@ The saved outputs in `numerics/` were produced with Python 3.13.16 and numpy
 
 ---
 
+## 7. The phase family: β = 0 reduction, all-time small-b response, checks (18 October)
+
+Two folders from the same day, by different owners.
+
+[`all-time-phase-response/`](all-time-phase-response/) (owner: Codex; patch of local commit
+`ddbca048`, imported from the user's upload) proves, with symbolic constants, that for
+fixed ν > 0 one sufficiently small b works for all time: the perturbed flows are global and
+smooth, the second-order coefficients E₂, Z₂, S₂ solve explicit linear equations, and the
+observable remainders after subtracting them are O(b⁴) with exponential decay. **Analytic
+argument with symbolic constants, plus numerical evidence, kept separate.** No numerical
+radius is certified: the sufficient condition has the form |b| ≤ ν e^{−A}/(2KF) and, for the
+norms the closure needs, e^{−A} is below 10^{−3800K} at ν = 1/28. Its §1 writes out the
+β = 0 reduction that [`ns-phase-audit/`](ns-phase-audit/) §7.5 had left as "not written out".
+
+[`phase-family-checks/`](phase-family-checks/) (owner: Claude) checks the β = 0 reduction three
+ways, measures the b² scaling of the phase harmonics at T = 1 and its loss by T = 8, reproduces
+Codex's second-order response at T = 0.5 with an independent solver to six figures, and
+reproduces the PR #17 compliance table from the repository's generator, identifying the
+resistance bias as regression dilution. **Checked numerically.**
+
+---
+
 ## What remains open
 
 **Navier–Stokes.** The Millennium problem is untouched. Everything in
@@ -486,8 +511,24 @@ balance dZ/dt = S − νD are not formalised. Specifically missing
 4. **Nonvanishing of the leading |m| ≥ 5 coefficient.** The first cos mφ
    coefficient is computed to be nonzero only for |m| = 2, 3, 4.
 
-Also not done: P1 at finite time is verified numerically but not written out
-as a proof, and P1 is not in Lean.
+P1 at the solution level is now written out in
+[`all-time-phase-response/PROOF.md`](all-time-phase-response/PROOF.md) §1 and checked in
+[`phase-family-checks/`](phase-family-checks/); it is not in Lean.
+
+**The all-time small-b result** (section 7) is a qualitative theorem: there is a
+b₀ > 0 below which the restored-mode flows are global and smooth with O(b²)
+response and O(b⁴) remainder, uniformly in time. What is open: any useful value of
+b₀ (the proved sufficient condition is astronomically small), control at b = 1, a
+remainder bound with evaluated constants, and the inviscid b ≠ 0 problem, where
+nothing of the argument survives. The computed flows at b ≤ 1 are smooth to the
+times computed; that is numerical evidence, not a certificate (§7.1).
+
+**The surfactant conjecture** ([`../navier_stokes/`](../navier_stokes/) and
+[`../web/`](../web/)) is **Open: a conjecture, not checked**. PR #16 replaced its
+seven-step outline by three standard identities, three named gaps and one refuted
+deduction; the gaps are the threshold mechanism, control of vortex stretching, and
+a regularity criterion in the free-boundary setting, two of which are the
+obstructions of the general problem.
 
 **Smaller open items.**
 

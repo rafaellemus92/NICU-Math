@@ -2,7 +2,7 @@
 
 const links = [
   { href: '/', label: 'Conjecture' },
-  { href: '/proof', label: 'Gaps' },
+  { href: '/outline', label: 'Outline' },
   { href: '/demo', label: 'Demo' },
   { href: '/shared-air', label: 'Shared Air' },
 ]

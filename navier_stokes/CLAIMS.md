@@ -1,5 +1,7 @@
 # Fluid/respiratory claim correction ledger
 
+Status (labels of `math/README.md`): **Open — a conjecture, not checked.** Identities: standard.
+
 Scope: corrections to `navier_stokes/` and the corresponding web presentation,
 not a reassessment of unrelated research. Original source is preserved at commit
 `ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`. Superseding implementation commit:

@@ -1,5 +1,10 @@
 # Synthetic waveforms and an incomplete conjecture
 
+**Status (labels of [`math/README.md`](../math/README.md)): Open — a conjecture, not checked.**
+The analytical identities below are standard; the conjecture they correct is not proved,
+not formalised in Lean and not checked numerically. The synthetic pipeline is numerical
+implementation, not evidence for any claim about Navier–Stokes solutions.
+
 This directory preserves a motivation: investigate how geometry, surface tension
 and distributed mechanics influence explicitly specified models. Its former
 outline did **not** establish a conditional Navier–Stokes regularity theorem.

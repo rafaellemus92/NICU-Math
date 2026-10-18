@@ -5,7 +5,7 @@ import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
   title: 'Respiratory Mechanics: Models and Conjectures',
-  description: 'Synthetic respiratory teaching models and an incomplete fluid-dynamics conjecture with explicit gaps. Not validated for patient care.',
+  description: 'Open: a conjecture, not checked. Synthetic respiratory teaching models and an incomplete fluid-dynamics conjecture with explicit gaps. Not validated for patient care.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

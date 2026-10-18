@@ -1,0 +1,43 @@
+{
+  "recheck_only": true,
+  "records": [
+    {
+      "source": "results/pilot.json",
+      "source_sha256": "a26a7fc1a08e304d4f5dbfaa0eb84491f5e43fd5a254da2a74964de0dc2e83f4",
+      "phase_all_m0_to_m3_cos_and_sin_error": 6.6898233804172226e-12,
+      "limit": 2e-06,
+      "phase_check_pass": true,
+      "original_status": "FAIL",
+      "full_solve_parameters_from_source": {
+        "N": 18,
+        "K": 5,
+        "phi": 0.37,
+        "dt": 0.005,
+        "b_magnitudes": [
+          0.1,
+          0.05
+        ],
+        "dt_note": "metadata supplied retrospectively from inspected source; matches run 1 step"
+      }
+    },
+    {
+      "source": "results/refined.json",
+      "source_sha256": "f0ef4d6be4c1ac7799f9639364807758453e805e6d0cbc80a0594908b1d1f139",
+      "phase_all_m0_to_m3_cos_and_sin_error": 4.5412550190234726e-12,
+      "limit": 2e-06,
+      "phase_check_pass": true,
+      "original_status": "pass",
+      "full_solve_parameters_from_source": {
+        "N": 18,
+        "K": 5,
+        "phi": 0.37,
+        "dt": 0.005,
+        "b_magnitudes": [
+          0.1,
+          0.05
+        ],
+        "dt_note": "metadata supplied retrospectively from inspected source; matches run 1 step"
+      }
+    }
+  ]
+}

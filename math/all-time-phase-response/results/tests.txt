@@ -1,0 +1,14 @@
+test_leading_cos2_general_amplitudes (test_response.ExactJetTests.test_leading_cos2_general_amplitudes) ... ok
+test_all_reported_phase_components_checked (test_response.VariationTests.test_all_reported_phase_components_checked) ... ok
+test_bad_inputs (test_response.VariationTests.test_bad_inputs) ... ok
+test_base_reduction (test_response.VariationTests.test_base_reduction) ... ok
+test_initial_and_factorial_convention (test_response.VariationTests.test_initial_and_factorial_convention) ... ok
+test_phase_aliasing (test_response.VariationTests.test_phase_aliasing) ... ok
+test_recheck_does_not_overwrite_input (test_response.VariationTests.test_recheck_does_not_overwrite_input) ... ok
+test_stretching_slots (test_response.VariationTests.test_stretching_slots) ... ok
+test_support_divergence_parity (test_response.VariationTests.test_support_divergence_parity) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.304s
+
+OK

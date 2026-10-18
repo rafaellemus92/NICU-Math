@@ -250,7 +250,7 @@ For reference, the next even order is [t⁸] cos 2φ = 7035947189629/33541847539
 | Statement | Status |
 |---|---|
 | P1 at the level of the Taylor recurrence, for all (α, γ, δ, ν) | **Proved** (analytic induction re-derived by the cross-check) |
-| P1 at the solution level (finite T) | **Verified numerically** to 2e-15 through T = 4. A proof would follow the same lines, since the k_z = 0 subspace is invariant and the u₃ equation is linear, but we have not written it out. |
+| P1 at the solution level (finite T) | **Verified numerically** to 2e-15 through T = 4. A proof would follow the same lines, since the k_z = 0 subspace is invariant and the u₃ equation is linear, but we have not written it out. *Update, 18 October:* written out in [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) §1 and re-checked in [`../../phase-family-checks/`](../../phase-family-checks/). |
 | P2: grading, selection rules, "no \|m\| harmonic before n = 3\|m\|", e = 0 and the forced monomial at n = 3\|m\| | **Proved**, given P1 |
 | [t⁷] m = 2 coefficient is ∝ ν and zero for Euler | Form **proved**. Constant **computed exactly**: 207269/14515200. |
 | Leading coefficient at n = 3\|m\| is nonzero | **Computed** for \|m\| = 2, 3, 4. **Unproven** for \|m\| ≥ 5. |
@@ -521,7 +521,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
 ### 7.5 Smaller open points
 
 * **Leading coefficients for \|m\| ≥ 5.** The coefficient at n = 3\|m\| is computed nonzero only for \|m\| = 2, 3, 4.
-* **P1 at the solution level.** Verified numerically through T = 4; the proof has not been written out.
+* **P1 at the solution level.** Verified numerically through T = 4; the proof is now written out in [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) §1 (18 October) and re-checked in [`../../phase-family-checks/`](../../phase-family-checks/).
 * **Phase lemma check.** The exact line's phase lemma was cross-checked against the generic complex implementation for three parameter sets only, though the lemma itself is proved.
 * **Lean coverage.** No time-dependent statement is formalised in Lean.
 
