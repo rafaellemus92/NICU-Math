@@ -1,0 +1,30 @@
+
+=== F(1,1): 228 prime words (onsets 21, nuclei 6, codas 21) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: False
+  exact number of perfect pangrams: 0
+  (1s)
+
+=== F(2,1): 2,966 prime words (onsets 401, nuclei 6, codas 21) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: False
+  exact number of perfect pangrams: 0
+  (6s)
+
+=== F(1,2): 2,614 prime words (onsets 21, nuclei 6, codas 401) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: False
+  exact number of perfect pangrams: 0
+  (2s)
+
+=== F(3,0): 7,816 prime words (onsets 7241, nuclei 6, codas 1) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: False
+  exact number of perfect pangrams: 0
+  (66s)
+
+=== F(0,3): 2,414 prime words (onsets 1, nuclei 6, codas 7241) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: False
+  exact number of perfect pangrams: 0
+  (22s)
+
+=== F(2,2): 34,587 prime words (onsets 401, nuclei 6, codas 401) [0s]
+  packing bound: 20 consonants coverable by <=6 onsets + <=6 odd codas: True
+  budget 0 foreign clusters: none (157,219 nodes)
+  budget 1 foreign clusters: none (30,596,357 nodes)

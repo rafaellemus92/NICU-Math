@@ -1,0 +1,13 @@
+columns: ['phase_index', 'phase', 'time', 'n', 'reference_n', 'relative_field_L2', 'relative_Z_difference']
+phi=0.000 T=2 N=32: DNS relZ=3.4629e-06  package=3.4640e-06  ratio=0.9997
+phi=0.000 T=2 N=48: DNS relZ=4.4995e-08  package=4.6168e-08  ratio=0.9746
+phi=0.000 T=4 N=32: DNS relZ=1.0405e-05  package=1.0405e-05  ratio=1.0000
+phi=0.000 T=4 N=48: DNS relZ=5.2203e-07  package=5.2210e-07  ratio=0.9999
+phi=0.971 T=2 N=32: DNS relZ=5.1916e-06  package=5.1927e-06  ratio=0.9998
+phi=0.971 T=2 N=48: DNS relZ=5.3541e-08  package=5.4675e-08  ratio=0.9793
+phi=0.971 T=4 N=32: DNS relZ=1.4048e-05  package=1.4048e-05  ratio=1.0000
+phi=0.971 T=4 N=48: DNS relZ=4.0566e-07  package=4.0555e-07  ratio=1.0003
+phi=2.160 T=2 N=32: DNS relZ=6.3856e-06  package=6.3863e-06  ratio=0.9999
+phi=2.160 T=2 N=48: DNS relZ=8.2482e-08  package=8.3129e-08  ratio=0.9922
+phi=2.160 T=4 N=32: DNS relZ=6.8017e-05  package=6.8017e-05  ratio=1.0000
+phi=2.160 T=4 N=48: DNS relZ=6.0755e-07  package=6.0727e-07  ratio=1.0005

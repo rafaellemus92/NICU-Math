@@ -1,0 +1,55 @@
+{
+ "regime": "F(1,4)",
+ "n_onsets": 21,
+ "n_codas": 123521,
+ "n_nuclei": 6,
+ "n_prime": 450883,
+ "packing_feasible": null,
+ "witness": [
+  [
+   "bu",
+   73,
+   "b",
+   "",
+   0
+  ],
+  [
+   "cy",
+   103,
+   "c",
+   "",
+   0
+  ],
+  [
+   "tids",
+   357727,
+   "t",
+   "ds",
+   0
+  ],
+  [
+   "zafgpk",
+   309483367,
+   "z",
+   "fgpk",
+   1
+  ],
+  [
+   "vehjlq",
+   263822849,
+   "v",
+   "hjlq",
+   1
+  ],
+  [
+   "nomxrw",
+   173439107,
+   "n",
+   "mxrw",
+   1
+  ]
+ ],
+ "min_foreign_clusters": null,
+ "count": 603962334877113,
+ "seconds": 37
+}

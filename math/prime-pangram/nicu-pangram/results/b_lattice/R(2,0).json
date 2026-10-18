@@ -1,0 +1,56 @@
+{
+ "regime": "R(2,0)",
+ "n_onsets": 413,
+ "n_codas": 175,
+ "n_nuclei": 36,
+ "n_prime": 108593,
+ "packing_feasible": true,
+ "packing_min_foreign": 3,
+ "witness": [
+  [
+   "ve",
+   577,
+   "v",
+   "",
+   0
+  ],
+  [
+   "qa",
+   443,
+   "q",
+   "",
+   0
+  ],
+  [
+   "bzyc",
+   53381,
+   "bz",
+   "c",
+   1
+  ],
+  [
+   "xjiwk",
+   11149877,
+   "xj",
+   "wk",
+   1
+  ],
+  [
+   "dpurg",
+   2123791,
+   "dp",
+   "rg",
+   1
+  ],
+  [
+   "mnolfths",
+   108922176707,
+   "mn",
+   "lfths",
+   0
+  ]
+ ],
+ "min_foreign_clusters": 3,
+ "count": 8627591390,
+ "seconds": 612
+}
