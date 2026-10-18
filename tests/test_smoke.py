@@ -1,5 +1,6 @@
 """Synthetic, no-network smoke coverage. Run: python -m unittest discover -s tests -v."""
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -12,6 +13,23 @@ os.environ.pop('NICU_OPENAI_KEY', None)
 
 from fastapi.testclient import TestClient
 from api.app.main import app
+
+# The homepage must not make a browser fetch or navigate anywhere but this service.
+# Checked on the lower-cased page text: CSS at-rules/functions are case-insensitive.
+EXTERNAL_TOKENS = ('//', '@import', 'url(', 'image-set(', 'src(', 'image(', 'http-equiv')
+SCHEME = re.compile(r'(?i)\b(?:https?|ftp|wss?|data|blob|javascript|file|mailto|tel):')
+FORBIDDEN_TAGS = {'form', 'input', 'iframe', 'script', 'link', 'img', 'object', 'embed', 'video',
+                  'audio', 'source', 'picture', 'svg', 'use', 'base', 'meta-http-equiv'}
+FORBIDDEN_ATTRIBUTES = {'ping', 'background', 'xlink:href', 'manifest', 'codebase', 'longdesc',
+                        'cite', 'http-equiv', 'style'}
+HOMEPAGE_REFERENCES = {'#content', '/docs', '/healthz'}
+
+
+def assert_no_external_references(case, page):
+    lowered = page.lower()
+    for token in EXTERNAL_TOKENS:
+        case.assertNotIn(token, lowered)
+    case.assertNotRegex(page, SCHEME)
 
 
 class OfflineAPI(unittest.TestCase):
@@ -33,11 +51,17 @@ class OfflineAPI(unittest.TestCase):
                 super().__init__()
                 self.links = []
                 self.references = []
+                self.attribute_names = set()
+                self.values = []
                 self.tags = []
 
             def handle_starttag(self, tag, attrs):
                 attrs = dict(attrs)
                 self.tags.append(tag)
+                if tag == 'meta' and 'http-equiv' in attrs:
+                    self.tags.append('meta-http-equiv')  # refresh/CSP pragmas navigate or report elsewhere
+                self.attribute_names.update(attrs)
+                self.values.extend(value for value in attrs.values() if value)
                 if tag == 'a':
                     self.links.append(attrs.get('href'))
                 # Every attribute that can fetch a resource, on any tag.
@@ -50,18 +74,19 @@ class OfflineAPI(unittest.TestCase):
         self.assertIn('text/html', response.headers['content-type'])
         parser = PageParser()
         parser.feed(response.text)
-        self.assertEqual(set(parser.links), {'#content', '/docs', '/healthz'})
-        self.assertEqual(set(parser.references), {'#content', '/docs', '/healthz'})
+        self.assertEqual(set(parser.links), HOMEPAGE_REFERENCES)
+        self.assertEqual(set(parser.references), HOMEPAGE_REFERENCES)
         self.assertEqual(parser.tags.count('h1'), 1)
-        self.assertFalse({'form', 'input', 'iframe', 'script', 'link', 'img', 'object', 'embed',
-                          'video', 'audio', 'source', 'base', 'meta-refresh'} & set(parser.tags))
-        # No external asset anywhere, including inline CSS (@import, url()) and absolute URLs in text.
-        self.assertNotIn('://', response.text)
-        self.assertNotIn('@import', response.text)
-        self.assertNotIn('url(', response.text)
+        self.assertFalse(FORBIDDEN_TAGS & set(parser.tags))
+        self.assertFalse({name for name in parser.attribute_names
+                          if name.startswith('on') or name in FORBIDDEN_ATTRIBUTES})
+        for value in parser.values:  # any attribute value, whatever the attribute is called
+            self.assertFalse(value.startswith('//'), value)
+            self.assertNotRegex(value, SCHEME)
+        assert_no_external_references(self, response.text)
         for text in ['NICU-Math', 'Offline mode', 'Synthetic research and education only',
                      'Do not enter patient data', 'unvalidated',
-                     'loads its script and stylesheet from a public CDN',
+                     'fetches its script and stylesheet from cdn.jsdelivr.net',
                      'two-compartment passive-emptying model', 'this API does not serve it',
                      'Streamlit research interface runs separately and is not hosted at this endpoint']:
             self.assertIn(text, response.text)
@@ -73,11 +98,11 @@ class OfflineAPI(unittest.TestCase):
         offline, evidence = render_homepage(True), render_homepage(False)
         for page in (offline, evidence):
             self.assertNotIn('{{', page)
-            self.assertNotIn('://', page)
-            self.assertEqual(page.count('<h1>'), 1)
-        self.assertIn('Offline mode', offline)
-        self.assertNotIn('Offline mode', evidence)
-        self.assertIn('Evidence mode · unvalidated', evidence)
+            assert_no_external_references(self, page)
+            self.assertEqual(page.count('<h1'), 1)
+        self.assertIn('<span class="mode">Offline mode</span>', offline)
+        self.assertNotIn('<span class="mode">Offline mode</span>', evidence)
+        self.assertIn('<span class="mode">Evidence mode · unvalidated</span>', evidence)
         self.assertIn('Legacy evidence services are enabled but not integration-validated.', evidence)
         self.assertIn('Evidence search and generated answers are disabled in this mode.', offline)
 

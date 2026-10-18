@@ -66,7 +66,7 @@ _PAGE = '''<!doctype html>
       <section aria-labelledby="available">
         <h2 id="available">Available through this API</h2>
         <ul>
-          <li>Interactive endpoint documentation at <code>/docs</code>. That page is Swagger UI and loads its script and stylesheet from a public CDN, so it needs internet access even when the API runs offline; the schema at <code>/openapi.json</code> is served locally.</li>
+          <li>Interactive endpoint documentation at <code>/docs</code>. That page is Swagger UI: your browser fetches its script and stylesheet from cdn.jsdelivr.net and its icon from fastapi.tiangolo.com, so it needs internet access even in Offline mode. The ReDoc page at <code>/redoc</code> likewise loads from cdn.jsdelivr.net and fonts.googleapis.com. The schema at <code>/openapi.json</code> is served locally.</li>
           <li>Service status and configured mode at <code>/healthz</code>.</li>
           <li>Seeded toy simulations of acidosis, NEC and extubation, using synthetic inputs. These are software demonstrations, not calibrated predictions.</li>
         </ul>
