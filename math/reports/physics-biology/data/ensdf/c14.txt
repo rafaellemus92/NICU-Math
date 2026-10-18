@@ -1,0 +1,403 @@
+14 C -1                                                                                                                                       14 C -1
+ 6 8                                                      From ENSDF - Updated July 1990                                                       6 8
+
+
+
+                                                          Adopted Levels, Gammas              1991Aj01
+
+                                                                           History
+                   Type                                 Author                                     Citation          Literature Cutoff Date
+                   Update     F. Ajzenberg-selove, J. H. Kelley and C. D. Nesaraja            NP A523,1 (1991)                1-Jul-1990
+
+Q(β− )=156.476 4; S(n)=8176; S(p)=20831.2 11; Q(α)=−12012.5 1       2012Wa38
+Note: Current evaluation has used the following Q record 156.475 4 8176.4425 20831.3 11−12011.6 4                      1997Au04.
+Additional information 1.
+                                                                          14 C Levels
+
+
+
+                                                               Cross Reference (XREF) Flags
+
+                                     A     14 B β− decay                  K     13 C(p,π+ )        U      14 C(14 C,14 C′ )
+
+                                     B     13 C(n,γ) E=thermal            L     13 C(d,p)          V      14 N(γ,π+ )
+
+                                     C     13 C(n,γ) res                  M     13 C(t,d)          W      14 N(π− ,γ)
+
+                                     D     9 Be(6 Li,p)                   N     13 C(7 Li,6 Li)    X      14 N(n,p)
+
+                                     E     9 Be(7 Li,d)                   O     14 C(γ,n) res      Y      14 N(d,2p)
+
+                                     F     11 B(α,p)                      P     14 C(e,e′ )        Z      14 N(t,3 He)
+
+                                     G     11 B(6 Li,3 He),11 B(7 Li,α)   Q     14 C(π,π′ )        Others:
+                                     H     12 C(t,p)                      R     14 C(p,p′ )        AA     15 N(γ,p)
+
+                                     I     12 C(α,2p)                     S     14 C(d,d′ )        AB     15 N(d,3 He)
+
+                                     J     13 C(n,n′ ) res                T     14 C(α,α′ )        AC     16 O(6 Li,8 B)
+
+
+  E(level)    Jπ            T1/2                        XREF                                                   Comments
+     0.0     0+       5700 y 30          AB DEFGHIJKLMNOPQRSTUVWXYZ             XREF: Others: AA, AB, AC
+                                                                                %β− =100
+                                                                                T=1
+                                                                                T1/2 : From the weighted average of the values 5780 y 65
+                                                                                  [Watt et al. Intern. J. Appl. Radiat. Isot. 11 (1961) 68],
+                                                                                  5680 y 40 (1962Ol04), 5745 y 50 (1964Hu09), 5660 y 30
+                                                                                  (1968Be47), and 5736 y 56 (1968ReZZ and 1972Em01).
+                                                                                  The reduced-χ2 for this average is 1.06. These values
+                                                                                  were obtained from specific activity measurements. Values
+                                                                                  that have not been included in the average, all earlier, are
+                                                                                  4700 y 400 (1946Re10), 5100 y 200 (1948No02), 7200 y
+                                                                                  500       (1948Ya02), 6360 y 200 (1949Ha52), 5589 y 75
+                                                                                  (1949Jo07), 5580 y        90 [Engelkemeir & Libby, Rev.
+                                                                                  Sci. Instr. 21 (1950) 550], 6360 y       190 and 5513 y 165
+                                                                                  [Miller et al., Phys. Rev. 77 (1950) 714],       5370 y 200
+                                                                                  [Manov & Curtiss, J. Research Nat. Bur. Std. 46 (1951)
+                                                                                  328], 6100 y 85 (1952Je11), 5900 y 250 [Caswell et al., J.
+                                                                                  Research Nat. Bur. Std. 53 (1954) 27]. These values were
+                                                                                  omitted because of their large uncertainties and the later
+                                                                                  improvements in the measurement methods. From a
+                                                                                  similar evaluation, 1990Ho28 gives a result of 5715 y 30
+                                                                                  from an unweighted average of eight values. Evaluated by
+                                                                                  V. Chechev in 1998 in conjunction with the Decay Data
+                                                                                  Evaluation Project (1999BeZS,1999BeZQ).
+ 6093.8 2    1−        <7 fs             AB DEFGH KLMN PQ T                Z    XREF: Others: AB
+ 6589.4 2    0+         3.0 ps 4         AB DEF H  LM
+ 6728.2 13   3−        66 ps 8           A DEFGHI KLMN PQRSTU              Z    XREF: Others: AB
+                                                                                µ=0.816 21 (1989Ra17)
+ 6902.6 2    0−         25 fs 3           B DE GH       LMN P
+ 7012 4      2+          9.0 fs 14          DEFGH      KLMN PQRS                XREF: Others: AB, AC
+ 7341 3      2−        111 fs 42         A DE GH       KLMN P    T         Z    XREF: Others: AB
+
+
+
+
+                                                        Continued on next page (footnotes at end of table)
+                                                                          1
+14 C -2                                                                                                                   14 C -2
+ 6 8                                                          From ENSDF                                                   6 8
+
+
+
+                                               Adopted Levels, Gammas              1991Aj01 (continued)
+
+                                                              14 C Levels (continued)
+
+
+     E(level)             Jπ         T1/2                          XREF                                        Comments
+          8317.9 8   2+              3.4 keV 7      B DEFGHIJKLM            PQ   T   W YZ   XREF: Others: AC
+                                                                                            %IT=?; %n=?
+          9746† 7    0+                                                                     XREF: Others: AB
+          9801 6     3−             45 keV 12         D FGH JKLM            P    T          XREF: Others: AB
+                                                                                            %IT=?; %n=?
+      10425 5        2+                               D F H JKLM            P    T          XREF: Others: AB
+                                                                                            %n=100
+      10449 7        ≥1                               D FGH JK                              XREF: Others: AB
+                                                                                            %n=100
+      10498 4        (3− )          26 keV 8          D   GH JKLM                           XREF: Others: AB
+                                                                                            %n=100
+      10736† 5       4+             20 keV 7          D FGHI KLM                 T   W
+      11306 15       1+             46 keV 12         D F   J    OP                         XREF: Others: AB
+                                                                                            %IT=0.015 5; %n=99.985 5
+      11395 8        1−             22 keV 7          D FGH        LM            T          %n=100
+     11500?          1− ,2−                                    J                            %n=100
+                                                                                            T1/2 : Γ=broad.
+      11666 10       4−             20 keV 7          D FGHI KLM            PQRST           XREF: Others: AB
+      11730† 9       (5− )                            D FGHI K
+    119×102 3        (1− )         950 keV 300              J LM                            %n=100
+      12583 10       (2− ,3− )      95 keV 15         D GH J LM             Q    T          XREF: Others: AB
+                                                                                            %n=100
+      12863 8                       30 keV 10         D  GH J LM            P               %n=100
+      12963 9        (3− )          30 keV 10         D  GH J LM                 T          %n=100
+   135×102 ?† 1                   <200 keV                   K
+      13700          2−          ≈1800 keV                  J                               %n=100
+ 140.5×102 ?† 10                  <200 keV                   K
+      14667 20       (4+ )          57 keV 15         D FG J                                %n=100
+      14868† 20      (6+ ,5− )                        D FGHI K                              XREF: Others: AB
+      15200† 23      4−                               D FG   K              PQ
+     15370?† 30                                       D
+      15440 40       (3− )                            D     J                               %n=100
+     16020? 50       (4+ )                            D     J                               %n=100
+      16430† 16                                       D FGH
+     16570?† 40                                       D
+      16715 30       (1+ )        ≈200 keV          B D F                                   %IT=?; %n=?
+      17300 30       4−                               D FG                  PQRS
+     17500?          (1+ )        ≈200 keV          B                                       %IT=?; %n=?
+      17950† 40                                       D
+      18100† 40                                       D
+      18500†                                                 K                              T1/2 : Γ=broad.
+      20400†                                                                          X     T1/2 : Γ=wide.
+     21400?†                                              F
+    221×102 1        (2− )                                                  P               T=2
+                                                                                            T: tentative.
+      23288† 15                    ≈50 keV                F     K
+    244×102 1        4−           <300 keV                                  PQ              T=2
+                                                                                            T: tentative.
+      24500†                                                    K           Q               T1/2 : Γ=wide.
+
+   † Decay mode not specified.
+
+
+
+
+                                                                        2
+14 C -3                                                                                                                                   14 C -3
+ 6 8                                                      From ENSDF                                                                       6 8
+
+
+                                             Adopted Levels, Gammas             1991Aj01 (continued)
+
+                                                                  γ(14 C)
+
+ Ei (level)   Jπi       Eγ           Iγ        Ef   Jπf   Mult.       I(γ+ce)                             Comments
+  6093.8      1−     6092.4 2     100           0.0 0+    [E1]                    B(E1)(W.u.)>7.3×10−4
+  6589.4      0+      495.35 10   100.0 1    6093.8 1−    [E1]                    B(E1)(W.u.)=0.0032 4
+                     6587.7 2                   0.0 0+    [E0]        1.1 1       I(γ+ce) : this decay mode is due entirely to internal
+                                                                                     pairs.
+  6728.2      3−      634.4 13      3.7 13   6093.8 1−    [E2]                    B(E2)(W.u.)=1.5 6
+                     6726.5 13    100.1 13      0.0 0+    [E3]                    B(E3)(W.u.)=2.4 3
+  6902.6      0−      808.8 3     100        6093.8 1−    [M1]                    B(M1)(W.u.)=1.6 2
+  7012        2+      918 4         1.4 7    6093.8 1−    [E1]                    B(E1)(W.u.)=0.0023 12
+                     7010 4       100.0 7       0.0 0+    [E2]                    B(E2)(W.u.)=1.8 3
+  7341        2−      613 3        70 7      6728.2 3−    [M1]                    B(M1)(W.u.)=0.29 10
+                                                                                  δ: δ(E2/M1)=−0.07 30.
+                     1248 3       100 7      6093.8 1−    [M1]                    B(M1)(W.u.)=0.049 20
+                                                                                  δ: δ(E2/M1)=0.04 9.
+                     7339 3        34 7         0.0 0+    [M2]                    B(M2)(W.u.)=0.38 15
+ 11306        1+    11301 15      100           0.0 0+    [M1]                    B(M1)(W.u.)=0.22 5
+
+
+
+
+                                                                  3
+14 C -4                                                                                                                                                            14 C -4
+ 6 8                                                                 From ENSDF                                                                                     6 8
+
+
+
+                                          Adopted Levels, Gammas                                    1991Aj01
+
+                                                                Level Scheme
+                                   Intensities: Relative photon branching from each level
+
+
+
+
+                       0
+                      10
+                      1]
+                    [M
+                1
+               30
+               11
+          1+                                                                                                                                  11306    46 keV 12
+
+
+
+
+                                           0
+                                34
+
+
+                                          10
+
+                                                    70
+
+
+                                                                .0
+                              2]
+
+
+                                          1]
+
+
+
+
+                                                              00
+                                                  1]
+                            [M
+
+
+                                        [M
+
+
+
+
+                                                                       .4
+                                                [M
+
+
+
+                                                              ]1
+
+
+
+
+                                                                                     0
+                                                                       ]1
+
+
+                                                                                     10
+                                                          [E2
+                           39
+
+
+                                     48
+
+
+
+
+                                                                                                 .1
+                                                                     [E1
+                                               3
+
+
+
+
+                                                                                               00
+                                                                                   1]
+                       73
+
+
+                                   12
+
+
+                                               61
+
+
+
+          2−                                                                                                                                    7341
+
+
+
+
+                                                                                                          .7
+                                                                                                                                                       111 fs 42
+
+
+
+                                                                                 [M
+
+
+
+                                                                                               ]1
+                                                         0
+
+
+
+
+                                                                                                                                 .0
+                                                                                                          ]3
+                                                          1
+
+
+                                                                   8
+
+
+
+
+                                                                                                                              00
+                                                       70
+
+
+                                                                91
+
+
+
+
+                                                                                           [E3
+          2+                                                                                                                                    7012
+
+
+
+
+                                                                                                      [E2
+                                                                            8.8
+                                                                                                                                                       9.0 fs 14
+
+
+
+
+                                                                                                                              ]1
+                                                                                                                    ]
+                                                                            80
+
+
+
+
+                                                                                                                 [E0
+
+
+                                                                                                                            [E1
+                                                                                          .5
+          0−                                                                                                                                  6902.6
+
+
+
+
+                                                                                                    4.4
+                                                                                                                                                       25 fs 3
+
+
+                                                                                        26
+
+
+
+
+                                                                                                                                         00
+                                                                                     67
+
+
+                                                                                                 63
+
+
+
+                                                                                                               .7
+
+
+                                                                                                                         5
+
+
+
+                                                                                                                                        ]1
+          3−                                                                                                                                  6728.2   66 ps 8
+
+
+
+
+                                                                                                                        5.3
+                                                                                                               87
+
+
+
+
+                                                                                                                                       [E1
+                                                                                                            65
+
+
+                                                                                                                       49
+          0+                                                                                                                                  6589.4   3.0 ps 4
+
+
+
+
+                                                                                                                                   .4
+                                                                                                                                   92
+                                                                                                                                  60
+          1−                                                                                                                                  6093.8   <7 fs
+
+
+
+
+          0+                                                                                                                                     0.0   5700 y 30
+
+                                                                           14 C
+                                                                            6 8
+
+
+
+
+                                                                                 4
+

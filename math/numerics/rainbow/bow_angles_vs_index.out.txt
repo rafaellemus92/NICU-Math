@@ -1,0 +1,36 @@
+IAPWS n(lambda), 20C and 10C:
+   380.0 nm  20C n=1.34563   10C n=1.34638
+   400.0 nm  20C n=1.34357   10C n=1.34431
+   404.7 nm  20C n=1.34313   10C n=1.34387
+   410.0 nm  20C n=1.34266   10C n=1.34340
+   420.0 nm  20C n=1.34181   10C n=1.34255
+   434.0 nm  20C n=1.34073   10C n=1.34146
+   450.0 nm  20C n=1.33962   10C n=1.34035
+   486.1 nm  20C n=1.33750   10C n=1.33823
+   500.0 nm  20C n=1.33680   10C n=1.33753
+   550.0 nm  20C n=1.33469   10C n=1.33541
+   589.3 nm  20C n=1.33336   10C n=1.33407
+   600.0 nm  20C n=1.33303   10C n=1.33374
+   656.3 nm  20C n=1.33152   10C n=1.33223
+   680.0 nm  20C n=1.33097   10C n=1.33167
+   700.0 nm  20C n=1.33053   10C n=1.33123
+   720.0 nm  20C n=1.33011   10C n=1.33081
+   750.0 nm  20C n=1.32952   10C n=1.33022
+   780.0 nm  20C n=1.32897   10C n=1.32966
+
+n=1.33100: primary 42.3698 deg, secondary 50.3651 deg
+n=1.34300: primary 40.6459 deg, secondary 53.4778 deg
+n=1.33333: primary 42.0297 deg, secondary 50.9781 deg
+n=1.33070: primary 42.4138 deg, secondary 50.2860 deg
+n=1.34390: primary 40.5191 deg, secondary 53.7073 deg
+n=1.33110: primary 42.3552 deg, secondary 50.3915 deg
+n=1.34350: primary 40.5754 deg, secondary 53.6053 deg
+widths (1.331..1.343): primary 1.7240, secondary 3.1126
+widths (1.3307..1.3439, ~700..400nm 20C): primary 1.8947, secondary 3.4213
+dprim/dn per 0.001: -0.1437 deg; dsec/dn per 0.001: 0.2594 deg
+primary=43 at n=1.32672 ; primary=42 at n=1.33354 ; primary=41 at n=1.34050; primary=40 at n=1.34761
+secondary=50 at n=1.32962 ; 51 at n=1.33342 ; 53 at n=1.34113 ; 54 at n=1.34505
+  n=1.33100 <-> lambda 678.5 nm at 20C, 710.8 nm at 10C
+  n=1.34300 <-> lambda 406.1 nm at 20C, 414.6 nm at 10C
+  n=1.32962 <-> lambda 745.1 nm at 20C, 782.4 nm at 10C
+  n=1.32672 <-> lambda 916.8 nm at 20C, 960.6 nm at 10C

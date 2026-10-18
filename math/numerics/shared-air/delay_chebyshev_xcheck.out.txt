@@ -1,0 +1,17 @@
+Convergence check, g=3 tau=2, rightmost eigenvalues vs N:
+10 [ 0.01191945-0.42186598j  0.01191945+0.42186598j -0.01182892+0.j        ]
+20 [ 0.01191945-0.42186598j  0.01191945+0.42186598j -0.01182892+0.j        ]
+30 [ 0.01191945+0.42186598j  0.01191945-0.42186598j -0.01182892+0.j        ]
+40 [ 0.01191945-0.42186598j  0.01191945+0.42186598j -0.01182892+0.j        ]
+60 [ 0.01191945-0.42186598j  0.01191945+0.42186598j -0.01182892+0.j        ]
+|D(lambda)| residual at N=40: [np.float64(7.755032163898323e-15), np.float64(7.755032163898323e-15), np.float64(4.666406150377611e-15)]
+g=3: tau scan max Re: [np.float64(-0.01233), np.float64(-0.0122), np.float64(-0.01207), np.float64(-0.00661), np.float64(0.01192), np.float64(0.02804), np.float64(0.0418)]
+g=3: critical tau (pseudospectral, N=40) = 1.835585, rightmost there: [-0.-0.428787j -0.+0.428787j]
+   N=20: critical tau = 1.835585
+   N=60: critical tau = 1.835585
+g=1: tau scan max Re: [np.float64(-0.03719), np.float64(-0.02473), np.float64(-0.01354), np.float64(-0.00422), np.float64(0.0035), np.float64(0.00989), np.float64(0.01516)]
+g=1: critical tau (pseudospectral, N=40) = 4.761272, rightmost there: [-0.-0.223749j -0.+0.223749j]
+   N=20: critical tau = 4.761272
+   N=60: critical tau = 4.761272
+g=1: max Re on (0,tau) grid stays negative until tau ~ 4.791932773109244; max Re at tau=0.01: -0.03855
+g=3: max Re on (0,tau) grid stays negative until tau ~ 1.851344537815126; max Re at tau=0.01: -0.01285

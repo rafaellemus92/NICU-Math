@@ -1,0 +1,552 @@
+{
+ "reports": {
+  "particles": {
+   "items": [
+    {
+     "claim": "(1) \"The Higgs boson is massless and could live in the infinite center line that makes Navier-Stokes smooth\"; \"look at the weak force and the Higgs boson in relation to the central part of Navier-Stokes.\"",
+     "verdict": "false as stated",
+     "facts": "- The Higgs boson is not massless. PDG 2026 gives m_H = 125.13 \u00b1 0.11 GeV (PDG 2025: 125.20 \u00b1 0.11), which is 133.4 proton masses.\n- Massless or near-massless bosons: the photon (experimental bound m < 1e-18 eV) and the gluon (m = 0 is the theoretical value; PDG notes that a mass of a few MeV is not ruled out). The graviton is hypothetical, with bound m < 1.76e-23 eV.\n- W boson: 80.3625 \u00b1 0.0077 GeV (PDG 2026, which excludes the 2022 CDF value; PDG 2025 gave 80.3692 \u00b1 0.0133). Z boson: 91.1879 \u00b1 0.0020 GeV.\n- What fills all of space is the Higgs FIELD, which has the same nonzero value everywhere: v = (sqrt2 G_F)^(-1/2) = 246.22 GeV. It is not confined to a line. The W, Z and fermion masses come from v. The photon and gluon stay massless because U(1)_em and SU(3)_colour are not broken.\n- The Higgs BOSON is a short-lived excitation of that field. \u0393 = 3.0 (+1.5/-0.7) MeV gives \u03c4 = \u0127/\u0393 = 2.2e-22 s (range 1.5 to 2.9 e-22 s), so c\u03c4 is about 66 fm. It cannot \"live\" anywhere inside a fluid.\n- The Higgs mechanism accounts for only about 1% of a proton's mass. The valence-quark masses (MS-bar scheme, so scheme-dependent) are 2(2.16) + 4.70 = 9.02 MeV, or 0.96% of 938.272 MeV. The rest is QCD (gluon) field energy.\n- The weak force has range \u0127c/(M_W c^2) = 197.327 MeV fm / 80362.5 MeV = 2.456e-18 m; with the Z mass it is 2.164e-18 m. In water at 37 \u00b0C the nearest-neighbour O-O distance is 2.80(1) \u00c5, and the mean spacing from the density is 3.11 \u00c5. So the weak range is about 1.1e8 to 1.3e8 times smaller than the distance between water molecules.\n- Navier-Stokes is a classical continuum equation: conservation of mass and momentum plus a Newtonian viscous stress. For water the only microphysics that enters it is \u03c1 = 993.33 kg/m^3 and \u03bc = 691.3 \u00b5Pa\u00b7s at 37 \u00b0C. It contains no particles, no Higgs field and no weak force.\n- The Clay problem asks whether smooth 3D solutions exist for all time or can blow up. Clay still lists it as \"Active\" (checked 2026-10-17). News reports describe a September 2026 claim by OpenAI of a finite-time blowup with an external force. Clay has not accepted it, and I could not verify the primary source.\n- On the \"centre line\": the strongest known partial-regularity result (Caffarelli-Kohn-Nirenberg 1982) says the singular set has zero 1-D parabolic Hausdorff measure. In Fefferman's words, \"the singular set of u cannot contain a spacetime curve of the form x = \u03c6(t).\" A moving line of singularity is therefore ruled out for suitable weak solutions. Smoothness is a property of the solution; it is not supplied by something that lives on a line.",
+     "numbers": "m_H/m_p = 125.13/0.938272 = 133.4; \u03c4_H = 6.582120e-16 eV s / 3.0e6 eV = 2.194e-22 s; c\u03c4 = 197.327/3.0 = 65.8 fm; v = (1.41421 \u00d7 1.1663787e-5)^(-1/2) = 246.220 GeV; (2\u00d72.16 + 4.70)/938.272 = 0.96%; r_W = 197.3269804/80362.5 fm = 2.4555e-18 m; r_Z = 2.1640e-18 m; n_water = 993.33 \u00d7 6.02214076e23 / 0.0180153 = 3.3205e28 m^-3, so n^(-1/3) = 3.111 \u00c5; 2.80e-10/2.4555e-18 = 1.14e8; 3.111e-10/2.4555e-18 = 1.27e8; \u03bd_water = 6.96e-7 m^2/s",
+     "sources": [
+      "https://pdg.lbl.gov/2026/tables/rpp2026-sum-gauge-higgs-bosons.pdf",
+      "https://pdg.lbl.gov/2025/tables/rpp2025-sum-gauge-higgs-bosons.pdf",
+      "https://pdg.lbl.gov/2026/tables/rpp2026-sum-quarks.pdf",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-higgs-boson.pdf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?gf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?hbcmevf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?hbarev",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?mp",
+      "https://pubmed.ncbi.nlm.nih.gov/23445023/",
+      "https://webbook.nist.gov/cgi/fluid.cgi?ID=C7732185&Action=Page",
+      "https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf",
+      "https://www.claymath.org/millennium/navier-stokes-equation/",
+      "https://rits.shanghai.nyu.edu/ai/openai-navier-stokes-proof-credit-dispute/"
+     ],
+     "confidence": "High for the particle values, the computed scales and the Navier-Stokes mathematics (taken from Fefferman's Clay statement). Low for the status of the September 2026 blowup claim, which comes from news reports only."
+    },
+    {
+     "claim": "(2) \"W boson, Z boson and gluon are a manifestation of an all-encompassing force.\"",
+     "verdict": "partly true",
+     "facts": "- W, Z and the photon really are unified: electroweak theory, SU(2)xU(1). Nobel 1979 went to Glashow, Salam and Weinberg \"for their contributions to the theory of the unified weak and electromagnetic interaction.\" The W and Z were discovered in 1983, and the Nobel 1984 citation calls them \"communicators of weak interaction.\"\n- Above the electroweak scale, W+, W-, Z and \u03b3 all come from SU(2)xU(1). The full Standard Model gauge group SU(3)xSU(2)xU(1) has 8+3+1 = 12 gauge bosons (8 gluons, W+, W-, Z, \u03b3).\n- Adding the gluon (grand unification) is hypothetical. The PDG 2026 GUT review states that coupling unification \"fails in the SM.\" With supersymmetry (MSSM) the couplings meet near M_G \u2248 2e16 GeV with \u03b1_G^-1 \u2248 24.3, but supersymmetry has not been observed.\n- The key GUT prediction, proton decay, has not been seen. Super-Kamiokande (450 kton\u00b7yr) gives \u03c4/B(p\u2192e+\u03c00) > 2.4e34 yr at 90% CL (Phys. Rev. D 102, 112011 (2020); quoted in PDG 2026). PDG's mode-independent limit (p \u2192 invisible) is \u03c4 > 9e29 yr. Hyper-Kamiokande aims for about 1e35 yr.\n- Gravity is not unified with any of these. There is no accepted quantum theory of gravity, and the graviton has not been observed (mass bound < 1.76e-23 eV).\n- The Standard Model still has 19 free parameters (PDG GUT review), so it is not a single all-encompassing force.",
+     "numbers": "2.4e34 yr / 13.797e9 yr (age of universe, PDG) = 1.74e24; nucleons in 70 kg \u2248 70/1.66054e-27 = 4.2e28. With the Super-K bound, even if every nucleon were a proton: fewer than 4.2e28/2.4e34 = 1.8e-6 p\u2192e+\u03c00 decays per year in a 70-kg body. Gauge bosons: 8+3+1 = 12.",
+     "sources": [
+      "https://www.nobelprize.org/prizes/physics/1979/summary/",
+      "https://www.nobelprize.org/prizes/physics/1984/summary/",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-guts.pdf",
+      "https://arxiv.org/abs/2010.16098",
+      "https://pdg.lbl.gov/2026/tables/rpp2026-sum-baryons.pdf",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf"
+     ],
+     "confidence": "High"
+    },
+    {
+     "claim": "(3) \"Consider the collection of particles, 3 sets of 4. The 3 sets representing a 'trinity'.\"",
+     "verdict": "true (as one valid counting); 'trinity' is outside physics",
+     "facts": "- The Standard Model has 3 generations of fermions. Each generation has 4 types: an up-type quark, a down-type quark, a charged lepton and a neutrino. That gives 4 x 3 = 12.\n- \"12\" depends on how you count:\n  - with 3 colours per quark: (2x3 + 2) x 3 = 24;\n  - adding antiparticles: 48;\n  - as chiral (Weyl) fields, using the PDG representations (3,2)+(3\u0304,1)+(3\u0304,1)+(1,2)+(1,1): 15 per generation, 45 in total, 48 with right-handed neutrinos.\n- Light neutrino species from the invisible Z width:\n  - LEP-SLC 2006: N_\u03bd = 2.9840 \u00b1 0.0082, which is 1.95\u03c3 below 3;\n  - corrected value (Janot and Jadach 2020: improved Bhabha cross-section plus correlated luminosity bias): 2.9963 \u00b1 0.0074, which is 0.50\u03c3 from 3. PDG 2026 uses this value;\n  - \u0393_inv = 499.3 \u00b1 1.5 MeV. This only counts neutrinos that couple to the Z and are lighter than M_Z/2;\n  - cosmology's baseline N_eff is 3.044.\n- Quarks also come in 3 colours (SU(3)). This connects to the lepton/quark pattern: within each generation the SU(2)^2-U(1)_Y anomaly cancels only if N_c\u00b7(1/3) + (-1) = 0, i.e. N_c = 3. Equivalently, the charges in a generation sum to zero: N_c(2/3 - 1/3) - 1 = 0. This works generation by generation, so it says nothing about how many generations there are.\n- Why there are 3 generations is unexplained in the Standard Model. Known constraints:\n  - CP violation in quark mixing needs at least 3 generations, because there are (n-1)(n-2)/2 CP phases: 0 for n = 2, 1 for n = 3. This is the Kobayashi-Maskawa result, Nobel 2008: \"at least three families of quarks.\"\n  - QCD asymptotic freedom needs 33 - 2n_f > 0, so n_f \u2264 16, i.e. at most 8 generations.\n  - No known principle fixes the number at exactly 3.\n- There is another real \"12\": the 12 gauge bosons (8+3+1). But they group as 8/3/1, not 4/4/4.",
+     "numbers": "(3 - 2.9840)/0.0082 = 1.95\u03c3; (3 - 2.9963)/0.0074 = 0.50\u03c3; 4x3 = 12; (2x3+2)x3 = 24; x2 = 48; 15x3 = 45; N_c(1/3) - 1 = 0 only for N_c = 3; CKM angles/phases for n = 3: 3/1, for n = 2: 1/0; n_f \u2264 16, so \u2264 8 generations",
+     "sources": [
+      "https://pdg.lbl.gov/2026/listings/rpp2026-list-number-neutrino-types.pdf",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-light-neutrino-types.pdf",
+      "https://pdg.lbl.gov/2026/tables/rpp2026-sum-gauge-higgs-bosons.pdf",
+      "https://arxiv.org/abs/1912.02067",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-guts.pdf",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-qcd.pdf",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf",
+      "https://www.nobelprize.org/prizes/physics/2008/summary/"
+     ],
+     "confidence": "High"
+    },
+    {
+     "claim": "(4) \"If two people are like fermions, then our communication, oscillator principles are like bosons\"; \"the Dirac equation, like a torus or donut that I am\"; \"weak force (love, speech, communication)\".",
+     "verdict": "Fermion/boson exchange: a metaphor that maps onto real structure. Dirac equation as a torus: false as stated. Weak force as speech or love: false as stated.",
+     "facts": "- In quantum field theory, matter is made of spin-1/2 fermions, and forces act by exchanging spin-1 gauge bosons (photon, W/Z, gluons). The Nobel 1984 citation literally calls the W and Z \"communicators of weak interaction.\" The structure of the analogy is correct.\n- But all biological communication (speech, nerve signals, chemistry, light) is electromagnetic, carried by photons, not by the weak force. At E = 13.6 eV (the hydrogen ionisation energy) the effective weak coupling is G_F E^2 = 2.2e-21, against \u03b1 = 7.30e-3: a ratio of 3.0e-19.\n- People are not fermions in the physical sense. A composite of an odd number of fermions is a fermion and of an even number is a boson. Quantum statistics only matters when the thermal de Broglie wavelength is comparable to the spacing between particles. For a 70-kg body at 310 K that wavelength is 4.8e-25 m; for a free electron it is 4.2e-9 m. Pauli exclusion (Nobel 1945) does real work for electrons (atomic shells, chemistry, why matter is solid), not for whole people.\n- Spin-1/2 is a genuine topological fact:\n  - The rotation operator is U(\u03b8) = exp(-i\u03b8\u03c3_z/2). Computed: U(2\u03c0) = -I and U(4\u03c0) = +I, while the ordinary rotation R(2\u03c0) = I.\n  - SU(2) is the 3-sphere S^3 and double-covers SO(3) \u2245 RP^3; \u03c01(SO(3)) = Z/2. This is what the belt/plate trick shows.\n  - Measured by neutron interferometry: first by Rauch et al. 1975 and Werner et al. 1975; precisely as 716.8 \u00b1 3.8\u00b0 by Rauch et al. 1978, against a predicted 720\u00b0 (0.84\u03c3).\n- But this is not a torus. The torus T^2 has fundamental group Z x Z, whereas the relevant spaces here are S^3 (simply connected) and RP^3 (Z/2). The Dirac equation is a first-order relativistic wave equation for 4-component spinors and contains no toroidal structure. The torus image is outside physics.",
+     "numbers": "G_F(13.6056 eV)^2 = 1.1664e-5 \u00d7 (1.3606e-8)^2 = 2.159e-21; \u03b1 = 1/137.035999 = 7.297e-3; ratio 2.96e-19. At E = m_p: G_F m_p^2 = 1.027e-5 (ratio 1.4e-3). \u03bb = h/sqrt(2\u03c0 m k T): 70 kg at 310 K gives 4.829e-25 m; electron gives 4.233e-9 m. U(2\u03c0) = diag(-1,-1); U(4\u03c0) = I; (720 - 716.8)/3.8 = 0.84\u03c3",
+     "sources": [
+      "https://www.nobelprize.org/prizes/physics/1984/summary/",
+      "https://www.nobelprize.org/prizes/physics/1945/summary/",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?gf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?alphinv",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?rydhcev",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?h",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?k",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?me",
+      "https://link.springer.com/doi/10.1007/BF01321193",
+      "https://arxiv.org/abs/1601.07053",
+      "https://arxiv.org/abs/2310.19665",
+      "https://arxiv.org/abs/1504.04885"
+     ],
+     "confidence": "High for the physics and the numbers. The 1975 Werner result (often quoted as 704 \u00b1 38\u00b0) could not be fetched, so only the 1978 Rauch value is given. A minority of papers (arXiv 1601.07053) dispute how to interpret the 4\u03c0 experiments, but not the measured numbers."
+    },
+    {
+     "claim": "(5) \"Dark matter could have influence on things outside of our space-time, and maybe before or after death our particles do interact.\"",
+     "verdict": "\"Outside space-time\": false as stated. \"Particles interact before/after death\" via dark matter: outside physics.",
+     "facts": "- All evidence for dark matter is gravitational. The PDG 2026 review lists stellar velocity dispersions, rotation curves, the virial theorem, gravitational lensing, the CMB and structure formation. Dark matter is detected because it gravitates, i.e. it curves spacetime and moves within it. So it is inside spacetime by construction; \"outside spacetime\" has no operational meaning in general relativity.\n- Dark matter is 26.4% of the critical density and 84.4% of all matter (PDG). Planck gives \u03a9_c h^2 = 0.1200 \u00b1 0.0012; the P-ACT-LB2 combination gives 0.1174 \u00b1 0.0006. These two datasets differ slightly.\n- Local density near the Sun, where sources disagree:\n  - de Salas and Widmark 2021: 0.4\u20130.6 GeV/cm^3 from local analyses, 0.3\u20130.5 from global ones;\n  - PDG 2026 (Baudis and Profumo, revised Aug 2025): 0.2\u20130.6 from global methods, 0.3\u20131.5 from Gaia, 0.47 \u00b1 0.05 from a normalising-flow study, 0.55 \u00b1 0.17 from an updated halo model;\n  - Famaey 2015 suggests about 0.5.\n- Dark-matter mass inside a 70-L body at any instant:\n  - at 0.3 GeV/cm^3: 2.1e4 GeV = 3.7e-23 kg = 2.24e4 proton masses;\n  - at 0.4 GeV/cm^3: 2.8e4 GeV = 5.0e-23 kg = 2.98e4 proton masses;\n  - across the full 0.2\u20130.6 range: 2.5e-23 to 7.5e-23 kg;\n  - that is about 7e-25 of a 70-kg body.\n- How many particles that is depends on the unknown particle mass. At 0.4 GeV/cm^3: 280 particles if 100 GeV, 700 if 40 GeV, 28,000 if 1 GeV.\n- It does not stay in the body: it moves at about v_c = 233 km/s (PDG), crossing 1 m in 4.3 \u00b5s.\n- Any non-gravitational interaction is tightly limited. LZ (4.2 tonne\u00b7yr; Phys. Rev. Lett. 135, 011802 (2025)) gives \u03c3_SI < 2.2e-48 cm^2 at 40 GeV.\n- A crude upper bound on scatters in the body. Assumptions: the whole 70 kg treated as oxygen-16; coherent A^2 scaling; no form factor or detection threshold; \u03c1 = 0.4 GeV/cm^3; v = 233 km/s. Result: fewer than 1.5e-3 scatters per year, i.e. fewer than one every ~650 years. This is order-of-magnitude only.\n- Nothing in physics singles out death. A body's atoms persist and keep interacting electromagnetically before and after death (protons are stable beyond 1e34 yr in the p\u2192e+\u03c00 mode). A dark-matter link to the afterlife has no testable mechanism, so it is outside physics.",
+     "numbers": "V = 7.0e4 cm^3. M = \u03c1V: 0.2 \u2192 1.40e4 GeV = 2.496e-23 kg = 1.49e4 m_p; 0.3 \u2192 2.10e4 GeV = 3.744e-23 kg = 2.24e4 m_p; 0.4 \u2192 2.80e4 GeV = 4.991e-23 kg = 2.98e4 m_p; 0.47 \u2192 5.87e-23 kg; 0.55 \u2192 6.86e-23 kg; 0.6 \u2192 7.487e-23 kg = 4.48e4 m_p. 1 GeV/c^2 = 1.782661921e-27 kg; m_p = 0.938272 GeV. Fraction of 70 kg at 0.4: 7.1e-25. Scatter bound: \u03bc_N = 10.858 GeV, \u03bc_n = 0.9168 GeV, \u03c3_N = 2.2e-48 \u00d7 16^2 \u00d7 (10.858/0.9168)^2 = 7.90e-44 cm^2; N_T = 2.635e27; n_\u03c7 = 0.01 cm^-3; rate < 4.85e-11 s^-1 = 1.53e-3 per yr. Crossing time: 1 m / 233 km/s = 4.29e-6 s.",
+     "sources": [
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-dark-matter.pdf",
+      "https://arxiv.org/abs/2012.11477",
+      "https://arxiv.org/abs/1404.1938",
+      "https://arxiv.org/abs/1501.01788",
+      "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf",
+      "https://arxiv.org/abs/2410.17036",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?evkg",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?ukg"
+     ],
+     "confidence": "High that dark matter is known only through gravity and that the computed masses are correct. Medium on the local density itself: the sources span 0.2\u20131.5 GeV/cm^3, and the computed masses scale linearly with whatever value is chosen. Low precision on the scatter-rate bound, which is an order-of-magnitude estimate under the stated assumptions. Read 2014's abstract gives no number, so it is cited for context only."
+    }
+   ],
+   "scripts": [
+    "particle_cluster.py",
+    "particle_cluster_output.txt"
+   ]
+  },
+  "glucose": {
+   "items": [
+    {
+     "claim": "\"Move past the atoms and look at glucose with quarks\": what one glucose molecule is made of",
+     "verdict": "true (as a counting exercise); the count is exact",
+     "facts": "For C6H12O6 built only from 12C, 1H and 16O: protons = 6*6 + 12*1 + 6*8 = 96. Neutrons = 6*6 + 0 + 6*8 = 84. Electrons = 96 (neutral molecule). Nucleons = 180. Valence quarks: up = 2p + 1n = 2*96 + 84 = 276; down = 1p + 2n = 96 + 2*84 = 264; total 540 = 3*180. Caveats: 'valence' quarks are a bookkeeping label. Each nucleon also holds a sea of quark-antiquark pairs and gluons whose number is not fixed. Natural glucose is not monoisotopic: about 1.07% of C atoms are 13C and about 0.2% of O atoms are 18O, so a given molecule can carry extra neutrons. Monoisotopic mass = 72 + 12*1.00782503223 + 6*15.99491461957 = 180.06338810 u, which matches the NIST WebBook figure of 180.0633881. The average molar mass is 180.1559 g/mol.",
+     "numbers": "p=96, n=84, e=96, u=276, d=264, valence quarks 540; M=180.06338810 u = 167,727.98 MeV (x 931.49410372 MeV/u)",
+     "sources": [
+      "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl",
+      "https://webbook.nist.gov/cgi/cbook.cgi?ID=C50997&Mask=2",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?muc2mev"
+     ],
+     "confidence": "high"
+    },
+    {
+     "claim": "Glucose mass budget: the Higgs-given quark masses vs strong-force (gluon) energy vs electrons vs nuclear binding vs the chemical energy of oxidation",
+     "verdict": "partly true. About 99% of the mass is not quark rest mass. But calling that 99% 'gluon field energy' is too simple.",
+     "facts": "All shares are fractions of the molecule's rest energy, 167.728 GeV. (a) Valence quark rest masses, using PDG MS-bar at 2 GeV with m_u = 2.16 +/- 0.07 MeV and m_d = 4.70 +/- 0.07 MeV: 276*2.16 + 264*4.70 = 1836.96 MeV, which is 1.095% (range 1.073-1.118%). Per nucleon: proton 9.02/938.272 = 0.961%; neutron 11.56/939.565 = 1.230%. (b) Electrons, whose mass is also Higgs-given: 96*0.51099895 = 49.056 MeV, which is 0.0292%. So the directly Higgs-given rest mass is about 1.12%. (c) Nucleon masses minus valence quark masses, i.e. everything QCD does: 168,997.616 - 1,836.96 = 167,160.66 MeV, which is 99.66%. (d) Nuclear binding is a negative entry: B(12C) = 92.162 MeV and B(16O) = 127.619 MeV, computed from the atomic masses. 6*92.162 + 6*127.619 = 1,318.69 MeV, which is -0.786%. A check: the free p + n + e sum minus the molecule mass gives 1,318.688 MeV, which matches. (e) Chemical energy of complete oxidation: NIST dcH(solid alpha-D-glucose) = -2805.0 +/- 1.3 kJ/mol, or 29.07 eV per molecule. Ratio = 2.805e6 J / (0.180063 kg * c^2 = 1.6183e16 J) = 1.73e-10. With dG'0 = -2870 kJ/mol (Tran & Unden 1998, via BioNumbers) the ratio is 1.77e-10. With eQuilibrator's dG'm of about -2910 kJ/mol it is 1.80e-10. The free-energy sources disagree by about 1.4%; this does not change the order of magnitude. The ladder is therefore: about 1 (QCD), 1e-2 (quark masses), 8e-3 (nuclear binding), 3e-4 (electrons), 2e-10 (chemistry). The body scale: metabolising 2000 kcal = 8.368 MJ reduces mass by E/c^2 = 9.3e-11 kg, or about 93 ng per day. Pushback on '99% from gluons': the 1% versus 99% split only counts valence rest masses. A lattice-QCD decomposition of the proton (Yang et al., PRL 121, 212001, 2018) gives roughly 32-33% quark kinetic and potential energy, 36-37% gluon field energy, 23% trace anomaly, and 9% (+/-2) from the u, d and s quark-mass condensate (sigma terms). The arXiv abstract and the published version differ by 1 percentage point. On that accounting the quark-mass term, including sea quarks, is about 9%, not 1%. 'Gluon field energy' alone is about 36%. The split depends on the scheme and scale. Accurate wording: 'about 99% of the mass is QCD interaction energy, not quark rest mass'.",
+     "numbers": "quarks 1.095%; electrons 0.0292%; QCD dynamics 99.66%; nuclear binding -0.786%; oxidation 1.73e-10 (dH) to 1.80e-10 (dG); 29.07 eV per molecule; 93 ng/day for 2000 kcal",
+     "sources": [
+      "https://pdg.lbl.gov/2025/tables/rpp2025-sum-quarks.pdf",
+      "https://pdg.lbl.gov/2024/tables/rpp2024-sum-quarks.pdf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?mpc2mev",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?mnc2mev",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?mec2mev",
+      "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl",
+      "https://webbook.nist.gov/cgi/cbook.cgi?ID=C492626&Mask=2",
+      "https://bionumbers.hms.harvard.edu/bionumber.aspx?id=103388",
+      "https://equilibrator.weizmann.ac.il/static/classic_rxns/classic_reactions/glucose_ox.html",
+      "https://arxiv.org/abs/1808.08677"
+     ],
+     "confidence": "high for the arithmetic and inputs; medium for how the nucleon mass is decomposed, because that depends on the scheme"
+    },
+    {
+     "claim": "\"A closed loop when we inhale and exhale, though for me there is usually a leak\"",
+     "verdict": "metaphor that maps onto real structure: the gas loop closes exactly only for carbohydrate, and on a mixed diet the 'leak' is real and quantifiable",
+     "facts": "RQ = CO2 produced / O2 consumed. Glucose: C6H12O6 + 6 O2 -> 6 CO2 + 6 H2O gives RQ = 6/6 = 1.000, so the molecule count closes. Palmitate: C16H32O2 + 23 O2 -> 16 CO2 + 16 H2O gives RQ = 16/23 = 0.6957, so 30.4% of the O2 taken in does not come back out as CO2. Protein, using the albumin equation on OpenAnesthesia: 63/77 = 0.818. A mixed or Western diet is about 0.8 (OpenAnesthesia); one revision source gives 0.85. RQ above 1 occurs with lipogenesis or overfeeding, and fasting moves it toward 0.7. At RQ 0.8, about 20% of the O2 consumed is not returned as CO2. That oxygen leaves the body bound in water. Even at RQ = 1 the loop does not close atom for atom. In standard biochemistry, O2 is reduced to water at complex IV. Exhaled-CO2 oxygen exchanges quickly with body water (PMC4454186). The O2-to-water step here is from textbook biochemistry, not from a source fetched here. Metabolic water per gram of substrate: glucose 6*18.015/180.156 = 0.600 g/g; palmitate 16*18.015/256.43 = 1.124 g/g. ICRP 23 Reference Man lists 350 mL/day of water 'by oxidation of food'.",
+     "numbers": "RQ: glucose 1.000, palmitate 0.6957, albumin 0.818, mixed about 0.80-0.85; O2 not returned as CO2: 0%, 30.4%, 18.2%, about 20%",
+     "sources": [
+      "https://www.openanesthesia.org/keywords/respiratory-quotient/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4454186",
+      "https://bionumbers.hms.harvard.edu/files/Water%20balance%20for%20reference%20man.pdf"
+     ],
+     "confidence": "high for the stoichiometry; medium for the mixed-diet value (sources give 0.80-0.85)"
+    },
+    {
+     "claim": "The breath 'leak': anatomical dead space and water lost in exhaled air",
+     "verdict": "true: both are real, measurable non-returning parts of each breath",
+     "facts": "Anatomic dead space is about 150 mL in an adult, about 30% of a 500 mL tidal volume (StatPearls 'Physiology, Lung Dead Space'). It is about 2 mL/kg and higher in pediatric patients (StatPearls, respiratory dead space); some sources give 2.2 mL/kg. 2 mL/kg * 70 kg = 140 mL. Respiratory insensible water loss is about 400 mL/day in an unstressed adult. It rises with minute ventilation and falls toward zero with fully humidified 37 C inspired gas, as on a ventilator (Brandis, Fluid Physiology). ICRP 23 Reference Man gives 850 mL/day total insensible loss (skin plus lungs) and 350 mL/day water from oxidation. So metabolic water roughly offsets the respiratory loss. My own check used the Buck saturation-vapour formula. Saturated air at 37 C holds 43.9 g/m3 and at 34 C 37.5 g/m3; inspired air at 20 C and 50% RH holds 8.6 g/m3. At 0.5 L * 12/min = 8.64 m3/day, the loss is 250-304 g/day, which is the same order as the cited 400 mL/day. Limitation: the StatPearls pages returned 403 when I tried to fetch them. The 150 mL and 2 mL/kg figures come from search excerpts of those pages.",
+     "numbers": "dead space about 150 mL, about 2 mL/kg (2.2 in some sources), 30% of tidal volume; respiratory water about 400 mL/day (cited) vs 250-304 g/day (my estimate at 6 L/min); metabolic water 350 mL/day (ICRP 23)",
+     "sources": [
+      "https://www.statpearls.com/point-of-care/24497",
+      "https://www.statpearls.com/point-of-care/17518",
+      "https://med.libretexts.org/Bookshelves/Anatomy_and_Physiology/Fluid_Physiology_(Brandis)/03%3A_Water_Balance/3.02%3A_Insensible_Water_Loss",
+      "https://bionumbers.hms.harvard.edu/files/Water%20balance%20for%20reference%20man.pdf"
+     ],
+     "confidence": "medium-high"
+    },
+    {
+     "claim": "The weak force operates inside every human continuously (K-40 and C-14 beta decay), so the body emits neutrinos",
+     "verdict": "true",
+     "facts": "Inputs from ICRP 23 Reference Man (70 kg): K = 140 g and C = 16,000 g (23%). K-40, from ENSDF: T1/2 = 1.248e9 y, natural abundance 0.0117%, beta-minus 89.28(11)%, EC + beta-plus 10.72(11)%. Atoms = 140*0.000117/39.0983*NA = 2.52e20 (16.7 mg). lambda = 1.760e-17 /s, giving A = 4,440 Bq (31.7 Bq per g K). Sources disagree: HPS gives about 5,000 Bq for 70 kg, and Wikipedia gives about 3,850-4,300. C-14, from ENSDF: T1/2 = 5700 +/- 30 y, 100% beta-minus. The modern-carbon ratio is 14C/C = 1.176e-12. Specific activity = 1.176e-12*NA/12.011*ln2/(5700 y) = 0.227 Bq/gC, close to the standard 0.226. 16,000 g gives 3,635 Bq; 12,600 g C (18%) gives 2,863 Bq. A Springer paper gives about 3,150 Bq. The spread comes from the body-carbon assumption and from bomb-pulse 14C. Neutrinos per second: beta-minus emits an electron antineutrino and EC emits an electron neutrino. Antineutrinos = 4,440*0.8928 + 3,635 = 7,600/s, or 6.57e8/day. Neutrinos = 4,440*0.1072 = 476/s, or 4.11e7/day. Total 8,076/s, or about 7.0e8/day; with the HPS 5,000 Bq figure it is 7.5e8/day. This excludes Rb-87, H-3, U/Th-series and other emitters, which I did not quantify. The EC branch is also the source of the roughly 500/s escaping 1461 keV gammas that HPS describes. Almost all of these neutrinos leave the body without interacting. Per-neutrino interaction probability is about 1e-20 (see the solar-neutrino item), so self-interactions are about 1e-11 per day. That is an order-of-magnitude estimate using pp-like cross-sections.",
+     "numbers": "K-40 4,440 Bq (cited range about 3,850-5,000); C-14 2,860-3,640 Bq (cited 3,150); body emits about 6.6e8 antineutrinos + 4.1e7 neutrinos per day, about 7.0e8/day total",
+     "sources": [
+      "https://www.nndc.bnl.gov/ensnds/40/K/adopted.pdf",
+      "https://www.nndc.bnl.gov/ensnds/14/C/adopted.pdf",
+      "https://bionumbers.hms.harvard.edu/files/Reference%20man-total%20body%20content%20for%20some%20elements.pdf",
+      "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl",
+      "https://hps.org/ate_faq/faqradbods/",
+      "https://en.wikipedia.org/wiki/Potassium-40",
+      "https://link.springer.com/article/10.1007/s10311-007-0100-7",
+      "https://journals.uair.arizona.edu/index.php/radiocarbon/article/download/691/696"
+     ],
+     "confidence": "high for the decay physics and order of magnitude; about +/-20% on the activities because of body composition"
+    },
+    {
+     "claim": "Beta decay of C-14 in DNA turns a carbon into a nitrogen (a real, if tiny, mutation source)",
+     "verdict": "true, but vanishingly small against ordinary somatic mutation",
+     "facts": "Sassi et al. (BBA 2014), using ab initio MD, found that 14C -> 14N transmutation can break sugar-backbone bonds and create mutagenic wobble mispairs. Ring bases are relatively resistant. Whether DNA repair recognises the extra N is unknown. My computation: a diploid genome is 2 * 3.055e9 bp (T2T-CHM13) with 19-20 C per bp, giving 1.16-1.22e11 C atoms per nucleus. At 1.176e-12 that is 0.137-0.144 14C atoms per nucleus, or 1.7e-5 14C decays per nucleus per year. There are about 3e12 nucleated cells (Sender 2016; about 90% of the 3.0e13 cells lack nuclei, mostly RBCs). That gives about 1.4e5 decays/day (1.6/s) in nuclear DNA, or about 4e9 over 80 years. Sources disagree: Sassi states about 50 billion over a lifetime. I reproduce 5.1e10 only if all 3.72e13 cells (Bianconi 2013) carry a genome. That suggests about a 10x overcount, because RBCs have no DNA; this is my inference about their method. Scale: an adult stem cell gains about 40 new mutations per year (Blokzijl 2016). 1.7e-5 / 40 = 4e-7, so even if every 14C decay in DNA caused a mutation, it would be under a millionth of the somatic burden. Mitochondrial DNA is ignored here and is small.",
+     "numbers": "1.7e-5 14C decays per nucleus per year; about 1.4e5/day body-wide (3e12 nucleated cells); about 4e9 per 80 y (my value) vs 5e10 (Sassi 2014); 4e-7 of somatic mutation rate",
+     "sources": [
+      "https://pubmed.ncbi.nlm.nih.gov/24121105/",
+      "https://pubmed.ncbi.nlm.nih.gov/35357919/",
+      "https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112985",
+      "https://pubmed.ncbi.nlm.nih.gov/23829164/",
+      "https://pubmed.ncbi.nlm.nih.gov/27698416/",
+      "https://www.nndc.bnl.gov/ensnds/14/C/adopted.pdf"
+     ],
+     "confidence": "high for the mechanism; medium for the absolute counts (cell number and C per bp)"
+    },
+    {
+     "claim": "\"Neutrinos could be related to our perception\" (part 1): how many solar neutrinos pass through a person",
+     "verdict": "true that enormous numbers pass through",
+     "facts": "Standard solar model B16-GS98 fluxes at Earth, in cm^-2 s^-1: pp 5.98e10, 7Be 4.93e9, pep 1.44e8, 13N 2.78e8, 15O 2.05e8, 8B 5.46e6, 17F 5.29e6, hep 7.98e3. Total = 6.54e10, with pp 91.5%. Borexino measured the pp flux at (6.6 +/- 0.7)e10. Independent check: 4 1H -> 4He releases Q = 26.731 MeV, from the atomic masses. With about 26.1 MeV going to photons per 2 neutrinos, the IAU nominal L = 3.828e26 W implies 1.83e38 neutrinos/s, or 6.51e10 cm^-2 s^-1 at 1 AU. Through a body of projected area 0.5-1 m^2 (5,000-10,000 cm^2), that is 3.3e14 to 6.5e14 per second, or 2.8e19 to 5.6e19 per day. The neutrinos arrive from the Sun's direction, at night through the Earth, so the projected area facing the Sun is what matters. The body's own emission (about 7e8/day) is about 1e-11 of the solar flux through it.",
+     "numbers": "6.54e10 cm^-2 s^-1 (SSM); 3.3e14-6.5e14 per second through the body; 2.8e19-5.6e19 per day",
+     "sources": [
+      "https://arxiv.org/abs/1611.09867",
+      "https://arxiv.org/abs/1510.07674",
+      "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl"
+     ],
+     "confidence": "high"
+    },
+    {
+     "claim": "\"Neutrinos could be related to our perception\" (part 2): do they interact with us?",
+     "verdict": "false as stated (no plausible link to perception). They interact about 0.1 times per day, which is negligible next to the body's own radioactivity.",
+     "facts": "Cross-sections for pp neutrino-electron scattering (Bahcall, Kamionkowski & Sirlin 1995, Table VIII): nu_e 11.6e-46 cm^2 and nu_mu 3.3e-46 cm^2. Maximum electron recoil is 0.261 MeV. Electrons in the body, from ICRP 23 elements: Z/A = 0.549, so 70 kg holds 2.31e28 electrons. pp rate = 5.98e10 * sigma * 2.31e28. That gives 1.6e-6/s, or 0.14/day, if all are nu_e. It gives 0.039/day if all are nu_mu or nu_tau. Oscillation puts the true value between these. Empirical cross-check: Borexino Phase-II measured pp at 134 +/- 10 (+6/-10) counts per day per 100 t, plus 7Be at 48.3 and pep at 2.43. The scintillator C9H12 holds 3.307e31 electrons per 100 t. Scaling to 2.31e28 electrons gives 0.094/day from pp and 0.13/day from all three: about 34-47 per year, or about 2,700-3,800 over 80 years. Per neutrino: the chance of interacting over 20 cm of tissue is 3.34e23 e/cm^3 * 1.16e-45 * 20 = 8e-21. Sources disagree with popular outreach. The KCL school worksheet gets an 8.6% chance per lifetime because it assumes 1e35 neutrinos/s from the Sun, about 1,900x too low against 6.54e14 m^-2 s^-1, and a per-neutrino probability of 1e-22. Other outreach pieces say 'about one per lifetime'. The Borexino-scaled figure is about 3 orders of magnitude higher. Not included: coherent neutrino-nucleus scattering. For pp neutrinos on 16O its maximum recoil is only 23.7 eV (computed, Tmax = 2E^2/(M+2E)). I could not pin down its rate from a cited cross-section. Comparison: the body undergoes 3.4e8 K-40 beta-minus decays per day, each up to 1.311 MeV. That is about 3.7e9 times the number of solar-neutrino interactions, each of which deposits at most 0.261 MeV. No known mechanism links neutrinos to perception. Any claim of one would have to beat the body's own beta background by about 10 orders of magnitude.",
+     "numbers": "about 0.04-0.14 interactions/day from cross-sections; 0.094 (pp) to 0.13 (pp+7Be+pep) per day from Borexino scaling; about 2,700-3,800 per 80 y; per-neutrino probability about 8e-21 per 20 cm; K-40 betas outnumber them by about 3.7e9",
+     "sources": [
+      "https://arxiv.org/abs/astro-ph/9502003",
+      "https://arxiv.org/abs/1707.09279",
+      "https://arxiv.org/abs/1611.09867",
+      "https://bionumbers.hms.harvard.edu/files/Reference%20man-total%20body%20content%20for%20some%20elements.pdf",
+      "https://www.kcl.ac.uk/physics/assets/pdf/outreach-invisible-explorers-neutrino-calculations-answers.pdf"
+     ],
+     "confidence": "high for order of magnitude (two independent routes agree within about 1.5x); low for the exact value, because flavour mix and body composition are approximate"
+    }
+   ],
+   "scripts": [
+    "glucose_weak.py",
+    "glucose_weak_output.txt"
+   ]
+  },
+  "biology": {
+   "items": [
+    {
+     "claim": "(1) \"At conception, the zinc spark could be worth considering.\"",
+     "verdict": "true. The zinc spark is a real, well-characterised event. It is ion chemistry (Zn2+ exocytosis), not light given off by the egg and not a particle-physics event.",
+     "facts": "- What it is: when the egg is activated, it releases zinc into the surrounding medium in coordinated bursts. These follow the calcium oscillations.\n- First report: Kim et al. 2011, in ACS Chemical Biology (not Nature Chem Biol). The work used mouse eggs and also showed the spark is conserved in nonhuman primates.\n- Timing in mice (NIH release): the first sparks came about 20 minutes after fertilization, with 1 to 5 rounds in the first 2 hours.\n- Before fertilization: in the last hours of maturation the mouse oocyte takes up more than 20 billion zinc atoms.\n- Function: the spark lowers zinc inside the egg, and that drop is needed to leave metaphase-II arrest. Raising zinc again re-arrests the egg. In human eggs (Duncan et al. 2016), removing zinc with the chelator TPEN was enough on its own to restart the cell cycle.\n- Human eggs (Duncan 2016): no sperm were used, since that is not permitted in US federally funded research. Eggs were activated with Ca-ionomycin, ionomycin or PLCzeta cRNA. The ability to spark depended on meiotic stage. Spark amplitude varied between eggs, which the authors say 'suggests' quality differences, but they did not test this.\n- Link to embryo quality: shown in mice only (Zhang et al. 2016). Choosing embryos by their spark profile more than doubled the share reaching blastocyst. Spark amplitude correlated with the total cell number of the resulting embryos (R = 0.9209). The claim that it predicts quality in human IVF comes from press coverage, not a demonstrated human result.\n- Not light: the 'spark' is the glow of a fluorescent zinc dye (50 uM FluoZin-3 in the medium) that lights up when it binds released Zn2+. Calcium was tracked with Fluo-4.",
+     "numbers": "- 20e9 Zn atoms / 6.02214076e23 per mol = 3.32e-14 mol = 33.2 fmol.\n- That times 65.38 g/mol = 2.17e-12 g = 2.17 pg of zinc taken up by one mouse oocyte (lower bound, since the paper says 'over').\n- Mouse quality correlation: R = 0.9209 (reported value, not recomputed).",
+     "sources": [
+      "https://doi.org/10.1021/cb200084y",
+      "https://www.nih.gov/news-events/news-releases/zinc-sparks-fly-egg-within-minutes-fertilization",
+      "https://doi.org/10.1038/srep24737",
+      "https://doi.org/10.1038/srep22772",
+      "https://www.ciaaw.org/atomic-weights.htm",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?na"
+     ],
+     "confidence": "high"
+    },
+    {
+     "claim": "(2) \"Consider the thyroid, and our ability to utilize iodide and how that's led to advances in intelligence.\"",
+     "verdict": "partly true. Iodine is necessary for normal brain development, and deficiency lowers population IQ: well established. That iodine use drove the evolution of human intelligence is a contested hypothesis, not established.",
+     "facts": "- Hormone chemistry (ChEBI): T4 is C15H11I4NO4 with 4 iodine atoms; T3 is C15H12I3NO4 with 3.\n- Scale of the problem: Hetzel (Bull WHO 2002) calls iodine deficiency 'the most common preventable cause of brain damage', with about 2.2 billion people at risk in 130 countries (WHO estimate). Zimmermann et al. (Lancet 2008) call it 'the most common cause of preventable mental impairment worldwide', with about 2 billion people having insufficient intake. Current WHO pages describe cretinism and 'pervasive mental impairment'. The wording differs across sources ('most common', 'leading', 'single most important').\n- IQ effects (the meta-analyses disagree):\n  - Bleichrodt & Born 1994: 13.5 points across 18 studies, mostly observational and cross-sectional.\n  - Qian et al. 2005 (37 Chinese studies, 12,291 children): 12.45 points lower in severely deficient vs sufficient areas; 8.7 points recovered with iodine before or during pregnancy.\n  - Bougma et al. 2013 (children 5 years and under): 6.9 to 10.2 points lower, with weak study designs and calls for more RCTs.\n- Heaviest required element: iodine (Z = 53) is the heaviest element with an established human dietary requirement; molybdenum (Z = 42) is next. Tungsten (Z = 74) is used only by some prokaryotes, not humans.\n- Evolution: thyroid hormones are ancient. They are used across vertebrates and act in many invertebrates (Heyland & Moroz 2005), so iodine dependence long predates hominins and is not human-specific.\n- The 'shore-based diet' idea (Cunnane, Crawford 1993 onward; iodine, DHA and other nutrients from shoreline foods driving brain expansion) is disputed. Langdon 2006 (Br J Nutr) calls the DHA-limitation premise 'unsupported'. Carlson & Kingston 2007 argue terrestrial diets suffice. Cunnane et al. 2007 rebut. It remains an open hypothesis.",
+     "numbers": "- T4 molar mass = 15(12.011) + 11(1.008) + 4(126.90447) + 14.007 + 4(15.999) = 776.874 g/mol (ChEBI 776.872). Iodine = 507.618 g/mol, or 65.3% of the mass.\n- T3 = 650.977 g/mol; iodine 380.713, or 58.5%.\n- Qian: 0.83 SD x 15 = 12.45 IQ points; 0.58 SD x 15 = 8.7.\n- Bougma: 0.46 x 15 = 6.9; 0.68 x 15 = 10.2.\n- Atomic numbers of the trace elements with a dietary reference intake: F 9, Cr 24, Mn 25, Fe 26, Cu 29, Zn 30, Se 34, Mo 42, I 53. Iodine is the maximum.",
+     "sources": [
+      "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18332",
+      "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18258",
+      "https://pubmed.ncbi.nlm.nih.gov/12077619/",
+      "https://doi.org/10.1016/S0140-6736(08)61005-3",
+      "https://www.who.int/data/nutrition/nlis/info/iodine-deficiency",
+      "https://pubmed.ncbi.nlm.nih.gov/15734706/",
+      "https://doi.org/10.3390/nu5041384",
+      "https://www.ciaaw.org/atomic-weights.htm",
+      "https://doi.org/10.1242/jeb.01877",
+      "https://doi.org/10.1079/bjn20061805",
+      "https://doi.org/10.1002/ajhb.20683",
+      "https://doi.org/10.1002/ajhb.20673"
+     ],
+     "confidence": "high for the chemistry and the deficiency effects; medium for the exact IQ magnitude, since the meta-analyses rest on mostly observational data and disagree (6.9 to 13.5 points)"
+    },
+    {
+     "claim": "(3) \"Consider the size of DNA in trisomy 13, 18 and 21 and how despite the trisomy, extrauterine life is possible.\"",
+     "verdict": "partly true. Survival after birth is possible. But raw DNA size is the wrong variable: gene dosage (number of dosage-sensitive genes) decides viability.",
+     "facts": "Chromosome lengths:\n- GRCh38.p14 (NCBI): chr13 114,364,328 bp; chr18 80,373,285; chr21 46,709,983; chrX 156,040,895; chr16 90,338,345.\n- T2T-CHM13v2.0 differs slightly: chr13 113.6 Mb, chr18 80.5, chr21 45.1, chrX 154.3, chr16 96.3. The two assemblies disagree by up to about 6 Mb.\n\nProtein-coding genes (Ensembl release 116, BioMart):\n- chr13 322, chr18 267, chr21 221, chr16 856, chrX 867, out of 20,094 nuclear genes.\n- Key pattern: the only full autosomal trisomies seen in newborns (13, 18, 21; Nagaoka 2012, Table 1) are exactly the three autosomes with the fewest coding genes. By length, chr13 is only the 10th-shortest autosome. chr19 is shorter (58.6 Mb) but carries 1,479 genes.\n- Counterexample, trisomy 16: chr16 is shorter than chr13 but has 2.66 times the genes. It is the commonest human trisomy (at least 1% of clinically recognized pregnancies; Hassold 1995) and is 'almost uniformly embryonic lethal'.\n\nSurvival:\n- Trisomy 21: US median age at death was 57 years in 2019 (IQR 49 to 61), up from 1 year in 1968 (Iulita 2022). The often-quoted '60 years' is the upper end, not the median.\n- Trisomy 18 and 13, Ontario 1991 to 2012 (Nelson 2016): median survival 9 days (T18) and 12.5 days (T13); 1-year survival 12.6% and 19.8%; 10-year 9.8% and 12.9%.\n- Same, 9 US states 1999 to 2007 (Meyer 2016): median 8 days (T18) and 5 days (T13); 1-year 13.4% and 11.5%; 5-year 12.3% and 9.7%.\n- The two cohorts disagree on whether T13 or T18 does worse.\n\nThe 47,XXX counterexample:\n- It adds more DNA (156 Mb) than any viable autosomal trisomy, yet is usually mild. It occurs in about 1 in 1,000 female births, and only about 10% are diagnosed clinically (Tartaglia 2010).\n- The reason is X-inactivation: the extra X is mostly silenced. More than 15% of X genes escape or variably escape inactivation (Balaton & Brown 2021), and these are thought to drive the phenotype.",
+     "numbers": "Diploid 46,XX genome from GRCh38 chromosome lengths: 2(2,875,001,522) + 2(156,040,895) = 6,062,084,834 bp (6.06 Gb). T2T gives 6.11 Gb. The commonly quoted '~6.2 Gb' equals 2 x the GRCh38 total of 3.099 Gb, which includes unplaced scaffolds.\n\nExtra DNA as a share of the 46,XX genome (GRCh38):\n- +21: 46,709,983 / 6,062,084,834 = 0.77%\n- +18: 1.33%\n- +13: 1.89%\n- +16: 1.49%\n- +X: 2.57%\n- (T2T: 0.74 / 1.32 / 1.86 / 1.58 / 2.52%)\n\nExtra coding genes as a share of 20,094: +21 1.10%, +18 1.33%, +13 1.60%, +16 4.26%, +X 4.31% (mostly silenced).\n\nGene density (genes per Mb): chr13 2.82, chr18 3.32, chr21 4.73, chr16 9.48.\n\nchr16/chr13: length ratio 0.79, gene ratio 2.66. chrX/chr13 length ratio = 1.36.\n\nRough estimate: 15% x 867 = about 130 X genes with extra dosage in 47,XXX, vs 221 extra genes in +21.",
+     "sources": [
+      "https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.40/",
+      "https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_009914755.1/",
+      "https://www.ensembl.org/biomart/martview (Ensembl release 116, hsapiens_gene_ensembl, biotype=protein_coding)",
+      "https://pubmed.ncbi.nlm.nih.gov/22705668/",
+      "https://doi.org/10.1001/jamanetworkopen.2022.12910",
+      "https://doi.org/10.1001/jama.2016.9819",
+      "https://doi.org/10.1002/ajmg.a.37495",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC2883963",
+      "https://doi.org/10.1186/s13072-021-00404-9",
+      "https://pubmed.ncbi.nlm.nih.gov/7573048/",
+      "https://doi.org/10.1002/ajmg.a.62368"
+     ],
+     "confidence": "high for lengths, gene counts and survival (gene counts change slightly between annotation releases); medium for the 'gene count predicts viability' pattern, which is a strong correlation, not a full mechanism"
+    },
+    {
+     "claim": "(4) \"Consider the effect of gluon (strong force) on trisomies, genetic mutations, etc.\"",
+     "verdict": "false as stated. Trisomies arise from errors in chromosome segregation, which is biochemistry (electromagnetic interactions). The strong force acts only inside atomic nuclei and is identical in every cell whatever the karyotype.",
+     "facts": "Where trisomies come from:\n- Mostly maternal meiotic nondisjunction. For trisomy 21, DNA markers show the extra chromosome is maternal in 95.3% of cases and paternal in 4.7% (Antonarakis 1991; 184/193 families).\n- Most aneuploidy comes from errors in maternal meiosis I, and maternal age is a risk factor for most trisomies (Hassold 2007).\n- Trisomy 16: all 62 cases studied were maternal, virtually all from meiosis I (Hassold 1995).\n\nScale and the age effect (Nagaoka 2012):\n- Aneuploid embryos make up at least 10% of pregnancies, and may exceed 50% near the end of the reproductive lifespan.\n- About 0.3% of newborns are aneuploid, vs more than 35% of spontaneous abortions.\n- Leading explanations for the age effect: age-related loss of cohesin (proteins that hold chromosomes together) on oocyte chromosomes, and altered crossover (recombination) patterns.\n\nStrong-force range:\n- About 1 fm. The range of the nucleon-nucleon force is set by the pion: hbar/(m_pi c) is about 1.4 fm. Gluons themselves are confined inside hadrons.\n\nWhere gluons do matter: about 99% of proton and neutron mass is strong-interaction binding energy, not quark rest mass. This is the same in every cell and has no bearing on karyotype.\n\nThe only nuclear route to mutation is radiation from radioactive decay:\n- Alpha decay involves the strong and electromagnetic forces; beta decay the weak force; gamma emission the electromagnetic force.\n- Even then, the DNA damage itself is done by electromagnetic ionization.\n\nRERF data (children of atomic-bomb survivors): no excess of stable structural aberrations (translocations, inversions). Each group had exactly one newly arisen aberration. Caveats: aneuploidy was not this endpoint, and no child was examined before age 12.",
+     "numbers": "- Yukawa range = hbar c / m_pi c^2 = 197.3269804 MeV fm / 139.57039 MeV = 1.414 fm.\n- Bohr radius = 52,918 fm, so atomic size / strong-force range = 37,429.\n- Carbon-12 binding energy B(12C) = [6(1.00782503223) + 6(1.00866491606) - 12] u x 931.49410372 MeV/u = 92.162 MeV, or 7.680 MeV per nucleon.\n- 7.680e6 eV / 13.606 eV (hydrogen ionization energy) = 5.6e5: nuclear energies are about a million times chemical ones.\n- Proton: (2 x 2.16 + 4.70) / 938.272 = 0.96% of its mass from quark rest masses.\n- Neutron: (2.16 + 2 x 4.70) / 939.565 = 1.23%.\n- RERF: exposed 18/8,322 = 0.22% vs control 25/7,976 = 0.31%.",
+     "sources": [
+      "https://pubmed.ncbi.nlm.nih.gov/1825697/",
+      "https://pubmed.ncbi.nlm.nih.gov/17911163/",
+      "https://pubmed.ncbi.nlm.nih.gov/7573048/",
+      "https://pubmed.ncbi.nlm.nih.gov/22705668/",
+      "https://pdg.lbl.gov/2025/tables/rpp2025-sum-mesons.pdf",
+      "https://pdg.lbl.gov/2025/tables/rpp2025-sum-quarks.pdf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?hbcmevf",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?bohrrada0",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?rydhcev",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?mnu",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?muc2mev",
+      "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=H",
+      "https://www.rerf.or.jp/en/programs/roadmap_e/health_effects-en/geneefx-en/chromeab"
+     ],
+     "confidence": "high"
+    },
+    {
+     "claim": "(5) \"Our body is essentially a torus, our gut our 2nd brain.\"",
+     "verdict": "metaphor that maps onto real structure. 'Torus' is the minimum: the body is a handlebody of genus at least 1, and higher once the nose and tear ducts are counted. 'Second brain' is fair for the gut's autonomy, but the gut has well under 1% of the brain's neuron count.",
+     "facts": "Topology:\n- The genus equals the number of independent loops in the network of tubes open to the outside, with the outside counted as one node.\n- Mouth to anus alone gives genus 1.\n- The nostrils join the pharynx through the choanae, raising it to 3.\n- Each eye has upper and lower lacrimal puncta. These drain through the canaliculi, lacrimal sac and nasolacrimal duct into the inferior meatus of the nose (StatPearls), adding 4: genus 7. A popular Vsauce video reaches the same 7.\n- Females: the vagina and uterus lead to two fallopian tubes that both open into the closed peritoneal sac. This forms an extra loop: genus 8.\n- Eustachian tubes are dead ends while the eardrums are intact. Each perforation or ear tube adds 1.\n- Neonatal anomalies change the count: imperforate anus lowers it to 6; bilateral choanal atresia lowers it to 5.\n- So 'genus 7' is a convention that depends on what is counted and on minimum hole size, not a fixed fact.\n- Topologically the gut lumen is outside the body, so the enteric nervous system lines an external surface.\n\nEnteric nervous system:\n- Neuron counts disagree. Furness et al. 2014 give 200 to 600 million. The most systematic count (Michel et al. 2022, with human gut dimensions taken from the literature) gives 168 million, comparable to the spinal cord.\n- The '400 to 600 million' figure is the upper end of an older range and is not supported by the newest count.\n- Autonomy: the ENS of the small intestine and colon contains full reflex circuits, and cutting the vagal or sympathetic connections has minor effects on gut function (Furness 2014).",
+     "numbers": "Genus = E - V + C (edges - vertices + connected components):\n- gut only: 2 - 2 + 1 = 1\n- + nostrils: 6 - 4 + 1 = 3\n- + 4 puncta: 12 - 6 + 1 = 7\n- female (+ uterus, 2 tubes, peritoneum): 15 - 8 + 1 = 8\n- both eardrums perforated: 16 - 8 + 1 = 9\n- imperforate anus: 11 - 6 + 1 = 6\n- bilateral choanal atresia: 10 - 6 + 1 = 5\n\nENS neurons vs brain (86.1 billion; Azevedo 2009):\n- 168e6 / 86.1e9 = 0.20%\n- 200e6 / 86.1e9 = 0.23%\n- 600e6 / 86.1e9 = 0.70%",
+     "sources": [
+      "https://www.statpearls.com/point-of-care/23996",
+      "https://www.ncbi.nlm.nih.gov/books/NBK547660/",
+      "https://www.youtube.com/watch?v=egEraZP9yXQ",
+      "https://doi.org/10.1007/978-1-4939-0897-4_3",
+      "https://doi.org/10.1111/nmo.14440",
+      "https://doi.org/10.1002/cne.21974"
+     ],
+     "confidence": "high for the genus arithmetic given the stated anatomy (the number depends on what is counted); medium-high for ENS counts (published estimates span 168 to 600 million)"
+    },
+    {
+     "claim": "(6) \"During end of life care, memories are able to penetrate deeper into the subconscious mind ... my perception of time is affected by gravity.\"",
+     "verdict": "partly true. The end-of-life phenomena are real and documented, though 'penetrate deeper into the subconscious' is not a defined, measured construct. Outside physics on gravity: there is no known link, and gravitational time dilation at human scales is about 10^-16.",
+     "facts": "End-of-life dreams and visions (Kerr et al. 2014, J Palliat Med):\n- 66 hospice inpatients consented; 59 were analysed.\n- 'Most' reported at least one dream or vision. The 88% figure appears in Hospice Buffalo's own article; I could not check it against the paper's full text.\n- Dreams of deceased people were more comforting, and became more common as death approached.\n\nTerminal (paradoxical) lucidity:\n- Nahm et al. 2012 review case reports spanning 250 years (dementia, tumours, stroke, schizophrenia). The evidence is anecdotal.\n- Mashour et al. 2019 (Alzheimer's & Dementia) say it would challenge current assumptions only 'if systematically confirmed'.\n\nDying-brain gamma surge:\n- Borjigin et al. 2013 (PNAS, rats): a transient, global, coherent burst of gamma oscillations within 30 s of cardiac arrest, exceeding waking levels.\n- Xu et al. 2023 (PNAS): 2 of 4 comatose patients showed a gamma surge after withdrawal of ventilation. It was driven by global hypoxia and included the posterior cortical 'hot zone'.\n- These are neurophysiological (hypoxic and network) effects. None involves gravity.\n\nGravity: clocks at different heights do tick at different rates (measured for height changes under 1 m by Chou et al. 2010, Science), but the effect is about 10^-16 per metre. Distorted sense of time near death is a brain phenomenon.",
+     "numbers": "- Fractional time dilation dt/t = g h / c^2.\n- For h = 1 m: 9.80665 x 1 / 299792458^2 = 1.09e-16, i.e. 3.44 ns per year and about 275 ns over 80 years.\n- For h = 0.33 m: 3.60e-17, i.e. 1.14 ns per year.\n- Kerr: 59/66 = 89% of enrolled patients analysed.\n- Xu: 2/4 = 50% of patients showed the surge.",
+     "sources": [
+      "https://doi.org/10.1089/jpm.2013.0371",
+      "https://hospicebuffalo.com/news/in-the-news/what-deathbed-visions-teach-us-about-living",
+      "https://doi.org/10.1016/j.archger.2011.06.031",
+      "https://doi.org/10.1016/j.jalz.2019.04.002",
+      "https://doi.org/10.1073/pnas.1308285110",
+      "https://doi.org/10.1073/pnas.2216268120",
+      "https://doi.org/10.1126/science.1192720",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?gn"
+     ],
+     "confidence": "high that the phenomena are documented and that the gravity effect is negligible; low-medium on how common and what causes ELDVs and terminal lucidity (small samples, case reports)"
+    }
+   ],
+   "scripts": [
+    "compute_bio.py",
+    "tools/epmc_search.py",
+    "tools/kw.py"
+   ]
+  },
+  "gravity": {
+   "items": [
+    {
+     "claim": "\"Take seriously what someone means when they say 'the gravity of the situation'.\" Implied: the idiom secretly refers to the physical force of gravity.",
+     "verdict": "Metaphor that maps onto real structure, but the history runs the other way. Both meanings come from one root meaning 'heavy'. The seriousness sense came first, and the physics sense was borrowed from it.",
+     "facts": "Root: Latin gravitas ('heaviness, weight; dignity, seriousness') comes from gravis ('heavy, serious'), from the Proto-Indo-European root *g\u02b7reh\u2082- ('heavy'). Sanskrit guru ('weighty, venerable') shares the root. English took the word through French gravit\u00e9.\n\nOrder of senses in English:\n(a) Seriousness, dignity, solemnity: c. 1500 (Etymonline). Merriam-Webster gives a first known use of 1509 for its sense 2a, 'dignity or sobriety of bearing'. Wiktionary, citing the OED (Sept 2025), says the word was 'first used figuratively, and gained the senses relating to physical qualities in the 17th century'.\n(b) The physical sense, 'downward acceleration of terrestrial bodies', first appears in the 1620s (Etymonline). Bacon's Sylva Sylvarum (printed 1626/1627, after his death) uses 'Grauitie' for a body's downward tendency. That is before Newton. 'Gravitation' in the physics sense dates from the 1640s (Etymonline).\n(c) Newton did not coin the word or its physical sense. His Principia (July 1687) gave it the meaning of one universal attraction. The Stanford 'Cultural History of Gravity' page says the 'field of attraction' sense did not appear until Newton's time. That fits Etymonline: a 1620s downward-tendency sense, then Newton's universal sense.\n\nPushback: the idiom is about weight (load, consequence), the sense the word had before physics. It does not show that gravitation and seriousness are the same thing. The physics borrowed the word from the moral sense.",
+     "numbers": "Seriousness sense: c. 1500 (Etymonline) or 1509 (Merriam-Webster). Physical sense: 1620s. Principia: 1687. The seriousness sense came about 120 years before the physical sense and about 180 years before Newton's universal sense.",
+     "sources": [
+      "https://www.etymonline.com/word/gravity",
+      "https://www.etymonline.com/word/gravitation",
+      "https://www.merriam-webster.com/dictionary/gravity",
+      "https://en.wiktionary.org/wiki/gravity",
+      "https://einstein.stanford.edu/STEP/information/data/gravityhist2.html",
+      "https://rbscp.lib.rochester.edu/3613",
+      "https://newtonproject.ox.ac.uk/catalogue/record/THEM00094"
+     ],
+     "confidence": "High on the order of the senses and the Latin root. Medium on exact first-use years: the dictionaries differ slightly (c. 1500 vs 1509). I read Etymonline only through search-index text, because its page returned a Cloudflare challenge. I could not reach the OED directly; its view comes through Wiktionary's citation."
+    },
+    {
+     "claim": "\"My perception of time is affected by gravity.\" Physical part: gravity changes how fast time passes for the body.",
+     "verdict": "Partly true. Gravitational time dilation is real and has been measured at human scales, but near Earth's surface it is about 1e-16 per metre. That is far too small to matter for biology or perception.",
+     "facts": "In weak gravity, a clock higher by height h runs faster by the fraction g\u00b7h/c\u00b2. Constants used: c = 299,792,458 m/s (exact, CODATA 2022) and g_n = 9.80665 m/s\u00b2 (exact conventional value, CODATA 2022).\n\nMeasured:\n- Chou, Hume, Rosenband & Wineland, Science 329:1630 (2010), compared two Al+ optical clocks. Raising one clock by 33 cm gave a fractional shift of (4.1 \u00b1 1.6)e-17. Read as a height, that is 37 \u00b1 15 cm, against the true 33 cm. The paper quotes about 1.1e-16 per metre.\n- Bothwell et al., Nature 602:420 (2022), measured the shift inside a single millimetre-sized cloud of about 100,000 strontium-87 atoms. Predicted gradient: -1.09e-19 per mm. Measured (preprint final value): -9.8(2.3)e-20 per mm. Measurement uncertainty: 7.6e-21.\n\nHow big the human-scale effect is:\n- Your head ages faster than your feet, by about half a microsecond over 80 years.\n- Earth's entire gravity well, compared with deep space, shifts an 80-year life by only about 1.8 s.\n- Running at 10 m/s slows a clock (velocity time dilation) by 5.6e-16. That is three times the gravitational head-to-feet effect.",
+     "numbers": "Constants: c\u00b2 = 8.987552e16 m\u00b2/s\u00b2. 80 years = 80 \u00d7 365.25 \u00d7 86400 = 2.524608e9 s.\n\n1 m: 9.80665 \u00d7 1 / 8.987552e16 = 1.0911e-16. Over 80 years: 1.0911e-16 \u00d7 2.524608e9 = 2.755e-7 s, about 275 ns.\n1.7 m (head vs feet): 9.80665 \u00d7 1.7 / 8.987552e16 = 1.8549e-16. Over 80 years: 4.683e-7 s, about 468 ns. Per day: about 16.0 ps.\nIf g ranges from 9.780 (equator) to 9.83 (pole), the 1.7 m figure ranges from 467.0 to 469.4 ns.\n\nTime for the head-to-feet difference to build up:\n- to 1 \u00b5s: 1e-6 / 1.8549e-16 = 5.39e9 s, about 171 years\n- to 1 s: about 1.7e8 years\n\nCheck against Chou: 9.80 \u00d7 0.33 / c\u00b2 = 3.60e-17 predicted, against (4.1 \u00b1 1.6)e-17 measured, 0.3 sigma apart. Over 79 years, 33 cm gives 89.7 ns, matching NIST's '~90 billionths of a second over 79 years'.\nCheck against Bothwell: 9.80 \u00d7 1e-3 / c\u00b2 = 1.090e-19 per mm predicted. Measured/predicted = 0.90 \u00b1 0.21, 0.48 sigma apart.\n\nWhole potential wells:\n- Earth's surface vs deep space: GM/(R\u00b7c\u00b2) = 3.9860e14 / (6.371e6 \u00d7 8.9876e16) = 6.96e-10. Over 80 years: 1.76 s.\n- The Sun's potential at Earth's distance (1 AU): 9.87e-9. Over 80 years: 24.9 s.\n\nVelocity effect, v\u00b2/(2c\u00b2): 5.56e-18 at 1 m/s; 5.56e-16 at 10 m/s.",
+     "sources": [
+      "https://pubmed.ncbi.nlm.nih.gov/20929843/",
+      "https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=905055",
+      "https://www.nist.gov/news-events/news/2010/09/nist-pair-aluminum-atomic-clocks-reveal-einsteins-relativity-personal",
+      "https://arxiv.org/abs/2109.12238",
+      "https://doi.org/10.1038/s41586-021-04349-7",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?c",
+      "https://physics.nist.gov/cgi-bin/cuu/Value?gn",
+      "https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html",
+      "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html"
+     ],
+     "confidence": "High. The formula is standard, the constants are exact or from NASA, and two independent experiments agree with the prediction. Small caveat: Bothwell's gradient is the preprint's final value; the Nature abstract confirms 7.6e-21 but I did not see the published table."
+    },
+    {
+     "claim": "\"My perception of time is affected by gravity in relation to bosons, e.g. during end-of-life care memories penetrate deeper into the subconscious.\"",
+     "verdict": "Outside physics as stated. Felt time and memory at the end of life are brain phenomena. The gravitational effect is about 1e-16 (see the previous item) and plays no part.",
+     "facts": "- How long something feels is built by the brain. Wittmann (Nat Rev Neurosci 2013) reviews evidence for 'climbing neural activation' as a mechanism for timing durations, possibly involving the insular cortex.\n- Fear-induced 'slow motion' is a memory effect, not faster perception. Stetson, Fiesta & Eagleman (PLoS ONE 2007) had people free-fall 31 m. They later judged their own fall 36% longer than other people's falls, yet their visual time resolution did not improve. The authors conclude that 'time-slowing is a function of recollection, not perception'.\n- The closest evidence for heightened recall near death is neural. Vicente et al. (Front Aging Neurosci 2022) recorded EEG in one 87-year-old during cardiac arrest after a traumatic subdural haematoma. Gamma activity, as a share of power, rose, and gamma coupled to alpha/theta rhythms even after blood flow to the brain stopped. This is a single case with brain injury as a confounder.\n\nTestable framing that fits the user's observation: richer memory encoding and recall near death is a neurophysiological hypothesis. Measured gravitational effects are about 10 orders of magnitude too small to explain it.",
+     "numbers": "Stetson 2007: retrospective overestimate +36%, fall height 31 m.\nVicente 2022: n = 1, age 87.\nGravity, for comparison: head vs feet 1.85e-16 fractional, about 468 ns over 80 years (computed in the previous item).",
+     "sources": [
+      "https://pubmed.ncbi.nlm.nih.gov/23403747/",
+      "https://pubmed.ncbi.nlm.nih.gov/18074019/",
+      "https://pubmed.ncbi.nlm.nih.gov/35273490/"
+     ],
+     "confidence": "High that gravity is irrelevant to felt time. Medium on the end-of-life neural evidence, which is a single case."
+    },
+    {
+     "claim": "\"Maybe that Wow pulsar is related.\" Part 1: the Wow! signal was a pulsar.",
+     "verdict": "False as stated. The Wow! signal was a single narrowband radio transient, not a pulsar.",
+     "facts": "What it was (Ehman's Big Ear report):\n- Detected by Ohio State's Big Ear radio telescope at about 11:16 pm EDT on 15 Aug 1977. The 2025 re-analysis gives 03:16 UTC on 16 Aug.\n- It appeared in one 10-kHz channel, so it was narrowband. It was seen in only one of the two feed horns.\n- The printout '6EQUJ5' encodes signal-to-noise ratios of 6, 14, 26, 30, 19, 5. The peak was 30.0 to 31.0 sigma.\n- The 72 s is not the signal's own length. It is six samples of 12 s each (10 s of averaging plus about 2 s of processing): the time the fixed beam took to sweep across the source as Earth turned. Ehman limits the actual signal to about 2.5 minutes or less, because it did not show up in the second horn.\n\nNever repeated:\n- Not seen in about 60 more days at the same declination at Big Ear.\n- Not found by Gray with the Very Large Array (VLA) in 1995\u201396 (Gray & Marvel, ApJ 546:1171, 2001).\n- Not found by Gray & Ellingsen with the 26-m Hobart telescope in 1999, using six 14-hour observations that searched specifically for periodic emission (ApJ 578:967, 2002).\n\nWhy it is not a pulsar: pulsars send regular pulse trains. The first one, CP 1919, had pulses about 1.3 s apart. Their emission spreads across many frequencies and recurs at the same sidereal time each day. The Wow! signal was single-channel, its average stayed constant within each 10-s sample, and it never recurred.\n\nLikely mix-up: CP 1919 (1967) was nicknamed 'LGM-1' ('Little Green Men') before it was understood to be natural.\n\nSources disagree on the frequency:\n- Kraus (1994): 1420.3556 MHz\n- Ehman (1998): 1420.4556 \u00b1 0.005 MHz\n- M\u00e9ndez et al. (2025), after correcting reversed channel order: 1420.726 \u00b1 0.005 MHz, with V_LSR = -74 \u00b1 2 km/s, flux 256 \u00b1 63 Jy and duration 73.4 \u00b1 0.5 s.",
+     "numbers": "Hydrogen hyperfine ('21-cm') rest frequency: 1420.405751768 MHz (Hellwig et al. 1970).\nWavelength = c/f = 21.106 cm. Photon energy = h\u00b7f = 5.874 \u00b5eV.\n\nOffsets from the rest frequency:\n- Kraus: -50.2 kHz\n- Ehman: +49.8 kHz\n- M\u00e9ndez 2025: +320.2 kHz\n\nFractional bandwidth: 10e3 / 1.4204e9 = 7.0e-6.\nDuration: 6 \u00d7 12 s = 72 s.\nLetter code (A=10 \u2026 Z=35): E=14, Q=26, U=30, J=19.",
+     "sources": [
+      "https://www.bigear.org/Wow30th/wow30th.htm",
+      "https://en.wikipedia.org/wiki/Wow!_signal",
+      "https://doi.org/10.1086/318272",
+      "https://doi.org/10.1086/342646",
+      "https://arxiv.org/abs/2508.10657",
+      "https://arxiv.org/abs/1801.04323",
+      "https://www.lindahall.org/about/news/scientist-of-the-day/jocelyn-bell-burnell",
+      "https://tf.nist.gov/general/pdf/13.pdf"
+     ],
+     "confidence": "High that it is not a pulsar and never repeated. Medium on the true frequency: three published values disagree by up to about 370 kHz."
+    },
+    {
+     "claim": "Part 2: the Wow! signal has been explained: the 2024 M\u00e9ndez et al. hypothesis that it was a hydrogen maser-like flare from a cold hydrogen cloud.",
+     "verdict": "A proposal, not settled.",
+     "facts": "M\u00e9ndez, Ortiz Ceballos & Zuluaga, 'Arecibo Wow! I' (arXiv:2408.08513; v1 16 Aug 2024; v2 11 Sep 2024, 'submitted to ApJ'). The arXiv page shows no journal reference as of 17 Oct 2026.\n- Data: archival Arecibo drift scans at 1420 MHz from Feb to May 2020.\n- Finding: narrowband (about 10 kHz) hydrogen-line signals like the Wow!, but about two orders of magnitude weaker, coming from small cold hydrogen clouds.\n- Hypothesis: a strong transient source, such as a magnetar flare or soft gamma repeater, suddenly brightened such a cloud. The mechanism would be maser-like stimulated emission or superradiance.\n- The authors say it 'could be the first recorded event of an astronomical maser-like flare in the hydrogen line'. So the proposed mechanism has never been observed.\n\nThe follow-up, 'Arecibo Wow! II' (arXiv:2508.10657, Aug 2025, 'to be submitted to ApJ'), revised the signal's position, flux and frequency. It argues for an astrophysical origin rather than radio interference, but does not confirm the flare.\n\nAn earlier comet hydrogen-cloud hypothesis (Paris 2017) is listed as discredited. Status: the cause is unknown; the hydrogen-cloud flare is the leading hypothesis but has not been confirmed or published in a journal.",
+     "numbers": "Arecibo signals: about 10 kHz wide, about 100 times weaker than the Wow!. Wow! peak flux revised from 54 or 212 Jy (Ehman) to 256 \u00b1 63 Jy (M\u00e9ndez 2025).",
+     "sources": [
+      "https://arxiv.org/abs/2408.08513",
+      "https://arxiv.org/abs/2508.10657",
+      "https://www.bigear.org/Wow30th/wow30th.htm",
+      "https://en.wikipedia.org/wiki/Wow!_signal"
+     ],
+     "confidence": "High on the hypothesis status and what the papers say."
+    },
+    {
+     "claim": "Part 3: the Wow! signal is related to neutrinos (and so to perception and relativity).",
+     "verdict": "False as stated. No physical or published link.",
+     "facts": "- The Wow! signal was radio photons at the hydrogen 21-cm line. That is an electromagnetic spin-flip (hyperfine) transition in neutral hydrogen, picked up by a radio antenna and receiver.\n- Neutrinos have no electric charge. They interact only through the weak force (exchange of W or Z bosons) and gravity, so a radio receiver cannot register them. They are detected through rare weak-interaction events in very large detectors.\n- None of the Wow! analyses (Ehman 2007/2010; Gray & Marvel 2001; Gray & Ellingsen 2002; M\u00e9ndez 2024/2025) mentions neutrinos.\n- 'Relativity' in this context means only ordinary Doppler and frame corrections to the line frequency (heliocentric and LSR velocities).",
+     "numbers": "21-cm photon: f = 1420.405751768 MHz, E = h\u00b7f = 6.62607015e-34 \u00d7 1.420405751768e9 / 1.602176634e-19 = 5.874e-6 eV.\nM\u00e9ndez 2025 line-of-sight velocities: -84 \u00b1 1 km/s heliocentric, -74 \u00b1 2 km/s in the local standard of rest.",
+     "sources": [
+      "https://t2k-experiment.org/neutrinos/neutrino-detection/",
+      "https://tf.nist.gov/general/pdf/13.pdf",
+      "https://arxiv.org/abs/2508.10657",
+      "https://www.bigear.org/Wow30th/wow30th.htm"
+     ],
+     "confidence": "High."
+    }
+   ],
+   "scripts": [
+    "gravity_time.py",
+    "gravity_time_output.txt"
+   ]
+  }
+ },
+ "verification": {
+  "corrections": [
+   {
+    "item": "biology (3) trisomy: 'the only full autosomal trisomies seen in newborns (13, 18, 21)'",
+    "problem": "Overstated. Full, non-mosaic trisomy 22 has been documented in liveborn infants: Tinkle et al. collected 23 cases (median survival 4 days), Heinrich 2013 reported a survivor to 29 days, and Phung 2023 a survivor after cardiac surgery. Full trisomy 9 livebirths are also reported. The gene-dosage pattern still holds, but this sentence is too absolute.",
+    "correct_value": "Trisomies 13, 18 and 21 are the only full autosomal trisomies that regularly survive to birth. Full trisomy 22 (and rarely trisomy 9) occurs in liveborns, usually with survival of days to weeks.",
+    "source": "https://bmcpediatr.biomedcentral.com/articles/10.1186/s12887-023-03949-8 ; https://pmc.ncbi.nlm.nih.gov/articles/PMC3569106"
+   },
+   {
+    "item": "particles (1) Navier-Stokes: 'A moving line of singularity is therefore ruled out' (paraphrasing Fefferman's curve x = \u03c6(t))",
+    "problem": "Misreads the quote. A spacetime curve x = \u03c6(t) is the path of a single moving POINT singularity, not a line. The conclusion that a 'centre-line' singularity is excluded is still correct, but for a different reason: CKN gives parabolic 1-D Hausdorff measure P^1(S) = 0, and a spatial line segment at a single instant already has P^1 > 0. Also, 'strongest known' is Fefferman's 2000 wording ('best partial regularity theorem known so far'), not a 2026 statement.",
+    "correct_value": "CKN: for suitable weak solutions P^1(singular set) = 0. This rules out both a singular point persisting along x = \u03c6(t) and a singular spatial line or filament at any instant.",
+    "source": "https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf (lines quoted: 'the singular set of u cannot contain a spacetime curve of the form {(x,t): x = \u03c6(t)}')"
+   },
+   {
+    "item": "particles (1): 'In water at 37 \u00b0C the nearest-neighbour O-O distance is 2.80(1) \u00c5'",
+    "problem": "Wrong conditions cited. Skinner et al. 2013 (PMID 23445023) measured AMBIENT water (room temperature), not 37 \u00b0C. At 37 \u00b0C the value differs by at most about 0.01 \u00c5, so the 1.1e8 to 1.3e8 ratio is unchanged.",
+    "correct_value": "2.80(1) \u00c5 for ambient (~25 \u00b0C) water. Separately, the weak range is about 1.1e8 to 1.3e8 times smaller using M_W, and 1.29e8 to 1.44e8 using M_Z (r_Z = 2.164e-18 m), so the full span is 1.1e8 to 1.4e8.",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/23445023/ (abstract: 'ambient water ... 2.80(1) \u00c5'); my recomputation in verify/v2.py"
+   },
+   {
+    "item": "biology (4): '[aneuploidy in] more than 35% of spontaneous abortions' (Nagaoka 2012)",
+    "problem": "Misquoted. Nagaoka et al. say 'approximately 35%', not 'more than'.",
+    "correct_value": "About 0.3% of newborns vs approximately 35% of spontaneous abortions are aneuploid.",
+    "source": "Nagaoka 2012, Nat Rev Genet, PMC3551553 (text: 'approximately 35% (Table 1)')"
+   },
+   {
+    "item": "glucose/weak: 'the roughly 500/s escaping 1461 keV gammas that HPS describes'",
+    "problem": "Slightly overstated. HPS (using 5,000 Bq) says about 500 gammas per second are PRODUCED and 'most' leave the body. With the report's own 4,440 Bq and a 10.55% EC branch to the 1461 keV level, production is about 470/s, and fewer than that escape.",
+    "correct_value": "About 470 to 530 1461-keV gammas per second are produced (4,440 to 5,000 Bq \u00d7 ~10.6%); most, but not all, escape.",
+    "source": "https://hps.org/ate_faq/faqradbods/ (via search excerpt); ENSDF K-40 %\u03b5+%\u03b2+ = 10.72(11)"
+   },
+   {
+    "item": "particles (5) DM scatter bound: '\u03bc_n = 0.9168 GeV'",
+    "problem": "Labelling slip. 0.9168 GeV is the WIMP-PROTON reduced mass for a 40 GeV WIMP; the neutron value is 0.9180 GeV. LZ normalises per nucleon, so using \u03bc_p is the conventional choice. The effect on the rate is 0.3%, so the result (<1.5e-3 scatters/yr, about one per 650 yr) stands.",
+    "correct_value": "\u03bc_p = 0.9168 GeV (\u03bc_n = 0.9180); \u03c3_N = 7.88e-44 cm\u00b2; rate < 4.84e-11 /s = 1.53e-3 /yr (only for a 40 GeV WIMP, and an order-of-magnitude upper bound)",
+    "source": "recomputed in verify/v2.py; LZ PRL 135, 011802 (2025): 2.2e-48 cm\u00b2 at 40 GeV confirmed"
+   },
+   {
+    "item": "particles (1) Higgs lifetime \u03c4 = 2.2e-22 s, c\u03c4 \u2248 66 fm",
+    "problem": "Not wrong, but it uses the measured central width of 3.0 MeV. The PDG 2026 Higgs review gives the SM width as 4.1 MeV, which corresponds to \u03c4 = 1.6e-22 s and c\u03c4 \u2248 48 fm. The stated range (1.5\u20132.9e-22 s) already covers this, so this is a framing point only.",
+    "correct_value": "\u03c4 \u2248 1.6e-22 s (SM, \u0393 = 4.1 MeV) to 2.2e-22 s (measured central \u0393 = 3.0 +1.5/\u22120.7 MeV); c\u03c4 \u2248 44\u201386 fm",
+    "source": "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-higgs-boson.pdf ('total width of a 125 GeV SM Higgs boson is \u0393H = 4.1 MeV')"
+   },
+   {
+    "item": "particles (2): 'The Standard Model still has 19 free parameters'",
+    "problem": "Correct only for the minimal SM with massless neutrinos, as the PDG GUT review states. Neutrino oscillations establish neutrino masses, which add 7 parameters for Dirac neutrinos or 9 for Majorana neutrinos. This supports the report's conclusion, but the number reads as complete when it is not.",
+    "correct_value": "19 in the minimal SM; about 26 (Dirac) to 28 (Majorana) once neutrino masses and mixing are included",
+    "source": "https://pdg.lbl.gov/2026/reviews/rpp2026-rev-guts.pdf (line: 'the SM contains 19 parameters ... Majorana neutrinos add ...')"
+   },
+   {
+    "item": "glucose (neutrinos part 2): 'K-40 betas outnumber solar-neutrino interactions by about 3.7e9'",
+    "problem": "Uses only the pp rate (3.42e8/0.094 = 3.6e9). Against the report's own all-flux Borexino scaling (0.13/day) the ratio is 2.6e9, and against the cross-section range (0.039\u20130.14/day) it is 2.4e9 to 8.8e9.",
+    "correct_value": "About 2.6e9 to 3.6e9 (Borexino-scaled), or about 3e9; the 'about 10 orders of magnitude' conclusion is unaffected",
+    "source": "recomputed in verify/v3.py; Borexino PRD 100, 082004 (2019): pp 134, 7Be 48.3, pep 2.43 cpd/100 t confirmed"
+   },
+   {
+    "item": "verdict calibration: particles (5) 'Dark matter outside space-time: false as stated'",
+    "problem": "Slightly too harsh. All observed dark matter is detected gravitationally, so it lives in our spacetime, and the report is right on that. But speculative extra-dimensional and hidden-brane models (e.g. Kaluza-Klein dark matter, bulk fields in brane-world scenarios) are legitimate hypotheses in which part of the dark sector lives 'off' our 4-D brane, though still in a higher-dimensional spacetime. The report does not mention them.",
+    "correct_value": "'Unsupported as stated': observed dark matter is inside spacetime; only speculative extra-dimensional models place parts of a dark sector off our 4-D brane, and none involves death or the afterlife.",
+    "source": "general physics (extra-dimension DM models); PDG 2026 dark-matter review confirms evidence is purely gravitational"
+   },
+   {
+    "item": "verdict calibration: glucose 'Neutrinos could be related to our perception (part 2): false as stated'",
+    "problem": "'Could be related' is a speculative possibility, not a factual assertion, so it cannot strictly be shown false. The report's own quantitative argument (about 0.1 interactions per day, about 3e9 times fewer than K-40 betas, no known mechanism) supports 'implausible and unsupported' rather than 'false'.",
+    "correct_value": "'Unsupported / physically implausible': about 0.04\u20130.14 interactions per day, each depositing at most 0.26 MeV, against about 3.4e8 K-40 betas per day",
+    "source": "report's own numbers, recomputed in verify/v3.py"
+   }
+  ],
+  "confirmed": [
+   "Glucose counts: p=96, n=84, e=96, nucleons 180, up 276, down 264, valence quarks 540; monoisotopic mass 180.06338810 u = 167,727.98 MeV (NIST WebBook 180.0633881)",
+   "Glucose mass budget: quark rest mass 1.095% (range 1.073\u20131.118%), electrons 0.0292%, QCD 99.66%, nuclear binding \u22120.786% (B12C 92.162, B16O 127.619 MeV; free-particle check 1318.687 MeV); these sum to 100.00%",
+   "Oxidation: NIST \u0394cH(\u03b1-D-glucose, solid) = \u22122805.0 \u00b1 1.3 kJ/mol confirmed; 29.07 eV per molecule; ratio 1.733e-10 (\u0394H), 1.77e-10 and 1.80e-10 (\u0394G); 2000 kcal/day = 93.1 ng/day mass loss",
+   "Proton 0.961% and neutron 1.230% valence-quark fractions; PDG 2026 m_u = 2.16 \u00b1 0.07, m_d = 4.70 \u00b1 0.07 MeV confirmed",
+   "Yang et al. 2018 lattice decomposition (arXiv abstract 33/37/23/9%) confirmed",
+   "RQ: glucose 1.000, palmitate 16/23 = 0.6957 (30.4% O2 not returned as CO2), albumin 63/77 = 0.818; metabolic water 0.600 and 1.124 g/g",
+   "Respiratory water estimate with the Buck formula: 43.9, 37.5 and 8.6 g/m\u00b3; 8.64 m\u00b3/day gives 250\u2013304 g/day",
+   "K-40: ENSDF T1/2 1.248e9 y, \u03b2\u2212 89.28(11)%, \u03b5+\u03b2+ 10.72(11)%, abundance 0.0117%; 2.52e20 atoms, 16.7 mg, A = 4,440 Bq, 31.7 Bq/g K; HPS ~5,000 Bq confirmed",
+   "C-14: ENSDF 5700 \u00b1 30 y, 100% \u03b2\u2212; 0.227 Bq/gC; 3,635 Bq (16 kg C) and 2,863 Bq (12.6 kg C)",
+   "Body neutrino emission: 7,600 antineutrinos/s (6.57e8/day) + 476 neutrinos/s (4.11e7/day) = about 7.0e8/day (7.5e8/day with HPS 5,000 Bq)",
+   "DNA C-14: 1.16\u20131.22e11 C per diploid nucleus, 0.137\u20130.144 C-14 atoms, 1.66\u20131.75e-5 decays per nucleus per year, 1.4e5/day body-wide, about 4e9 per 80 y vs Sassi's 5e10 (Sassi abstract '50 billion' confirmed; the 3.72e13-cell route reproduces 4.9\u20135.2e10); 4e-7 of 40 mutations/yr (Blokzijl confirmed)",
+   "Solar neutrinos: SSM total 6.54e10 cm^-2 s^-1 (pp 91.5%); luminosity check 1.83e38/s gives 6.51e10 at 1 AU; Q = 26.731 MeV; 3.3\u20136.5e14/s and 2.8\u20135.6e19/day through the body",
+   "Solar-neutrino interactions: 2.31e28 electrons; 0.139/day (\u03bde) and 0.039/day (\u03bd\u03bc); Borexino scaling 0.094/day (pp), 0.129/day (pp+7Be+pep), 2,740\u20133,780 per 80 y; per-neutrino probability 7.7e-21 per 20 cm; KCL factor about 1,830x; CEvNS Tmax 23.7 eV; \u03bd-e Tmax 0.261 MeV",
+   "PDG 2026 (created 1 Jun 2026): m_H = 125.13 \u00b1 0.11 GeV, \u0393_H = 3.0 +1.5/\u22120.7 MeV; m_W = 80.3625 \u00b1 0.0077 GeV excluding CDF 2022; m_Z = 91.1879 \u00b1 0.0020 GeV; \u0393_inv = 499.3 \u00b1 1.5 MeV; photon < 1e-18 eV; gluon 0 (few MeV not precluded); graviton < 1.76e-23 eV",
+   "m_H/m_p = 133.4; \u03c4_H = 2.19e-22 s (range 1.46\u20132.86e-22); v = 246.22 GeV",
+   "Weak range: r_W = 2.4555e-18 m, r_Z = 2.1640e-18 m; water n = 3.3205e28 m^-3, spacing 3.111 \u00c5; \u03bd_water = 6.96e-7 m\u00b2/s",
+   "N_\u03bd: LEP-SLC 2.9840 \u00b1 0.0082 (1.95\u03c3); Janot & Jadach 2020 2.9963 \u00b1 0.0074 (0.50\u03c3) is the PDG 2026 value",
+   "Proton decay: Super-K \u03c4/B(p\u2192e+\u03c00) > 2.4e34 yr (PRD 102, 112011, 450 kt\u00b7yr) confirmed; PDG 2026 \u03c4 > 9e29 yr (p\u2192invisible) confirmed; 1.74e24 \u00d7 age of universe; < 1.8e-6 decays/yr in 70 kg",
+   "GUT review (PDG 2026): unification 'fails in the SM'; MSSM \u03b1_G^-1 \u2248 24.3, M_G \u2248 2e16 GeV; 19 SM parameters (minimal SM)",
+   "Weak/EM coupling at 13.6 eV: G_F E\u00b2 = 2.159e-21, \u03b1 = 7.297e-3, ratio 2.96e-19; G_F m_p\u00b2 = 1.027e-5; thermal de Broglie wavelengths 4.83e-25 m (70 kg) and 4.23e-9 m (electron); U(2\u03c0) = \u2212I, U(4\u03c0) = I; Rauch 1978 716.8 \u00b1 3.8\u00b0 (0.84\u03c3)",
+   "Dark matter: PDG 2026 (Baudis & Profumo, Aug 2025) 26.4% and 84.4%; global 0.2\u20130.6, Gaia 0.3\u20131.5, 0.47 \u00b1 0.05, 0.55 \u00b1 0.17 GeV/cm\u00b3; v_c = 233 \u00b1 3 km/s; \u03a9_c h\u00b2 0.1200 \u00b1 0.0012 vs P-ACT-LB2 0.1174 \u00b1 0.0006; de Salas & Widmark 0.4\u20130.6 local / 0.3\u20130.5 global",
+   "DM mass in 70 L: 2.50e-23 to 7.49e-23 kg for 0.2\u20130.6 GeV/cm\u00b3 (2.98e4 m_p at 0.4); 7.1e-25 of body mass; 280, 700 and 28,000 particles for 100, 40 and 1 GeV; crossing time 4.29 \u00b5s; LZ 2.2e-48 cm\u00b2 at 40 GeV",
+   "Time dilation: 1.091e-16 per m (3.44 ns/yr, 275 ns per 80 y); 1.7 m: 1.855e-16, 468 ns per 80 y, 16.0 ps/day, 467.0\u2013469.4 ns over the g range; 171 yr to reach 1 \u00b5s; Earth well 6.96e-10 (1.76 s per 80 y); Sun at 1 AU 9.87e-9 (24.9 s); 10 m/s velocity term 5.56e-16",
+   "Chou 2010 (4.1 \u00b1 1.6)e-17 for 33 cm and '37 \u00b1 15 cm' confirmed from the paper (0.31\u03c3); 89.7 ns over 79 yr",
+   "Bothwell 2022: predicted \u22121.09e-19/mm, final \u22129.8(2.3)e-20/mm in both the arXiv and accepted manuscripts; ratio 0.90 \u00b1 0.21 (0.48\u03c3); 7.6e-21 uncertainty",
+   "Clay site still lists Navier-Stokes as 'Active' (fetched 2026-10-17); OpenAI forced-blowup claim of 8 Sept 2026 is unaccepted per news coverage",
+   "Chromosome lengths GRCh38.p14 and T2T-CHM13 recomputed from NCBI data; diploid 46,XX 6,062,084,834 bp (T2T 6.11 Gb); extra-DNA fractions +21 0.77%, +18 1.33%, +13 1.89%, +16 1.49%, +X 2.57%; chr13 is the 10th-shortest autosome",
+   "Ensembl protein-coding counts recomputed: 21:221, 18:267, 13:322 are the three lowest autosomes; 16:856, X:867, 19:1479; 20,094 nuclear; gene fractions and densities match",
+   "Trisomy survival: Nelson 2016 (12.5 and 9 days median; 19.8%/12.6% at 1 yr; 12.9%/9.8% at 10 yr); Meyer 2016 (5 and 8 days median; 11.5%/13.4% at 1 yr; 9.7%/12.3% at 5 yr) from the full-text tables; Iulita 2022 median 57 (IQR 49\u201361) in 2019 vs 1 yr in 1968",
+   "Antonarakis 1991: 184/193 maternal = 95.3% (200 families); Hassold 1995 trisomy 16 \u22651% of recognized pregnancies, 62/62 maternal; Tartaglia 1/1,000 and 10% diagnosed; Balaton 'over 15%' escape XCI",
+   "Strong-force/nuclear: Yukawa range 1.414 fm; Bohr/range 37,429; B(12C)/A 7.680 MeV; ratio to 13.606 eV 5.6e5; RERF 18/8,322 (0.22%) vs 25/7,976 (0.31%), 1 newly arisen aberration each",
+   "Zinc spark: Kim 2011 ACS Chem Biol (20 billion Zn atoms; rodents and nonhuman primates); 20e9 atoms = 33.2 fmol = 2.17 pg; Zhang 2016 R = 0.9209 and blastocyst share more than doubled",
+   "Iodine: T4 776.874 g/mol (65.3% I), T3 650.977 (58.5%); Qian 12.45 and 8.7 IQ points; Bougma 6.9\u201310.2 (0.46\u20130.68 SD) confirmed from abstract",
+   "Genus arithmetic 1, 3, 7, 8, 9, 6, 5; ENS 168e6 (Michel 2022 confirmed) = 0.20% of 86.1e9; 200e6 0.23%; 600e6 0.70%",
+   "End of life: Kerr 2014 66 consented / 59 analysed, 'most' had at least one dream or vision; Xu 2023 2/4 patients, gamma 'stimulated by global hypoxia', posterior hot zone; Stetson 2007 31 m fall, 36%; Vicente 2022 n = 1, age 87",
+   "Wow!: Ehman page confirms 11:16 pm EDT, 30.0\u201331.0\u03c3 peak, \u22642.5 min duration limit, about 60 days at the same declination with no repeat, 1420.4556 \u00b1 0.005 MHz; M\u00e9ndez 2025 1420.726 \u00b1 0.005 MHz (arXiv 2508.10657, 'to be submitted'); Arecibo Wow! I v2 11 Sep 2024 'submitted to ApJ' with no journal ref; 21-cm 21.106 cm, 5.874 \u00b5eV; offsets \u221250.2, +49.8 and +320.2 kHz",
+   "Etymology: Etymonline c. 1500 (seriousness) and 1620s (physical sense); Merriam-Webster 1509"
+  ],
+  "summary": "I recomputed every number in the four reports with python3 (scripts v1\u2013v4.py in verify/) and found no arithmetic errors in any headline figure.\n\nI also checked the headline citations against primary sources:\n- PDG 2026 summary tables, listings and reviews, downloaded directly\n- ENSDF data for K-40 and C-14\n- full texts or abstracts from NCBI, PubMed and arXiv\n- the Chou and Bothwell papers, Fefferman's Clay statement, the Ehman Wow! page and the RERF page\n\nAll the specifically requested quantities hold:\n- glucose quark counts and mass fractions\n- RQ values\n- K-40 and C-14 activities and daily neutrino emission\n- dark-matter mass in a body\n- weak-force range\n- time dilation over 80 years\n- chromosome lengths and extra-DNA fractions\n- Higgs, W and Z masses (PDG 2026: 125.13 \u00b1 0.11, 80.3625 \u00b1 0.0077 without CDF, 91.1879 \u00b1 0.0020 GeV)\n- N_\u03bd = 2.9963 \u00b1 0.0074 from Janot and Jadach 2020, which is the PDG 2026 value\n- proton-lifetime bounds: > 2.4e34 yr for e+\u03c00 and > 9e29 yr for the invisible mode\n\nThe problems I found are minor. Most are wording, attribution or calibration issues:\n1. The claim that 13, 18 and 21 are the only full trisomies seen in newborns is overstated. Liveborn full trisomy 22 is documented.\n2. Fefferman's x = \u03c6(t) describes a moving point, not a moving line. The conclusion that a line singularity is excluded still follows, from P^1 = 0.\n3. The 2.80 \u00c5 O\u2013O distance was measured in ambient water, not at 37 \u00b0C.\n4. Nagaoka says 'approximately 35%', not 'more than 35%'.\n5. HPS counts gammas produced, not gammas escaping, and its figure is based on 5,000 Bq.\n6. The value labelled \u03bc_n is actually \u03bc_p.\n7. The SM Higgs width of 4.1 MeV gives \u03c4 \u2248 1.6e-22 s.\n8. The 19-parameter count excludes neutrino masses.\n9. The ratio of K-40 betas to solar-neutrino interactions is about 2.6\u20133.6e9, not 3.7e9.\n\nTwo verdicts are slightly harsh. I would call both 'unsupported' rather than 'false': 'dark matter outside space-time' and 'neutrinos could relate to perception'. All other verdicts look appropriately calibrated."
+ }
+}
