@@ -1,23 +1,24 @@
 absorb_chain.py: inhomogeneous remainder estimate of NOTE.md (this folder) in validated interval arithmetic
-parameters a=c=d=1, nu=1/28, phi=0.37, T=0.25, b=0.0055; coarse cells 250 of width 1.0e-03; numerics: KQ=10 KW=20 NP=64 H=2e-05 (inflation 1e-10, 1e-14)
+parameters a=c=d=1, nu=1/28, phi=0.37, T=0.25, b=0.0055; coarse cells 250 of width 1.0e-03; approximation: KQ=10 KW=20 H=2e-05
+inputs: validated.json -- validated midpoint-radius interval arithmetic in IEEE binary64 (u = 2^-53, eta = 2^-1022, order-independent summation bound), decimal interval arithmetic for e^{-nu t_j}, cos phi, sin phi and the scalar cell integrals; every written number is an upper bound rounded up; epsW(0) <= 2.6943E-16
 C_A <= 4.06707921080 (results/lattice_sums.log (R = 250)); nu/(2 C_A) >= 4.3906E-3; S0, S1, S2 (sup-norm conversion) <= 4.5864E-1, 5.8868E-1, 1.1484E+0
 
      t       m1       m2      epsW      eps0      eps1    delta2    S1(t)    sigma1       N_w         K
- 0.050   2.4912   2.9779  1.17e-05  1.38e-06  3.18e-06  1.45e-10  0.70789 8.076e-01 4.032e-02    2.9177
- 0.100   2.5362   3.1441  2.49e-05  3.43e-06  8.97e-06  1.14e-09  0.71268 9.163e-01 9.163e-02    5.0888
- 0.150   2.5841   3.3264  3.99e-05  6.31e-06  1.85e-05  4.86e-09  0.72133 1.035e+00 1.562e-01    7.7311
- 0.200   2.6347   3.5241  5.70e-05  1.02e-05  3.36e-05  1.60e-08  0.73370 1.166e+00 2.366e-01   11.1509
- 0.250   2.6881   3.7364  7.65e-05  1.55e-05  5.66e-05  4.53e-08  0.74967 1.310e+00 3.364e-01   15.6948
+ 0.050   2.4912   2.9779  1.15e-05  1.37e-06  3.16e-06  1.43e-10  0.70789 8.076e-01 4.032e-02    2.9177
+ 0.100   2.5362   3.1441  2.45e-05  3.40e-06  8.89e-06  1.12e-09  0.71268 9.163e-01 9.163e-02    5.0888
+ 0.150   2.5841   3.3264  3.94e-05  6.25e-06  1.84e-05  4.77e-09  0.72133 1.035e+00 1.562e-01    7.7311
+ 0.200   2.6347   3.5241  5.62e-05  1.01e-05  3.33e-05  1.57e-08  0.73370 1.166e+00 2.366e-01   11.1509
+ 0.250   2.6881   3.7364  7.54e-05  1.53e-05  5.60e-05  4.44e-08  0.74967 1.310e+00 3.364e-01   15.6948
 
 certified at T = 0.25 (bounds rounded UP, thresholds rounded DOWN):
-  base-flow error  sup_t ||W - W_lin||_(*,3) <= 7.6540E-5
-  q1 error         sup_t ||q1 - q1^N|| <= 1.5475E-5,  sup_t ||grad(q1 - q1^N)|| <= 5.6611E-5,  int ||Lap(q1 - q1^N)||^2 <= 4.5324E-8
+  base-flow error  sup_t ||W - W_lin||_(*,3) <= 7.5438E-5
+  q1 error         sup_t ||q1 - q1^N|| <= 1.5301E-5,  sup_t ||grad(q1 - q1^N)|| <= 5.6024E-5,  int ||Lap(q1 - q1^N)||^2 <= 4.4389E-8
   S_1 = sup_t ||grad q1|| <= 7.4967E-1      (computed sup ||grad q1^N|| = 0.749610; measured in ../results: 0.7496 at t = 0.25)
   N_w = sup_t ||w||/b^2 <= 3.3644E-1,   K = sup_t ||grad w||/b^2 <= 1.5695E+1
-  rounding budget: maximal relative enclosure width 5.0e-35 (plus the documented inflation of the numerics)
+  rounding budget: maximal relative enclosure width 5.0e-35
 
 (A) absorption condition of ../NOTE.md section 7:  C_A (b S_1 + b^2 K) <= nu/2  <=>  b S_1 + b^2 K <= nu/(2 C_A)
      left side <= 4.5980E-3   threshold >= 4.3906E-3   ->  FAILS   (b S_1 <= 4.1232E-3, b^2 K <= 4.7477E-4; margin factor >= 9.5491E-1)
-(B) bootstrap used by this folder's argument:  C_A b^2 K < nu/2  ->  4.7477E-4 < 4.3906E-3: HOLDS;   b C_A eps1 <= nu/8  ->  1.2664E-6 <= 4.4642E-3: HOLDS
+(B) bootstrap used by this folder's argument:  C_A b^2 K < nu/2  ->  4.7477E-4 < 4.3906E-3: HOLDS;   b C_A eps1 <= nu/8  ->  1.2532E-6 <= 4.4642E-3: HOLDS
 verdict for b = 0.0055, T = 0.25, phi = 0.37: NOT CERTIFIED
 wrote results/chain_b0.0055.json

@@ -18,8 +18,8 @@
   "ABS": 1e-14,
   "numpy": "2.0.2",
   "python": "3.13.16",
-  "wall_seconds": 135.0054807662964,
-  "source_sha256": "2430415a3a30b7a6dd4a94acfb58afd3a281d8fc5b729359ad47aa367750cf87"
+  "wall_seconds": 133.24628353118896,
+  "source_sha256": "7cbc598dc9d77311e6169115ce4a4b4a9f302ae1cc03a903470a1bbbba2e7313"
  },
  "conventions": {
   "norms": "torus-normalized L2; ||q||^2 = (1/2) sum_k |Qhat_k|^2 for q = Re(e^{iz} Q); ||X||_{*,3}^2 = sum_n (2+n^2)^3 |X_n|^2",
@@ -29,6 +29,17 @@
   "sup_q, sup_gradq": "maxima over the coarse cell of ||q1^N||, ||grad q1^N|| (convex in tau on each fine cell)",
   "sup_absq, sup_absgradq, sup_abshessq": "maxima over the coarse cell of sum_k |Qhat_k|, sum_k |ktilde||Qhat_k|, sum_k |ktilde|^2 |Qhat_k| (bounds of sup|q1^N|, sup|grad q1^N|, sup|grad^2 q1^N|)",
   "inflation": "every value below is x(1+INFL)+ABS of the computed double-precision number"
+ },
+ "trajectory": {
+  "files": [
+   "trajectory/W_nodes.npy",
+   "trajectory/Q_nodes.npy"
+  ],
+  "layout": "W_nodes[j, i]: node j = 0..NSTEP, mode n = i - (KW+1) for i = 0..2KW+2; Q_nodes[j, c, ix, iy]: node j, component c, k_x = ix - KQ, k_y = iy - KQ; complex128, raw-bytes SHA-256 below",
+  "sha256_of_array_bytes": {
+   "W_nodes.npy": "825078dc2eaf8818b6e0bcd0ca6615559a3d5bb32781507dd0c4e01bf37e22bd",
+   "Q_nodes.npy": "529b1e4c61f0a98437d09d92b1e71a1ad9a271fefafb7bbd5d507412cb4bd9d8"
+  }
  },
  "coarse_t_right": [
   0.001,

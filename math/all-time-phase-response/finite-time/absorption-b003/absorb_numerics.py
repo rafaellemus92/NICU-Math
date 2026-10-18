@@ -3,6 +3,12 @@ q1^N of the linear coefficient q1 together with everything a posteriori validati
 the chain script (absorb_chain.py) can bound q1 - q1^N rigorously and then bound the nonlinear
 remainder w = v - b q1.
 
+ROLE AFTER THE AUDIT. The inflated double-precision bounds this script writes to results/numerics.json
+are NOT a rigorous enclosure; absorb_chain.py labels any verdict built on them conditional. The
+certificate uses validate_residual.py instead, which encloses the residuals of the approximation
+defined from the trajectory this script dumps (trajectory/), independently of this script's
+arithmetic. This script remains the producer of the trajectory and of the comparison numbers.
+
 What is computed (a = c = d = 1, nu = 1/28, phi = 0.37, T = 0.25; all torus-normalized norms):
 
   1. The base-flow amplitude W(y,t) of w = Re(e^{ix} W) on |n| <= KW Fourier modes, RK4 nodes on
@@ -43,6 +49,10 @@ below 1e-13 relative, which INFL = 1e-10 covers by a factor above 10^3. The resi
 order 1e-10; for the integrated residuals (order 1e-8 per coarse cell) the margin is the absolute
 term ABS = 1e-14 against an accumulated roundoff of order 1e-17 to 1e-18. This is a documented
 safety margin, not a certified rounding bound; the chain script states it again.
+
+The node values of W and Q (the double-precision trajectory that defines the approximation
+validated by validate_residual.py) are written to trajectory/W_nodes.npy and trajectory/Q_nodes.npy
+(the latter about 265 MB, not committed; both SHA-256 hashes are recorded in results/numerics.json).
 
 Run from this folder:  python3 -B absorb_numerics.py   (about 2 minutes; NumPy only)
 """
@@ -201,6 +211,9 @@ Qh = np.zeros((3, NP, NP), complex)
 Qh[1, 0, 0] = -1j                                   # q1(0) = sin z e_y = Re(-i e^{iz}) e_y
 assert abs(h1(Qh) - 2 ** -0.5) < 1e-15 and abs(l2(Qh) - 2 ** -0.5) < 1e-15
 
+qidx = np.array([k % NP for k in range(-KQ, KQ + 1)])       # grid indices of k = -KQ..KQ, in that order
+Qnodes = np.empty((NSTEP + 1, 3, 2 * KQ + 1, 2 * KQ + 1), complex)   # [node, component, k_x, k_y]
+Qnodes[0] = Qh[:, qidx][:, :, qidx]
 ncoarse = NSTEP // COARSE
 agg = {k: np.zeros(ncoarse) for k in ['int_r', 'int_gradr', 'int_rW', 'sup_q', 'sup_gradq', 'sup_absq', 'sup_absgradq', 'sup_abshessq',
                                       'tail_at_nodes', 'frozen_sigma_part']}
@@ -241,11 +254,17 @@ for j in range(NSTEP):
     agg['sup_abshessq'][c] = max(agg['sup_abshessq'][c], s2a, s2b)
     agg['tail_at_nodes'][c] = max(agg['tail_at_nodes'][c], l2((Ts_Q + transport_w(Qh, wfj)) * (~MASK)))
     Qh = Qn
+    Qnodes[j + 1] = Qh[:, qidx][:, :, qidx]
     node_gradq[j + 1] = h1(Qh)
     if (j + 1) % 2500 == 0:
         print(f'  step {j + 1}/{NSTEP}  t={t + H:.3f}  |grad q1^N|={node_gradq[j + 1]:.6f}  cell int|r|={cell_r:.2e}  int|grad r|={cell_gr:.2e}', flush=True)
 wall = time.time() - tic
-assert np.isfinite(Qh).all()
+assert np.isfinite(Qh).all() and not np.any(Qh[:, ~MASK])          # the nodes live exactly on the Galerkin set
+TRAJ = HERE / 'trajectory'
+TRAJ.mkdir(exist_ok=True)
+np.save(TRAJ / 'W_nodes.npy', Wnodes)
+np.save(TRAJ / 'Q_nodes.npy', Qnodes)
+traj_sha = {'W_nodes.npy': hashlib.sha256(Wnodes.tobytes()).hexdigest(), 'Q_nodes.npy': hashlib.sha256(Qnodes.tobytes()).hexdigest()}
 
 # Galerkin truncation sanity: energy in the outermost retained shell of Q and W at T
 shell = MASK & ((np.abs(KX) == KQ) | (np.abs(KY) == KQ))
@@ -266,6 +285,10 @@ out = {
         'sup_absq, sup_absgradq, sup_abshessq': 'maxima over the coarse cell of sum_k |Qhat_k|, sum_k |ktilde||Qhat_k|, sum_k |ktilde|^2 |Qhat_k| (bounds of sup|q1^N|, sup|grad q1^N|, sup|grad^2 q1^N|)',
         'inflation': 'every value below is x(1+INFL)+ABS of the computed double-precision number',
     },
+    'trajectory': {'files': ['trajectory/W_nodes.npy', 'trajectory/Q_nodes.npy'],
+                   'layout': 'W_nodes[j, i]: node j = 0..NSTEP, mode n = i - (KW+1) for i = 0..2KW+2; '
+                             'Q_nodes[j, c, ix, iy]: node j, component c, k_x = ix - KQ, k_y = iy - KQ; complex128, raw-bytes SHA-256 below',
+                   'sha256_of_array_bytes': traj_sha},
     'coarse_t_right': [(c + 1) * COARSE * H for c in range(ncoarse)],
     'cells': {k: [infl(v) for v in vals] for k, vals in agg.items()},
     'diagnostics': {

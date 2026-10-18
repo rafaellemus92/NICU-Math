@@ -1,10 +1,12 @@
 # The nonlinear absorption condition at b = 0.003, T = 0.25: an inhomogeneous remainder estimate with validated q₁
 
 **Status: paper argument with every constant explicit; the analytic constants evaluated in validated
-interval arithmetic with directed rounding; the computed quantities (the base-flow amplitude and
-the linear coefficient q₁) validated a posteriori against the exact equations through residuals,
-with Galerkin tails included exactly and the time discretization enclosed, in double precision
-with a documented inflation. Not formalized. One phase, φ = 0.37.**
+interval arithmetic with directed rounding; the approximation (the base-flow amplitude W_lin and the
+exactly solenoidal coefficient q₁^N) defined precisely from a stored trajectory and validated a
+posteriori against the exact equations through residuals enclosed in rigorous interval arithmetic
+(Galerkin tails, time discretization, initial-data, phase, viscosity and time-node discrepancies
+all inside the enclosure). Not formalized. One phase, φ = 0.37. The first version of this note
+(commit c764948) rested on inflated double-precision residuals and is superseded; see Section 7.**
 Written by Claude (session "Inviscid run convergence past max|ω|"), 18 October 2026, on the
 corrected finite-time note [../NOTE.md](../NOTE.md) at commit `cd9c9f0a`, branch
 `claude/absorption-b003-T025`. It answers the question that note leaves open in its section 7:
@@ -35,10 +37,12 @@ error, and let, on [0, T],
     ε₀(t) ≥ ‖e(t)‖,   ε₁(t) ≥ ‖∇e(t)‖,   δ₂(t) ≥ ∫₀ᵗ ‖Δe‖²   (certified in Section 3),
     n₁(t) ≥ sup|∇q₁^N|,  n₂(t) ≥ sup|∇²q₁^N|,  p₀(t) ≥ sup|q₁^N|,  S^N(t) ≥ ‖∇q₁^N‖,  P^N(t) ≥ ‖q₁^N‖,
 
-all computed (Section 3). Three facts about q₁^N are used: it is divergence-free (the Leray
-projection and the linear interpolation preserve this in exact arithmetic; in double precision the
-divergence is at roundoff, under the caveat of Section 3), it is smooth, and its sup norms are
-bounded by the ℓ¹ sums of its Fourier coefficients. Everything below is for 0 ≤ t ≤ T on an
+all computed (Section 3). Three facts about q₁^N are used: it is divergence-free exactly, by
+definition (Section 3: its node coefficients are the exact Leray projections P Q_j, so k̃·Q̂_k = 0
+for every mode and every t, linear interpolation preserving this), it is smooth, and its sup norms
+are bounded by the ℓ¹ sums of its Fourier coefficients. Every cancellation below that uses
+div q₁^N = 0 (Lemma W1, bullets 3 and 5 of Lemma W2) and div e = 0 (Lemma E) is therefore exact;
+no divergence-defect term arises. Everything below is for 0 ≤ t ≤ T on an
 interval where the smooth solution exists; the continuation argument is at the end of Section 2.
 
 **Lemma W1 (L² of w).** Pair (1.1) with w. By (I1) ⟨B(U,w),w⟩ = ⟨B(q₁,w),w⟩ = ⟨B(w,w),w⟩ = 0; by
@@ -120,15 +124,19 @@ and it is the condition this note was asked to decide.
 ## 2. The base flow in the computation and its error
 
 The computation uses U_N := (σ, 0, w_N) with σ = a e^{−νt} sin y exact and w_N = Re(e^{ix} W_lin(y,t)),
-where W_lin is the piecewise-linear-in-time interpolant between RK4 nodes of the truncated
-(|n| ≤ K_W = 20) Fourier system of W_t = ν(W_yy − W) − i a e^{−νt} sin(y) W. The true W and the
-error δW := W − W_lin satisfy
+where W_lin is the piecewise-linear-in-time interpolant, on the exact nodes t_j = j/50000
+(j = 0, …, 12500), between the stored node vectors W_j ∈ C⁴³ (modes |n| ≤ 21, each stored double
+taken as the exact dyadic rational it is; trajectory/W_nodes.npy, produced by RK4 on the Galerkin
+system truncated at |n| ≤ 20, which is irrelevant to what follows). The true W of
+W_t = ν(W_yy − W) − i a e^{−νt} sin(y) W and the error δW := W − W_lin satisfy
 
     δW_t = ν(δW_yy − δW) − i a e^{−νt} sin(y) δW − r_W,    r_W := W_lin,t − ν(W_lin,yy − W_lin) + i a e^{−νt} sin(y) W_lin,
 
-with δW(0) the representation error of the data W(y,0) = c − d e^{i(y+φ)} in double precision
-(W₁(0) = −d e^{iφ} is not exactly representable; the error is of the order of the machine epsilon and
-is covered by the rounding caveat of Section 3, under which the chain starts from ε_W(0) = 0). In the weighted norm ‖X‖²_{*,3} := Σ_n (2+n²)³|X_n|²
+with δW(0) = W(·,0) − W₀ the representation error of the data W(y,0) = c − d e^{i(y+φ)}: W₀ is
+checked to equal c exactly at n = 0 and zero for n ∉ {0, 1}, and at n = 1 the stored double differs
+from −d e^{iφ} = −cos φ − i sin φ (φ = 37/100 exactly) by an amount enclosed from a decimal
+enclosure of cos φ, sin φ (alternating Taylor series with remainder), giving
+ε_W(0) := ‖δW(0)‖_{*,3} ≤ 2.695·10⁻¹⁶, the initial value of the chain. In the weighted norm ‖X‖²_{*,3} := Σ_n (2+n²)³|X_n|²
 the heat part is dissipative with rate at least ν (every mode has n²+1 ≥ 1) and multiplication by
 sin y has operator norm at most L₃ := 2^{3/2} (the shift bound 2+(n±1)² ≤ 2(2+n²) of PROOF.md's
 appendix), so
@@ -154,11 +162,18 @@ q₁ lives on k_z = ±1, so q₁ = Re(e^{iz} Q(x,y,t)) with Q complex, C³-value
 
     Q_t = ν(Δ₂ − 1)Q − P[ σ Q_x + i w Q + (Q₂ σ_y, 0, Q₁ w_x + Q₂ w_y) ],     Q(0) = (0, −i, 0),
 
-with P the Leray projector on the mode k̃ = (k_x, k_y, 1). Q is computed on |k_x|, |k_y| ≤ K_Q = 10
-by RK4 with the exact Galerkin right-hand side (products evaluated on a 64² grid, alias-free since
-K_Q + K_W + 1 < 32), with U_N of Section 2, and q₁^N := Re(e^{iz} Q_lin) with Q_lin the
-piecewise-linear interpolant between the nodes. The error e := q₁ − q₁^N solves L_U e = −r, e(0) = 0,
-with the residual
+with P the Leray projector on the mode k̃ = (k_x, k_y, 1).
+
+**Definition of the approximation.** The stored trajectory (trajectory/Q_nodes.npy, produced by RK4
+on the Galerkin system |k_x|, |k_y| ≤ K_Q = 10 with alias-free products on a 64² grid; how it was
+produced plays no role below) gives node arrays Q_j ∈ C^{3×21×21} at the exact nodes t_j = j/50000.
+Set Q̃_j := P Q_j, the exact mode-wise Leray projection of the stored doubles (a rational array,
+exactly solenoidal), let Q̃_lin be the piecewise-linear interpolant between the Q̃_j, and
+
+    q₁^N := Re(e^{iz} Q̃_lin(x, y, t)),   U_N := (a e^{−νt} sin y, 0, Re(e^{ix} W_lin)),   a = c = d = 1, ν = 1/28, φ = 37/100.
+
+Q₀ is checked bitwise to be (0, −i, 0) at k = 0 and zero elsewhere, so Q̃₀ is the exact initial
+coefficient and e(0) = 0. The error e := q₁ − q₁^N solves L_U e = −r, with the residual
 
     r = [ Q_lin,t − νΔq₁^N + P(B-terms with U_N) ]  +  P[ (δU·∇)q₁^N + (q₁^N·∇)δU ],
 
@@ -194,57 +209,79 @@ node), and S_1 = sup(S^N + ε₁).
 What is and is not validated here. The Galerkin truncation is handled exactly (the tails are in
 the residuals). The time discretization is handled exactly (the residual is that of a function
 defined for all t). The base-flow truncation and discretization are handled exactly through δW.
-The arithmetic is IEEE double; every number written by absorb_numerics.py is multiplied by
-(1 + 10⁻¹⁰) and increased by 10⁻¹⁴. The residual norms are of order 10⁻⁵ and arise by cancellation
-of O(1) terms, so their relative roundoff can itself be of order 10⁻¹⁰; the margin for the integrated
-residuals therefore comes from the absolute term, 10⁻¹⁴ per coarse cell against an accumulated
-roundoff of order 10⁻¹⁷ to 10⁻¹⁸, while the relative term covers the O(1) quantities (sup norms,
-S^N). This inflation is documented, not certified. Everything after that
-(absorb_chain.py) is interval arithmetic with directed rounding in the sense of ../constants.py,
-on coarse cells of width 10⁻³ with upper sums (nondecreasing factors at the right endpoint, the
-decreasing factor e^{−νt} at the left endpoint).
+The initial data, the phase and the viscosity enter through their exact values: ε_W(0) above,
+φ = 37/100 inside cos φ, sin φ, ν = 1/28 as an interval wherever it multiplies, e^{−νt_j} enclosed
+from the exact rational node times (the double-precision times and constants used by the solver
+never enter). The residual enclosure (validate_residual.py) is independent of the solver: it reads
+only the node arrays, evaluates every product by direct convolution in k_y (Toeplitz sums over 21
+terms, no FFT), applies P inside the interval computation, and encloses each cell integral as
+h‖r₀‖ + (h²/2)‖r₁‖ + (h³/3)‖r₂‖ + e^{−νt_j}(νh²/2) max_nodes ‖T_σ(Q̃)‖ (with ∫₀ʰ ντ dτ = νh²/2 for
+the frozen factor, ‖P f‖ ≤ ‖f‖, and the cell maximum of a norm along the linear path at a node),
+likewise for ∇r and for r_W. Its arithmetic is midpoint-radius interval arithmetic over IEEE 754
+binary64 vectorised in NumPy, under the model |fl(x ∘ y) − (x ∘ y)| ≤ u|fl(x ∘ y)| + η for
+∘ ∈ {+, −, ×, /} with u = 2⁻⁵³ and η = 2⁻¹⁰²² (covering the subnormal range under gradual underflow;
+flush-to-zero and denormals-are-zero modes assumed off, NumPy's default),
+correctly rounded sqrt, exact abs and nextafter, and the order-independent summation bound
+|fl(Σxᵢ) − Σxᵢ| ≤ γ_{n−1} Σ|xᵢ| + (n−1)η, γ_k = ku/(1−ku) (Higham, Accuracy and Stability of
+Numerical Algorithms, 2nd ed., Lemma 3.1 and §4.2); every radius is rounded outward with nextafter
+after each operation; only elementwise ufuncs and np.sum are used (no FMA, BLAS, FFT or matmul).
+The scalar cell integrals, the coarse-cell sums and the decimal enclosures (e^{−νt_j}, cos φ, sin φ)
+use the decimal interval class of ../constants.py; every written number is an upper bound rounded
+up. Everything after that (absorb_chain.py) is interval arithmetic with directed rounding in the
+sense of ../constants.py, on coarse cells of width 10⁻³ with upper sums (nondecreasing factors at
+the right endpoint, the decreasing factor e^{−νt} at the left endpoint).
 
 ## 4. Numbers (a = c = d = 1, ν = 1/28, φ = 0.37, T = 0.25, b = 0.003)
 
-Commands (from this folder; the first takes about 140 s in double precision, the second 0.6 s):
+Commands (from this folder; wall times on the 4-core container used here):
 
-    python3 absorb_numerics.py            # writes results/numerics.json, results/numerics.log
-    python3 absorb_chain.py               # writes results/chain.json, prints results/chain_b0.003.log
+    python3 absorb_numerics.py        # 135 s: trajectory/W_nodes.npy, trajectory/Q_nodes.npy (not committed), results/numerics.json (inflated comparison numbers)
+    python3 validate_residual.py      # 690 s: results/validated.json, the rigorous enclosures (log: results/validated.log)
+    python3 absorb_chain.py           # 0.6 s: results/chain.json, printed as results/chain_b0.003.log
 
 Validated bounds at T = 0.25 (every bound rounded up, every threshold rounded down; maximal relative
-enclosure width of the interval chain 5.0·10⁻³⁵, plus the documented inflation of the numerics):
+enclosure width of the interval chain 5.0·10⁻³⁵; the inputs are the rigorous enclosures of
+validate_residual.py, maximal relative radius of r₀ over all cells 7.6·10⁻¹⁰, of the nodes Q̃_j 1.1·10⁻¹⁶):
 
 | quantity | meaning | bound |
 |---|---|---|
-| sup_t ‖W − W_lin‖_{*,3} | base-flow error (weighted norm, Section 2) | ≤ 7.6540·10⁻⁵ |
-| ε₀(T) = sup_t ‖q₁ − q₁^N‖ | q₁ error, L² | ≤ 1.5475·10⁻⁵ |
-| ε₁(T) = sup_t ‖∇(q₁ − q₁^N)‖ | q₁ error, H¹ | ≤ 5.6611·10⁻⁵ |
-| δ₂(T) = ∫₀ᵀ ‖Δ(q₁ − q₁^N)‖² | q₁ error, dissipation | ≤ 4.5324·10⁻⁸ |
+| ε_W(0) = ‖W(·,0) − W₀‖_{*,3} | initial-data representation error | ≤ 2.695·10⁻¹⁶ |
+| sup_t ‖W − W_lin‖_{*,3} | base-flow error (weighted norm, Section 2) | ≤ 7.5438·10⁻⁵ |
+| ε₀(T) = sup_t ‖q₁ − q₁^N‖ | q₁ error, L² | ≤ 1.5301·10⁻⁵ |
+| ε₁(T) = sup_t ‖∇(q₁ − q₁^N)‖ | q₁ error, H¹ | ≤ 5.6024·10⁻⁵ |
+| δ₂(T) = ∫₀ᵀ ‖Δ(q₁ − q₁^N)‖² | q₁ error, dissipation | ≤ 4.4389·10⁻⁸ |
 | S₁(T) = sup_t ‖∇q₁‖ | linear term | ≤ 0.74967 |
 | N_w(T) = sup_t ‖w‖/b² | Lemma W1 | ≤ 0.33625 |
 | K(T) = sup_t ‖∇w‖/b² | Lemma W2 | ≤ 15.674 |
 
-The computed sup ‖∇q₁^N‖ is 0.749610; ../results/measurements.json has 0.7496 at t = 0.25 for the
-same quantity, and 0.7078875 at t = 0.05 against 0.707888 here. The time course (upper bounds at
-the coarse-cell boundaries) is in results/chain_b0.003.log; the Grönwall growth of K is roughly
-linear in t, from 2.92 at t = 0.05 to 15.67 at t = 0.25.
+The validated upper bound of sup ‖∇q₁^N‖ is 0.749610; ../results/measurements.json has 0.7496 at
+t = 0.25 for the same quantity, and 0.7078875 at t = 0.05 against 0.707888 here. The time course
+(upper bounds at the coarse-cell boundaries) is in results/chain_b0.003.log; the Grönwall growth of
+K is roughly linear in t, from 2.92 at t = 0.05 to 15.67 at t = 0.25.
 
-**Result (exact calculation, validated interval chain on documented double-precision inputs).**
+**Result (exact calculation: validated interval chain on validated interval enclosures).**
 For a = c = d = 1, ν = 1/28, φ = 0.37, T = 0.25 and b = 0.003:
 
-    (A)  b S₁ ≤ 2.2491·10⁻³,   b² K ≤ 1.4106·10⁻⁴,   b S₁ + b² K ≤ 2.3901·10⁻³  <  4.3906·10⁻³  ≤  ν/(2 C_A)
+    (A)  b S₁ ≤ 2.2490·10⁻³,   b² K ≤ 1.4106·10⁻⁴,   b S₁ + b² K ≤ 2.3901·10⁻³  <  4.3906·10⁻³  ≤  ν/(2 C_A)
 
 (the three bounds are rounded up separately, so the displayed parts need not add up to the displayed sum),
-
 so the absorption condition C_A(|b| sup_t‖∇q₁‖ + b² K(T)) ≤ ν/2 of ../NOTE.md section 7 **holds**,
 with margin factor ≥ 1.837. The bootstrap this folder's argument needs is weaker and also holds:
 
     (B)   C_A b² K < ν/2        ⇔  1.4106·10⁻⁴ < 4.3906·10⁻³    (margin factor ≥ 31),
-    (H1)  |b| C_A ε₁(T) ≤ ν/8   ⇔  6.9073·10⁻⁷ ≤ 4.4642·10⁻³.
+    (H1)  |b| C_A ε₁(T) ≤ ν/8   ⇔  6.8356·10⁻⁷ ≤ 4.4642·10⁻³.
 
 The target was fixed before the computation (b = 0.003, T = 0.25, condition (A) as stated in
-../NOTE.md section 7) and was not changed afterwards. Where the two conditions differ, both are
-reported above.
+../NOTE.md section 7) and was not changed afterwards, neither in the first version of this note nor
+after the audit. Where the two conditions differ, both are reported above.
+
+Comparison with the superseded inflated inputs (commit c764948): they gave ε_W ≤ 7.6540·10⁻⁵,
+ε₀ ≤ 1.5475·10⁻⁵, ε₁ ≤ 5.6611·10⁻⁵, δ₂ ≤ 4.5324·10⁻⁸ and the same S₁, N_w, K, left side and margin
+to the digits shown (b S₁ ≤ 2.2491·10⁻³ then). The validated enclosures are slightly smaller because
+the frozen-factor correction is now ∫₀ʰ ντ dτ = νh²/2 rather than νh·h and no inflation is applied;
+the two independent evaluations of the residual sums agree to within 1.5 % (∫‖r‖: 5.3259·10⁻⁶
+validated against 5.3699·10⁻⁶ inflated; ∫‖∇r‖: 1.0785·10⁻⁵ against 1.0848·10⁻⁵; ∫‖r_W‖_{*,3}:
+5.1980·10⁻⁵ against 5.2745·10⁻⁵). This agreement is a consistency check, not part of the proof.
 
 Where the margin goes. The linear term b S₁ is 94 % of the left side of (A); it is essentially
 the measured quantity 0.7496 of ../NOTE.md, and the certification adds only ε₁ ≈ 6·10⁻⁵ to it.
@@ -254,17 +291,17 @@ from the term-by-term bounds on the source and from the Grönwall factor e^{R₁
 for the decision at b = 0.003. The ceiling of (A) at this phase and horizon is the linear one noted
 in ../NOTE.md: with S₁ = 0.74967 and K = 0 one would have b ≤ ν/(2 C_A S₁) ≈ 5.86·10⁻³.
 
-Information only (same scripts with `--b`, outputs kept in results/chain_b*.json and .log; the
-target of this folder remains b = 0.003). "Not certified" means the validated upper bound exceeds
-the threshold; it does not mean the true quantity does:
+Information only (same scripts with `--b`, outputs kept in results/chain_b*.json and .log, all on
+the validated inputs; the target of this folder remains b = 0.003). "Not certified" means the
+validated upper bound exceeds the threshold; it does not mean the true quantity does:
 
 | b | b S₁ ≤ | b² K ≤ | (A) left side ≤ | (A) certified | (B) left side ≤ | (B) certified |
 |---|---|---|---|---|---|---|
-| 0.003 | 2.2491·10⁻³ | 1.4106·10⁻⁴ | 2.3901·10⁻³ | yes (margin 1.84) | 1.4106·10⁻⁴ | yes |
+| 0.003 | 2.2490·10⁻³ | 1.4106·10⁻⁴ | 2.3901·10⁻³ | yes (margin 1.84) | 1.4106·10⁻⁴ | yes |
 | 0.0052 | 3.8983·10⁻³ | 4.2432·10⁻⁴ | 4.3226·10⁻³ | yes (margin 1.016) | 4.2432·10⁻⁴ | yes |
 | 0.0053 | 3.9733·10⁻³ | 4.4082·10⁻⁴ | 4.4141·10⁻³ | no (0.995) | 4.4082·10⁻⁴ | yes |
 | 0.0055 | 4.1232·10⁻³ | 4.7477·10⁻⁴ | 4.5980·10⁻³ | no (0.955) | 4.7477·10⁻⁴ | yes |
-| 0.015 | 1.1246·10⁻² | 3.5499·10⁻³ | 1.4795·10⁻² | no | 3.5499·10⁻³ | yes |
+| 0.015 | 1.1245·10⁻² | 3.5499·10⁻³ | 1.4795·10⁻² | no | 3.5499·10⁻³ | yes |
 | 0.016 | 1.1995·10⁻² | 4.0412·10⁻³ | 1.6036·10⁻² | no | 4.0412·10⁻³ | yes |
 | 0.017 | 1.2745·10⁻² | 4.5647·10⁻³ | 1.7309·10⁻² | no | 4.5647·10⁻³ | no |
 
@@ -275,9 +312,13 @@ stops, not that the solution does. Neither number is a stability radius.
 ## 5. What is certified, and what is not
 
 - For |b| = 0.003 at φ = 0.37 and T = 0.25: the solution u_b is smooth on [0, T] and
-  ‖∇w‖ ≤ b² K(T), ‖w‖ ≤ b² N_w(T) with the constants of Section 4, under the rounding
-  caveat of Section 3 (double precision with a documented inflation in the numerics; validated
-  interval arithmetic in the chain).
+  ‖∇w‖ ≤ b² K(T), ‖w‖ ≤ b² N_w(T) with the constants of Section 4, with every numerical quantity
+  enclosed in validated interval arithmetic (Section 3). What is assumed is: IEEE 754 binary64
+  round-to-nearest with gradual underflow (no flush-to-zero or denormals-are-zero mode), no FMA
+  contraction and no extended precision in NumPy's elementwise ufuncs, np.sum and sqrt; a correct
+  `decimal` module and float↔Decimal conversion in Python; and C_A, m₁, m₂ as certified in
+  ../NOTE.md. This is the standard semantics of NumPy on x86-64 and is stated, not verified by
+  the code.
 - Condition (A), the absorption condition of ../NOTE.md section 7, is decided in Section 4 with
   its margin. Condition (B), the one this argument needs, is weaker and is reported next to it.
 - Not uniform in φ: the computed q₁ is for one phase. The analytic parts (m₁, m₂, the
@@ -285,8 +326,12 @@ stops, not that the solution does. Neither number is a stability radius.
   either a bound on ∂_φ q₁ or a computation on a φ grid with Lipschitz control. Not done.
 - Not a statement about T > 0.25, about b = 1, or about regularity in general. The loss that
   remains is the Grönwall factor e^{R₁} in K; it is affordable because w is O(b²).
-- The arithmetic of the numerics is not interval arithmetic. A version with validated FFT
-  products would remove the one documented margin.
+- The stored trajectory itself (265 MB) is not committed; its SHA-256 is recorded in
+  results/numerics.json and results/validated.json, and absorb_numerics.py regenerates it
+  bit-for-bit on the same platform (checked three times in this session; validate_residual.py was
+  run four times on it, with identical output apart from wall time and the recorded source hashes).
+  A different trajectory would simply be a different approximation to validate; nothing in the
+  certificate depends on how it was produced.
 
 ## 6. Review
 
@@ -316,3 +361,55 @@ numbers. Outcome, applied in this commit:
 - Not checked by the reviewer: the parent's C_A certification and PROOF.md's appendix text
   (the shift inequality was verified directly); the numerics were code-reviewed and hash-matched,
   not re-run.
+
+## 7. The three certification gaps of the audit and how they are closed
+
+An independent audit of commit c764948 reproduced the chain and named three gaps in the certificate
+as it then stood. Each is closed in this commit without changing b, T or φ; the target condition (A)
+is unchanged.
+
+1. **Floating-point residual evaluation.** The residual norms were double-precision numbers
+   inflated by x(1 + 10⁻¹⁰) + 10⁻¹⁴, a documented margin, not an enclosure. Now
+   validate_residual.py encloses every residual integral and every norm of the approximation in
+   midpoint-radius interval arithmetic over IEEE binary64 with the rounding model of Section 3
+   (every operation's error bounded by u|result| + η, order-independent summation bound,
+   outward rounding of every radius), independently of the solver: it reads only the stored node
+   arrays and evaluates the products by direct convolution. The chain (absorb_chain.py) reads
+   these enclosures by default; fed the old inflated numbers it labels its verdict conditional.
+   The enclosures agree with the inflated numbers to the digits shown in Section 4 (the maximal
+   relative radius of r₀ is 7.6·10⁻¹⁰; the inflated and the validated sums of ∫‖r‖ differ by
+   less than 1.5 %), which is a consistency check of the two independent evaluations, not part of the proof.
+2. **Initial-data, phase, viscosity and time-node discrepancies.** The approximation is now defined
+   from exact objects (Section 3): exact rational node times t_j = j/50000 and coarse boundaries,
+   the stored doubles as exact dyadic rationals, ν = 1/28 and h = 1/50000 as intervals wherever
+   they multiply, e^{−νt_j} enclosed from the exact rational t_j, φ = 37/100 exactly inside the
+   enclosures of cos φ and sin φ, and the representation error of the initial datum W₁(0) = −d e^{iφ}
+   enclosed and carried as ε_W(0) ≤ 2.695·10⁻¹⁶ (Section 2); Q₀ is checked bitwise to be exact.
+   The solver's own floating-point times and constants never enter.
+3. **Solenoidality.** The approximation's node coefficients are defined as the exact Leray
+   projections Q̃_j := P Q_j (Section 3), so div q₁^N = 0 exactly for all t; P is applied inside the
+   interval computation, and every norm and residual of Section 4 is that of Q̃. The cancellations of
+   Lemmas W1, W2 and E that use div q₁^N = 0 and div e = 0 are therefore exact, and no
+   divergence-defect term is needed.
+
+Not changed: the derivation of Section 1, the analytic constants, the chain's structure, the phase,
+the horizon and b. The result of Section 4 is now a closed certificate under the platform model
+stated in Section 5, with no conditional numerical input.
+
+**Second review.** One targeted reviewer (a single read-only agent, no sub-agents, no network),
+briefed on the audit's three gaps, validate_residual.py, the chain changes and Sections 3–5 and 7,
+checked the floating-point model and every interval helper line by line, cross-checked T_σ and T_w
+at a node against an independent 128² FFT evaluation (agreement 7·10⁻¹⁷ and 1.4·10⁻¹⁶ on O(0.5)
+fields, no energy outside the retained mode ranges), checked the cell polynomials against a direct
+midpoint evaluation (1–2·10⁻¹⁶), the bilinear cross-term identity, the initial-data checks, the
+exact e^{−νt_j}, the norm conventions, the solenoidality claim of Section 1 (e and every term of r
+exactly solenoidal), the chain diff against c764948 (only the stated changes) and every number of
+Section 4 against the result files. Verdict: no blocking or major finding; gaps (i)–(iii) closed;
+what remains assumed is the platform model, the `decimal` module and the parent's C_A, m₁, m₂.
+Minor items, fixed in this commit: ε_W(0) was printed rounded to nearest (2.694 → 2.695·10⁻¹⁶,
+the chain and the validator now print it rounded up); the arithmetic model wrongly claimed to
+cover flush-to-zero (it assumes gradual underflow, NumPy's default); the residual sums agree to
+1.5 %, not 1 %; the csum docstring now derives the (1+u) factor absorbed by F (the reviewer also
+checked the slack numerically for every n that occurs); the validator's stated runtime; and the
+chain's provenance key for the hash of the input-producing script is now `inputs_source_sha256`.
+None affects a printed digit or a decision.

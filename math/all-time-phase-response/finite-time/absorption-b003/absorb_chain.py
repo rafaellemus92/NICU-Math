@@ -1,11 +1,13 @@
 """absorb_chain.py -- evaluate the inhomogeneous remainder estimate of NOTE.md (this folder) in
 validated interval arithmetic and decide the absorption condition for the given b.
 
-Inputs: results/numerics.json (absorb_numerics.py): per coarse cell, upper bounds of the residual
-integrals of the computed base-flow amplitude W_lin and of the computed q1^N, and of the norms of
-q1^N. Those numbers are double-precision values inflated as documented there; here they enter as
-exact decimals (the binary value of each float, converted exactly) and everything downstream is
-interval arithmetic with directed rounding, reusing the Iv class of ../constants.py (40 digits).
+Inputs (default): results/validated.json (validate_residual.py): per coarse cell, rigorous upper
+bounds of the residual integrals of the base-flow amplitude W_lin and of the exactly solenoidal
+approximation q1^N, of the norms of q1^N, and the initial base-flow error epsW0, all in validated
+interval arithmetic. With --numerics results/numerics.json the chain instead takes the inflated
+double-precision numbers of absorb_numerics.py and labels its verdict conditional on them. Either
+way the numbers enter as exact decimals (the binary value of each float) and everything downstream
+is interval arithmetic with directed rounding, reusing the Iv class of ../constants.py (40 digits).
 
 Chain (NOTE.md sections 2-4), on coarse cells [t_{c-1}, t_c] of width Delta with upper sums
 (nondecreasing factors at the right endpoint, the decreasing factor alpha at the left endpoint,
@@ -69,12 +71,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--b', default='0.003')
     ap.add_argument('--json', type=Path, default=HERE / 'results' / 'chain.json')
-    ap.add_argument('--numerics', type=Path, default=HERE / 'results' / 'numerics.json')
+    ap.add_argument('--numerics', type=Path, default=HERE / 'results' / 'validated.json')
     args = ap.parse_args()
     data = json.loads(args.numerics.read_text())
     P = data['parameters']
     cells = data['cells']
     n = P['ncoarse']
+    if 'arithmetic' in data:
+        assert data['provenance']['complete'], 'validated.json covers only part of [0, T]'
+        assert n * P['COARSE'] == P['NSTEP']
     with localcontext(TRAP):
         run(args, data, P, cells, n)
 
@@ -114,8 +119,11 @@ def run(args, data, P, cells, n):
     def X(key, j):
         return Iv.of(Decimal(cells[key][j]))              # exact decimal of the (inflated) float
 
+    validated = 'arithmetic' in data
     el = one
-    epsW = eps0 = eps1 = delta2 = zero
+    epsW0 = Iv.of(Decimal(data.get('initial', {}).get('epsW0', 0.0)))  # ||W(.,0) - W_0||_{*,3}: the data's representation error
+    epsW = epsW0
+    eps0 = eps1 = delta2 = zero
     Nw = Kw2 = zero                                        # N_w and K^2 (the parts without the Lap e terms)
     R0 = R1 = zero                                         # int rho0, int (2 rho1 + 1)
     S1max = zero
@@ -177,7 +185,11 @@ def run(args, data, P, cells, n):
     width = max(x.rel_width() for x in (K, S1max, eps1, lhsA))
     print('absorb_chain.py: inhomogeneous remainder estimate of NOTE.md (this folder) in validated interval arithmetic')
     print(f'parameters a=c=d=1, nu=1/28, phi={P["phi"]}, T=0.25, b={args.b}; coarse cells {n} of width {float(Delta.hi):.1e}; '
-          f'numerics: KQ={P["KQ"]} KW={P["KW"]} NP={P["NP"]} H={P["H"]} (inflation {P["INFL"]}, {P["ABS"]})')
+          f'approximation: KQ={P["KQ"]} KW={P["KW"]} H={P["H"]}')
+    if validated:
+        print(f'inputs: {args.numerics.name} -- {data["arithmetic"]["summary"]}; epsW(0) <= {up(epsW0)}')
+    else:
+        print(f'inputs: {args.numerics.name} -- double precision inflated by ({P["INFL"]}, {P["ABS"]}); NOT a rigorous enclosure')
     print(f'C_A <= {CA.hi} ({CA_src.split(":")[0]}); nu/(2 C_A) >= {down(thresh)}; S0, S1, S2 (sup-norm conversion) <= {up(S0)}, {up(S1)}, {up(S2)}')
     print()
     print(f'{"t":>6} {"m1":>8} {"m2":>8} {"epsW":>9} {"eps0":>9} {"eps1":>9} {"delta2":>9} {"S1(t)":>8} {"sigma1":>9} {"N_w":>9} {"K":>9}')
@@ -189,7 +201,8 @@ def run(args, data, P, cells, n):
     print(f'  q1 error         sup_t ||q1 - q1^N|| <= {up(eps0)},  sup_t ||grad(q1 - q1^N)|| <= {up(eps1)},  int ||Lap(q1 - q1^N)||^2 <= {up(delta2)}')
     print(f'  S_1 = sup_t ||grad q1|| <= {up(S1max)}      (computed sup ||grad q1^N|| = {max(cells["sup_gradq"]):.6f}; measured in ../results: 0.7496 at t = 0.25)')
     print(f'  N_w = sup_t ||w||/b^2 <= {up(Nw_tot)},   K = sup_t ||grad w||/b^2 <= {up(K)}')
-    print(f'  rounding budget: maximal relative enclosure width {width:.1e} (plus the documented inflation of the numerics)')
+    print(f'  rounding budget: maximal relative enclosure width {width:.1e}'
+          + ('' if validated else ' (plus the documented inflation of the numerics, which is not a rigorous enclosure)'))
     print()
     print(f'(A) absorption condition of ../NOTE.md section 7:  C_A (b S_1 + b^2 K) <= nu/2  <=>  b S_1 + b^2 K <= nu/(2 C_A)')
     print(f'     left side <= {up(lhsA)}   threshold >= {down(thresh)}   ->  {"HOLDS" if condA else "FAILS"}'
@@ -197,11 +210,15 @@ def run(args, data, P, cells, n):
     print(f'(B) bootstrap used by this folder\'s argument:  C_A b^2 K < nu/2  ->  {up(lhsB1)} < {down(thresh)}: {"HOLDS" if condB1 else "FAILS"};'
           f'   b C_A eps1 <= nu/8  ->  {up(lhsB2)} <= {down(nu / 8)}: {"HOLDS" if condB2 else "FAILS"}')
     verdict = 'CERTIFIED' if (condA and condB1 and condB2) else 'NOT CERTIFIED'
+    if not validated:
+        verdict += ' (conditional on the inflated double-precision inputs of results/numerics.json)'
     print(f'verdict for b = {args.b}, T = 0.25, phi = {P["phi"]}: {verdict}')
     out = dict(b=args.b, T=0.25, phi=P['phi'], C_A=str(CA.hi), threshold_nu_over_2CA=down(thresh), S1=up(S1max), K=up(K), N_w=up(Nw_tot),
                eps0=up(eps0), eps1=up(eps1), delta2=up(delta2), epsW=up(epsW), lhs_A=up(lhsA), lhs_B1=up(lhsB1), lhs_B2=up(lhsB2),
                condition_A=condA, condition_B1=condB1, condition_B2=condB2, verdict=verdict, max_relative_enclosure_width=width,
-               numerics_source_sha256=P['source_sha256'], numerics_inflation=[P['INFL'], P['ABS']],
+               numerics_file=args.numerics.name, numerics_kind='validated interval enclosure' if validated else 'inflated double precision (conditional)',
+               inputs_source_sha256=P['source_sha256'], numerics_inflation=[P['INFL'], P['ABS']], epsW0=str(epsW0.hi),
+               trajectory_sha256=data.get('provenance', {}).get('trajectory_sha256_of_array_bytes'),
                log_columns=['t', 'm1', 'm2', 'epsW', 'eps0', 'eps1', 'delta2', 'S1', 'sigma1', 'N_w', 'K'], log=log)
     args.json.write_text(json.dumps(out, indent=1) + '\n')
     print(f'wrote {args.json}')
