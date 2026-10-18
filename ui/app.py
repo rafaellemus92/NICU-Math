@@ -5,7 +5,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import altair as alt
-from urllib.parse import quote
 
 API_URL = os.getenv("API_URL", "http://localhost:8000").rstrip("/")
 
@@ -20,7 +19,9 @@ def api_post(path: str, json: dict):
     return session.post(f"{API_URL}{path}", json=json, timeout=DEFAULT_TIMEOUT)
 
 st.set_page_config(page_title="NICU Evidence", layout="wide")
-st.title("NICU Evidence Search & Scenario Engine — Extended")
+st.title("NICU Synthetic Research & Scenario Engine")
+st.warning("Synthetic research and education only. Do not enter patient data. "
+           "Models are unvalidated and must not guide treatment.")
 
 # ---- Health badge ----
 health = "unknown"
@@ -37,7 +38,8 @@ tab1, tab2 = st.tabs(["🔎 Evidence", "🧮 Scenario (Bayes)"])
 
 # ----------------------------- Evidence tab -----------------------------
 with tab1:
-    st.subheader("Ask a clinical question")
+    st.subheader("Explore a synthetic research question")
+    st.caption("Evidence retrieval is disabled in the default offline mode.")
     q = st.text_input("Question or keywords", placeholder="e.g., causes of neonatal metabolic acidosis")
     k = st.slider("Top results", 3, 12, 6)
 
@@ -61,12 +63,6 @@ with tab1:
                     excerpt = s.get("excerpt") or s.get("content") or ""
                     st.write(excerpt)
 
-                    # Link to served PDF if server returned a local path
-                    p = s.get("path")
-                    if p:
-                        # use only the filename and URL-encode it
-                        filename = os.path.basename(p)
-                        st.markdown(f"[Open PDF]({API_URL}/files/{quote(filename)})")
         except Exception as e:
             st.error(f"API error: {e}")
 
@@ -212,33 +208,6 @@ with tab2:
 
             with st.expander("Assumptions"):
                 st.json(data.get("assumptions", {}))
-            with st.expander("Raw response"):
-                st.json(data)
-        except Exception as e:
-            st.error(f"API error: {e}")
-
-            # ---- Full distribution plot (histogram from backend) ----
-            if data.get("hist_bins") and data.get("hist_counts"):
-                bins = data["hist_bins"]; counts = data["hist_counts"]
-                # midpoints for nicer chart
-                mids = [(bins[i]+bins[i+1])/2 for i in range(len(bins)-1)]
-                df = pd.DataFrame({"prob": mids, "count": counts})
-                chart = (
-                    alt.Chart(df)
-                    .mark_bar()
-                    .encode(
-                        x=alt.X("prob:Q", title="Probability", scale=alt.Scale(domain=[0,1])),
-                        y=alt.Y("count:Q", title="Count"),
-                        tooltip=["prob","count"]
-                    )
-                )
-                st.altair_chart(chart, use_container_width=True)
-            else:
-                st.info("No histogram returned; showing preview only.")
-                st.bar_chart(pd.Series(data["samples_preview"]))
-
-            with st.expander("Assumptions"):
-                st.json(data["assumptions"])
             with st.expander("Raw response"):
                 st.json(data)
         except Exception as e:
