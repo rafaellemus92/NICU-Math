@@ -25,6 +25,7 @@ it is, how certain it is, and where to find it.
 | [`wyrd/`](wyrd/) | Core Lean proofs: the pangram, Euclid, √2 | Proved in Lean |
 | [`wyrd-mathlib/`](wyrd-mathlib/) | Lean + Mathlib: the bridge to Mathlib, √2, the rainbow, body water, Shared Air, its limits, periodic Navier–Stokes | Proved in Lean |
 | [`ns-phase-audit/`](ns-phase-audit/) | Independent audit of ChatGPT's periodic Navier–Stokes lab v2 | Audit |
+| [`all-time-phase-response/`](all-time-phase-response/) | All-time small-b proof with symbolic constants; direct second variations and bounded refinement pilot | Analytic argument; numerical evidence (separated) |
 | [`numerics/`](numerics/) | 19 scripts that recompute numbers used in the theorems and audits | Checked numerically |
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
