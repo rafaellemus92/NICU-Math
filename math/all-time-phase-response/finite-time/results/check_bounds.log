@@ -1,47 +1,55 @@
-check_bounds.py -- 2026-10-18 18:35:14; python 3.12.3, numpy 2.0.2
-N=24 K=7 nu=0.035714 phi=0.37 a=c=d=1 dt=0.005 T=1.0; b in [0.001, 0.01, 0.05]; C_A = 4.067079 (results/lattice_sums.log); wall 13 s
+check_bounds.py -- 2026-10-18 19:13:00; python 3.13.16, numpy 2.5.3; measurements loaded from measurements.json (solves of the first run, wall 13 s, numpy 2.0.2; not re-run)
+N=24 K=7 nu=0.035714 phi=0.37 a=c=d=1 dt=0.005 T=1.0; b in [0.001, 0.01, 0.05]; C_A <= 4.067079 (results/lattice_sums.log (R = 250): C_A <= 4.06707921080)
 consistency: max|q1| on k_z=0 plane 1.0e-18; max|q2| off k_z in {0,2} 1.6e-17; b=0.001: max|identity residual| 5.5e-16, six-term 5.5e-16, cross term 5.8e-27; b=0.01: max|identity residual| 5.4e-16, six-term 5.4e-16, cross term 5.8e-24; b=0.05: max|identity residual| 5.3e-16, six-term 5.3e-16, cross term 7.3e-22
-note: b = 1e-2 and 0.05 lie outside every certified radius beta1(T) and the absorption hypothesis C_A||grad v|| <= nu/2 fails along those solves; Table B compares the bounds with the b -> 0 limits of the b^k-scaled quantities (smooth in b), not with certified cases.
+status of the tested b against the certified radii (strict inequality |b| < beta1(T); beta1 rounded down): beta1(0.25) = 1.0873E-3, beta1(0.5) = 2.1137E-4, beta1(1.0) = 6.3333E-6.
+   b = 1e-2 and 0.05 lie outside every radius; b = 1e-3 lies inside the radius for T <= 0.25 only and outside it at T = 0.5 and T = 1.
+   Table B therefore compares the bounds with measurements of the b -> 0 limits of the b^k-scaled quantities (smooth in b), not with
+   certified cases, and nothing measured here is a certificate: N = 24 truncations without error control, sampled every 0.05 in time.
 
-Table A: section 2 base-flow bounds against certified sups of the fine 1-D solve (bound / measured >= 1 required)
+Table A: section 2 base-flow bounds (certified, printed rounded up) against certified sups of the fine 1-D solve (bound / measured >= 1 required; ratio to nearest)
     t   m1 bound  sup|gradU|   ratio   m2 bound  sup|hessU|   ratio     mDelta   ||LapU||   ratio
- 0.25     2.6881      2.6452   1.016     3.7364      3.4130   1.095     4.2391      1.8533   2.287
- 0.50     2.9882      2.8786   1.038     4.9959      4.1606   1.201     5.5640      2.0535   2.709
- 1.00     3.7041      3.3660   1.100     8.3404      6.0061   1.389     8.9157      2.6093   3.417
+ 0.25  2.6881E+0      2.6452   1.016  3.7365E+0      3.4130   1.095  4.2391E+0      1.8533   2.287
+ 0.50  2.9883E+0      2.8786   1.038  4.9959E+0      4.1606   1.201  5.5641E+0      2.0535   2.709
+ 1.00  3.7042E+0      3.3660   1.100  8.3404E+0      6.0061   1.389  8.9158E+0      2.6093   3.417
 
-Table B: chain bounds against measurements (b = 1e-2 for b^2..b^4-scaled quantities; ratio = bound / measured = loss of the estimate)
+Table B: chain bounds (certified, printed rounded up) against measurements (b = 1e-2 for b^2..b^4-scaled quantities; ratio = bound / measured = loss of the estimate, to nearest)
     t               quantity        bound     measured      ratio
- 0.25       G1 vs |grad v|/b   4.0381e+00   7.4961e-01  5.387e+00
- 0.25 D1 vs int|Lap v|^2/b^2   4.5778e+02   1.4086e-01  3.250e+03
- 0.25        Q2 vs |grad q2|   7.6316e+03   2.9070e-02  2.625e+05
- 0.25 Vbar vs |grad vbar|/b^2   1.0762e+04   1.4139e-02  7.612e+05
- 0.25  R1 vs |grad rtil|/b^2   5.1927e+04   2.5399e-02  2.044e+06
- 0.25 Etilde vs |grad e2til|/b^3   2.2538e+08   2.4856e-03  9.067e+10
- 0.25    Ebar vs |e2bar|/b^4   6.1475e+11   5.5170e-05  1.114e+16
- 0.25       C_Z vs |R_Z|/b^4   2.6388e+12   6.4427e-05  4.096e+16
- 0.50       G1 vs |grad v|/b   2.0772e+01   8.7985e-01  2.361e+01
- 0.50 D1 vs int|Lap v|^2/b^2   1.2116e+04   3.9639e-01  3.057e+04
- 0.50        Q2 vs |grad q2|   1.0173e+06   1.3344e-01  7.624e+06
- 0.50 Vbar vs |grad vbar|/b^2   1.3841e+06   7.9970e-02  1.731e+07
- 0.50  R1 vs |grad rtil|/b^2   3.0497e+07   1.0682e-01  2.855e+08
- 0.50 Etilde vs |grad e2til|/b^3   3.0713e+12   3.0666e-02  1.002e+14
- 0.50    Ebar vs |e2bar|/b^4   9.1930e+18   1.6531e-03  5.561e+21
- 0.50       C_Z vs |R_Z|/b^4   5.1362e+19   1.0350e-03  4.962e+22
- 1.00       G1 vs |grad v|/b   6.9326e+02   1.3984e+00  4.957e+02
- 1.00 D1 vs int|Lap v|^2/b^2   1.3494e+07   2.4958e+00  5.407e+06
- 1.00        Q2 vs |grad q2|   1.8910e+11   8.5100e-01  2.222e+11
- 1.00 Vbar vs |grad vbar|/b^2   1.9283e+11   6.3130e-01  3.054e+11
- 1.00  R1 vs |grad rtil|/b^2   4.3135e+14   5.7065e-01  7.559e+14
- 1.00 Etilde vs |grad e2til|/b^3   1.0704e+23   6.6510e-01  1.609e+23
- 1.00    Ebar vs |e2bar|/b^4   6.7391e+37   8.0756e-02  8.345e+38
- 1.00       C_Z vs |R_Z|/b^4   6.0107e+38   1.0063e-02  5.973e+40
+ 0.25       G1 vs |grad v|/b    4.0382E+0   7.4961e-01  5.387e+00
+ 0.25 D1 vs int|Lap v|^2/b^2    4.5779E+2   1.4086e-01  3.250e+03
+ 0.25        Q2 vs |grad q2|    7.6317E+3   2.9070e-02  2.625e+05
+ 0.25 Vbar vs |grad vbar|/b^2    1.0763E+4   1.4139e-02  7.612e+05
+ 0.25  R1 vs |grad rtil|/b^2    5.1927E+4   2.5399e-02  2.044e+06
+ 0.25 Etilde vs |grad e2til|/b^3    2.2538E+8   2.4856e-03  9.067e+10
+ 0.25    Ebar vs |e2bar|/b^4   6.1475E+11   5.5170e-05  1.114e+16
+ 0.25       C_Z vs |R_Z|/b^4   2.6389E+12   6.4427e-05  4.096e+16
+ 0.50       G1 vs |grad v|/b    2.0773E+1   8.7985e-01  2.361e+01
+ 0.50 D1 vs int|Lap v|^2/b^2    1.2117E+4   3.9639e-01  3.057e+04
+ 0.50        Q2 vs |grad q2|    1.0173E+6   1.3344e-01  7.624e+06
+ 0.50 Vbar vs |grad vbar|/b^2    1.3842E+6   7.9970e-02  1.731e+07
+ 0.50  R1 vs |grad rtil|/b^2    3.0497E+7   1.0682e-01  2.855e+08
+ 0.50 Etilde vs |grad e2til|/b^3   3.0713E+12   3.0666e-02  1.002e+14
+ 0.50    Ebar vs |e2bar|/b^4   9.1931E+18   1.6531e-03  5.561e+21
+ 0.50       C_Z vs |R_Z|/b^4   5.1362E+19   1.0350e-03  4.962e+22
+ 1.00       G1 vs |grad v|/b    6.9326E+2   1.3984e+00  4.957e+02
+ 1.00 D1 vs int|Lap v|^2/b^2    1.3495E+7   2.4958e+00  5.407e+06
+ 1.00        Q2 vs |grad q2|   1.8910E+11   8.5100e-01  2.222e+11
+ 1.00 Vbar vs |grad vbar|/b^2   1.9283E+11   6.3130e-01  3.054e+11
+ 1.00  R1 vs |grad rtil|/b^2   4.3135E+14   5.7065e-01  7.559e+14
+ 1.00 Etilde vs |grad e2til|/b^3   1.0705E+23   6.6510e-01  1.609e+23
+ 1.00    Ebar vs |e2bar|/b^4   6.7392E+37   8.0756e-02  8.345e+38
+ 1.00       C_Z vs |R_Z|/b^4   6.0107E+38   1.0063e-02  5.973e+40
 
-bootstrap hypothesis C_A ||grad v|| <= nu/2 = 1.7857e-02 along the b = 1e-3 solve: max C_A||grad v|| = 5.6875e-03 (holds: True); certified radii beta1(T): T=0.25: 1.09e-03, T=0.5: 2.11e-04, T=1.0: 6.33e-06
+absorption hypothesis C_A ||grad v|| <= nu/2 = 1.7857e-02 at the 21 saved sample times (every 0.05) of the b = 1e-3 solve: max C_A||grad v|| = 5.6875e-03 (holds at those times).
+   This is a consistency observation at the sampled times of an uncontrolled N = 24 solve; it certifies nothing between samples and is
+   not part of the proof. The theorem covers b = 1e-3 only for T <= 0.25, where Proposition 1 certifies the hypothesis on all of [0, T].
 all bounds dominate their measurements: True
 
-Table C (NOT certified): the chain with G1 and D1 replaced by the measured sup_t ||grad q1|| and int ||Lap q1||^2 over [0,T]
-         i.e. the conditional scenario of NOTE.md section 7 if a validated propagator bound were available
-    T    G1 meas    D1 meas   beta1 cond    Vbar cond  Etilde cond    Ebar cond     C_Z cond  |R_Z|/b^4 meas
- 0.25     0.7504     0.1410    5.851e-03    3.528e+01    1.038e+05    6.688e+06    2.863e+07       6.443e-05
- 0.50     0.8807     0.3968    4.985e-03    3.674e+02    2.396e+07    4.704e+11    2.624e+12       1.035e-03
- 1.00     1.3998     2.4983    3.137e-03    3.243e+05    2.928e+14    1.652e+26    1.473e+27       1.006e-02
+Table C (NOT certified; a what-if for this particular majorant): the chain of Lemmas 3-7 with G1 and D1 replaced by the measured
+   sup_t ||grad q1|| and int ||Lap q1||^2 over [0,T] (times 1.001), i.e. the linear coefficient q1 in place of the full perturbation v.
+   The column nu/(2 C_A G1meas) is the absorption threshold evaluated on q1; it is NOT an admissible radius, because the nonlinear
+   remainder w = v - b q1 is not bounded here (NOTE.md section 7). The excess of C_Z what-if over the measurement is a property
+   of this majorant with these inputs, not a lower bound on what a different estimate could achieve.
+    T    G1 meas    D1 meas  nu/(2C_A G1meas)  Vbar what-if  Etilde what-if  Ebar what-if   C_Z what-if  |R_Z|/b^4 meas
+ 0.25     0.7504     0.1410         5.851e-03     3.528e+01       1.038e+05     6.688e+06     2.863e+07       6.443e-05
+ 0.50     0.8807     0.3968         4.985e-03     3.674e+02       2.396e+07     4.704e+11     2.624e+12       1.035e-03
+ 1.00     1.3998     2.4983         3.137e-03     3.243e+05       2.928e+14     1.652e+26     1.473e+27       1.006e-02

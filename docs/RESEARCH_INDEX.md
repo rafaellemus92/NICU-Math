@@ -19,7 +19,7 @@ an endorsement of clinical validity. No patient data or licensed full texts belo
 | Respiratory claim audit and site | Standard / refuted / open / synthetic, per claim | `navier_stokes/`, `web/`: counterexamples remain refutations; `/outline`, `/proof` redirect. |
 | Speech motivations | Analogy / proposed research | `math/speech-motivations/`: no speech model implemented. |
 | Canonical all-time response | Unrefereed paper argument / finite-grid checks | `math/all-time-phase-response/`: application of known stability, not proven novelty or a certified numerical radius. |
-| Finite-time enstrophy error bound | Paper proof with evaluated constants (not formalized); numerical consistency checks | `math/all-time-phase-response/finite-time/`: certified finite-time radius β₁(T) and \|Z(u_b) − Z(U) − b²Z2\| ≤ C_Z(T) b⁴ for \|b\| < β₁(T); C_Z far above the measured remainder, obstruction documented. Not about b = 1 or general regularity. |
+| Finite-time enstrophy error bound | Paper proof; constants evaluated in validated interval arithmetic with directed rounding (not formalized); numerical consistency checks | `math/all-time-phase-response/finite-time/`: certified finite-time radius β₁(T) and \|Z(u_b) − Z(U) − b²Z2\| ≤ C_Z(T) b⁴ for \|b\| < β₁(T); C_Z far above the measured remainder, obstruction documented. Not about b = 1 or general regularity. |
 | Legacy evidence retrieval | Unvalidated application pipeline | `api/app/search.py`, `api/app/answer.py`, `api/app/ingest*.py`, `api/app/schema.sql`. Disabled in default startup. Retrieval, citations, ingestion variants and DB schema compatibility require separate integration review. |
 
 For each new item record: claim ID and category; precise statement; assumptions and

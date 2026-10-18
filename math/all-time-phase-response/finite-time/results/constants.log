@@ -1,29 +1,32 @@
-constants.py: explicit constants of NOTE.md (every number is an upper bound of its definition)
-parameters a=1.0 c=1.0 d=1.0 nu=0.03571428571; C_A = 4.067079 from results/lattice_sums.log; Agmon threshold nu/(2 C_A) = 4.3907e-03
-ceiling of the all-time condition (PROOF.md, s=4) at these parameters: 7.142e-22 (review/radius_ceiling.log)
+constants.py: explicit constants of NOTE.md in validated interval arithmetic (40 decimal digits, directed rounding; printed to 5 significant digits: beta1 rounded DOWN, all others UP)
+parameters a=1 c=1 d=1 nu=1/28; supported range enforced: nu > 0, T > 0, |c|+|d| >= nu
+C_A: results/lattice_sums.log (R = 250): C_A <= 4.06707921080; built-in R = 60: partial 1.6360E+1 + tail 2.1380E-1 -> C_A <= 4.0711E+0 (consistent); Agmon threshold nu/(2 C_A) >= 4.3906E-3
+ceiling of the all-time condition (PROOF.md, s = 4) at these parameters: 7.2e-22 rounded up from the double-precision 7.142e-22 of review/radius_ceiling.log (a ceiling on a sufficient condition, not an admissible radius)
 
 quantity                 T=0.1        T=0.25         T=0.5         T=1.0
-m1(T)               2.5361e+00    2.6881e+00    2.9882e+00    3.7041e+00
-m2(T)               3.1441e+00    3.7364e+00    4.9959e+00    8.3404e+00
-mDelta(T)           3.5624e+00    4.2391e+00    5.5640e+00    8.9157e+00
-Phi1                2.4560e-01    6.3176e-01    1.3313e+00    2.9816e+00
-Psi                 4.9657e-01    1.2769e+00    2.6894e+00    6.0169e+00
-Theta               1.0967e+00    2.8127e+00    5.8966e+00    1.3069e+01
-G1                  1.4676e+00    4.0381e+00    2.0772e+01    6.9326e+02
-D1                  6.0427e+01    4.5778e+02    1.2116e+04    1.3494e+07
-beta1               2.9916e-03    1.0873e-03    2.1137e-04    6.3334e-06
-N2                  1.8758e+01    3.3047e+02    2.4895e+04    2.0425e+08
-Q2                  4.2511e+02    7.6316e+03    1.0173e+06    1.8910e+11
-D2                  3.0789e+06    5.9393e+08    9.2837e+12    2.8550e+23
-Vbar                6.0101e+02    1.0762e+04    1.3841e+06    1.9283e+11
-Dbar                1.2309e+07    2.3651e+09    3.4867e+13    5.9842e+23
-Nr                  6.7066e+01    2.1048e+03    6.5780e+05    6.3242e+11
-R1                  1.5309e+03    5.1927e+04    3.0497e+07    4.3135e+14
-Dr                  3.5170e+07    1.9260e+10    5.1284e+15    8.7293e+29
-Ne                  5.0024e+04    8.0250e+06    5.5740e+10    1.7913e+20
-Etilde              1.2145e+06    2.2538e+08    3.0713e+12    1.0704e+23
-De                  1.9982e+13    2.8649e+17    3.7524e+25    3.8297e+46
-Ebar                1.3072e+08    6.1475e+11    9.1930e+18    6.7391e+37
-C_Z                 4.7587e+08    2.6388e+12    5.1362e+19    6.0107e+38
+m1(T)                2.5362E+0     2.6881E+0     2.9883E+0     3.7042E+0
+m2(T)                3.1441E+0     3.7365E+0     4.9959E+0     8.3404E+0
+mDelta(T)            3.5625E+0     4.2391E+0     5.5641E+0     8.9158E+0
+Phi1                 2.4561E-1     6.3176E-1     1.3313E+0     2.9817E+0
+Psi                  4.9657E-1     1.2770E+0     2.6894E+0     6.0169E+0
+Theta                1.0968E+0     2.8128E+0     5.8967E+0     1.3070E+1
+G1                   1.4677E+0     4.0382E+0     2.0773E+1     6.9326E+2
+D1                   6.0427E+1     4.5779E+2     1.2117E+4     1.3495E+7
+beta1                2.9916E-3     1.0873E-3     2.1137E-4     6.3333E-6
+N2                   1.8758E+1     3.3047E+2     2.4895E+4     2.0426E+8
+Q2                   4.2511E+2     7.6317E+3     1.0173E+6    1.8910E+11
+D2                   3.0789E+6     5.9394E+8    9.2838E+12    2.8551E+23
+Vbar                 6.0102E+2     1.0763E+4     1.3842E+6    1.9283E+11
+Dbar                 1.2310E+7     2.3651E+9    3.4868E+13    5.9842E+23
+Nr                   6.7066E+1     2.1049E+3     6.5781E+5    6.3243E+11
+R1                   1.5309E+3     5.1927E+4     3.0497E+7    4.3135E+14
+Dr                   3.5171E+7    1.9260E+10    5.1285E+15    8.7293E+29
+Ne                   5.0025E+4     8.0250E+6    5.5741E+10    1.7914E+20
+Etilde               1.2145E+6     2.2538E+8    3.0713E+12    1.0705E+23
+De                  1.9983E+13    2.8650E+17    3.7525E+25    3.8297E+46
+Ebar                 1.3072E+8    6.1475E+11    9.1931E+18    6.7392E+37
+C_Z                  4.7588E+8    2.6389E+12    5.1362E+19    6.0107E+38
 
-beta1(T): certified admissible radius for [0,T] (Proposition 1); C_Z(T): |R_Z(t)| <= C_Z(T) b^4 on [0,T] for |b| < beta1(T).
+rounding budget: maximal relative width of the enclosures over all reported quantities 2.9e-31 (the upper-sum slack is not an error; see the docstring)
+beta1(T): certified admissible radius for [0,T] (Proposition 1; strict inequality |b| < beta1(T)); C_Z(T): |R_Z(t)| <= C_Z(T) b^4 on [0,T] for |b| < beta1(T).
+wrote /tmp/claude-0/-home-user/c16694eb-abbe-5f94-b7ec-b4328f4ab984/scratchpad/audit-fix/constants.json

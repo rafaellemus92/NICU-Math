@@ -11,24 +11,35 @@ edits, merges or overwriting of archived outputs. Scope: the new folder
 `math/all-time-phase-response/finite-time/` (note, two scripts, logs), one index row in
 `math/README.md` and `docs/RESEARCH_INDEX.md`, and this section. Nothing else is changed.
 
-Result (paper argument with every constant explicit, evaluated as rigorous upper bounds):
-a certified admissible radius β₁(T) at the H¹ level and |Z(u_b) − Z(U) − b²Z2| ≤ C_Z(T) b⁴
-on [0, T] for |b| < β₁(T). At a = c = d = 1, ν = 1/28: β₁ = 1.1×10⁻³ (T = 0.25), 2.1×10⁻⁴
-(T = 0.5), 6.3×10⁻⁶ (T = 1), against the all-time ceiling 7.2×10⁻²²; C_Z is 10¹⁶–10⁴⁰ above
-the measured remainder, and the obstructing estimate (Agmon/dissipation source bounds, not
-the propagator) and one improvement are documented in the note. Labels: mathematical proof
-with symbolic→evaluated constants (not formalized); numerical evidence only for the
-consistency checks.
+Result (paper argument with every constant explicit, evaluated in validated interval
+arithmetic with directed rounding): a certified admissible radius β₁(T) at the H¹ level and
+|Z(u_b) − Z(U) − b²Z2| ≤ C_Z(T) b⁴ on [0, T] for |b| < β₁(T), strict. At a = c = d = 1,
+ν = 1/28 exactly: β₁ = 1.08×10⁻³ (T = 0.25), 2.11×10⁻⁴ (T = 0.5), 6.33×10⁻⁶ (T = 1), rounded
+down, against the all-time ceiling 7.2×10⁻²²; C_Z = 2.64×10¹², 5.14×10¹⁹, 6.02×10³⁸, rounded
+up, which is 10¹⁶–10⁴⁰ above the measured remainder. The obstructing estimate
+(Agmon/dissipation source bounds, not the propagator) and one improvement are documented in
+the note, together with the estimate any improvement of the radius still needs: a certified
+H¹ bound on the nonlinear remainder v − bq₁, without which validated norms of q₁ give no
+radius. Labels: mathematical proof with symbolic→evaluated constants (not formalized);
+numerical evidence only for the consistency checks.
 
-Validation: `constants.py` (under 1 s; double precision with a stated rounding slack, not
-interval arithmetic), `check_bounds.py` (N = 24, dt = 0.005, T = 1, b = 10⁻³, 10⁻², 0.05,
-about 15 s; every bound is consistent with, i.e. exceeds, its measurement; the six-term
-Section 5 identity holds to 6×10⁻¹⁶; note that b = 10⁻² lies outside every certified radius,
-so this is a check of the b → 0 limits, not of a certified case), certified lattice sum for
-the Agmon constant (`lattice_sums.py`, about 6 s). Not run: Lean, any DNS beyond N = 24 and
-T = 1, the all-time package's own pilots (unchanged). Independent review: one targeted
-reviewer re-derived every step and confirmed the theorem with the constants as evaluated;
-its eight minor/nit findings are applied in the branch's second commit (folder README).
+Validation: `constants.py` (about 90 s; interval arithmetic with directed rounding, complete
+rounding budget printed as the maximal enclosure width 3×10⁻³¹, parameter range ν > 0, T > 0,
+|c| + |d| ≥ ν enforced), `check_bounds.py` (N = 24, dt = 0.005, T = 1, b = 10⁻³, 10⁻², 0.05;
+the solves were run once, about 15 s, and the third commit re-rendered its tables from the
+saved measurements without re-running any solve; every bound is consistent with, i.e.
+exceeds, its measurement; the six-term Section 5 identity holds to 6×10⁻¹⁶; b = 10⁻² and
+0.05 lie outside every certified radius and b = 10⁻³ inside it only for T ≤ 0.25, so this is
+a check of the b → 0 limits, not of a certified case, and the saved samples every 0.05
+certify nothing in between), certified lattice sum for the Agmon constant (`lattice_sums.py`,
+about 6 s). Not run: Lean, any DNS beyond N = 24 and T = 1, the all-time package's own pilots
+(unchanged). Independent review: one targeted reviewer re-derived every step and confirmed
+the theorem with the constants as evaluated; its eight minor/nit findings are applied in the
+branch's second commit (folder README). A read-only audit of the second commit (bfbe2b0)
+asked for directed rounding, a validated error budget or a weaker label, the removal of the
+claim that validated q₁ norms alone give a larger radius, a narrower description of Table C,
+and the b = 10⁻³ status at T = 0.5, 1; the third commit applies all of it; one targeted reviewer
+checked it, and its outcome is recorded in the following commit.
 
 ## PR19 independent-review corrections (historical, Codex)
 

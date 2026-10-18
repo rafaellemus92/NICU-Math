@@ -1,6 +1,8 @@
 # A certified finite-time bound for the enstrophy error beyond the b² response
 
-**Status: paper argument with every constant explicit; numerically evaluated, not formalized.**
+**Status: paper argument with every constant explicit; constants evaluated in validated interval
+arithmetic with directed rounding (admissible radii rounded down, error constants rounded up); not
+formalized.**
 Written by Claude (session "Navier Stokes-Speech"), 18 October 2026, on main `2b14eeaa`.
 It answers one question for the family of [../PROOF.md](../PROOF.md): for ν > 0 and a
 finite interval [0, T], how large is
@@ -10,10 +12,12 @@ finite interval [0, T], how large is
 the enstrophy error after its quadratic response in b is subtracted, with constants
 that can be evaluated? Section 1 extracts the constants of the existing all-time theorem
 and names its largest loss. Sections 2–5 prove a finite-time bound at the enstrophy (H¹)
-level, which is the level the question lives at. Section 6 evaluates the constants
-([constants.py](constants.py), [results/constants.log](results/constants.log)) and compares
-them with measured values ([check_bounds.py](check_bounds.py)). Section 7 states what is
-certified, what is a ceiling, and the single estimate that keeps the bound from being usable.
+level, which is the level the question lives at. Section 6 evaluates the constants with a
+complete numerical error budget ([constants.py](constants.py),
+[results/constants.log](results/constants.log)) and compares them with measured values
+([check_bounds.py](check_bounds.py)). Section 7 states what is certified, what is a ceiling, the
+single estimate that keeps the bound from being usable, and the estimate that any improvement
+of the radius still needs.
 
 ## 0. Conventions
 
@@ -139,7 +143,8 @@ Equations*, Ch. III, Thm 3.10 and Rem. 3.7; Constantin–Foias, *Navier–Stokes
 Ch. 10); hence T_max > T and the bounds hold on [0, T]. ∎
 
 β₁ is a certified admissible radius for the finite interval, not a ceiling on a sufficient
-condition: every |b| below it is covered.
+condition: every |b| below it is covered. The inequality |b| < β₁(T) is strict, and the evaluated
+radii of Section 6 are rounded down, so every printed radius is itself admissible.
 
 **Lemma 3 (the linear coefficients).** q₁ obeys the same inequalities without the cubic term,
 so ‖q₁‖ ≤ F₀e^{Φ₁}, ‖∇q₁‖ ≤ G₁, ∫₀ᵗ‖Δq₁‖² ≤ D₁ (the b = 1 versions). For q₂, with source
@@ -230,36 +235,54 @@ every factor an explicit function of (a, c, d, ν, t, C_A) through Sections 2–
 gives |E(u_b) − E(U) − b²E2| ≤ (m₁-free) analogues, not written out.
 
 Time interval: [0, T] for any T > 0. Norms: normalized L² and H¹ on T³. Parameter range:
-ν > 0, (a, c, d) with (H), |b| < β₁(T). Coefficient convention: q₂ is the Taylor coefficient
-(half the second derivative), Z2 the coefficient of b² in Z, S-free.
+ν > 0, (a, c, d) real with (H), |b| < β₁(T) (strict). Coefficient convention: q₂ is the Taylor
+coefficient (half the second derivative), Z2 the coefficient of b² in Z, S-free.
 
 ## 6. Numbers
 
-[constants.py](constants.py) evaluates every function of Sections 2–5 on a fine time grid with
-rigorous upper Riemann sums: on each cell the decreasing factor α is frozen at its left
-endpoint and every other factor (all nondecreasing) at its right endpoint, so each computed
-quantity is an upper bound of its definition; a relative slack of 10⁻⁹ covers rounding.
-C_A is the certified value from results/lattice_sums.log (C_A ≈ 4.07, threshold ν/(2C_A) ≈
-4.4×10⁻³). At a = c = d = 1, ν = 1/28 ([results/constants.log](results/constants.log)):
+[constants.py](constants.py) evaluates every function of Sections 2–5 on a uniform time grid
+(n = 20 000 cells) with rigorous upper Riemann sums: on each cell the decreasing factor α is
+frozen at its left endpoint and every other factor (all nondecreasing) at its right endpoint,
+so each computed quantity is an upper bound of its definition; the gap to the integral is a
+slack, not an error. The arithmetic is validated. Every quantity is an interval with decimal
+endpoints of 40 digits, computed with directed rounding (floor for lower, ceiling for upper
+endpoints); square roots are verified by exact squaring; exponentials come from a Taylor
+polynomial with an explicit remainder after argument halving; the cancellations E₁ − E₂ and
+1 − e^{−νt} and every nested operation are enclosed automatically; and the maximal relative
+width of all enclosures is printed (3×10⁻³¹ in the log). That line is the complete rounding
+budget: nothing else in the evaluation is approximate. Printed radii are lower endpoints
+rounded down and printed constants are upper endpoints rounded up, so the table below consists
+of valid bounds as printed. The script enforces the parameter range on which the argument is
+valid, ν > 0, T > 0, a, c, d real with |c| + |d| ≥ ν (hypothesis (H)), and refuses anything
+else. C_A is the certified bound of results/lattice_sums.log (C_A ≤ 4.06708, cross-checked
+there against an independent built-in bound; threshold ν/(2C_A) ≥ 4.39×10⁻³). At a = c = d = 1
+and ν = 1/28 exactly ([results/constants.log](results/constants.log); bounds rounded in their
+certified direction to three digits, measured values to two):
 
 | T | m₁(T) | G₁(T) | **β₁(T)** | C_Z(T) | measured ‖∇v‖/\|b\| | measured \|R_Z\|/b⁴ |
 |---|---|---|---|---|---|---|
-| 0.1 | 2.5 | 1.5 | 3.0×10⁻³ | 4.8×10⁸ | — | — |
-| 0.25 | 2.7 | 4.0 | 1.1×10⁻³ | 2.6×10¹² | 0.75 | 6.4×10⁻⁵ |
-| 0.5 | 3.0 | 21 | 2.1×10⁻⁴ | 5.1×10¹⁹ | 0.88 | 1.0×10⁻³ |
-| 1 | 3.7 | 690 | 6.3×10⁻⁶ | 6.0×10³⁸ | 1.40 | 1.0×10⁻² |
+| 0.1 | 2.54 | 1.47 | 2.99×10⁻³ | 4.76×10⁸ | — | — |
+| 0.25 | 2.69 | 4.04 | 1.08×10⁻³ | 2.64×10¹² | 0.75 | 6.4×10⁻⁵ |
+| 0.5 | 2.99 | 20.8 | 2.11×10⁻⁴ | 5.14×10¹⁹ | 0.88 | 1.0×10⁻³ |
+| 1 | 3.71 | 694 | 6.33×10⁻⁶ | 6.02×10³⁸ | 1.40 | 1.0×10⁻² |
 
 The measured columns are from [check_bounds.py](check_bounds.py) (full nonlinear solves at
-b = 10⁻², N = 24, dt = 0.005, φ = 0.37; [results/check_bounds.log](results/check_bounds.log)).
-Every bound of Sections 2–5 is consistent with its measurement, i.e. exceeds it (Table A: the
-Section 2 derivative bounds against certified maxima of the trigonometric polynomials of a fine
-one-dimensional solve, ratios 1.02–3.4; Table B: the chain); the six-term identity of
-Section 5 holds to 6×10⁻¹⁶; and the bootstrap hypothesis C_A‖∇v‖ ≤ ν/2 holds along the
-b = 10⁻³ solve (5.7×10⁻³ ≤ 1.8×10⁻²). Two caveats. The theorem makes no claim at b = 10⁻²:
-that b lies outside every certified radius and the absorption hypothesis fails along that
-solve (C_A‖∇v‖ ≈ 3×10⁻²); Table B compares the bounds with the b → 0 limits of the
-b^k-scaled quantities, which are smooth in b, and b = 10⁻³ cannot be used for the b⁴-scaled
-columns (roundoff). And a check that passes by factors of 10⁵–10⁴⁰ has no power to detect a
+b = 10⁻², N = 24, dt = 0.005, φ = 0.37, saved every 0.05;
+[results/check_bounds.log](results/check_bounds.log)). Every bound of Sections 2–5 is
+consistent with its measurement, i.e. exceeds it (Table A: the Section 2 derivative bounds
+against certified maxima of the trigonometric polynomials of a fine one-dimensional solve,
+ratios 1.02–3.4; Table B: the chain), and the six-term identity of Section 5 holds to 6×10⁻¹⁶.
+Three caveats. (i) Which b the theorem covers: b = 10⁻² and 0.05 lie outside every certified
+radius (and the absorption hypothesis fails along the b = 10⁻² solve, C_A‖∇v‖ ≈ 3×10⁻²);
+b = 10⁻³ lies inside the radius only for T ≤ 0.25 (β₁(0.25) = 1.08×10⁻³) and outside it at
+T = 0.5 (β₁ = 2.11×10⁻⁴) and T = 1 (6.33×10⁻⁶). Table B therefore compares the bounds with the
+b → 0 limits of the b^k-scaled quantities, which are smooth in b, and b = 10⁻³ cannot be used
+for the b⁴-scaled columns (roundoff). (ii) Measurements certify nothing: the solves are N = 24
+truncations without error control, and the absorption hypothesis C_A‖∇v‖ ≤ ν/2 observed along
+the b = 10⁻³ solve (5.7×10⁻³ ≤ 1.8×10⁻²) is checked only at the 21 saved sample times, not in
+between. Where the theorem applies (b = 10⁻³, T ≤ 0.25) the hypothesis is certified by
+Proposition 1 on all of [0, T]; where it does not (T = 0.5, 1) the observation is not a
+substitute. (iii) A check that passes by factors of 10⁵–10⁴⁰ has no power to detect a
 moderate error in a late constant; only the base-flow bounds and G₁ are tested tightly.
 Where the chain loses, at T = 0.25 (bound/measured): G₁ 5.4, D₁ 3×10³, Q₂ 3×10⁵,
 V̄ 8×10⁵, R₁ 2×10⁶, Ẽ 9×10¹⁰, Ē 1×10¹⁶, C_Z 4×10¹⁶; incrementally, D₁/G₁ ≈ 6×10²,
@@ -268,37 +291,51 @@ Q₂/D₁ ≈ 80, V̄/D₁ ≈ 2×10², R₁/V̄ ≈ 3, Ẽ/R₁ ≈ 4×10⁴, �
 ## 7. What is certified, and the obstruction
 
 - **Certified (for |b| < β₁(T)):** smoothness on [0, T], the Lemma 1–2 bounds on v, and
-  |R_Z(t)| ≤ C_Z(t) b⁴ on [0, T], every constant evaluated. β₁ is an admissible radius, not
-  a ceiling: every b below it is covered. At T = 0.25 it is 1.1×10⁻³, i.e. 10¹⁸ times the
-  ceiling 7.2×10⁻²² that the all-time condition of PROOF.md can certify at the same
-  parameters (that figure is a ceiling on a sufficient condition, not a covered set).
+  |R_Z(t)| ≤ C_Z(t) b⁴ on [0, T], every constant evaluated in validated arithmetic. β₁ is an
+  admissible radius, not a ceiling: every b below it is covered. At T = 0.25 it is 1.08×10⁻³,
+  more than 10¹⁸ times the ceiling 7.2×10⁻²² that the all-time condition of PROOF.md can
+  certify at the same parameters (that figure is a ceiling on a sufficient condition, not a
+  covered set).
 - **Not usable as a number, and why.** C_Z exceeds the measured remainder by 10¹⁶ at
   T = 0.25 and 10⁴⁰ at T = 1. The loss has two distinct sources, separated in Table C of
   the check log:
   1. *The radius* is limited by the Agmon absorption of the cubic term in Lemma 2,
-     C_A‖∇v‖ ≤ ν/2, which caps any radius from this argument at ν/(2C_A F₁) ≈ 6.2×10⁻³
+     C_A‖∇v‖ ≤ ν/2, which caps any radius from this argument at ν/(2C_A F₁) ≤ 6.21×10⁻³
      whatever the base flow does, and is reduced below that by the Grönwall factor
      G₁(T)/F₁ of (I3)–(I4) (5.4× at T = 0.25, 500× at T = 1 against the measured growth).
-     With the measured propagator in place of G₁, D₁ the radius would be 3–6×10⁻³
-     (Table C, not certified).
+     Table C evaluates ν/(2C_A·sup‖∇q₁‖) with the measured linear coefficient, 3–6×10⁻³;
+     that is the absorption threshold on q₁, not a radius: a radius needs ‖∇v‖ for the full
+     perturbation, and v − bq₁ is not bounded there (see the last bullet).
   2. *The constant* is dominated not by the propagator but by the source estimates
      ‖(X·∇)Y‖ ≤ C_A‖ΔX‖‖∇Y‖ followed by Cauchy–Schwarz in time against the dissipation
      integrals D₁, D̄, D_r, D_e, each of which trades a pointwise-small transport velocity
      for ν⁻¹ times a time-integrated H² norm. The incremental losses in Section 6 (6×10² at
      the first dissipation integral, then 80, 2×10², 3, 4×10⁴ and 10⁵ through the chain)
-     are all of this kind. Even with the measured G₁, D₁ inserted, C_Z stays 10¹¹ above the
-     measurement (Table C). This is the precise obstructing estimate.
-- **One improvement.** Certify the linear layer numerically instead of bounding it: compute,
-  with validated error control along [0, T] (interval arithmetic or a-posteriori control in
-  the sense of Chernyshenko–Constantin–Robinson–Titi 2007), the H¹ propagator norm of the
-  linearized flow around U and the pointwise norms ‖∇q₁‖, ‖Δq₁‖, ‖q₁‖_∞, ‖∇q₂‖, ‖Δq₂‖,
-  ‖q̃₂‖_∞, and feed them into Lemmas 2–7 in place of G₁, D₁, Q₂, D₂ and of C_A‖Δq‖. What this
-  provably buys: the radius becomes ν/(2C_A·sup‖∇q₁‖) ≈ 3–6×10⁻³ (Table C, conditional), which
-  is also this method's hard ceiling ν/(2C_A F₁) ≈ 6.2×10⁻³ up to the measured growth; and the
-  source bounds that involve only linear objects (s₂, and the q₁, q̃₂ factors in S̄_e) lose
-  their ν⁻¹·dissipation exchange. What it does not buy: the sources built from the nonlinear
-  pieces v̄, r̃, ẽ₂ keep the Agmon exchange, so Table C's residual 10¹¹ is a lower bound on what
-  remains for C_Z. Moving the whole chain one derivative up does not escape this either: the
+     are all of this kind. With the measured G₁, D₁ inserted into this same majorant, C_Z
+     still exceeds the measurement by 10¹¹ (Table C); that figure is a property of this
+     majorant with those inputs, not a lower bound on what a different estimate could achieve.
+     The source estimate is the precise obstructing estimate.
+- **One improvement, and the estimate it still needs.** Certify the linear layer numerically
+  instead of bounding it: compute, with validated error control along [0, T] (interval
+  arithmetic, or a-posteriori control in the sense of Chernyshenko–Constantin–Robinson–Titi
+  2007), the pointwise norms ‖∇q₁‖, ‖Δq₁‖, ‖q₁‖_∞, ‖∇q₂‖, ‖Δq₂‖, ‖q̃₂‖_∞ and the H¹ norm of
+  the solution operator of L_U. Validated norms of q₁ alone prove nothing about the radius:
+  Proposition 1 needs ‖∇v‖ for the full perturbation, and v = bq₁ + w with the nonlinear
+  remainder w := v − bq₁ solving
+
+      L_U w = −B(bq₁ + w, bq₁ + w),   w(0) = 0.
+
+  The missing estimate is a certified bound ‖∇w(t)‖ ≤ b² K(T) on [0, T] for |b| < β, with K(T)
+  obtained from a validated solution-operator bound rather than from the Grönwall majorant
+  e^{Ψ} (the loss that produced G₁). Given such a K, the absorption
+  C_A(|b| sup‖∇q₁‖ + b² K) ≤ ν/2 would yield a radius, necessarily below the absorption
+  ceiling ν/(2C_A F₁) ≤ 6.21×10⁻³ of Lemma 2's method; without it, Table C's threshold on q₁
+  is not a radius. Whether a validated bound on w can close this at one short horizon, say
+  T = 0.25, is open: it is the next question, not a result. For the constant, the source
+  bounds built from linear objects (s₂, and the q₁, q̃₂ factors in S̄_e) would lose their
+  ν⁻¹·dissipation exchange and those built from the nonlinear pieces v̄, r̃, ẽ₂ would keep it;
+  how much of the gap closes is not predicted by Table C, whose residual is specific to the
+  present majorant. Moving the whole chain one derivative up does not escape this either: the
   H² estimate pairs a source S with Δ²X and needs ∇S, i.e. ‖∇X‖_∞ of the transporting field
   (one more derivative everywhere), and the ν⁻¹ exchange then multiplies ∫‖∇S‖²; whether that
   is numerically smaller is unknown. A free, small gain not applied here: for the z-independent
