@@ -32,12 +32,18 @@ class OfflineAPI(unittest.TestCase):
             def __init__(self):
                 super().__init__()
                 self.links = []
+                self.references = []
                 self.tags = []
 
             def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
                 self.tags.append(tag)
                 if tag == 'a':
-                    self.links.append(dict(attrs).get('href'))
+                    self.links.append(attrs.get('href'))
+                # Every attribute that can fetch a resource, on any tag.
+                for name in ('href', 'src', 'srcset', 'action', 'data', 'poster', 'formaction'):
+                    if attrs.get(name) is not None:
+                        self.references.append(attrs[name])
 
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
@@ -45,14 +51,35 @@ class OfflineAPI(unittest.TestCase):
         parser = PageParser()
         parser.feed(response.text)
         self.assertEqual(set(parser.links), {'#content', '/docs', '/healthz'})
+        self.assertEqual(set(parser.references), {'#content', '/docs', '/healthz'})
         self.assertEqual(parser.tags.count('h1'), 1)
-        self.assertFalse({'form', 'input', 'iframe', 'script'} & set(parser.tags))
+        self.assertFalse({'form', 'input', 'iframe', 'script', 'link', 'img', 'object', 'embed',
+                          'video', 'audio', 'source', 'base', 'meta-refresh'} & set(parser.tags))
+        # No external asset anywhere, including inline CSS (@import, url()) and absolute URLs in text.
+        self.assertNotIn('://', response.text)
+        self.assertNotIn('@import', response.text)
+        self.assertNotIn('url(', response.text)
         for text in ['NICU-Math', 'Offline mode', 'Synthetic research and education only',
                      'Do not enter patient data', 'unvalidated',
+                     'loads its script and stylesheet from a public CDN',
+                     'two-compartment passive-emptying model', 'this API does not serve it',
                      'Streamlit research interface runs separately and is not hosted at this endpoint']:
             self.assertIn(text, response.text)
         self.assertEqual(self.client.get('/docs').status_code, 200)
         self.assertEqual(self.client.get('/healthz').status_code, 200)
+
+    def test_homepage_evidence_mode_copy(self):
+        from api.app.homepage import render_homepage
+        offline, evidence = render_homepage(True), render_homepage(False)
+        for page in (offline, evidence):
+            self.assertNotIn('{{', page)
+            self.assertNotIn('://', page)
+            self.assertEqual(page.count('<h1>'), 1)
+        self.assertIn('Offline mode', offline)
+        self.assertNotIn('Offline mode', evidence)
+        self.assertIn('Evidence mode · unvalidated', evidence)
+        self.assertIn('Legacy evidence services are enabled but not integration-validated.', evidence)
+        self.assertIn('Evidence search and generated answers are disabled in this mode.', offline)
 
     def test_compatibility_entrypoint(self):
         from main import app as compatibility_app

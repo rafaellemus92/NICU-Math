@@ -1,6 +1,40 @@
 # Startup and collaboration handoff — 2026-10-18
 
 
+## API homepage claim wording and asset guard (current, Claude)
+
+Owner: Claude Code. Branch `claude/new-session-sbrl43`, based on PR #17 head
+`43160952f2c851e2c9e340a66b48651a6a285046`. User authorized fixing the homepage
+claims and pushing this branch; no merge, settings change or deployment. The
+Next.js homepage (`web/app/page.tsx`) was already corrected in PRs #16/#17 and is
+not changed here. Scope: the FastAPI homepage `api/app/homepage.py` and its test.
+
+- `/docs` is Swagger UI and loads its script and stylesheet from a public CDN, so
+  the homepage now says so instead of implying an offline documentation page;
+  `/openapi.json` is served locally.
+- The intro no longer reads as if a respiratory/hemodynamic model were delivered;
+  the limits list points to the closed-form two-compartment teaching model in
+  `physiology/`, which this API does not serve.
+- `tests/test_smoke.py`: the external-asset guard now collects every resource
+  attribute on every tag, forbids `link`/`img`/`object`/`embed`/media tags, and
+  rejects `://`, `@import` and `url(` anywhere in the page (a mutation probe had
+  shown the old `<a href>`-only guard passing with an injected stylesheet, image
+  and CSS import). A new test renders the evidence-mode copy without the client.
+
+Validation (offline-only venv, Python 3.12.3, NumPy 2.0.2, credentials unset):
+- `NICU_OFFLINE=1 .venv/bin/python -m unittest tests.test_smoke tests.test_requirements tests.test_optional_pdf -v`:
+  **12 tests, 10 passed, 2 optional PDF tests skipped**.
+- `python -m compileall -q api ui tests physiology navier_stokes` and `git diff --check`: passed.
+- Mutation probe on a scratch copy: an injected external stylesheet `<link>`, `<img>`,
+  CSS `@import`, CSS `url()` and a protocol-relative `<object data>` each make the
+  guard fail (5/5 caught; the previous guard caught 0/3).
+- Live loopback uvicorn: `/`, `/healthz`, `/docs`, `/openapi.json`, `/redoc` HTTP 200;
+  Streamlit `/_stcore/health` ok. Chromium at 1440, 390 and 320 px: no horizontal
+  overflow, one h1, skip link is the first Tab stop, **zero external requests on `/`**;
+  `/docs` requests two jsdelivr assets, which the page now states. Servers stopped.
+- Not run: optional PDF environment, Docker, hosted preview, web build (web
+  unchanged), research pytest suites (unchanged).
+
 ## Synthetic breath analysis repair (current)
 
 Owner: Codex. Branch `codex/fix-synthetic-breath-analysis`, based on verified

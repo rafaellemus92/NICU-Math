@@ -56,7 +56,7 @@ _PAGE = '''<!doctype html>
   <main id="content">
     <p class="eyebrow">Research &amp; education</p>
     <h1>Explore the mathematics.<br>Keep the limits in view.</h1>
-    <p class="intro">A workspace for synthetic scenarios and mathematical research, with a focus on respiratory mechanics and neonatal hemodynamics.</p>
+    <p class="intro">A workspace for synthetic scenarios and mathematical research. Respiratory mechanics and neonatal hemodynamics are the intended research scope, not a delivered clinical model.</p>
     <nav aria-label="API resources">
       <a class="button primary" href="/docs">Open API documentation</a>
       <a class="button" href="/healthz">Check API health</a>
@@ -66,7 +66,7 @@ _PAGE = '''<!doctype html>
       <section aria-labelledby="available">
         <h2 id="available">Available through this API</h2>
         <ul>
-          <li>Interactive endpoint documentation at <code>/docs</code>.</li>
+          <li>Interactive endpoint documentation at <code>/docs</code>. That page is Swagger UI and loads its script and stylesheet from a public CDN, so it needs internet access even when the API runs offline; the schema at <code>/openapi.json</code> is served locally.</li>
           <li>Service status and configured mode at <code>/healthz</code>.</li>
           <li>Seeded toy simulations of acidosis, NEC and extubation, using synthetic inputs. These are software demonstrations, not calibrated predictions.</li>
         </ul>
@@ -76,7 +76,7 @@ _PAGE = '''<!doctype html>
         <ul>
           <li>{{EVIDENCE}}</li>
           <li>No patient-data uploads or document hosting.</li>
-          <li>No validated respiratory-mechanics or neonatal-hemodynamics model is provided here.</li>
+          <li>No validated respiratory-mechanics or neonatal-hemodynamics model is provided here. The repository's two-compartment passive-emptying model is a closed-form teaching instrument in <code>physiology/</code>; this API does not serve it.</li>
           <li>No patient-specific treatment recommendations.</li>
         </ul>
       </section>
