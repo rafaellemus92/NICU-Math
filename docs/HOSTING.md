@@ -12,9 +12,12 @@ The user also supplied a preview-build diagnosis for branch commit `a93da83`:
 `PYTHON_REQUIREMENTS_PARSE_ERROR` at the root `-r requirements-offline.txt` include.
 The included file existed; the parser reason was not established. This branch now
 uses a flat root manifest, with a regression check against the service manifests.
-Automatic deployment status for `53353b7` subsequently succeeded. No manual
-deployment was run. The user confirmed hosted `/healthz` reports offline/ok.
+Automatic deployment status for `53353b7` subsequently succeeded, under the
+Vercel project configuration in effect at that time (root directory at the
+repository root, FastAPI detected from `main.py`). No manual deployment was run.
+The user confirmed hosted `/healthz` reports offline/ok under that configuration.
 The supplied report is distinct from the main-branch invalid-package failure.
+See "Hosting on main has moved to `web/`" below for what changed afterwards.
 
 ## FastAPI and Streamlit are separate services
 
@@ -57,3 +60,34 @@ links and synthetic-research limitations. It is not the Streamlit application.
 Local desktop/mobile rendering and API/UI health checks passed; see HANDOFF.md.
 Direct preview requests from this environment are blocked by the network proxy
 (403), so local render checks do not claim hosted browser verification.
+
+The homepage document itself has no script, form, iframe or external asset.
+The linked `/docs` page is FastAPI's default Swagger UI, which loads
+`swagger-ui-bundle.js` and `swagger-ui.css` from `cdn.jsdelivr.net` and its
+favicon from `fastapi.tiangolo.com`; that is unchanged, pre-existing FastAPI
+behaviour, so "no external requests" is a statement about `/` only.
+
+## Hosting on main has moved to `web/`
+
+After this branch's base was taken, main changed what the Vercel project builds:
+
+- `4ec82bb` (PR #8) added a Next.js application under `web/` with its own
+  homepage (`web/app/page.tsx`).
+- `d9b01c4`, an empty commit titled "Trigger Vercel redeploy with root directory
+  set to web/", records that the project's root directory was switched to `web/`.
+- `efff6a5` (PR #11) added `web/vercel.json` with `"framework": "nextjs"`.
+
+Consequences for this branch:
+
+- The FastAPI homepage at `/` on this branch is not what the Vercel project
+  serves from main; main's `/` is the Next.js page.
+- The automatic preview success recorded for `b606b03` (deployment status at
+  08:01:45Z on 18 October) predates the root-directory change (`d9b01c4`,
+  08:02:55Z). This branch has no `web/` directory, so a preview build under the
+  new setting is not expected to succeed. This was not verified: no Vercel
+  settings were inspected or changed from here.
+- The earlier statements in this file about FastAPI discovery from root
+  `main.py` describe the previous configuration, not the current one.
+
+Which `/` the repository should serve, and from where, is an integration
+decision for the maintainer, not something this branch settles.
