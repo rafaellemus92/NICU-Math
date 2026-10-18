@@ -1,1 +1,11 @@
 __pycache__/
+*.pyc
+
+# Lean build output (wyrd/ and wyrd-mathlib/ also ignore their own /.lake)
+.lake/
+# written by the CI audit step (`lake env lean Audit.lean | tee audit.txt`)
+/wyrd/audit.txt
+/wyrd-mathlib/audit.txt
+
+# ChatGPT's v2 package, unzipped here from ../inputs to run the audit scripts
+/ns-phase-audit/periodic_ns_lab_v2/

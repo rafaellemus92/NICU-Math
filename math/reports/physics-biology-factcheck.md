@@ -370,7 +370,7 @@ Sources: [Vinyoles et al., standard solar models](https://arxiv.org/abs/1611.098
 - **It does not stay.** It moves at about 233 km/s, crossing 1 m in 4.3 µs.
 - **Any non-gravitational interaction is tightly limited.** LZ (4.2 tonne·yr) gives σ_SI < 2.2e-48 cm² at 40 GeV.
 - **Crude upper bound on scatters in the body.** Assumptions: the whole body treated as ¹⁶O; coherent A² scaling; no form factor or detection threshold; WIMP-proton reduced mass 0.9168 GeV.
-  - Result: σ_N ≈ 7.88e-44 cm², and fewer than 1.5e-3 scatters per year, i.e. fewer than one every ~650 years.
+  - Result: σ_N ≈ 7.88e-44 cm², and fewer than 1.6e-3 scatters per year (1.53e-3), i.e. fewer than one every ~650 years.
   - This is an order-of-magnitude bound for a 40 GeV WIMP only.
 
 Sources: [PDG 2026 dark matter review](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-dark-matter.pdf), [PDG 2026 cosmological parameters](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf), [de Salas & Widmark 2021](https://arxiv.org/abs/2012.11477), [Read 2014](https://arxiv.org/abs/1404.1938), [Famaey 2015](https://arxiv.org/abs/1501.01788), [LZ, PRL 135, 011802](https://arxiv.org/abs/2410.17036), [CODATA eV-kg](https://physics.nist.gov/cgi-bin/cuu/Value?evkg).
@@ -433,7 +433,7 @@ Sources: [Ehman, Big Ear Wow! page](https://www.bigear.org/Wow30th/wow30th.htm),
 
 ### 3.1 Trisomy 13, 18 and 21: DNA size versus gene dosage
 
-**Verdict: partly true.** Life after birth is possible with these trisomies. But raw DNA size is the wrong variable: viability tracks the number of extra dosage-sensitive genes.
+**Verdict: partly true.** Life after birth is possible with these trisomies. But raw DNA size is the wrong variable: viability is better predicted by the number of extra dosage-sensitive genes (a rank ordering over about seven chromosomes, not a fitted statistic).
 
 **Genome size.** A 46,XX genome is 6,062,084,834 bp from GRCh38.p14 chromosome lengths, or 6.11 Gb from T2T-CHM13. The often-quoted "about 6.2 Gb" is 2 × the GRCh38 total of 3.099 Gb, which includes unplaced scaffolds.
 
@@ -637,7 +637,7 @@ The verifier recomputed every number and found no arithmetic errors. It made the
 | Water O-O distance | 2.80 Å "at 37 °C" | 2.80(1) Å in ambient water. The weak range is 1.1e8–1.4e8 times smaller |
 | Aneuploidy in miscarriages | "More than 35%" | Approximately 35% (Nagaoka) |
 | ⁴⁰K gamma rays | About 500/s "escaping" | About 470–530/s *produced*; most escape |
-| Dark-matter scatter bound | Reduced mass labelled μ_n | It is μ_p = 0.9168 GeV; the result is unchanged (< 1.5e-3/yr) |
+| Dark-matter scatter bound | Reduced mass labelled μ_n | It is μ_p = 0.9168 GeV; the result is unchanged (< 1.53e-3/yr) |
 | Higgs lifetime | 2.2e-22 s | 1.6e-22 s (SM width 4.1 MeV) to 2.2e-22 s (measured central width) |
 | Standard Model parameters | 19 | 19 in the minimal SM; about 26–28 with neutrino masses |
 | ⁴⁰K betas vs solar-neutrino interactions | 3.7e9 | About 3e9 (2.6e9–3.6e9, Borexino-scaled) |

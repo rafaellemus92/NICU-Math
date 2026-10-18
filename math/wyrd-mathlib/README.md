@@ -66,7 +66,7 @@ Intrauterine Growth Aberration* (abdominalkey.com).
 | `isotonic_stays_extracellular` | Isotonic fluid whose solute stays out (0.9% saline) leaves cell water unchanged (iso-osmolar dextrose does not) |
 | `solute_load_shrinks_cells` | Extra effective solute outside the cells shrinks them |
 | `adrogue_madias` | From Edelman's relation: `v` litres at concentration `c` change sodium by `v(c − Na)/(W + v)` |
-| `per_litre_scaling_underestimates` | Scaling the per-litre form `(c − Na)/(TBW + 1)` down to a small volume **underestimates** the model change; about 42% for 10 mL in a 3 kg newborn |
+| `per_litre_scaling_underestimates` | Scaling the per-litre form `(c − Na)/(TBW + 1)` down to a small volume **underestimates** the model change: for 10 mL in a 3 kg newborn the true change is more than 1.42 times the scaled figure (the scaled figure is about 30% too small) |
 | `smaller_body_bigger_change_abs` | The same fluid moves sodium further, in either direction, in a smaller body |
 | `free_water_deficit` | `W(Na/140 − 1)` litres of free water bring model sodium to 140 (a total, never a rate) |
 | `water_fraction_falls` | Losing extracellular water after birth lowers the body's water fraction |

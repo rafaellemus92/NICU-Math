@@ -134,7 +134,7 @@ is far below the 9.9 × 10²⁷ CRT modulus).  Two independent confirmations:
 * `freedp.c` (a plain stage-by-stage DP over 2²⁰ consonant subsets, 64-bit
   integers, no inclusion–exclusion) prints the same `11261264735669`;
 * with primality switched off the engine returns exactly the closed form
-  N₀ = 20!·[x²⁰](1+x+x²)¹² = 20!·1221 = 2,970,573,351,983,677,440,000
+  N₀ = 20!·\[x²⁰\](1+x+x²)¹² = 20!·1221 = 2,970,573,351,983,677,440,000
   (`python3 engine.py`).
 
 Every solution has exactly six words (each word has exactly one vowel) and
