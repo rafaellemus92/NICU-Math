@@ -4,7 +4,7 @@ import socket
 import subprocess
 import sys
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 os.environ['NICU_OFFLINE'] = '1'
 os.environ.pop('OPENAI_API_KEY', None)
@@ -70,6 +70,27 @@ class DefaultModeSmoke(unittest.TestCase):
 
 
 class StreamlitSmoke(unittest.TestCase):
+    def test_evidence_sources_keep_excerpt_without_unserved_pdf_link(self):
+        from streamlit.testing.v1 import AppTest
+        import requests
+        response = Mock()
+        response.json.return_value = {
+            'answer_markdown': 'Synthetic answer',
+            'sources': [{'title': 'Synthetic source', 'path': '/library/example.pdf',
+                         'excerpt': 'Synthetic excerpt', 'score': 0.5}],
+        }
+        with patch.object(requests.Session, 'get', side_effect=requests.ConnectionError('offline test')), \
+             patch.object(requests.Session, 'post', return_value=response), \
+             patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden')):
+            page = AppTest.from_file('app.py').run(timeout=15)
+            page.text_input[0].set_value('Synthetic question')
+            next(button for button in page.button if button.label == 'Search & Answer').click().run()
+            self.assertEqual(len(page.exception), 0)
+            rendered = '\n'.join(item.value for item in page.markdown)
+            self.assertIn('Synthetic excerpt', rendered)
+            self.assertNotIn('/files/', rendered)
+            self.assertNotIn('Open PDF', rendered)
+
     def test_initial_render_and_failed_scenario(self):
         from streamlit.testing.v1 import AppTest
         import requests

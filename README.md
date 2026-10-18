@@ -40,6 +40,11 @@ NICU_OFFLINE=1 .venv/bin/python -m unittest discover -s tests -v
 Tests block outbound socket connections and cover API lifespan, health, disabled
 evidence routes, seeded scenario invariants, request bounds and UI error handling.
 They do not establish clinical validity or verify the legacy evidence pipeline.
+Optional PDF tests skip when those dependencies are absent. To check the optional
+install too, use a fresh virtual environment, install both `requirements.txt` and
+`requirements-test.txt`, run `python -m pip check`, then run the same test command.
+The optional tests check PDF dependency compatibility and in-memory synthetic text
+extraction; they do not ingest documents or call external services.
 
 ## Legacy evidence tools and credentials
 `requirements.txt` additionally lists the legacy database/PDF/OpenAI dependencies.

@@ -5,7 +5,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import altair as alt
-from urllib.parse import quote
 
 API_URL = os.getenv("API_URL", "http://localhost:8000").rstrip("/")
 
@@ -64,12 +63,6 @@ with tab1:
                     excerpt = s.get("excerpt") or s.get("content") or ""
                     st.write(excerpt)
 
-                    # Link to served PDF if server returned a local path
-                    p = s.get("path")
-                    if p:
-                        # use only the filename and URL-encode it
-                        filename = os.path.basename(p)
-                        st.markdown(f"[Open PDF]({API_URL}/files/{quote(filename)})")
         except Exception as e:
             st.error(f"API error: {e}")
 

@@ -1,5 +1,60 @@
 # Startup and collaboration handoff — 2026-10-18
 
+## Current follow-up: independent review corrections
+
+- Implementation owner: Codex. The two findings below were reported by an
+  **independent Codex review**, not Claude. Claude has not been contacted.
+- Follow-up base: `9d64cc63a1b5c16fdac7d0be81c02bb30b719c67`.
+- Branch: `codex/startup-collaboration`. User authorized fixing and pushing both
+  findings to the existing private repository; no merge or deployment.
+- Target: the commit containing this update; exact SHA supplied in delivery.
+
+### Reproduced findings and fixes
+
+1. P2: `python -m pip install --dry-run -r requirements.txt` failed with
+   `ResolutionImpossible`: pdfplumber 0.11.4 requires pdfminer.six 20231228,
+   conflicting with our 20240706 pin. Changed only these two dependency pins to
+   pdfplumber 0.11.9 / pdfminer.six 20251230.
+   The [maintainer advisory](https://github.com/pdfminer/pdfminer.six/security/advisories/GHSA-wf5f-4jwr-ppcp)
+   identifies versions before 20251230 as affected by arbitrary code execution.
+   This avoids downgrading to the affected 20231228 release.
+   [pdfplumber release notes](https://github.com/jsvine/pdfplumber/releases/tag/v0.11.9)
+   and PyPI metadata confirm the exact dependency. Version 0.11.10 requires
+   Pillow >=12.2.0, incompatible with existing Streamlit 1.39.0 Pillow <11;
+   0.11.9 avoids expanding this repair into a UI-stack upgrade. This is a targeted
+   compatibility/security decision, not a whole-stack security certification.
+2. P3: the new Streamlit regression test failed before the fix because a synthetic
+   source path rendered `[Open PDF](http://localhost:8000/files/example.pdf)`
+   even though document serving is disabled. Removed link generation and its
+   unused URL-quoting import; source titles/excerpts remain. No serving enabled.
+
+### Follow-up validation
+
+Passed:
+- Fresh `python -m venv /tmp/nicu-review-optional`; both dry-run resolution and
+  installation with `-r requirements.txt -r requirements-test.txt` succeeded.
+- `/tmp/nicu-review-optional/bin/python -m pip check`: no broken requirements.
+- `NICU_OFFLINE=1 /tmp/nicu-review-optional/bin/python -m unittest discover -s tests -v`:
+  **8 passed, zero skipped**. Includes PDF pin/installed metadata compatibility,
+  in-memory synthetic PDF extraction, UI source rendering without dead links,
+  and all prior API/UI offline checks. No PDF fixture saved or ingested.
+- Original offline-only `.venv`: same discovery command, **6 passed, 2 optional
+  PDF tests skipped**; pip check passed.
+- Live localhost Uvicorn health and synthetic extubation request: HTTP 200;
+  Streamlit health: HTTP 200. Both processes stopped. Credentials unset.
+- `docker compose config --quiet` and `git diff --check`.
+
+Expected pre-fix failures: dependency resolver conflict and new dead-link UI test,
+now fixed. No failures remain in the executed follow-up checks.
+
+Not run: Docker build/startup (prior container DNS failure below remains unresolved),
+Python 3.11 checks, Postgres ingestion/retrieval integration, paid APIs, full pangram
+reproduction, clinical validation, whole-stack security audit or a second review of
+this follow-up. Fresh optional install/PDF tests supersede the earlier optional
+installation not-run status, but do not validate the full evidence pipeline.
+
+## Initial implementation record (historical)
+
 - Implementation owner: Codex. Independent reviewer: Claude Code, pending; not contacted.
 - Branch: `codex/startup-collaboration` (local only).
 - Base: `4babdcdf50d6d5aed780319daeebb0deb65075ea` on original branch `work`.
