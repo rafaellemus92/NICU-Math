@@ -1,0 +1,14 @@
+3.553e-15  F[u0^phi]-u0^-phi, phi=0.3
+2.331e-15  -u0^phi(x) - u0^(phi+pi)(x+(pi,pi,pi)), phi=0.3
+3.553e-15  F[u0^phi]-u0^-phi, phi=0.72
+3.192e-15  -u0^phi(x) - u0^(phi+pi)(x+(pi,pi,pi)), phi=0.72
+3.331e-15  F[u0^phi]-u0^-phi, phi=1.9
+2.442e-15  -u0^phi(x) - u0^(phi+pi)(x+(pi,pi,pi)), phi=1.9
+3.775e-15  F[u0^phi]-u0^-phi, phi=2.8
+2.554e-15  -u0^phi(x) - u0^(phi+pi)(x+(pi,pi,pi)), phi=2.8
+4.662e-18  mask(Rk)==mask(k) (cutoff commutes with F)
+3.469e-17  F[rhs(a)]-rhs(F[a]) random field
+0.000e+00  d/dt[-u(-t)] = rhs_{-nu}(-u) check
+3.556e-17  translation commutes with rhs
+Z(2,0.72)=2.250765695850479  Z(2,-0.72)=2.250765695850479  diff=-4.44e-16  field |F[u]-u_-|=3.38e-16
+Z(2,2.16)=2.128198291845978  Z(2,-2.16)=2.128198291845978  diff=-4.44e-16  field |F[u]-u_-|=2.83e-16

@@ -1,0 +1,12 @@
+mom awake, skin-to-skin     N 100  infant-mom 0.504 +/- 0.028  infant-other parent 0.524 +/- 0.023
+mom asleep, skin-to-skin    N 100  infant-mom 0.408 +/- 0.028  infant-other parent 0.524 +/- 0.023
+mom awake, at the bedside   N 100  infant-mom 0.504 +/- 0.028  infant-other parent 0.524 +/- 0.023
+paired differences in infant-mom synchrony, same seeds, no bond:
+  awake minus asleep (skin-to-skin)            +0.096 +/- 0.009 SEM (z 10.4)
+  holding minus not (skin-to-skin vs bedside)  +0.000 +/- 0.000 SEM (all differences 0)
+largest change in infant-other parent synchrony across conditions: 0
+time 22.4 s
+
+real	0m22.484s
+user	0m22.465s
+sys	0m0.081s

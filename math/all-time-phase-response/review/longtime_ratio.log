@@ -1,0 +1,24 @@
+longtime_ratio.py: remainder ratios |R(0.1)|/|R(0.05)| beyond T = 0.5 (finite systems)
+python 3.13.16, numpy 2.5.3; a = c = d = 1, nu = 1/28, phi = 0.37, dt = 0.005, b = 0.1 and 0.05 (+-b averaged)
+
+N = 24 (K = 7), 58 s
+    t    ratio E    ratio Z    ratio S   max|ratio/16-1|  in 14..18   S2          R_S(0.1)/b^4   q2 edge-shell energy
+   0.5    15.9989    15.9989    15.9986       0.01 %       yes       +2.8315e-01  +9.1980e-03   3.8e-07
+   1.0    15.9987    16.0007    16.0077       0.05 %       yes       +4.8388e-01  +3.5004e-02   3.9e-04
+   2.0    15.6569    16.8270    15.8516       5.17 %       yes       +1.1101e+00  -1.0139e+00   1.5e-02
+   4.0    17.5775    18.1633    13.7391      14.13 %       NO        +3.6297e+00  -7.8406e+01   9.3e-03
+
+N = 32 (K = 10), 140 s
+    t    ratio E    ratio Z    ratio S   max|ratio/16-1|  in 14..18   S2          R_S(0.1)/b^4   q2 edge-shell energy
+   0.5    15.9991    15.9989    15.9986       0.01 %       yes       +2.8315e-01  +9.1980e-03   3.5e-11
+   1.0    15.9987    16.0007    16.0070       0.04 %       yes       +4.8391e-01  +3.5190e-02   1.3e-06
+   2.0    15.6258    16.2789    15.8249       2.34 %       yes       +1.1276e+00  -1.0506e+00   4.6e-04
+   4.0    17.4268    18.0249    13.6381      14.76 %       NO        +3.8165e+00  -8.4361e+01   3.2e-04
+
+N = 24 against N = 32 at each time (relative difference):
+  t = 0.5: ratios 1.3e-05, S2 6.4e-09
+  t = 1.0: ratios 4.1e-05, S2 5.2e-05
+  t = 2.0: ratios 3.4e-02, S2 1.6e-02
+  t = 4.0: ratios 8.6e-03, S2 4.9e-02
+
+total wall time 198 s

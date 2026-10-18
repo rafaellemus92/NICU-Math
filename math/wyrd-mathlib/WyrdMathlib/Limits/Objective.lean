@@ -13,11 +13,15 @@ arousal, `z` soothing) after an infant disturbance `x(0) = 1`, `y(0) = 0`:
 
 * `mom_untouched_iff`: mom's arousal stays at rest for all `t ≥ 0` **exactly**
   when `g = 0`. An objective that protects mom picks `g = 0`.
-* `infant_best_moves_mom`: the coupling that maximises the recovery rate after
-  the infant's disturbance (`optimal_coupling`, `g* ≈ 0.08036`) is positive, so
-  it necessarily moves mom. That rate is the spectral rate of the whole
-  zero-delay linearised system (its slowest decaying mode), not the source's
-  Test 4 statistic.
+* `infant_best_moves_mom`: the coupling `g* ≈ 0.08036` that maximises the
+  slowest-mode decay rate `ρ` of the whole zero-delay linearised system
+  (`optimal_coupling`) is positive, so it necessarily moves mom. `ρ` is a
+  spectral rate, not the source's Test 4 statistic, and `g*` is not the
+  coupling that brings the infant back fastest: after this very disturbance
+  (a heel stick), recovery to within 10 bpm is fastest at much larger `g`,
+  `g = 2.98` (the edge of the swept range 0–3) at `τ = 0.02 s` (the simulator’s one-step minimum delay) and `1.73` at
+  `τ = 1.5 s` (noise-free; checked numerically, not proved here;
+  `math/shared-air/AUDIT.md` §3). The theorem's name keeps the older wording.
 
 No single coupling serves both objectives. Choosing between them, or a third
 person's objective, is a decision about whose good counts. The dynamics are the
@@ -66,7 +70,8 @@ theorem mom_untouched_iff {g : ℝ} {x y z : ℝ → ℝ} (hs : LinSol g x y z) 
     · exact absurd h (Real.exp_pos _).ne'
     · exact h
 
-/-- The infant-optimal coupling moves mom. -/
+/-- The spectral-optimal coupling `g*` (the maximiser of the slowest-mode decay rate
+`ρ`, not of heel-stick recovery) moves mom. -/
 theorem infant_best_moves_mom {s₀ : ℝ} (hs₀ : s₀ ∈ Set.Ioo (-(1 / 20 : ℝ)) (-(1 / 30)))
     (hH : H (1 / 30) (1 / 20) (1 / 4) (1 / 250) (3 / 40) s₀ = 0) {x y z : ℝ → ℝ}
     (hs : LinSol (G (1 / 20) (1 / 4) (1 / 250) (3 / 40) s₀) x y z) (hx0 : x 0 = 1)

@@ -1,0 +1,209 @@
+{
+ "about": "Independent review of the corrected page: one reviewer checked every changed claim, one exercised the changed code in Chromium. It reviewed an intermediate version; all of its suggested fixes were then applied (see AUDIT.md). Line numbers refer to that intermediate version. Script and screenshot paths pointed to a temporary session scratchpad; the files are not part of this folder.",
+ "task": "Adversarially review the corrected Shared Air artifact: every changed claim, and the new code paths in a real browser",
+ "claims_review": {
+  "summary": "I ran the model and checked every changed or added statement in edits.diff. Nothing found is a blocker. Six things should be fixed and four are nits. The numbers the edits rely on all reproduce. DEF.sweep is identical to expSweep(DEFAULTS,{R:200}) and every DEF.pulse field matches expPulse. The noise-free saddle-node sits at g=2.069, and at a 3 s delay the resting state loses stability (Hopf) at g=1.61; in simulation it starts oscillating between K=1.58 and 1.65. The exact 2:1 onset is 4.0002 at every resolution tried, and the locking range closes at 19.71. An infant 10 bpm above twice mom's rate locks from 8.376; one 10 bpm below never locks up to 40 (checked on a 0.05 grid). The overshoot explanation holds: the rise in median recovery survives removing the cap and disappears without the delay. 'Mom asleep or away' gives a negative alike-world difference: -0.12 and -0.21 (N=60), and -0.12 and -0.23 (N=100, other seeds). The asleep effect comes from the halved alarm kick, not from the lower set point.\n\nThe problems:\n- The new synchrogram note is wrong about 3:2. A 3:2 lock is caught by the n=3 index and shown as '3:1'; 4:3 and 5:3 are the ratios it misses.\n- 'Drags the infant's cells slower' describes only a second-order part of the effect. At the default rates the net pull is faster, toward the 2:1 ratio, and the infant's simulated heart rate rises with pulse strength.\n- 'Sinks below zero' is true on average but not in any one live window. Only 59–66% of 90 s windows read below zero, against 46–50% with mom awake.\n- The Test 4 bedside sentence about the slowest settling rate is correct but hard for a lay reader. Its 0.08 is the value with no delay; at the default 1.5 s delay the peak is at 0.075, on a very flat curve.\n- The Jaffe wording credits 'summaries' with a point the monograph's own abstract makes.\n- 'The coupling is real but weak' states as fact what the Van Leeuwen authors themselves only conclude.\n\nNits: the stuck state appears from about K=2 in the noisy runs, not 2.1; the delay-doubling best setting is an exact tie between 0.5 and 0.75; the 37% push uses the wrong rate; the voice equation line leaves out a presence condition.\n\nAll scripts are in <session scratchpad>/artifact/review-claims/. Each one checks a claim: c1_alike.js, c1_mech.js and c1_live.js (live note); c2_equil.js, c2_det.js, c2_cens.js and c2_ubias.js (stuck state); c34_lin.js, c4_fine.js and c4_mech.js (Hopf, settling rate, overshoot); c5_freq.js (pulse drag); c6_regen.js, with output in sweep_check.txt (stored data); c7_lockcauses.js (what breaks the lock); render_text.js (rendered f4/f5 text).",
+  "findings": [
+   {
+    "severity": "should-fix",
+    "where": "Live view, synchrogram caption (line 271, added sentence)",
+    "problem": "False for its own example. A 3:2 lock puts three evenly spaced bands on mom's cycle (phases 0, 2/3, 1/3), so pli(n=3) catches it and the live note shows it as '3:1'. The ratios the index really cannot see are 4:3 and 5:3, which need n=4 and n=5. This matters because Test 5's bedside text cites Van Leeuwen's 3:2, 5:3 and 4:3 epochs.",
+    "evidence": "Model.pliMax on synthetic n:m beat phases: 2:1 gives v 0.996 (n 2); 3:1 gives 0.991 (n 3); 3:2 gives 0.991 (n 3); 4:3 gives 0.0005; 5:3 gives 0.0011. pliMax checks only n = 1, 2, 3 (line 876).",
+    "suggested_text": "OLD: It looks for 1:1, 2:1 and 3:1 and reports the strongest; ratios such as 3:2 would need a different index.\nNEW: It looks for 1:1, 2:1 and 3:1 and reports the strongest. A 3:2 rhythm also puts three bands on mom’s cycle, so it would show up as 3:1; ratios such as 4:3 or 5:3 would need a different index."
+   },
+   {
+    "severity": "should-fix",
+    "where": "Test 5 rendered text, writeF5 (line 1720): 'because the pulse also drags the infant’s cells slower'",
+    "problem": "Only half right, and easy to misread. The pulse does have a second-order slowing part. It explains why the exact onset (4.0) is above the first-order value (3.31); second-order averaging gives a shift of -0.0040·ε² rad/s, which reproduces the 4.0. But the net effect at the default rates is the resonant pull toward 2:1, which makes the cells faster. A lay reader will take 'drags slower' as the overall effect, and the stored sessions show the infant's heart rate going up as the pulse gets stronger.",
+    "evidence": "Mean frequency of the forced phase minus ω at the default rates (ω=15.665, Ω=7.987): ε=1: +0.010; ε=2: +0.043; ε=3: +0.107; ε=3.9: +0.242 rad/s, all above ω and matching theory with the slowing included. Away from any ratio (ω=2.2Ω, ε=6) it is -0.235, so slower, as claimed. DEF.pulse.hrI rises from 149.59 (ε=0) to 150.48 (ε=16), toward 152.54 (twice mom's rate).",
+    "suggested_text": "OLD (JS): ', because the pulse also drags the infant’s cells slower, which here moves them ' + (below ? 'further from' : 'toward') + ' the ratio. \nNEW (JS): ', because besides pulling the infant’s cells toward the ratio, the pulse also slows them slightly on average, which here ' + (below ? 'works against' : 'adds to') + ' that pull. "
+   },
+   {
+    "severity": "should-fix",
+    "where": "Live view sync-note (line 279)",
+    "problem": "True on average, but stated as if it always happens, about a number the reader watches one window at a time. In the live readout's own 90 s window the alike-world difference is small and reads below zero only about 60% of the time, against about 48% with mom awake. Also, 'hears fewer alarms' is loose: asleep, mom reacts half as strongly to every alarm; out of the room she misses them all. Isolating the causes confirms the alarms are the cause: removing the asleep set point barely changes the result, while restoring the full kick removes it.",
+    "evidence": "Test-1 statistic (300 s, 30 s warm-up, 16/8 cells, alarms reach everyone), alike world, seeds 1000+i, N=60: awake -0.037±0.034, asleep -0.123±0.037, away -0.206±0.042. Seeds 20000+i, N=100: -0.020±0.021, -0.116±0.024, -0.225±0.031. Asleep with set point 0: -0.108; asleep with full kick: -0.048. Live protocol (24/12 cells, autoAlarms, 20 Hz sampling, smoothDecimate(100,20), 90 s windows every 30 s, 48 sessions × 16 windows): awake +0.015±0.018 (46% of windows < 0), asleep -0.066±0.019 (59%), away -0.154±0.022 (64%); second seed set -0.001, -0.082 (62%), -0.160 (66%).",
+    "suggested_text": "OLD: They are built alike here, but a mom who is asleep or out of the room hears fewer alarms, and then the difference sinks below zero even in the alike world, where there is no bond.\nNEW: They are built alike here, but a mom who is asleep reacts less to the alarms and one out of the room misses them, and then the difference averages below zero even in the alike world, where there is no bond, though any single window can still read above zero."
+   },
+   {
+    "severity": "should-fix",
+    "where": "Test 4 bedside box (line 402), sentence about the slowest settling rate",
+    "problem": "The content is correct but reads as a paradox to a lay reader: 'the slowest rate … is best'. The 0.08 figure is the no-delay value; at the default 1.5 s delay the peak is at 0.075, on a curve flat to within 0.3% from 0.06 to 0.10. Checked: the pair can never settle faster than mom's own 1/20 per second. With mirroring switched off, the slowest rate sits exactly at 0.0500 for g ≥ 0.075. With mirroring on, the slowest mode is mostly mom's (Am/Ai = 4.7 at g=0.075 and 8.75 at K=1), and the feedback slows it to 0.0379 at K=1. 'At the default settings' is needed: at steadiness 2 the peak moves to g=0.",
+    "evidence": "Delayed linearization (τ=1.5): slowest rate 0.0333 (g=0), 0.0483 (g=0.075, peak), 0.0482 (g=0.08), 0.0461 (g=0.3), 0.0379 (g=1). τ=0 peak at g=0.0800; τ=3 peak at 0.0695. The discrete-time simulation map gives the same peaks. With Ta=40, the peak is at g=0.",
+    "suggested_text": "OLD: A different measure, the slowest rate at which the pair as a whole settles, is best at a much lower responsiveness (about 0.08 at the default settings), because the slowest settling is mom’s own. It describes the pair’s return after a disturbance that reaches mom, such as an alarm, not the infant’s heart rate after a heel stick.\nNEW: A different measure, how fast the last of the arousal fades from the pair as a whole, is best at a much lower responsiveness (below 0.1 at the default settings). Above that, what fades last is mom’s own arousal: soothing the infant can’t speed it up, and her arousal leaking back to the infant slows it a little. That measure describes the pair’s return after something that stirs mom directly, such as an alarm, not the infant’s heart rate after a heel stick."
+   },
+   {
+    "severity": "should-fix",
+    "where": "Test 4 bedside box (line 402), Jaffe & Beebe sentence",
+    "problem": "Credits the wrong source and is confusing. The monograph's own PubMed abstract (Jaffe, Beebe, Feldstein, Crown & Jasnow 2001, Monogr SRCD 66(2), PMID 11428150) says the 'midrange degree of mother-infant and stranger-infant coordination was optimal for attachment (Strange Situation)'. A mid-range optimum already means higher and lower coordination did worse, so 'summaries of that work add' wrongly suggests the authors did not report it. Also, the first author is Jaffe with four co-authors, so 'Jaffe and Beebe' should be 'Jaffe, Beebe and colleagues'. Outcome age is 12 months. The same abstract notes that high coordination was optimal for cognition; that does not need to be added here.",
+    "evidence": "PubMed abstract 11428150: 'Adult-infant coordination at age 4 months indeed predicted both outcomes at age 12 months, but midrange degree of mother-infant and stranger-infant coordination was optimal for attachment … whereas high (\"tight\") stranger-infant coordination in the lab was optimal for cognition.'",
+    "suggested_text": "OLD: Jaffe and Beebe found that mid-range vocal coordination at 4 months predicted secure attachment; summaries of that work add that both the tightest and the loosest coordination went with insecure attachment.\nNEW: Jaffe, Beebe and colleagues found that a mid-range degree of mother–infant vocal coordination at 4 months was optimal for attachment at 12 months; tighter or looser coordination went with less secure attachment."
+   },
+   {
+    "severity": "should-fix",
+    "where": "Test 5 bedside box (line 412), Van Leeuwen passage",
+    "problem": "Mostly accurate, but 'The coupling is real but weak' is stated as the page's own fact. The evidence behind it is a 2009 study of six women plus a 2003 study that found no difference in epoch counts. It should be the authors' conclusion, as in their 2014 wording: 'present but generally weak'. 'More often at fast breathing rates than in surrogates' is also slightly garbled. The 2009 abstract says the increase at high respiratory rates was seen 'in the original but not in the surrogate data'. The description of the 2003 study is accurate: 62 pregnancies, 712 real vs 741 surrogate epochs. The ScienceDaily release confirms six women and 4:3 and 3:2 ratios.",
+    "evidence": "PubMed 19597150 (PNAS 2009): 'We find a clear increase in synchronization epochs mostly at high maternal respiratory rates in the original but not in the surrogate data.' PubMed 12702214 (BMC Physiol 2003): '177 magnetocardiograms … in 62 pregnancies … Differences between real and surrogate data could not be found with respect to number of synchronization epochs found (712 vs. 741)' but 'occasional coupling … does occur'. PubMed 25162592 (PLoS One 2014): 'fetal-maternal heart rate coupling is present but generally weak'.",
+    "suggested_text": "OLD: They found brief epochs of 3:2, 5:3 and 4:3 locking, more often at fast breathing rates than in surrogates; an earlier, larger study of theirs found about as many epochs in surrogates as in real pairs. The coupling is real but weak, and how it travels is not established.\nNEW: They found brief epochs of 3:2, 5:3 and 4:3 locking, and at fast breathing rates more of them than in surrogate data; an earlier, larger study of theirs found about as many epochs in surrogates as in real pairs. The authors conclude the coupling is present but weak; how it travels is not established."
+   },
+   {
+    "severity": "nit",
+    "where": "Test 4 rendered text, writeF4 (line 1649): 'above a responsiveness of about 2.1 this creates a second, stuck state'",
+    "problem": "2.07 is the threshold for the noise-free model and checks out. But the slow shared noise lowers it. With a shared-noise excursion of just U=0.1 (half its standard deviation), the stuck state already exists at g=2. At g=2.5–3 with U≥0.15, the calm state disappears entirely. The stored data match: 11 of 200 runs at K=2 never settle, and 10 of those 11 end with mom stuck aroused, some staying high for 500–800 s. The rendered page shows only K=3's count, so readers can't see the mismatch, but 'about 2' is both true and simpler. The rest of the sentence checks out: noise-free, the heel stick alone does not trap the pair (the kick would have to be 2.45 at K=2.5 or 1.41 at K=3, against 1.0), so noise is needed. At K=3 all 82 never-settling runs are in the aroused state.",
+    "evidence": "c2_equil.js: saddle-node at g=2.0689; stuck state at g=3 has Ai 1.91, Am 2.79. c2_ubias.js: with U=0.1, three equilibria at g=2 and a high state at Am 1.59. c2_cens.js, K=2: 11 never settle, 14 runs with Am>1 over the last 30 s, only 1 never-settling run not aroused.",
+    "suggested_text": "OLD (JS): '; above a responsiveness of about 2.1 this creates a second, stuck state in which both stay aroused, and noise pushes some runs into it'\nNEW (JS): '; from a responsiveness of about 2 this creates a second, stuck state in which both stay aroused, and noise pushes some runs into it'"
+   },
+   {
+    "severity": "nit",
+    "where": "Test 4 rendered text, writeF4 (line 1651): 'Doubling the delay moves the best setting to 0.5'",
+    "problem": "With the new 200-run data, the delay-doubled medians at K=0.5 and K=0.75 are exactly equal (13.75 s each). The code picks the first minimum, so the stated best setting is arbitrary.",
+    "evidence": "DEF.sweep.curves[1].rec = [39.25, 17.625, 13.75, 13.75, 23.5, ...] (independently reproduced).",
+    "suggested_text": "In writeF4, report ties: const bjs = Ks.filter((k, i) => c1.rec[i] === c1.rec[bj]); then use bjs.join('–') in place of Ks[bj]. The rendered text becomes 'moves the best setting to 0.5–0.75'."
+   },
+   {
+    "severity": "nit",
+    "where": "Test 5 rendered text, writeF5 (line 1711/1714): '37% of each cell’s own rate'",
+    "problem": "pushPct divides by the default infant's rate (omegaI = 15.67 rad/s). The sentence is about an infant 10 bpm above twice mom's rate, whose rate is 17.02 rad/s, so the push is about 34%.",
+    "evidence": "8.376 × 0.69 / 15.665 = 36.9%; 8.376 × 0.69 / 17.021 = 34.0%.",
+    "suggested_text": "const pushPct = (e, w) => Math.round(e * 0.69 / (w || d.omegaI) * 100); and in above10 call pushPct(d.eps10Above, d.omegaI - d.detuneSigned + Model.TAU * 10 / 60)."
+   },
+   {
+    "severity": "nit",
+    "where": "Equations block (line 439), new 'voice' line",
+    "problem": "Imprecise. In the code the arousal terms apply only when presence > 0 (lines 771–772), and the 1.12 factor applies only to the infant's V₀. But the infant's 1.12 is set from p.voice whether or not mom is present (applyParams, line 723), so with mom out of the room, voice still raises the infant's vagal tone. That inconsistency predates this edit, and the new line hides it.",
+    "evidence": "Line 723: this.infant.voice = !!p.voice; lines 771–772: voiceI = p.voice && p.presence > 0 ? -0.006 : 0; line 645: V includes (this.voice ? 1.12 : 1).",
+    "suggested_text": "OLD: voice      adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt, and multiplies V₀ by 1.12\nNEW: voice      with mom present, adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt; multiplies the infant’s V₀ by 1.12\n(and consider gating infant.voice on presence > 0 in applyParams)"
+   },
+   {
+    "severity": "ok",
+    "where": "DEF.sweep and DEF.pulse (stored data)",
+    "problem": "Verified. The stored data match a fresh run.",
+    "evidence": "c6_regen.js: expSweep(DEFAULTS,{R:200}) rounded to 3 decimals is identical to DEF.sweep (170 s). expPulse(DEFAULTS,{eps:[0,1,2,4,6,8,12,16]}) matches all 16 DEF.pulse fields, including detuneSigned -0.309, epsLockExact 4, epsLockOff 19.709, eps10Above 8.376, eps10Below null. The UI rerun uses the same eps list and the R=40 default, matching the Test 4 intro text."
+   },
+   {
+    "severity": "ok",
+    "where": "Test 4 mechanisms and the 3 s Hopf (f4 text, Test 4 bedside)",
+    "problem": "Verified.",
+    "evidence": "Overshoot (R=60, K = 0.5 to 3): with the cap, medians are 12.9, 10.3, 11.3, 17.1, 22.6, 140.3. With no cap they are 12.5, 10.0, 17.3, 23.3, 29.3, 49.3, so the rise survives. With no delay and no cap they are 12.0, 9.0, 7.8, 7.3, 6.8, 6.5, so it vanishes. The cap with no delay still leaves the never-settling runs (2/18/35). Linearized τ=3: Hopf at g=1.6117 (period about 21 s); at τ=1.5 none below 3.86. Noise-free simulation at τ=3: amplitude decays at K=1.5 and 1.58 and grows at K=1.65 and 1.75. Rendered f4 numbers (best K=1 at 10 s; 39 s with no bond; 50 s median and 82 of 200 at K=3; synchrony 0.24 to 0.83) match DEF.sweep."
+   },
+   {
+    "severity": "ok",
+    "where": "Test 5 locking numbers and the 'breathing swings, noise and scatter' sentence",
+    "problem": "Verified.",
+    "evidence": "Onset 4.00023 at n/G = 128/32, 256/64 and 512/128; +10 bpm onset 8.3756; -10 bpm never locks (0.05 grid, n=256, G=64, up to 40). Second-order theory gives a detuning of -0.372, hence onset 4.0. At ε=16, mean locking index 0.426 as stored; 0.576 without breathing swings (RSA); 0.832 with RSA, all noise and alarms removed. Per-session infant heart rate at ε=16 spans 143 to 159 bpm, so session scatter matters. Rendered f5: 3.0 bpm below, 3.3, about 4.0, 0.43 at 16, about 8."
+   },
+   {
+    "severity": "ok",
+    "where": "Other added statements (lines 375, 380, 398, 429, 435, 438, 444–445)",
+    "problem": "Verified against the code.",
+    "evidence": "expRoom uses presence 1, awake true, so both adults take in the room alike ('in these sessions they do'). The out-of-earshot effect is shown in the sync-note finding. recoveryTime returns the first 15 s in-band hold, so later relapses are ignored. BATCH_CELLS = {nSA: 16, nR: 8} in all tests; the live view uses 24/12. The V clamp, A⁺ and cap(Aₘ⁺) match lines 644–646 and 767–768. The first-order 2:1 formula and the 'exact range solved numerically' note match locked21 and lockRange21."
+   }
+  ]
+ },
+ "code_review": {
+  "findings": [
+   {
+    "severity": "should-fix",
+    "where": "shared_air.html line 1645, writeF4: const def = !ranWith.sweep;",
+    "problem": "The 2.1 and 1.6 sentences appear only while the stored curve is showing. If a user re-runs Test 4 without touching any slider, the sentences disappear even though they still hold. Both thresholds are properties of the deterministic arousal equations at the default steadiness and delay. They don't depend on R or on the seeds. K is swept inside expSweep (K is overridden), so the K slider has no effect on this test and should not count either.",
+    "evidence": "In Chromium at 1100px I reset to defaults and clicked Test 4 'Run with my settings'. The f4 text then read 'her capacity to soothe drops, which can trap the pair...' and the 'about 2.1' and 'about 1.6' clauses were gone. Status line: 'Your settings: responsiveness 1.00, delay 1.5 s, steadiness 1.00×, ... vagal 0.50'. On a patched copy using the condition below, the same rerun keeps both clauses. With steadiness 2.5 they are dropped, as they should be.",
+    "suggested_text": "old:     const def = !ranWith.sweep;\nnew:     const st4 = ranWith.sweep, def = !st4 || SKEYS.every(k => k === 'K' || Math.abs(st4[k] - D[k]) < 1e-9); // K is swept, so the slider doesn't matter\n(Strictly, only selfReg and tau enter the two thresholds: the arousal equations don't use warmth, pulse, gap or vagal. Comparing every setting except K is the safe choice.)"
+   },
+   {
+    "severity": "should-fix",
+    "where": "shared_air.html line 1649, writeF4 (new sentence 'Those are the runs that never settle.')",
+    "problem": "The new closing sentence is printed even when no run failed to settle, so it points to runs that don't exist.",
+    "evidence": "Test 4 run in Chromium with steadiness 2.5: '...At 3 the median is 21 s, and 0 of 40 runs never settle. ... her capacity to soothe drops, which can trap the pair in a state where both stay aroused. Those are the runs that never settle.'",
+    "suggested_text": "old: '. Those are the runs that never settle.</p>' +\nnew: '.' + (c0.censored[last] > 0 ? ' Those are the runs that never settle.' : '') + '</p>' +"
+   },
+   {
+    "severity": "should-fix",
+    "where": "shared_air.html lines 1711 and 1714, writeF5 pushPct / above10",
+    "problem": "The sentence is about a hypothetical infant 10 bpm above twice mom's rate, but the push percentage is computed against the current infant's rate (d.omegaI). The quoted percentage therefore shifts with the vagal slider while eps10Above (8.4) stays put. At defaults it is also off: 37% instead of 34%.",
+    "evidence": "eps10Above = 8.376 for every vagal setting I tried, yet the text said 37% at vagal 0.5, 34% at 0.3, 32% at 0.2, 30% at 0 and 40% at 0.65. The rate of the hypothetical infant is 2·ωM + 2π·10/60 = 17.02 rad/s, and 8.376·0.69/17.02 = 34%.",
+    "suggested_text": "old:     const pushPct = e => Math.round(e * 0.69 / d.omegaI * 100);\nnew:     const wAbove = 2 * Model.TAU * d.hrM[0] / 60 + Model.TAU * 10 / 60; // the hypothetical infant's own rate\n    const pushPct = (e, w) => Math.round(e * 0.69 / (w || d.omegaI) * 100);\nand\nold: pushPct(d.eps10Above) + '%</span>\nnew: pushPct(d.eps10Above, wAbove) + '%</span>"
+   },
+   {
+    "severity": "should-fix",
+    "where": "shared_air.html line 1676, drawC5b marks",
+    "problem": "When the user's infant sits about 10 bpm above twice mom's rate, the 'locks at these rates' marker and the '10 bpm above 2:1' marker land within about 0.4 of each other on the eps axis. At phone width their rotated labels pile into one unreadable block.",
+    "evidence": "Vagal 0.3 gives epsLockExact 8.78 and eps10Above 8.38. Screenshot <session scratchpad>/artifact/review-code/c5b_phone_sVag_0.3.png shows the two labels overlapping, about 8 px apart at 390px. Desktop (c5b_pulse_sVag_0.3.png) is still legible. With the fix: patched_c5b_390_sVag03.png.",
+    "suggested_text": "old:     if (d.eps10Above != null) marks.push([d.eps10Above, '10 bpm above 2:1']);\nnew:     if (d.eps10Above != null && !(marks[0][0] != null && Math.abs(X(d.eps10Above) - X(marks[0][0])) < 16)) marks.push([d.eps10Above, '10 bpm above 2:1']);"
+   },
+   {
+    "severity": "should-fix",
+    "where": "shared_air.html line 1721, writeF5 third paragraph",
+    "problem": "'The closeness to 2:1 is an accident of the chosen rates.' is printed even after a user run where the pair is far from 2:1 (10.6, 17.4 or 31 bpm away). The edit changed 'At the default rates' to 'At these rates' in the paragraph before but left this sentence unconditional.",
+    "evidence": "Vagal 0.3 run: '...the infant’s heart sits 10.6 bpm above twice mom’s. ... || The closeness to 2:1 is an accident of the chosen rates.'",
+    "suggested_text": "old: '<p>The closeness to 2:1 is an accident of the chosen rates. An infant 10 bpm\nnew: '<p>' + (Math.abs(sgn) * 60 / Model.TAU < 5 ? 'The closeness to 2:1 is an accident of the chosen rates. ' : 'How close a pair sits to 2:1 is set by its rates. ') + 'An infant 10 bpm\n(Tested on a patched copy; the wording of the far-from-2:1 alternative is up to you.)"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html lines 568-570, lockRange21 early return",
+    "problem": "If the phase is already locked at eps=0, the function returns { on: 0, off: null }, which says the tongue never closes, without ever looking for its end. In floating point this branch never fires. At omega = 2·Omega exactly, d is about -4e-14 for every starting phase, so locked21(…, 0) returns false and the scan returns on ≈ 1.2e-10, off 24.10, which is sensible. The branch is effectively dead code, and if it ever did fire it would give the wrong 'off'.",
+    "evidence": "omega-2Ω = 0, ±1.6e-11, ±1e-6: locked21 at eps=0 returns false every time, and lockRange21 returns {on≈1e-10 or 1e-5, off≈24.0965}.",
+    "suggested_text": "old:     if (locked21(omega, Omega, 0)) return { on: 0, off: null };\n    const edge = ...;\n    let on = null, off = null;\nnew:     const edge = ...;   (unchanged line)\n    let on = locked21(omega, Omega, 0) ? 0 : null, off = null;"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html lines 1022-1023, expPulse tail",
+    "problem": "All three lockRange21 solves run inside the generator's final next() call. That freezes the page for about 0.26-0.31 s at the very end of a run, with the progress bar sitting at 100%. Elsewhere the run blocks for about 110 ms per chunk.",
+    "evidence": "Node: the final next() takes 308 ms; total expPulse is 5.06 s, against 5.52 s for the original (noise). Chromium Test 5b: the last long task is 261 ms against a median of 114 ms; the original's last long tasks were about 110 ms. With the yields below, the last long tasks are 75-126 ms and runToEnd and regen_def are unaffected.",
+    "suggested_text": "old:     out.epsLockExact = lr.on; out.epsLockOff = lr.off;\n    out.eps10Above = lockRange21(2 * wM + d10, wM, 40).on; out.eps10Below = lockRange21(2 * wM - d10, wM, 40).on;\nnew:     out.epsLockExact = lr.on; out.epsLockOff = lr.off; yield 1;\n    out.eps10Above = lockRange21(2 * wM + d10, wM, 40).on; yield 1;\n    out.eps10Below = lockRange21(2 * wM - d10, wM, 40).on;"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html lines 1675 and 1713/1720, fallbacks in drawC5b and writeF5",
+    "problem": "(a) Data without the new fields gets two different fallbacks. drawC5b uses d.epsLock when epsLockExact is undefined, while writeF5 tests != null and prints 'no locking at any strength up to 40'. DEF and every new run carry the fields, so neither fallback can trigger now; they can be dropped or made the same. (b) The 'because ... moves them toward the ratio' clause still prints when epsLockExact is null on the above side, which contradicts itself. That case needs a detune of more than about +70 bpm, so the sliders can't reach it.",
+    "evidence": "I injected synthetic results into Model.expPulse in Chromium. A result with the fields deleted gave a chart marker at 1.4 while the text said 'no locking at any strength up to 40'. detuneSigned +0.6 with epsLockExact null gave 'gives no locking at any strength up to 40, because ... moves them toward the ratio'. No NaN or undefined appeared in any case.",
+    "suggested_text": "old: ' + exact + ', because the pulse also drags the infant’s cells slower, which here moves them ' + (below ? 'further from' : 'toward') + ' the ratio. Even at <span class=\"num\">'\nnew: ' + exact + (d.epsLockExact == null && !below ? '' : ', because the pulse also drags the infant’s cells slower, which here moves them ' + (below ? 'further from' : 'toward') + ' the ratio') + '. Even at <span class=\"num\">'\nand in drawC5b: old: d.epsLockExact !== undefined ? d.epsLockExact : d.epsLock   new: d.epsLockExact"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html line 439, equations block (voice line)",
+    "problem": "In the code, only the infant's vagal tone gets the 1.12 factor (this.infant.voice = !!p.voice; mom's voice is never set). The two arousal terms also apply only when presence > 0. The new line reads as if V₀ is scaled for everyone.",
+    "evidence": "Line 645: V = this.vagal * vagScale * (...) * (this.voice ? 1.12 : 1). Line 723: only infant.voice is set. Lines 771-772: voiceI/voiceM are gated on p.presence > 0.",
+    "suggested_text": "old: voice      adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt, and multiplies V₀ by 1.12\nnew: voice      adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt (mom present), and multiplies the infant’s V₀ by 1.12"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html writeF4 line ~1651, 'Doubling the delay moves the best setting to'",
+    "problem": "In the new 200-run DEF, the 3 s curve ties exactly at K=0.5 and K=0.75 (median 13.75 s for both). The strict < picks the first, so the text says 0.5 when 0.75 is just as good.",
+    "evidence": "DEF.sweep.curves[1].rec = [39.25,17.625,13.75,13.75,23.5,...]",
+    "suggested_text": "old: '<p>Doubling the delay moves the best setting to <span class=\"num\">' + Ks[bj] + '</span> and narrows it.\nnew: '<p>Doubling the delay moves the best setting to <span class=\"num\">' + (c1.rec.filter(v => v - c1.rec[bj] < 0.5).length > 1 ? Ks.filter((k, i) => c1.rec[i] - c1.rec[bj] < 0.5).join('–') : Ks[bj]) + '</span> and narrows it.\n(or simply write 'about 0.5' and leave the code as is)"
+   },
+   {
+    "severity": "nit",
+    "where": "shared_air.html line 1682, drawC5b marker labels (pre-existing, not from this diff)",
+    "problem": "Each rotated marker label is drawn straddling its own dashed line, so the line runs through the text.",
+    "evidence": "The default chart screenshot <session scratchpad>/artifact/review-code/c5b_pulse_sVag_0.5.png shows the dashed line striking through both labels. With the fix: patched2_c5b.png.",
+    "suggested_text": "old: ctx.save(); ctx.translate(x - 4, top + 4); ctx.rotate(Math.PI / 2);\nnew: ctx.save(); ctx.translate(x + 3, top + 4); ctx.rotate(Math.PI / 2);"
+   },
+   {
+    "severity": "ok",
+    "where": "Page load, desktop 1100px and phone 390px, light and dark",
+    "problem": "No problems.",
+    "evidence": "In all four combinations the only console error is the aborted Google Fonts request (ERR_FAILED), and there are no page errors. scrollWidth equals clientWidth (1100/1100 and 390/390), no element overflows outside a scroll container, and body backgrounds are correct (rgb(251,248,246) light, rgb(19,22,29) dark). The default f4/f5 text has no NaN, undefined, null or Infinity."
+   },
+   {
+    "severity": "ok",
+    "where": "Test 5b 'Run curve with my settings' in Chromium",
+    "problem": "The text handles every case without errors or NaN; the wording issues are reported above.",
+    "evidence": "Each run took 5.8-6.4 s. Vagal 0.5: -2.95 bpm, exact 4.00, off 19.71. Vagal 0.45: +0.44 bpm, exact 0.48. Vagal 0.4: +3.82, exact 3.72. Vagal 0.3: +10.61, exact 8.78. Vagal 0.2: +17.41, exact 12.96. Vagal 0: +31.04, exact 20.12 (beyond the chart, marker skipped correctly), off null. Vagal 0.65: -13.1, exact null, which prints 'no locking at any strength up to 40'. Warmth 0.8: -1.21, exact 1.45. eps10Below is null for every reachable mom rate, so I checked a non-null value by injection: it prints 'one 10 bpm below needs about 12'. epsLockExact = 0 prints 'about 0.0' (unreachable). In every case the above/below wording and the direction of the 'because' clause are consistent."
+   },
+   {
+    "severity": "ok",
+    "where": "Test 4 'Run with my settings' (R=40) in Chromium",
+    "problem": "Completes, and the UI stays responsive.",
+    "evidence": "Runs took 42.4 s at defaults, 43.5 s at steadiness 2.5 and 43.2 s at delay 0.5 (headless desktop; phones are likely 2-4 times slower). Over the run: 371 long tasks, the longest 151 ms; longest gap between animation frames 150 ms; page.evaluate latency at most 56 ms; the progress bar moved about 7.5% every 3 s. f4 reads 'of 40 runs'. For your information: the default rerun lands in the other text branch from the stored curve ('At 3, 24 of 40 runs never settle within the window' against the stored 'median is 50 s, and 82 of 200'). Seeds 5000-5039 happen to censor more often, about 2.4 standard errors above the 200-run rate. That is sampling noise, not a bug."
+   },
+   {
+    "severity": "ok",
+    "where": "locked21 / lockRange21 (lines 544-577): resolution, large detune, narrow tongues; verification of audit numbers",
+    "problem": "The numerics are sound. All the audit's locking numbers reproduce.",
+    "evidence": "Resolution: onsets and offsets at n=128,G=32 match n=512,G=128 and n=1024,G=256 to 4 decimals at detunes -5, -2.95, -1, +0.5, +2.95, +5 and +10 bpm. For example, default: on 3.9998 and off 19.7096 at all three resolutions. Audit facts confirmed: first-order 3.31, exact onset 4.00, tongue closes at 19.71, +10 bpm locks from 8.38 (closes at 33.7), -10 bpm never locks up to 40. Large detune: +30 locks from 19.6, +60 from 33.5, +75 never; -30 and -60 never. Skipped tongues: on the below side the tongue closes near -5.18 bpm (width 4.4 at -5.0, 0.5 at -5.175, gone by -5.2). The range where it is narrower than the 0.25 step is under 0.01 bpm wide, so skipping it never matters. At -10 bpm the best-phase error stays at or below -0.635 rad for every eps up to 40 (0.02-step scan). Timing per call is 96-203 ms."
+   }
+  ],
+  "summary": "I found no blockers. The page loads cleanly at 1100px and 390px in light and dark, with only the expected aborted Google Fonts error and no horizontal scroll at 390px. Test 5b runs (5.8-6.4 s) and Test 4 runs (R=40, 41-44 s, UI responsive: longest block 151 ms, progress updating steadily) complete without errors, and no NaN or undefined appears in f4/f5 for any slider setting or injected edge case.\n\nThe new locking solver is accurate. Its results at the shipped resolution (n=128, G=32) match much finer settings to 4 decimals, and every audit locking number reproduces (3.31 first-order, 4.00 exact onset, closes at 19.7, +10 bpm from 8.38, -10 never up to 40). The coarse 0.25 step can only skip a tongue in a detune window under 0.01 bpm wide, which never matters. In node, expPulse takes 5.1 s; the new solves add a 0.3 s block at the very end.\n\nShould-fix:\n1. Re-running Test 4 with unchanged default sliders drops the 2.1 and 1.6 sentences even though they still hold. Better condition: compare every setting except K (which the test sweeps) to the defaults.\n2. 'Those are the runs that never settle.' is printed even when 0 runs failed (seen at steadiness 2.5).\n3. The push percentage for the hypothetical infant 10 bpm above uses the current infant's rate. It shifts from 30% to 40% with the vagal slider and reads 37% at defaults instead of 34%.\n4. At phone width the two chart markers overlap when the infant is about 10 bpm above 2:1 (vagal 0.3).\n5. 'The closeness to 2:1 is an accident...' is printed even when the pair is 10-31 bpm away.\n\nNits: the eps=0 early return in lockRange21 (dead in floating point, wrong off value if hit); yields to split the 0.3 s block at the end of expPulse; fallbacks for old data that disagree between chart and text; the voice equation line; the exact tie at 0.5/0.75 on the 3 s curve; and marker labels struck through by their own lines (from before this edit).\n\nI applied every code fix I suggest to a copy in my own directory and tested it in Chromium and node: no errors, the default-settings rerun keeps both sentences, and the labels no longer overlap. Scripts, screenshots and the patched copy are in <session scratchpad>/artifact/review-code/ (patched copy: shared_air_patched.html; patch.py has the exact old/new strings)."
+ }
+}

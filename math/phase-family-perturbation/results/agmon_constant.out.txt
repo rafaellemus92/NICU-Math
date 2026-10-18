@@ -1,0 +1,8 @@
+sup over rho in [1,40] of (s2/rho)^(1/2) + (rho s4)^(1/2) = 7.3702 at rho = 40.000   (limit 2 sqrt(4 pi) = 7.0898)
+C_A = 0.4680   (asymptotic 0.4502);  use C_A = 0.47
+  rho=  1.0: s2/rho=6.000  rho*s4=10.590  bracket=5.704
+  rho=  2.0: s2/rho=8.083  rho*s4=12.652  bracket=6.400
+  rho=  5.0: s2/rho=10.712  rho*s4=12.928  bracket=6.869
+  rho= 10.0: s2/rho=11.655  rho*s4=13.165  bracket=7.042
+  rho= 20.0: s2/rho=12.107  rho*s4=13.735  bracket=7.186
+  rho= 40.0: s2/rho=12.339  rho*s4=14.881  bracket=7.370

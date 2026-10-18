@@ -1,0 +1,552 @@
+[
+  {
+    "path": "math/all-time-phase-response/results/observable_remainder.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "b28f99e3c4dd1679960af527afde75a63b0c005f0b98bcdce12149460fac85bb"
+  },
+  {
+    "path": "math/all-time-phase-response/results/pilot.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "a26a7fc1a08e304d4f5dbfaa0eb84491f5e43fd5a254da2a74964de0dc2e83f4"
+  },
+  {
+    "path": "math/all-time-phase-response/results/recheck.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "914412564cf3ba26f327b05b4015c32e0038e36a13984ff62a50e540dbea1648"
+  },
+  {
+    "path": "math/all-time-phase-response/results/refined.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "f0ef4d6be4c1ac7799f9639364807758453e805e6d0cbc80a0594908b1d1f139"
+  },
+  {
+    "path": "math/all-time-phase-response/results/tests.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "9000121d4c171f61ddca917ee481f39d1f094cc3ee0cda8bb21bc6ade6b1748e"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/compare_audit_v2.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "af8bc8f760c13333184458963bc9e8050a3643bda9486a4e4dfaf7deb40ce740"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/decompose.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "967d40c472c19f4aaee01f7ede5b719b4477705ff829a851942f8f87a680b3f0"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/decompose.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "3efba743b585a4cb43423391976e3564e73711bd4cd1e4455f5a6b8f74d683e3"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/README.md",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "917f2a04eca7b9f41d170a10bfea3f8cc1a8c3fe874bceb15b92a8de71770835"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_crossing.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "b7d3e353750b1a9fbcc3e815f2f9a8de8ba27910e86f5b2021d93d21cb12b3df"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_csv_audit.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "2046a0251aa9a5ebc429cd639858f97394ec3885ea50c692e9bd835c260b701a"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_field48_64.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "80183545438568981c690ae8dfa21964a558f6193288beba3bc0639750a84bd6"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_node_parity.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "aa63ed2cc84c22294fe50c567b789398c6daabe4687b049f8f42002c2bb756de"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_opt_fd_24.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "23fae8c2fc59d41d69699395513647990ed523852bc9d750cfb5772c0d6af254"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_pytest.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "24e7797ea1400810a601aa643e5b2c8913e2c65d2d878f7d0606964bc46ecd11"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_ranking32.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "660171658f95cb9478136fb59e1b6032b98b8462ea555d1fc44a91b2b508f7a4"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_selection_rule.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "f63f3ad0537e0e7180ca09e83fa245e6ebca0f7bde17481b7b4b6d585783ebf7"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/audit_symmetry.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "4bc307adb19308654cf35202b42aa2c8609e97ab698ec048fbb01e0ec9b58803"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/exact_run14.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "98382430a7c7d51fd88509db4cad44091f8c2741008f41cfc6be20dee87d7777"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/fixed_dt_L2.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "94b644a6170f9b82f4ca298049dac80caf064878afaeb883a275cedcb25ade3a"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/fixed_dt_L2.py",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "ea75d60fd27b9da33dc34e0e8b60570ce08d56bb3b9173daa502863245055059"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/float_rk4_check.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "5134ef7a65a78a9dc910fa3f0648dd39abe403cd66e497b5b62084934fe0be6d"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/reconcile_check_claims.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "2a06c7e0f4644b0b44c9bbf13b1d8994b0c8ec4aacd0e8b32b8e6a5634acbb1c"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/reconcile_compare_nodes.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "01cd2e4f4c4cc67fd54c87f80186ffe4d04d69a5466478cb87f7df60b539f4c5"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/reconcile_exact_vs_float.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "e62f03d275c3cd18a6d2b18775855bb746cb3f14cce763ec92cc905385b1850a"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/rot_passive_split.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "144d8b24129efd92fb40a05e28fca09a4d158027f6b9d12e9ca7a14ef437d336"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/rot_passive_split.py",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "f926ccb37a0fc90a95cfac8382bf1c69f9929e7ca757b54edd636bc6e64af36e"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/structure_growth.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "f5988610bba81a893fb1cb2f6814b2aab2bc1fd74b719a6eca96160d14f178f3"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/earlier_runs/structure_leaf_check11.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "341b75121e0c73052c48809f61e6fcd3677302323e5160eb2399a892595a79bb"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/exact_single_nu.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "a94107d73eb8cd45bdada694ad932dfe336bfbb38eea425b78e338ebab48756e"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/float_check.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "b746c1801b974bf8f12b7503ba19e4dfde4e12bf7cb51a11c1a75bcf956db7d4"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/leaf_check.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "fe96d0744a513338485ed651964b2eda787053f8a238a31dc8c87249a484e3f8"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/long_jet.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "f1e201c6bd13c05adcb648cd6f2de55b324235483d3b1dbb7008f73b2be351ea"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/long_jet.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "9b9e401791c76f247848bef02b39f401deba5af075b19ad32e104fe05b4bedae"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/series.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "8b071dd0abb8a6f293a4d4fbb168b09503305474dba3e13103100073dd0563f4"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/series_summary.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "20dc922e56bac5e8a0dda0a7f39bf1917adf60a87200e619b708ea85b3c47490"
+  },
+  {
+    "path": "math/ns-phase-audit/enstrophy-jet/results/taylor_exact_n14.log",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "ac52cdc8681357c4fc5846ed1cb62f872b23591bffc0121f9315d99fa87bf0f3"
+  },
+  {
+    "path": "math/shared-air/results/adjudication/t002_cap.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "1047a5a6ca053905bb90bcc106d905ae4a8e409e4bb42ade94c232a9daa49acb"
+  },
+  {
+    "path": "math/shared-air/results/adjudication/t002_nocap.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "e10914f61d38fa4ef02ffa0c0c137e13e79ce317d52a97775b4866d42d12fdbd"
+  },
+  {
+    "path": "math/shared-air/results/adjudication/t15_cap.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "0c624862f0a1b2925623cb75dc4a811c8f4102a5d011ca5ec3680a0516f959a3"
+  },
+  {
+    "path": "math/shared-air/results/adjudication/t15_nocap.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "319a8cace580a952bf38c951158d16ce6d9830aed925a06665e232ae11e4c0ba"
+  },
+  {
+    "path": "math/shared-air/results/checks/adjudicate_R14_seeds5000.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "2dde4904c067f48ea6626fcbcbb68aedfb572afce712510511536743146c4bea"
+  },
+  {
+    "path": "math/shared-air/results/checks/adjudicate_R20.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "27c369a1d30957d4eff1043fb20adc70c85e8cc60966b52a4fab8fa9b6167007"
+  },
+  {
+    "path": "math/shared-air/results/checks/kick_check.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "01ef04c7ef5086a3acea3409c8fa547847f85c309c76f32cc706957a12c3ef0b"
+  },
+  {
+    "path": "math/shared-air/results/checks/lock_proto.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "ce893e6abc9aaf352fd1700514fc2a40b75943e93c2c414a08eb2d21f00157fa"
+  },
+  {
+    "path": "math/shared-air/results/checks/quick_check.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "ffcc9e9f8aa796f8dd5a86e33968d5592f24dc473b3b62ae7eb1465daf804ea7"
+  },
+  {
+    "path": "math/shared-air/results/checks/regen_def_R14.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "425f17496b1cfc808a8e5736b8422d829a246cceacb811d8943952d8e92b32db"
+  },
+  {
+    "path": "math/shared-air/results/checks/regen_def_R200.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "5b6bf5ad4a9fcc3cf6ca51f67b9551be78acbeb1ea9011c432ab27480703744e"
+  },
+  {
+    "path": "math/shared-air/results/checks/regen_def_write_test.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "575ee09ccf6ef1e568ad9698e1350659970668555abbfcf1f714d82bf2a60f8f"
+  },
+  {
+    "path": "math/shared-air/results/checks/render.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "542bbddfb5c12364a78e06b64eb1cff843a5d2dc8fcbe7cecab224c0ff3c921a"
+  },
+  {
+    "path": "math/shared-air/results/checks/room_check_N100.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "2895f45bdffb409d1372b5721f0d39af78a8925a804c1bb127ca2d8b97b43701"
+  },
+  {
+    "path": "math/shared-air/results/checks/room_check_N60.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "78e454885374d1ac75795ce2343fe70ea43af320f3b876e5567753ba637b91e0"
+  },
+  {
+    "path": "math/shared-air/results/checks/theory_check.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "e48fb6ef549a70395daab8bd31f5e3ba58fde4cb2e2d0636ecae27acdc619ce8"
+  },
+  {
+    "path": "math/shared-air/results/checks/within_mom_N100.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "1cdd27076d7f744142ec0144bfd2ed6ffaca2d53e979a366795e836cd1d2b016"
+  },
+  {
+    "path": "math/shared-air/results/checks/within_mom_N60.txt",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "cdf8684a47d5d49e892c6064b50aa5e2847b8930e4ea58bfadd4893547ad9b10"
+  },
+  {
+    "path": "math/shared-air/results/corrections.diff",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "58e9f16c08ee1390fde93b89ed9f242f888d4ac7cb91ef7b5516505724ef4bca"
+  },
+  {
+    "path": "math/shared-air/results/review_findings.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "a95af227b8d8a5d2566cc0e421489720ff0fc48945adb9b6d861bddba1c8de6a"
+  },
+  {
+    "path": "math/shared-air/results/verifier_findings.json",
+    "source_commit": "1245d0c430c90bdbf1ba6cc735a2068bb2c28776",
+    "sha256": "21a949db88bca5d58a03b288c38dd5a05756f96b9c3a0b5157e2b3999cd6b607"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/K_effect_full.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "453e7d17d7514c909edde1fb307d5c465fcc8d9600b8cb2de9f01b92c1e97699"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/K_effect_full.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "c99cc0cd4a04ecbdea000788ce783707d90e4891af63a213913e4eeadfbf08e9"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/K_effect_resp.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "8a1d7359dd28cb3e2e951feaf7f266742e096ae1b3b50d1b93f2581c3f653f74"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/K_effect_resp.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "6df1b107dae1270a06319b2ccce666225c3eba0a9157bfab7eaa744127fe9e14"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/cancellation_E.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "6f63b9e782548d5fb72f2fded07f7f0ebcdb65c110e4befbd504ced007c6a2ee"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/formula_checks.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "77a78fc568eaea8412463ab6865173956c0216483165e6a9db5a545cb537c593"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/fullsolve_extrap.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "0c234e6b9ea06816c9a15209d4202a0fa527bc570975a8f8fd6b13e45a9e29fb"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/fullsolve_extrap.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "d1a94f0731e6b37d9c35f9076c9af9261b082d7068a8434112866095c5eae2b2"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/jet8.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "990ec114960f6d03dc667eec4732ebf4f3aae3eb603a3afc1e8ff29af2267537"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/jet_b2.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "9c4d53c37cfc6e98db94c7f78986d0bcd5375c0d40609cde5c0c53424e298fcf"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/jet_fit.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "a4852221fb043087a394020d8d94236924d906f73f65d997bf99a116f099b35a"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/jet_t7.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "2a2164a47aba249537947a968b60de110f1184f4627597244a1a04ed60c449c1"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/late_time_N24.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "920bcfc13ceab7c1f8343065bc264e90165993bfd90e4804b341f875e26204b3"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/late_time_N24.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "101e73891c69330e4422fec7e788cdf2983ef54c4f148cfb2bb7f997e69cde21"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/late_time_N30.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "c10b40d3075aef595a87eb65d25991b9f5d939509dcef6b14e0a2ed861fb70a6"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/late_time_N30.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "cec2cd4dfdd1cd2d312187cc0950eb53c0e21bedce40f3b3ed765bc7600e1bd6"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/phaseT1.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "715c594abd70b98b384a29fd6be354d712572cc1bde9233cec72264b906c000f"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/phaseT1_N18_M12.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "4c001ee6cdbf23a802c24f18c5b2593bcbe54e83fbec9ad7f6637836842a6d63"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/phaseT1_N24.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "4114fffe928c724af01c781cd613aeaa5ce0688f8409df3846ec7ba2820f5f19"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/phaseT1_N30.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "b98e254f7faba7d826c9ae3b58999d2a964534343a2cdfab742d2618154c34d1"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/pkg_check.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "4e6f9af2118b457e720182edbed3dd7790474b6ac654326bff72bf8cae6bc144"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/q3q4.out",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "1c7481811c211bfdf8aafb8a8a835e460520dc590c127e9c1e6281032dcf8492"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/richardson_fix.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "576532f59816a7c5dc34fa76b47b78ef10641b63ffe7a6875cc95089dfc5f931"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/run_pkg.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "7cfb639ea829c4bfa1fd42f4cca198d66cbc3a99a5fa35b209596c6776a40060"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/spatial_conv.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "eb459ed220efd84774ca6c46ee10816ee486cc4408c27cb3690cc48f06110921"
+  },
+  {
+    "path": "math/phase-family-checks/review/out/spatial_conv.log",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "2d0d061aee62bc78de0f1fea54d0d935c6ce5bda2568d0a19f93bc2ee1c12e1c"
+  },
+  {
+    "path": "math/phase-family-checks/v2/check_T05.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "04218087c19659204168ea2e7a23d1392258a5566e5b1b53c1555457f23079e2"
+  },
+  {
+    "path": "math/phase-family-checks/v2/results.json",
+    "source_commit": "43d41e916957b02359a5b0959057019fb8cf6950",
+    "sha256": "ed7dc15860f2f50e580202e09bc7262ff4c29a638dc37fc413d898abcaf063a7"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/agmon_constant.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "36d61cb40f3af181831a24c615b18997e5862a97e4214e898e9d81799a5d5dfe"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/atpr_refined.PROVENANCE.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "27938af92dd6862101195663b84b4e8a67ae69f4212c400c6fc7b7eaf4bdd6d2"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/atpr_refined.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "f0ef4d6be4c1ac7799f9639364807758453e805e6d0cbc80a0594908b1d1f139"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/base_flow_norms_a0.1.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "47e6dc4387799c5e2a40e6105d818f2dfe879b6ee6fd42cd22cd701c8d094ced"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/base_flow_norms_a0.3.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "cc3f502d2988573d36d70849ab2e195a628658c2adef7ccc5b07e5d303da6b79"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/base_flow_norms_a1.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "5927871ee98c4214e6be29019c05187d8fb43d618632c0d56ce88d7bf61139b1"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/crosscheck_variational.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "4f869a77c6b7f7df66e875a9ee0aa586a999776919ddd4f621445ef68f99dc14"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/full_family_dns.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "d22c89ce008aa77503efa38e37ae33f3689ea169ed224ca467fd3fdd1582c3aa"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/full_family_dns.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "3f38ca4adad76c0da246fc8d5c946559085efefefef846c5b68b7d8e675fc98d"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/growth_b0.1.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "94a4acf0ec169be7c704c2d1142185d14b0af78d3c0ccbbf6fac1c1d59de0f52"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/growth_b1.0.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "e60e2379034c498779d3870a52b32798f2140f3cef8c9214f905be1431bea022"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/jet9_generic.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "a2c3b985cd8fe85d730a7116a39668cdffa9c35e8a993d1a54c2798b8c5e2ec3"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/jet9_generic.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "eda00f113e54d92ec93fb280448d202904fd60ccb132b8c266cf0512c7fb233d"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/jet9_unit.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "63c97b2babea102fcf58331825a1edf469eb6c4e08fb7b7b8334231355038ad3"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/jet9_unit.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "80f50e8e81e33537fe674610d495aeea275f6349be3a14c16d9ff0b3e0e209e5"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/long_b.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "763c7685b5725e921755cff4600be22dcb67717f7ed5665f8f634b1c39204a39"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/long_b.log",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "9219c002a5fa84c48ed055b282a43ad680d6deae02b6b021cb4186ad166810ca"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/measured_constants.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "44f7129768ae7317fd05305b6cdc3330dd09c8eaa34c4afa115feb16daaefbd5"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/perturbation_growth_b0.1.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "85eb689b26d773e43469eecee10b1757e0094e040ff3380cf7ab851232aa38dd"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/perturbation_growth_b1.0.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "e89cce47a115753c2cc49f3a30239f3b05630bcf369b5ab5b0a16cbe87452ce3"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/reduced_family.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "246579c3b0d012837bb8612f9f98ef334d587e5cfe356248c687725cb7237c12"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/reduced_family_t20.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "0f9e500cd0cefe0a9194b25fe4fe5c6f988681b35c8b84c4519a280cf51c57be"
+  },
+  {
+    "path": "math/phase-family-perturbation/results/reduced_family_t20.out.txt",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "b48b2673a4945f4bcf84715b217a0c9bb75fb0c353aa6ec26497edd205547065"
+  },
+  {
+    "path": "math/oscillation/results/triad_coherence.json",
+    "source_commit": "a6c0739104272a3074aa1e4b5c90402c2c8a25ea",
+    "sha256": "6bdc371abe3f9d5ed47f0ae990b1d3a7f3339df2cb97ef02c69a09896619ea05"
+  }
+]

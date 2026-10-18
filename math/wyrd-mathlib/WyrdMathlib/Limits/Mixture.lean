@@ -31,12 +31,23 @@ model
 What mathematics cannot do is pick the numbers: `r, p, q, i` come only from
 recordings. Additivity itself is an assumption, and the interaction model is the
 first relaxation of it.
+
+Every result here also assumes that the alike part `r` is the same in every
+condition. In the page's model that holds exactly for responses of the infant
+alone, such as the heart-rate example above. It fails for infant–mom synchrony
+when mom sleeps: with no bond at all, her synchrony with the infant is higher
+awake than asleep by `+0.086 ± 0.013` (60 sessions) or `+0.096 ± 0.009` (100
+sessions), because asleep she gets half the alarm kick and a lower set point.
+`p = skinAwake − skinAsleep` would read that drop as a perceived part, and the
+same applies to `apart` taken at the bedside asleep (numerical, not proved
+here; `math/shared-air/AUDIT.md` §6).
 -/
 
 namespace Wyrd.Limits
 
 /-- A bedside condition: is the perceived path on (`1`) or off (`0`), and is the
-contact path on or off? -/
+contact path on or off? The alike part `r` is assumed the same in every condition
+(see the module header for where that fails in the model). -/
 structure Cond where
   perceived : ℝ
   contact : ℝ
@@ -55,7 +66,8 @@ def skinAwake : Cond := ⟨1, 1⟩
 /-- Skin-to-skin, mom asleep. -/
 def skinAsleep : Cond := ⟨0, 1⟩
 /-- Mom apart: at the bedside asleep (or out of the room, if that leaves the alike part
-`r` unchanged). -/
+`r` unchanged). Asleep has the same proviso: for infant–mom synchrony the model's
+sleep itself shifts `r` (see the module header). -/
 def apart : Cond := ⟨0, 0⟩
 
 /-- Any single-condition result is reproduced exactly by the pure alike world. -/

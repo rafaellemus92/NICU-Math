@@ -1,0 +1,26 @@
+  order 1: 28 labelled terms
+  order 2: 80 labelled terms
+  order 3: 258 labelled terms
+  order 4: 742 labelled terms
+  order 5: 1868 labelled terms
+  order 6: 4340 labelled terms
+  order 7: 9180 labelled terms
+  order 8: 18244 labelled terms
+  order 9: 34066 labelled terms
+  order 10: 60876 labelled terms
+  order 11: 103960 labelled terms
+jet time 257.1s
+U_n: nb=0 terms are (pure a, L=1) or linear in (c,d): PASS
+n=0: harmonics [0]  match series.json: True
+n=1: harmonics [-1, 0, 1]  match series.json: True
+n=2: harmonics [-1, 0, 1]  match series.json: True
+n=3: harmonics [-1, 0, 1]  match series.json: True
+n=4: harmonics [-1, 0, 1]  match series.json: True
+n=5: harmonics [-1, 0, 1]  match series.json: True
+n=6: harmonics [-2, -1, 0, 1, 2]  match series.json: True
+n=7: harmonics [-2, -1, 0, 1, 2]  match series.json: True
+n=8: harmonics [-2, -1, 0, 1, 2]  match series.json: True
+n=9: harmonics [-3, -2, -1, 0, 1, 2, 3]  match series.json: True
+n=10: harmonics [-3, -2, -1, 0, 1, 2, 3]  match series.json: True
+n=11: harmonics [-3, -2, -1, 0, 1, 2, 3]  match series.json: True
+ALL PASS

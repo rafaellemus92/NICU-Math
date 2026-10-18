@@ -1,0 +1,28 @@
+audit_t1_check.py: package Z2 cos 2phi at T = 1 against AUDIT.md section 4.3
+python 3.13.16, numpy 2.5.3
+
+(i) ns-phase-audit/audit_v2/xcheck/p1_finite_time.log, Laurent c2/beta^2 of Z(T = 1):
+    beta = +0.40: -1.190938e-03
+    beta = +0.20: -1.203510e-03
+    beta = +0.10: -1.206668e-03
+    beta = +0.05: -1.207458e-03
+    beta = -0.10: -1.206668e-03
+    AUDIT.md section 4.3 quotes [-0.0011909, -0.0012035, -0.0012067, -0.0012075]; the log rounded to 5 digits gives [-0.0011909, -0.0012035, -0.0012067, -0.0012075]
+    beta = -0.1 equals beta = +0.1 (even in beta), as AUDIT.md says
+
+(ii) Extrapolation of c2/beta^2 to beta -> 0:
+    Richardson from beta = 0.1, 0.05:          -1.2077213e-03   (rounding of the log alone allows +-8.3e-10)
+    Richardson from beta = 0.2, 0.1:           -1.2077207e-03
+    three-point (0.2, 0.1, 0.05; drops beta^4): -1.2077214e-03
+
+(iii) response.py, N = 24 (K = 7), dt = 0.01, T = 1.0, nu = 1/28, a = c = d = 1 (59 s):
+    audit phases 2 pi j/8 + 0.137 : Laurent [Z2]_(m=2) = -1.2077219e-03 (imaginary part -5.6e-12); cosine amplitude -2.4154438e-03
+    package phases 2 pi j/8       : Laurent [Z2]_(m=2) = -1.2077219e-03 (imaginary part +2.8e-17); cosine amplitude -2.4154438e-03
+
+Relative differences, package against the audit extrapolations:
+    Richardson 0.1/0.05 : 4.5e-07
+    Richardson 0.2/0.1  : 1.0e-06
+    three-point         : 4.2e-07
+    (the 7-digit rounding of the log allows about 7e-07 relative in the Richardson 0.1/0.05 value)
+
+total wall time 59 s

@@ -2,7 +2,7 @@
 
 const links = [
   { href: '/', label: 'Conjecture' },
-  { href: '/proof', label: 'Proof' },
+  { href: '/outline', label: 'Outline' },
   { href: '/demo', label: 'Demo' },
   { href: '/shared-air', label: 'Shared Air' },
 ]
@@ -23,7 +23,7 @@ export default function Nav() {
           color: '#c9a96e', textDecoration: 'none', fontFamily: 'Georgia, serif',
           fontSize: 18, fontWeight: 600, letterSpacing: '-0.02em',
         }}>
-          NS ; Regularity
+          Models ; Dynamics
         </a>
         <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 20, rowGap: 6 }}>
           {links.map(l => (

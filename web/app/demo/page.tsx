@@ -10,6 +10,7 @@ import {
   type BreathResult,
   type Classification,
 } from '@/lib/ns'
+import StatusBanner from '@/components/StatusBanner'
 
 const card = {
   background: 'rgba(255,255,255,0.03)',
@@ -19,25 +20,26 @@ const card = {
 }
 
 const LEGEND: { key: Classification; label: string; desc: string }[] = [
-  { key: 'smooth', label: 'Smooth', desc: '‖u‖_{H¹} bounded — solution regular, viscous dissipation dominates surface tension forcing.' },
-  { key: 'approaching', label: 'Approaching', desc: '‖u‖_{H¹} growing — compliance declining, approaching the critical threshold.' },
-  { key: 'critical', label: 'Critical', desc: 'Near blowup threshold — intervention needed to prevent finite-time singularity.' },
-  { key: 'singular', label: 'Singular', desc: 'Compliance near zero — alveolar collapse — the Laplace pressure 2γ/r diverges.' },
+  { key: 'higher_compliance', label: 'Higher compliance', desc: 'At least 1.0 mL/cmH₂O in this synthetic scale.' },
+  { key: 'intermediate_compliance', label: 'Intermediate compliance', desc: '0.3 to below 1.0 mL/cmH₂O, without the specified declining trend.' },
+  { key: 'declining_compliance', label: 'Declining compliance', desc: '0.3 to below 1.0 mL/cmH₂O and slope below −0.1 mL/cmH₂O per breath.' },
+  { key: 'low_compliance', label: 'Low compliance', desc: 'Below 0.3 mL/cmH₂O in this synthetic scale.' },
+  { key: 'insufficient_data', label: 'Insufficient data', desc: 'Missing or invalid inputs; no physiological inference.' },
 ]
 
 export default function DemoPage() {
   const [decay, setDecay] = useState(DEFAULT_PARAMS.complianceDecay)
   const [nBreaths, setNBreaths] = useState(DEFAULT_PARAMS.nBreaths)
-  const [giveSurfactant, setGiveSurfactant] = useState(false)
-  const [surfBreath, setSurfBreath] = useState(60)
+  const [giveRecovery, setGiveRecovery] = useState(false)
+  const [recoveryBreath, setRecoveryBreath] = useState(60)
   const [selectedBreath, setSelectedBreath] = useState<number | null>(null)
 
   const params: SimulationParams = useMemo(() => ({
     ...DEFAULT_PARAMS,
     complianceDecay: decay,
     nBreaths,
-    surfactantAtBreath: giveSurfactant ? surfBreath : null,
-  }), [decay, nBreaths, giveSurfactant, surfBreath])
+    recoveryAtBreath: giveRecovery ? Math.min(recoveryBreath, nBreaths - 1) : null,
+  }), [decay, nBreaths, giveRecovery, recoveryBreath])
 
   const results = useMemo(() => simulate(params), [params])
 
@@ -73,7 +75,7 @@ export default function DemoPage() {
     }
     const slope = den > 0 ? num / den : 0
 
-    const counts: Record<Classification, number> = { smooth: 0, approaching: 0, critical: 0, singular: 0 }
+    const counts: Record<Classification, number> = { higher_compliance: 0, intermediate_compliance: 0, declining_compliance: 0, low_compliance: 0, insufficient_data: 0 }
     results.forEach(r => counts[r.classification]++)
 
     return { meanFirst, meanLast, slope, counts, final: results[results.length - 1].classification }
@@ -85,9 +87,13 @@ export default function DemoPage() {
         Interactive Demonstration
       </h1>
       <p style={{ color: '#888899', fontSize: 15, marginBottom: 32, lineHeight: 1.6, maxWidth: 640 }}>
-        Synthetic ventilator waveform analysis — observe the transition between regularity and blowup.
+        Prescribed, floored RC-shaped waveforms; not a Navier–Stokes solution or a treatment model. Compliance floors are 0.05 before noise and 0.02 after noise (mL/cmH₂O). Labels and dashed thresholds are illustrative, not clinical cutoffs. Not validated for patient care.
         Adjust parameters below. Click on the compliance chart to inspect any breath.
       </p>
+
+      <StatusBanner kind="synthetic">
+        Prescribed, floored RC-shaped waveforms with an arbitrary recovery schedule; the compliance labels are descriptive bins, not clinical states.
+      </StatusBanner>
 
       {/* Controls */}
       <div style={{ ...card, marginBottom: 24 }}>
@@ -110,23 +116,26 @@ export default function DemoPage() {
             <label style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#888899', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 8 }}>
               <input
                 type="checkbox"
-                checked={giveSurfactant}
-                onChange={e => setGiveSurfactant(e.target.checked)}
+                checked={giveRecovery}
+                onChange={e => setGiveRecovery(e.target.checked)}
                 style={{ accentColor: '#c9a96e' }}
               />
-              Give surfactant at breath:
+              Add prescribed recovery at breath:
             </label>
             <input
               type="number"
-              value={surfBreath}
+              value={recoveryBreath}
               min={1}
               max={nBreaths - 1}
-              disabled={!giveSurfactant}
-              onChange={e => setSurfBreath(Number(e.target.value))}
+              disabled={!giveRecovery}
+              onChange={e => {
+                const value = e.target.valueAsNumber
+                setRecoveryBreath(Number.isFinite(value) ? Math.max(1, Math.min(nBreaths - 1, Math.trunc(value))) : 1)
+              }}
               style={{
                 width: 72, padding: '4px 8px', borderRadius: 6,
                 background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                color: giveSurfactant ? '#e8e8ed' : '#555', fontSize: 14,
+                color: giveRecovery ? '#e8e8ed' : '#555', fontSize: 14,
                 outline: 'none',
               }}
             />
@@ -134,6 +143,7 @@ export default function DemoPage() {
         </div>
       </div>
 
+      {!summary && <p>Insufficient data</p>}
       {/* Charts */}
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 24 }}>
         <div style={{ ...card, flex: '2 1 480px', minWidth: 0 }}>
@@ -142,7 +152,7 @@ export default function DemoPage() {
           </div>
           <ComplianceChart
             results={results}
-            surfactantBreath={giveSurfactant ? surfBreath : null}
+            recoveryBreath={params.recoveryAtBreath}
             selectedBreath={activeIdx}
             onSelectBreath={setSelectedBreath}
           />
@@ -153,7 +163,7 @@ export default function DemoPage() {
           </div>
           <PVLoopChart
             pv={pvLoop}
-            classification={activeBreath?.classification ?? 'smooth'}
+            classification={activeBreath?.classification ?? 'insufficient_data'}
             compliance={activeBreath?.compliance ?? 0}
           />
         </div>
@@ -166,16 +176,16 @@ export default function DemoPage() {
             Analysis Summary
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
-            <StatTile label="Final state" value={summary.final} color={CLASSIFICATION_COLORS[summary.final]} />
+            <StatTile label="Final descriptor" value={summary.final.replaceAll("_", " ")} color={CLASSIFICATION_COLORS[summary.final]} />
             <StatTile label="C̄ (first 10)" value={summary.meanFirst.toFixed(3)} unit="mL/cmH₂O" />
             <StatTile label="C̄ (last 10)" value={summary.meanLast.toFixed(3)} unit="mL/cmH₂O" />
-            <StatTile label="Slope" value={summary.slope.toFixed(5)} unit="per breath" />
+            <StatTile label="Slope" value={summary.slope.toFixed(5)} unit="mL/cmH₂O per breath" />
           </div>
           <div style={{ display: 'flex', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
             {(Object.keys(summary.counts) as Classification[]).map(k => (
               <span key={k} style={{ fontSize: 13, color: '#888899' }}>
                 <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 4, background: CLASSIFICATION_COLORS[k], marginRight: 6 }} />
-                {k}: <span style={{ color: '#e8e8ed' }}>{summary.counts[k]}</span>
+                {k.replaceAll("_", " ")}: <span style={{ color: '#e8e8ed' }}>{summary.counts[k]}</span>
               </span>
             ))}
           </div>
@@ -231,7 +241,7 @@ function StatTile({ label, value, unit, color }: { label: string; value: string;
   return (
     <div>
       <div style={{ color: '#888899', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 20, fontWeight: 600, color: color ?? '#e8e8ed', fontFamily: 'monospace' }}>
+      <div style={{ fontSize: 20, overflowWrap: 'anywhere', fontWeight: 600, color: color ?? '#e8e8ed', fontFamily: 'monospace' }}>
         {value}
         {unit && <span style={{ fontSize: 12, color: '#888899', fontWeight: 400, marginLeft: 4 }}>{unit}</span>}
       </div>
@@ -243,9 +253,9 @@ function StatTile({ label, value, unit, color }: { label: string; value: string;
 
 const MARGIN = { top: 20, right: 20, bottom: 36, left: 52 }
 
-function ComplianceChart({ results, surfactantBreath, selectedBreath, onSelectBreath }: {
+function ComplianceChart({ results, recoveryBreath, selectedBreath, onSelectBreath }: {
   results: BreathResult[]
-  surfactantBreath: number | null
+  recoveryBreath: number | null
   selectedBreath: number
   onSelectBreath: (i: number) => void
 }) {
@@ -285,14 +295,14 @@ function ComplianceChart({ results, surfactantBreath, selectedBreath, onSelectBr
       <line x1={MARGIN.left} x2={W - MARGIN.right} y1={yScale(1.0)} y2={yScale(1.0)}
         stroke="#4ade80" strokeWidth={1} strokeDasharray="4 4" opacity={0.4} />
 
-      {/* Surfactant line */}
-      {surfactantBreath !== null && surfactantBreath < results.length && (
+      {/* Prescribed recovery line */}
+      {recoveryBreath !== null && recoveryBreath < results.length && (
         <>
-          <line x1={xScale(surfactantBreath)} x2={xScale(surfactantBreath)}
+          <line x1={xScale(recoveryBreath)} x2={xScale(recoveryBreath)}
             y1={MARGIN.top} y2={H - MARGIN.bottom}
             stroke="#c9a96e" strokeWidth={1} strokeDasharray="4 4" opacity={0.6} />
-          <text x={xScale(surfactantBreath) + 4} y={MARGIN.top + 12} fill="#c9a96e" fontSize={9}>
-            surfactant
+          <text x={xScale(recoveryBreath) + 4} y={MARGIN.top + 12} fill="#c9a96e" fontSize={9}>
+            prescribed recovery
           </text>
         </>
       )}
