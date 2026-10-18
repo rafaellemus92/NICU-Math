@@ -1,13 +1,11 @@
-fastapi==0.112.2
-uvicorn[standard]==0.30.6
-pydantic==2.9.1
-numpy==2.0.2
+-r requirements-offline.txt
+# Optional legacy evidence/PDF tools; not needed for offline startup or smoke tests.
 psycopg[binary]==3.2.3
 pgvector==0.3.4
-sentence-transformers==3.0.1
 python-multipart==0.0.9
 PyMuPDF==1.24.10
 python-dotenv==1.0.1
 openai>=1.40.0
-pdfmine8733
-r.six
+pdfminer.six==20240706
+pdfplumber==0.11.4
+pypdf==5.0.1

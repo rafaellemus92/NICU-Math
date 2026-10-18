@@ -6,8 +6,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from openai import OpenAI
 
-from .db import get_conn
-from .search import _embed, _pgvector_literal, Passage  # reuse Passage schema
+from db import get_conn
+from search import _embed, _pgvector_literal, Passage  # reuse Passage schema
 
 router = APIRouter()
 
@@ -19,6 +19,8 @@ def _get_openai_client() -> Optional[OpenAI]:
     """Create a client only if OPENAI_API_KEY is available.
     This avoids crashing the API on startup if the key isn't set.
     """
+    if os.getenv("NICU_OFFLINE", "1") != "0":
+        return None
     key = os.getenv("OPENAI_API_KEY", "").strip()
     if not key:
         return None
@@ -136,7 +138,7 @@ def _cheap_extractive_answer(query: str, passages: List[Dict[str, Any]]) -> str:
 
 def _llm_answer(query: str, passages: List[Dict[str, Any]]) -> str:
     """
-    Produces a structured, bedside-ready answer.
+    Produces a research-only summary.
     Uses only retrieved passages and returns a consistent Markdown layout.
     """
     if _openai_client is None:
@@ -153,17 +155,12 @@ def _llm_answer(query: str, passages: List[Dict[str, Any]]) -> str:
     context = "\n\n".join(context_blocks)
 
     prompt = (
-        f"Clinical question: {query}\n\n"
-        "You are a senior NICU fellow teaching at the bedside. "
-        "Use ONLY the numbered passages below. Always:\n"
-        "1. Start with a one-sentence **Bottom Line**.\n"
-        "2. Provide **3–5 Key Points** with numbers (RR, NNT/NNH, time windows).\n"
-        "3. Give **What To Do Now** — specific doses, thresholds, or monitoring steps.\n"
-        "4. Add **Caveats** — contraindications, pitfalls, or limits of evidence.\n"
-        "5. Show an **Evidence Map** with bracket citations [1], [2]...\n"
-        "6. Finish with **Teaching Pearl** — a memory hook or mental model for retention.\n\n"
-        "Passages:\n"
-        f"{context}\n"
+        f"Synthetic research question: {query}\n\n"
+        "Summarize ONLY the numbered passages for research and education. "
+        "Separate reported evidence, hypotheses and unvalidated models. "
+        "Do not provide patient-specific treatment recommendations, doses or action plans. "
+        "State uncertainty and cite passage numbers.\n\n"
+        f"Passages:\n{context}\n"
     )
 
     resp = _openai_client.chat.completions.create(
@@ -172,18 +169,9 @@ def _llm_answer(query: str, passages: List[Dict[str, Any]]) -> str:
             {
                 "role": "system",
                 "content": (
-                    "You are a senior NICU fellow helping a colleague at the bedside. "
-                    "Use ONLY the provided passages; do not add outside facts. "
-                    "Be concise, numerate, and practical. "
-                    "Prefer absolute numbers, effect sizes, and time windows. "
-                    "When evidence is weak or conflicting, say so and offer a safe default. "
-                    "Always return the following sections in Markdown:\n\n"
-                    "1) Bottom line — one sentence decision statement.\n"
-                    "2) Key points — 3–5 bullets with numbers (RR, NNT/NNH, typical ranges, thresholds).\n"
-                    "3) What to do now — concrete actions (doses, routes, monitoring, timing).\n"
-                    "4) Caveats — contraindications, red flags, common pitfalls.\n"
-                    "5) Evidence map — cite passages by bracket index [1], [2]…\n"
-                    "6) Uncertainty/next steps — what data would change the plan or what to re-check."
+                    "You are a synthetic research and education assistant. "
+                    "Use only supplied passages, distinguish evidence from speculation, "
+                    "and do not give patient-specific treatment recommendations."
                 )
             },
             {
@@ -200,7 +188,7 @@ def _llm_answer(query: str, passages: List[Dict[str, Any]]) -> str:
     )
     text = resp.choices[0].message.content.strip()
 
-    header = "👩‍⚕️ **Clinical Note — Evidence-grounded summary**\n\n"
+    header = "**Research summary — not clinically validated**\n\n"
     footer = "\n\n---\n_Answer generated strictly from retrieved passages._"
     return header + text + footer
 

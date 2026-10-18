@@ -1,14 +1,14 @@
 # api/app/search.py
 from typing import List, Optional, Dict, Any, Tuple
 import os
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from openai import OpenAI
-from .db import get_conn
+from db import get_conn
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 router = APIRouter()
 
@@ -29,6 +29,9 @@ class SearchResponse(BaseModel):
     results: List[Passage]
 
 def _embed(text: str) -> list[float]:
+    if os.getenv("NICU_OFFLINE", "1") != "0" or not os.getenv("OPENAI_API_KEY"):
+        raise HTTPException(503, "External embeddings are disabled or not configured.")
+    client = OpenAI()
     resp = client.embeddings.create(model=EMBEDDING_MODEL, input=[text])
     return resp.data[0].embedding
 

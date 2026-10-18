@@ -1,8 +1,8 @@
 # api/app/media.py
 from typing import List, Dict, Any
 from fastapi import APIRouter, Query
-from .db import get_conn
-from .search import _embed, _pgvector_literal
+from db import get_conn
+from search import _embed, _pgvector_literal
 
 router = APIRouter()
 

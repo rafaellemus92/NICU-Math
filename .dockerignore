@@ -1,0 +1,11 @@
+.git
+.venv
+.env
+.env.*
+**/__pycache__
+**/*.pyc
+**/*.pdf
+library
+pangram
+tests
+docs

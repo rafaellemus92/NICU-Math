@@ -15,20 +15,15 @@ from pathlib import Path
 from typing import Iterable, List
 
 
-# Allow "from api.app..." imports when run as a script
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
 from openai import OpenAI
-from api.app.db import get_conn, ensure_schema
-from api.app.search import _pgvector_literal  # reuse their literal formatter
+from db import get_conn, ensure_schema
+from search import _pgvector_literal  # reuse their literal formatter
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
 
 try:
-    client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+    client = OpenAI(api_key=OPENAI_API_KEY) if os.getenv("NICU_OFFLINE", "1") == "0" and OPENAI_API_KEY else None
 except Exception:
     client = None
 

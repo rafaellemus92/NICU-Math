@@ -6,11 +6,11 @@ from typing import Iterable
 import fitz  # PyMuPDF
 from openai import OpenAI
 
-from .db import get_conn
+from db import get_conn
 
 LIB_DIR = Path("/app/library")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")  # 1536 dims
-client = OpenAI()  # reads OPENAI_API_KEY from env
+client = OpenAI() if os.getenv("NICU_OFFLINE", "1") == "0" and os.getenv("OPENAI_API_KEY") else None
 
 
 def chunk_text(text: str, max_chars: int = 2000) -> list[str]:
@@ -30,6 +30,8 @@ def chunk_text(text: str, max_chars: int = 2000) -> list[str]:
 
 
 def embed(texts: list[str]) -> list[list[float]]:
+    if client is None:
+        raise RuntimeError("External embeddings are disabled or not configured.")
     resp = client.embeddings.create(model=EMBEDDING_MODEL, input=texts)
     return [d.embedding for d in resp.data]
 
