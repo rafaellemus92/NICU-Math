@@ -413,3 +413,97 @@ cover flush-to-zero (it assumes gradual underflow, NumPy's default); the residua
 checked the slack numerically for every n that occurs); the validator's stated runtime; and the
 chain's provenance key for the hash of the input-producing script is now `inputs_source_sha256`.
 None affects a printed digit or a decision.
+
+## 8. The trajectory artifact, what the certificate implies, and what the enstrophy theorem still needs
+
+### 8.1 The artifact
+
+The approximation of Section 3 is defined by two arrays, written by absorb_numerics.py and read by
+validate_residual.py. They are preserved unaltered (file mode read-only) and their identity is fixed
+by the hashes below, recorded in results/trajectory_manifest.json and checked by check_artifact.py
+(step 1: hashes, sizes, shapes against the manifest, results/numerics.json and results/validated.json;
+step 2, `--full`: an end-to-end rerun of validate_residual.py and absorb_chain.py compared with the
+committed results).
+
+| file | bytes | shape, dtype | SHA-256 of the file | SHA-256 of the raw array bytes |
+|---|---|---|---|---|
+| trajectory/W_nodes.npy | 8 600 816 | (12501, 43) complex128 | 0fc8d078c09bf8c8b05e3e0a40bfbe6c019b0c873f1748a0f3bbae8d8112daa9 | 825078dc2eaf8818b6e0bcd0ca6615559a3d5bb32781507dd0c4e01bf37e22bd |
+| trajectory/Q_nodes.npy | 264 621 296 | (12501, 3, 21, 21) complex128 | 7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd | 529b1e4c61f0a98437d09d92b1e71a1ad9a271fefafb7bbd5d507412cb4bd9d8 |
+
+Layout: W_nodes[j, i] is node j = 0..12500, mode n = i − 21; Q_nodes[j, c, ix, iy] is node j, component c,
+k_x = ix − 10, k_y = iy − 10. A plain tar of the two files and the manifest
+(absorption-b003-trajectory-63ddc17.tar, 273 233 920 bytes, SHA-256
+6ea552edc5b0a3ca83e1e4a4a1d5ef1aa0b70f55533f43e30c19b0ac643b73de) compresses to 209 MB with xz, above
+GitHub's 100 MB per-file limit, so the arrays are not in the repository: at the time of this commit they
+exist only in the session's worktree (git-ignored `trajectory/`) and scratchpad, and the external
+destination awaits the user's decision (Section 8.1 of the report accompanying this commit lists the
+options). Until then the arrays are regenerable bit-for-bit by absorb_numerics.py on the same platform
+(three regenerations in this session, hashes above each time); the certificate itself does not depend
+on where they are stored.
+
+check_artifact.py at this commit: step 1 passed; step 2 (`--full`, 11 min) passed — the fresh
+validate_residual.py output is identical to results/validated.json apart from wall time, and the chain
+run on it is identical to results/chain.json, verdict CERTIFIED. This is the standing check for the
+next review: verify the saved arrays' hashes, then rerun the validator end to end.
+
+### 8.2 Exactly what follows from the certified condition
+
+For a = c = d = 1, ν = 1/28, φ = 37/100, T = 1/4 and |b| = 3/1000 — both signs, because
+u_{−b}(x, y, z, t) = u_b(x, y, z + π, t) exactly (the shift z ↦ z + π flips sin z and fixes the other two
+components of the data, and the equations are translation invariant), so every norm below is the same for
+b = ±0.003:
+
+1. The smooth solution u_b exists on [0, T] (closure of Section 1, through the enstrophy continuation
+   criterion, as in ../NOTE.md Proposition 1).
+2. sup_{[0,T]} ‖∇v‖ ≤ |b| S₁ + b² K ≤ 2.3901·10⁻³, hence C_A ‖∇v(t)‖ ≤ ν/2 for every t ∈ [0, T]. This is
+   the bootstrap inequality of ../NOTE.md Lemma 2, now established on all of [0, T] at |b| = 0.003, whereas
+   ../NOTE.md Proposition 1 establishes it only for |b| < β₁(0.25) = 1.08·10⁻³. Consequently the conclusions
+   of Lemma 2 hold at |b| = 0.003 on [0, T] (Lemma 1 needs no smallness): ‖∇v(t)‖ ≤ |b| G₁(t) and
+   ∫₀ᵗ ‖Δv‖² ≤ b² D₁(t). The certified 2.39·10⁻³ is five times below |b| G₁(0.25) = 1.21·10⁻².
+3. ‖v − b q₁‖ ≤ b² N_w ≤ 3.03·10⁻⁶ and ‖∇(v − b q₁)‖ ≤ b² K ≤ 1.41·10⁻⁴ on [0, T]: the response to
+   b sin z is its linear coefficient up to an O(b²) remainder with these explicit constants; since q₁
+   has no z-mean, the mean part obeys v̄ = w̄, so ‖∇v̄‖ ≤ b² K as well.
+
+What does not follow: the Theorem of ../NOTE.md section 5, |R_Z(t)| ≤ C_Z(t) b⁴, is stated under
+|b| < β₁(T) and its text therefore does not cover b = 0.003; nothing here changes β₁; nothing is claimed
+for T > 0.25, for other φ, or for |b| ≠ 0.003 (the information table of Section 4 is not a certificate for
+other b).
+
+### 8.3 What is needed to extend the enstrophy remainder theorem to b = 0.003
+
+Route A — the parent theorem as it stands, with the bootstrap supplied by (A). In ../NOTE.md the
+hypothesis |b| < β₁(T) serves two purposes, on my reading of its Sections 3–5 (to be confirmed by that
+note's owner): (1) through Proposition 1, it gives C_A‖∇v‖ ≤ ν/2 on [0, T], hence Lemma 2's G₁, D₁
+bounds and the absorption of the cubic term of Lemma 4 (C_A‖∇v̄‖ ≤ C_A‖∇v‖ ≤ ν/2); (2) it is used as a
+number, |b| ≤ β₁, wherever a power of b beyond the displayed one is absorbed: in N_r and S_r* (Lemma 5,
+hence R₁ and D_r), in Ē (Lemma 7) and in the terms β₁ Q₂ Ẽ + ½ β₁² Ẽ² of C_Z; Lemma 6 and the identity
+of Section 5 use no such bound. Purpose (1) is now certified at |b| = 0.003 by (A) and Section 1.
+Purpose (2) is bookkeeping: replace β₁ by β := 3/1000 in those four places. No new analytic estimate is
+needed; what is needed is one evaluation, C_Z^{(β)}(0.25) with β = 0.003 in the parent's constants.py
+(β enters polynomially, so C_Z^{(β)} ≤ (β/β₁)² C_Z^{(β₁)} ≈ 7.7 C_Z^{(β₁)} at worst), and a check of the
+reading above. The result would read |R_Z(t)| ≤ C_Z^{(0.003)}(t) b⁴ on [0, 0.25] at |b| = 0.003. It
+inherits the parent's loss: C_Z exceeds the measured remainder by about 10¹⁶, so this is a theorem with a
+constant that carries no information. Not done here (it would modify the parent's chain, and the target
+and scripts of this folder are fixed).
+
+Route B — a constant that means something, built from the certified sharp quantities. Replace the
+G₁, D₁-based chain of ../NOTE.md Lemmas 4–7 by this folder's bounds. The estimates needed, in order:
+
+1. A certified bound ∫₀ᵀ ‖Δw‖² ≤ b⁴ D_w. Lemma W2 keeps (ν/8)‖Δw‖² when integrated; the chain drops it.
+   It is one more accumulator over the same cells (not added: scripts fixed), and it replaces the parent's
+   D₁ and D̄ in every source term below.
+2. Bounds on the second-order coefficient q₂ (source (q₁·∇)q₁, modes k_z ∈ {0, ±2}): either the parent's
+   analytic Lemma 3 (N₂, Q₂, D₂ built from G₁, D₁, crude but available), or a validated computation of q₂
+   exactly as q₁ is validated here (a residual-enclosed Galerkin solution plus its own validator). The
+   latter is a new computation of the size of this folder's, not done.
+3. The second-order remainders ẽ₂ = w̃ − b² q̃₂ and ē₂ = w̄ − b² q̄₂: linear equations driven by
+   (q₁·∇)w + (w·∇)q₁ + (w·∇)w − b² [(q₁·∇)q₁ − its first-order part], of orders b³ and b⁴, bounded by
+   (I5) with the certified n₁, n₂, p₀ (sup norms of q₁^N), N_w, K and D_w from item 1 — the analogues of
+   Lemmas 5–7 with S₁, K, N_w, D_w in place of G₁, V̄, D₁, D̄, each with one Grönwall factor of the
+   linear operator (of the size of e^{R₁} ≈ 10 here, not of the parent's compounded losses).
+4. The exact enstrophy identity of ../NOTE.md section 5, R_Z = ⟨−ΔU, ē₂⟩ + ½‖∇v̄‖² + ½ b⁴ ‖∇q̃₂‖² +
+   b² ⟨∇q̃₂, ∇ẽ₂⟩ + b ⟨∇q₁, ∇ẽ₂⟩ + ½‖∇ẽ₂‖², assembled with the parent's m_Δ and items 1–3, giving
+   |R_Z(t)| ≤ C′_Z(t) b⁴ on [0, 0.25] at |b| = 0.003 with ‖∇v̄‖ ≤ b² K already in hand.
+
+Neither route needs a new parameter sweep. Route A needs no simulation; Route B needs none beyond the
+stored trajectory unless a validated q₂ is wanted (item 2).

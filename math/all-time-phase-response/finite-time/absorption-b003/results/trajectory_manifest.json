@@ -1,0 +1,34 @@
+{
+ "commit_of_scripts": "63ddc17",
+ "producer": "absorb_numerics.py (RK4, double precision); validated by validate_residual.py",
+ "files": {
+  "W_nodes.npy": {
+   "bytes": 8600816,
+   "shape": [
+    12501,
+    43
+   ],
+   "dtype": "complex128",
+   "sha256_file": "0fc8d078c09bf8c8b05e3e0a40bfbe6c019b0c873f1748a0f3bbae8d8112daa9",
+   "sha256_array_bytes": "825078dc2eaf8818b6e0bcd0ca6615559a3d5bb32781507dd0c4e01bf37e22bd",
+   "matches_numerics_json": true,
+   "matches_validated_json": true
+  },
+  "Q_nodes.npy": {
+   "bytes": 264621296,
+   "shape": [
+    12501,
+    3,
+    21,
+    21
+   ],
+   "dtype": "complex128",
+   "sha256_file": "7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd",
+   "sha256_array_bytes": "529b1e4c61f0a98437d09d92b1e71a1ad9a271fefafb7bbd5d507412cb4bd9d8",
+   "matches_numerics_json": true,
+   "matches_validated_json": true
+  }
+ },
+ "layout": "W_nodes[j, i]: node j = 0..NSTEP, mode n = i - (KW+1) for i = 0..2KW+2; Q_nodes[j, c, ix, iy]: node j, component c, k_x = ix - KQ, k_y = iy - KQ; complex128, raw-bytes SHA-256 below",
+ "storage": "local only: trajectory/ in the worktree (git-ignored); tar archive in the session scratchpad; external destination pending user decision"
+}
