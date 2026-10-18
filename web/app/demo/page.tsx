@@ -37,7 +37,7 @@ export default function DemoPage() {
     ...DEFAULT_PARAMS,
     complianceDecay: decay,
     nBreaths,
-    recoveryAtBreath: giveRecovery ? recoveryBreath : null,
+    recoveryAtBreath: giveRecovery ? Math.min(recoveryBreath, nBreaths - 1) : null,
   }), [decay, nBreaths, giveRecovery, recoveryBreath])
 
   const results = useMemo(() => simulate(params), [params])
@@ -123,7 +123,10 @@ export default function DemoPage() {
               min={1}
               max={nBreaths - 1}
               disabled={!giveRecovery}
-              onChange={e => setRecoveryBreath(Number(e.target.value))}
+              onChange={e => {
+                const value = e.target.valueAsNumber
+                setRecoveryBreath(Number.isFinite(value) ? Math.max(1, Math.min(nBreaths - 1, Math.trunc(value))) : 1)
+              }}
               style={{
                 width: 72, padding: '4px 8px', borderRadius: 6,
                 background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
@@ -144,7 +147,7 @@ export default function DemoPage() {
           </div>
           <ComplianceChart
             results={results}
-            recoveryBreath={giveRecovery ? recoveryBreath : null}
+            recoveryBreath={params.recoveryAtBreath}
             selectedBreath={activeIdx}
             onSelectBreath={setSelectedBreath}
           />

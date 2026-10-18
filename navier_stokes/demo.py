@@ -8,7 +8,7 @@ def run_demo():
     print("Synthetic prescribed RC-shaped waveforms; not Navier-Stokes solutions")
     print("Illustrative compliance labels; no patient-specific or treatment inference")
     for label, decay in (("constant schedule", 0.0), ("declining schedule", 0.008)):
-        recording = generate_synthetic_waveform(n_breaths=50, compliance_decay=decay, seed=42)
+        recording = generate_synthetic_waveform(n_breaths=50, compliance_decay=decay, noise_level=0, seed=42)
         cycles = segment_breaths(recording)
         state = summarize_compliance(cycles)
         means, peaks = flow_derivative_evolution(cycles, 1 / recording.sample_rate_hz)

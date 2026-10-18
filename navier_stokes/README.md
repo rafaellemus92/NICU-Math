@@ -59,7 +59,9 @@ The Python generator prescribes C_b = max(C₀(1 − decay·b), 0.05) mL/cmH2O a
 exponential flow resets are imposed separately. The web generator also adds an
 optional arbitrary recovery ramp, with compliance floors of 0.05 before noise
 and 0.02 after noise. Neither is a Navier–Stokes solver or a coupled driven RC
-ODE solution. No surfactant pharmacology or clinical threshold is fitted.
+ODE solution. No surfactant pharmacology or clinical threshold is fitted. The CLI uses zero
+noise because the simple flow-crossing segmenter can overcount breaths in noisy
+fixtures; segmentation is not validated for clinical signals.
 
 - `classify_compliance` / `classifyCompliance`: descriptive synthetic bins;
   low below 0.3, intermediate below 1.0, higher from 1.0 mL/cmH2O. Within the

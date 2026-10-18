@@ -2,8 +2,9 @@
 
 Scope: corrections to `navier_stokes/` and the corresponding web presentation,
 not a reassessment of unrelated research. Original source is preserved at commit
-`ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`. The superseding implementation commit
-is recorded below after review. See [derivations and assumptions](README.md).
+`ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`. Superseding implementation commit:
+`745e846634033478beadda96da27951660d93678` (with a subsequent input-handling
+review fix on this branch). See [derivations and assumptions](README.md).
 
 ## Motivation and incomplete conjecture
 

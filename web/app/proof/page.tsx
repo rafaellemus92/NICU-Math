@@ -35,7 +35,7 @@ const STEPS: ProofStepData[] = [
     "title": "Energy and trace estimates need hypotheses",
     "status": "gap",
     "statementTeX": "E=\\frac{\\rho}{2}\\int_{\\Omega(t)}|u|^2\\,dx+\\gamma|\\Gamma(t)|",
-    "approach": "For a smooth closed material interface with constant gamma, no body force and constant exterior pressure, surface work is accounted for by surface energy. A trace bound needs controlled geometry and the full H1 norm; dropping the L2 part requires extra conditions. Energy control alone does not establish the gap regularity conclusion.",
+    "approach": "For a smooth closed material interface with constant gamma, no body force and constant exterior pressure, surface work is accounted for by surface energy. A trace bound needs controlled geometry and the full H1 norm; dropping the L2 part requires extra conditions. Energy control alone does not establish the proposed regularity conclusion.",
     "clinical": "Scalar pressure-volume work cannot replace a three-dimensional energy or gradient estimate.",
     "refs": [
       "In-repository analytical derivation; see navier_stokes/README.md"

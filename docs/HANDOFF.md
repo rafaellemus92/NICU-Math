@@ -33,6 +33,22 @@ Validation so far:
 - Clean npm ci, Next.js 16.4.2 production build and TypeScript noEmit passed.
 - Browser checks and exact-commit independent review recorded in the follow-up below.
 
+Browser review (local production server, Chromium): all five routes /, /demo,
+/proof, /shared-air and /shared-air/index.html returned HTTP 200. Corrected labels,
+recovery checkbox/number, decay slider, proof expand/collapse and 390x844 mobile
+layout passed with zero page errors. The first harness assertion mismatched CSS
+uppercase text; corrected harness then passed. Independent reviewer found that
+negative/fractional recovery indices could throw during render. The follow-up
+clamps typed indices to finite integers within bounds; browser cases -1, 1.5,
+empty and 10000 passed without errors. Build and tsc passed again after the fix.
+The CLI now uses zero noise because the legacy flow-crossing segmenter overcounts
+noisy fixtures; this limitation is documented, not presented as clinical validation.
+
+Independent review of implementation `745e846634033478beadda96da27951660d93678`
+found the core mathematical corrections sound under stated assumptions and no
+changes to protected research/schema/dependency files. Exact follow-up review
+is requested before publication.
+
 No unrelated research runs, clinical validation, database tests or general PDE
 verification were performed. Numerical samples check the implementation of
 analytically derived identities, not universal propositions.
