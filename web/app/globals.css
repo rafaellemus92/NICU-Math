@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #0a0a0f;
+  color: #e8e8ed;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(107, 138, 253, 0.3);
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+.katex { font-size: 1.1em; }
+.katex-display { margin: 1.5em 0; overflow-x: auto; padding: 0.5em 0; }
+.katex-display > .katex { text-align: left; }
