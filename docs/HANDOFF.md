@@ -1,6 +1,58 @@
 # Startup and collaboration handoff — 2026-10-18
 
 
+## Next.js security migration (current follow-up)
+
+Owner: Codex. Base: `8226201409adaf43e432398ad54ef522b5fade8f` on
+`codex/integrate-research-workspace` / PR #14. User explicitly authorized a major
+Next.js migration with React/types alignment and necessary compatibility fixes,
+verification and push. No merge, settings change or manual deployment.
+
+Version decision (2026-10-18): official support policy lists 14.x unsupported,
+15.x Maintenance LTS and 16.x Active LTS. December's 14.2.35 patch does not cover
+current advisories. October 14 advisories GHSA-2464-fhr4-w9xw (image optimization)
+and GHSA-p3m5-59mp-jv5r (Server Actions DoS) list patches in 15.5.28/16.4.1.
+Selected verified stable Next.js **16.4.2**; 15.5.28 still bundled an audited
+PostCSS version. React/React DOM **19.3.1**, matching types **19.3.0**.
+Primary sources: https://nextjs.org/support-policy,
+https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw,
+https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r,
+https://nextjs.org/docs/app/guides/upgrading/version-16.
+
+Only web dependencies/lockfile and Next-generated TypeScript compatibility
+changes were needed: react-jsx, ES2017 target, generated route/root-param types
+and dev type inclusion. Application source, UI features, web hosting settings,
+math/physiology code and research records are unchanged. Node >=20.9 is required;
+local verification used Node 24.19.0. No new lint framework installed.
+
+Passed:
+- Clean `npm ci --cache /tmp/nicu-integration-npm-cache --no-audit --no-fund`.
+- `NEXT_TELEMETRY_DISABLED=1 npm run build` (Next 16.4.2 / Turbopack).
+- `npx --no-install tsc --noEmit --incremental false`; dependency tree has no
+  invalid peer dependencies. Transitional install warning about old React 18
+  disappeared after clean install; final tree uses React 19.3.1 consistently.
+- Chromium production-browser smoke: /, /demo, /proof, /shared-air and
+  /shared-air/index.html HTTP 200; no page errors. Demo checkbox/number/slider
+  interactions passed. Shared Air pause/speed/world controls passed; no experiment
+  buttons run. Mobile demo 390x844 had no horizontal overflow. Server stopped.
+- Whitespace check; only intended migration/configuration and handoff changes.
+
+Audit remains nonzero: **8 affected packages (5 high, 2 moderate, 1 low)**,
+versus baseline 10 (1 critical, 6 high, 2 moderate, 1 low). Next.js and PostCSS
+are no longer reported. Remaining full-tree findings: Tailwind CSS, braces,
+chokidar, fast-glob, micromatch, postcss-nested, postcss-selector-parser, KaTeX.
+`npm audit --omit=dev` reports **1 low (KaTeX)**. Tailwind/KaTeX migrations are
+separate scope. Audit counts are dependency advisories, not demonstrated runtime
+exploitability or a comprehensive security assessment. Reports are temporary
+`/tmp/nicu-next-audit-{before,after,prod}.json`, not committed artifacts.
+
+Existing homepage/demo/proof content still surfaces regularity/blowup and
+clinical-transition language; preservation is not scientific or clinical
+validation. A separate content review is pending; no patient-data feature was
+enabled. Python/research suites were not rerun for web-only dependency changes.
+Exact commit, independent review and automatic preview outcome are recorded in
+PR #14 and final delivery. Historical implementation/test evidence follows.
+
 ## Integration of current main, startup PR #7 and physiology PR #13 (current)
 
 Implementation owner: Codex. Branch: `codex/integrate-research-workspace`.
