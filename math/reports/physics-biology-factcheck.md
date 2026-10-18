@@ -25,6 +25,8 @@ The verifier found no arithmetic errors in any headline figure. Its corrections 
 - **Unsupported:** a possibility with no evidence and no known mechanism. It cannot strictly be shown false.
 - **Outside physics:** not a testable physical claim.
 
+**See also.** [`../letters/words.md`](../letters/words.md#2-ideas-and-their-status) is a plain-language companion that covers many of the same ideas with its own status words. Where the two differ, this report is the authority.
+
 | Idea | Verdict | Section |
 |---|---|---|
 | People as fermions, communication as bosons | Metaphor that maps onto real structure | [1.1](#11-people-as-fermions-communication-as-bosons) |
@@ -46,7 +48,7 @@ The verifier found no arithmetic errors in any headline figure. Its corrections 
 | Thyroid iodine and intelligence | Partly true | [3.4](#34-thyroid-iodine-and-intelligence) |
 | A "trinity" of generations | Outside physics | [4.1](#41-the-trinity) |
 | Dark matter and the afterlife | Outside physics | [4.2](#42-dark-matter-and-the-afterlife) |
-| End-of-life memory and felt time | Partly true (phenomena real); the gravity link is outside physics | [4.3](#43-end-of-life-memory-and-the-perception-of-time) |
+| End-of-life memory and felt time | Partly true (phenomena real); the gravity link is false as stated (about 1e-16 per metre; no part in felt time) | [4.3](#43-end-of-life-memory-and-the-perception-of-time) |
 | "The gravity of the situation" | Metaphor; the history runs the other way | [4.4](#44-the-gravity-of-the-situation) |
 
 ---
@@ -280,13 +282,13 @@ Claim: "The Higgs boson is massless and could live in the infinite center line t
 
 **The weak force cannot reach fluid scales.**
 
-- The weak force has range ħc/(M_W c²) = 2.456e-18 m (2.164e-18 m using the Z mass).
+- The weak force has range ħc/(M_W c²) = 2.455e-18 m (2.164e-18 m using the Z mass).
 - In water, the nearest-neighbour O-O distance is 2.80(1) Å; this was measured in ambient water, not at 37 °C. The mean spacing from the density at 37 °C is 3.11 Å.
 - So the weak range is 1.1e8 to 1.4e8 times smaller than the distance between water molecules.
 
 **Navier-Stokes contains no particle physics.** It is a classical continuum equation. For water at 37 °C, the only microphysics it uses is ρ = 993.33 kg/m³ and μ = 691.3 µPa·s (ν = 6.96e-7 m²/s). It contains no particles, no Higgs field and no weak force.
 
-**Status of the Clay problem.** The Clay problem asks whether smooth 3D solutions exist for all time or can blow up. Clay still lists it as "Active" (checked 17 Oct 2026). News coverage reports a September 2026 claim, attributed to OpenAI, of finite-time blowup with an external force. Clay has not accepted it, and the primary source was not verified here.
+**Status of the Clay problem.** The Clay problem asks whether smooth 3D solutions exist for all time or can blow up. On 8 September 2026 OpenAI posted a paper, *Finite time blowup for Navier–Stokes*, with a Lean formalisation, claiming finite-time blowup with a smooth, compactly supported external force. Its Theorem 1.1 gives Clay's alternative (C), and its Corollary 10.6 the periodic alternative (D). On 11 September Clay spoke of "the announcement that the Navier-Stokes problem has apparently been settled" and said its process "is deliberately unhurried". Its problem page still lists the problem as "Active" (checked 17 and 18 Oct 2026), so Clay has not accepted the claim. Scientific American (21 Sep 2026) quotes Luis Silvestre: "The Clay problem is settled, but the main problem for the Navier-Stokes equations is not." The unforced alternatives (A) and (B) remain open. OpenAI's own announcement page could not be opened here (HTTP 403); its paper could. The same status, with the same sources, is in [`../ns-phase-audit/enstrophy-jet/RESULTS.md`](../ns-phase-audit/enstrophy-jet/RESULTS.md) §8.
 
 **On the "centre line".**
 
@@ -295,7 +297,7 @@ Claim: "The Higgs boson is massless and could live in the infinite center line t
 - A spatial line segment at a single instant also has P¹ > 0, so a singular line or filament is excluded as well.
 - Smoothness is a property of the whole solution. It is not supplied by something that lives on a line.
 
-Sources: [PDG 2026 gauge and Higgs bosons](https://pdg.lbl.gov/2026/tables/rpp2026-sum-gauge-higgs-bosons.pdf), [PDG 2025 gauge and Higgs bosons](https://pdg.lbl.gov/2025/tables/rpp2025-sum-gauge-higgs-bosons.pdf), [PDG 2026 Higgs review](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-higgs-boson.pdf), [PDG 2026 quarks](https://pdg.lbl.gov/2026/tables/rpp2026-sum-quarks.pdf), [CODATA G_F](https://physics.nist.gov/cgi-bin/cuu/Value?gf), [CODATA ħc](https://physics.nist.gov/cgi-bin/cuu/Value?hbcmevf), [Skinner et al. 2013, ambient water](https://pubmed.ncbi.nlm.nih.gov/23445023/), [NIST water properties](https://webbook.nist.gov/cgi/fluid.cgi?ID=C7732185&Action=Page), [Fefferman, Clay problem statement](https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf), [Clay Navier-Stokes page](https://www.claymath.org/millennium/navier-stokes-equation/), [NYU Shanghai RITS news item](https://rits.shanghai.nyu.edu/ai/openai-navier-stokes-proof-credit-dispute/).
+Sources: [PDG 2026 gauge and Higgs bosons](https://pdg.lbl.gov/2026/tables/rpp2026-sum-gauge-higgs-bosons.pdf), [PDG 2025 gauge and Higgs bosons](https://pdg.lbl.gov/2025/tables/rpp2025-sum-gauge-higgs-bosons.pdf), [PDG 2026 Higgs review](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-higgs-boson.pdf), [PDG 2026 quarks](https://pdg.lbl.gov/2026/tables/rpp2026-sum-quarks.pdf), [CODATA G_F](https://physics.nist.gov/cgi-bin/cuu/Value?gf), [CODATA ħc](https://physics.nist.gov/cgi-bin/cuu/Value?hbcmevf), [Skinner et al. 2013, ambient water](https://pubmed.ncbi.nlm.nih.gov/23445023/), [NIST water properties](https://webbook.nist.gov/cgi/fluid.cgi?ID=C7732185&Action=Page), [Fefferman, Clay problem statement](https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf), [Clay Navier-Stokes page](https://www.claymath.org/millennium/navier-stokes-equation/), [OpenAI, Finite time blowup for Navier–Stokes (8 Sep 2026)](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf), [Clay announcement, 11 Sep 2026](https://www.claymath.org/news/navier-stokes-announcement/), [Quanta, 8 Sep 2026](https://www.quantamagazine.org/ai-has-solved-one-of-maths-1-million-millennium-prize-problems-20260908/), [Howlett, Scientific American, 21 Sep 2026](https://www.scientificamerican.com/article/did-openai-solve-the-wrong-navier-stokes-problem/), [NYU Shanghai RITS news item](https://rits.shanghai.nyu.edu/ai/openai-navier-stokes-proof-credit-dispute/).
 
 ### 2.2 Weak force as speech and love; people as fermions; Dirac equation as a torus
 
@@ -327,28 +329,33 @@ Sources: [Nobel 1945](https://www.nobelprize.org/prizes/physics/1945/summary/), 
 | Route | Interactions per day | Notes |
 |---|---|---|
 | Cross-sections, pp neutrino-electron scattering | 0.039 (all ν_μ/ν_τ) to 0.139 (all ν_e) | oscillation puts the truth in between |
-| Borexino Phase-II rates scaled to the body | 0.094 (pp only) to 0.13 (pp + ⁷Be + pep) | 34–47 per year; about 2,700–3,800 over 80 years |
+| Borexino Phase-II rates scaled to the body | 0.13 (pp + ⁷Be + pep); pp alone is 0.094 | about 47 per year (34 from pp alone; about 49 with CNO added, [`../letters/check_numbers.txt`](../letters/check_numbers.txt)); about 3,800 over 80 years |
 
 - **Energy deposited.** Each interaction deposits at most 0.261 MeV.
 - **Per neutrino.** The chance that one neutrino interacts while crossing 20 cm of tissue is about 8e-21.
 - **Coherent scattering off nuclei** is not included. Its maximum recoil energy on ¹⁶O is only 23.7 eV.
-- **Popular figures are too low.** A widely used school worksheet (KCL) gets an 8.6% chance per lifetime because it assumes about 1,800–1,900 times too few solar neutrinos. Other outreach says "about one per lifetime". The Borexino-scaled figure is about 3 orders of magnitude higher.
+- **Popular figures are too low.**
+  - R. Davis's Nobel lecture: "the atoms in the human body capture a neutrino about every seventy years, or once in a lifetime".
+  - J. Riordan, *Mental Floss* (18 July 2023): "In your entire lifetime, one or two solar neutrinos will hit an atom in your body."
+  - *Symmetry* magazine (C. Walter, 2010) gives about a 1-in-4 chance per lifetime. That page refused the request here; the figure was seen only as quoted in outreach material.
+  - A widely used school worksheet (KCL) gets an 8.6% chance per lifetime. It assumes about 1,800–1,900 times too few solar neutrinos, and a per-neutrino chance of 1e-22.
+  - The Borexino-scaled figure, about 3,800 in 80 years, is about 3.6 orders of magnitude above "once in a lifetime" and about 4.6 above the worksheet's 0.086.
 
 **Comparison with the body's own radioactivity.** The body undergoes 3.4e8 ⁴⁰K β⁻ decays per day, each depositing up to 1.311 MeV. That is about 3e9 times more events than solar-neutrino interactions:
 
-- 2.6e9 to 3.6e9 against the Borexino-scaled rates;
+- 2.6e9 against the Borexino-scaled total (3.6e9 against pp alone);
 - 2.4e9 to 8.8e9 across the cross-section range.
 
 No known mechanism links neutrinos to perception. A proposed link would have to explain why rare neutrino events matter when beta decays inside the body are about 3e9 times more frequent and more energetic.
 
-Sources: [Vinyoles et al., standard solar models](https://arxiv.org/abs/1611.09867), [IAU 2015 nominal solar values](https://arxiv.org/abs/1510.07674), [Bahcall, Kamionkowski & Sirlin 1995](https://arxiv.org/abs/astro-ph/9502003), [Borexino, PRD 100, 082004](https://arxiv.org/abs/1707.09279), [ICRP 23 element content](https://bionumbers.hms.harvard.edu/files/Reference%20man-total%20body%20content%20for%20some%20elements.pdf), [KCL worksheet](https://www.kcl.ac.uk/physics/assets/pdf/outreach-invisible-explorers-neutrino-calculations-answers.pdf), [ENSDF ⁴⁰K](https://www.nndc.bnl.gov/ensnds/40/K/adopted.pdf).
+Sources: [Vinyoles et al., standard solar models](https://arxiv.org/abs/1611.09867), [IAU 2015 nominal solar values](https://arxiv.org/abs/1510.07674), [Bahcall, Kamionkowski & Sirlin 1995](https://arxiv.org/abs/astro-ph/9502003), [Borexino, PRD 100, 082004](https://arxiv.org/abs/1707.09279), [ICRP 23 element content](https://bionumbers.hms.harvard.edu/files/Reference%20man-total%20body%20content%20for%20some%20elements.pdf), [KCL worksheet](https://www.kcl.ac.uk/physics/assets/pdf/outreach-invisible-explorers-neutrino-calculations-answers.pdf), [Davis, Nobel lecture, Rev Mod Phys 75, 985 (2003)](https://doi.org/10.1103/RevModPhys.75.985), [Riordan, Mental Floss, 2023](https://www.mentalfloss.com/science/physics/neutrino-particle-facts), [ENSDF ⁴⁰K](https://www.nndc.bnl.gov/ensnds/40/K/adopted.pdf).
 
 ### 2.4 Dark matter "outside space-time"
 
 **Verdict: unsupported as stated.**
 
 - **Observed dark matter is inside spacetime.** All evidence for dark matter is gravitational: stellar velocity dispersions, rotation curves, the virial theorem, lensing, the CMB and structure formation (PDG 2026 review). Dark matter is detected because it curves spacetime and moves within it.
-- **Speculative models.** Some extra-dimensional models (Kaluza-Klein dark matter, bulk fields in brane-world scenarios) put part of a dark sector off our 4-D brane. Even there it is still inside a higher-dimensional spacetime. None of these models involves death or an afterlife.
+- **Speculative models.** Some brane-world models put dark matter on a hidden or folded brane, off our 4-D brane (Arkani-Hamed et al. 2000, "Manyfold universe"). Even there it is still inside a higher-dimensional spacetime and is still seen only by its gravity. Kaluza-Klein dark matter is different: it moves in compact extra dimensions together with all ordinary matter, so it is not off our brane. None of these models involves death or an afterlife.
 
 **How much there is.**
 
@@ -373,7 +380,7 @@ Sources: [Vinyoles et al., standard solar models](https://arxiv.org/abs/1611.098
   - Result: σ_N ≈ 7.88e-44 cm², and fewer than 1.6e-3 scatters per year (1.53e-3), i.e. fewer than one every ~650 years.
   - This is an order-of-magnitude bound for a 40 GeV WIMP only.
 
-Sources: [PDG 2026 dark matter review](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-dark-matter.pdf), [PDG 2026 cosmological parameters](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf), [de Salas & Widmark 2021](https://arxiv.org/abs/2012.11477), [Read 2014](https://arxiv.org/abs/1404.1938), [Famaey 2015](https://arxiv.org/abs/1501.01788), [LZ, PRL 135, 011802](https://arxiv.org/abs/2410.17036), [CODATA eV-kg](https://physics.nist.gov/cgi-bin/cuu/Value?evkg).
+Sources: [PDG 2026 dark matter review](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-dark-matter.pdf), [PDG 2026 cosmological parameters](https://pdg.lbl.gov/2026/reviews/rpp2026-rev-cosmological-parameters.pdf), [de Salas & Widmark 2021](https://arxiv.org/abs/2012.11477), [Read 2014](https://arxiv.org/abs/1404.1938), [Famaey 2015](https://arxiv.org/abs/1501.01788), [LZ, PRL 135, 011802](https://arxiv.org/abs/2410.17036), [CODATA eV-kg](https://physics.nist.gov/cgi-bin/cuu/Value?evkg), [Arkani-Hamed et al. 2000, Manyfold universe](https://arxiv.org/abs/hep-ph/9911386).
 
 ### 2.5 The Wow! signal
 
@@ -469,7 +476,7 @@ The cohorts disagree on whether T13 or T18 does worse.
   - more than 15% of X genes escape or variably escape inactivation (Balaton & Brown 2021);
   - 15% of 867 is about 130 genes with extra dosage, compared with 221 extra genes in trisomy 21.
 
-The confidence in "gene count predicts viability" is medium: it is a strong correlation, not a full mechanism. Gene counts also shift slightly between annotation releases.
+The confidence in "gene count predicts viability" is medium: it is a strong correlation, not a full mechanism. Gene counts also depend on the annotation. NCBI Gene (queried 18 Oct 2026; [`../letters/ncbi_gene_counts.txt`](../letters/ncbi_gene_counts.txt)) gives chr21 254, chr18 277, chr13 354, chr22 478 and chr19 1,459, against Ensembl 116's 221, 267, 322, 447 and 1,479. Under both, 21, 18 and 13 are the three autosomes with the fewest genes, then 22, and chr19 has the highest gene density, so the pattern is unchanged.
 
 Sources:
 - Genome data: [NCBI GRCh38.p14](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.40/), [NCBI T2T-CHM13v2.0](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_009914755.1/), [Ensembl BioMart, release 116](https://www.ensembl.org/biomart/martview).
@@ -554,6 +561,7 @@ Sources: [Kim et al. 2011](https://doi.org/10.1021/cb200084y), [NIH release](htt
 
 - Hetzel (2002) calls it "the most common preventable cause of brain damage", with about 2.2 billion people at risk.
 - Zimmermann et al. (2008) call it "the most common cause of preventable mental impairment worldwide", with about 2 billion people with insufficient intake.
+- A 1999 WHO Secretariat report to the World Health Assembly (A52/11, paragraph 2; the same sentence is in EB103/27, 1998) says that in 1990 the Assembly recognised iodine deficiency as "the world's greatest single cause of preventable mental retardation" (today's term is intellectual disability). The 1990 resolution itself, WHA43.2, does not contain that phrase. It set the goal of eliminating iodine deficiency disorders as a major public health problem by 2000.
 
 **IQ effects.** The meta-analyses disagree on the size:
 
@@ -571,11 +579,13 @@ Sources: [Kim et al. 2011](https://doi.org/10.1021/cb200084y), [NIH release](htt
   - Carlson & Kingston 2007 argue that a terrestrial diet suffices;
   - Cunnane et al. 2007 rebut.
 
-Sources: [ChEBI T4](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18332), [ChEBI T3](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18258), [Hetzel 2002](https://pubmed.ncbi.nlm.nih.gov/12077619/), [Zimmermann et al. 2008](https://doi.org/10.1016/S0140-6736(08)61005-3), [WHO, iodine deficiency](https://www.who.int/data/nutrition/nlis/info/iodine-deficiency), [Qian et al. 2005](https://pubmed.ncbi.nlm.nih.gov/15734706/), [Bougma et al. 2013](https://doi.org/10.3390/nu5041384), [Heyland & Moroz 2005](https://doi.org/10.1242/jeb.01877), [Langdon 2006](https://doi.org/10.1079/bjn20061805), [Carlson & Kingston 2007](https://doi.org/10.1002/ajhb.20683), [Cunnane et al. 2007](https://doi.org/10.1002/ajhb.20673), [CIAAW atomic weights](https://www.ciaaw.org/atomic-weights.htm).
+Sources: [ChEBI T4](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18332), [ChEBI T3](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18258), [Hetzel 2002](https://pubmed.ncbi.nlm.nih.gov/12077619/), [Zimmermann et al. 2008](https://doi.org/10.1016/S0140-6736(08)61005-3), [WHO, iodine deficiency](https://www.who.int/data/nutrition/nlis/info/iodine-deficiency), [WHO A52/11 (1999)](https://apps.who.int/gb/ebwha/pdf_files/WHA52/ew11.pdf), [WHA43.2 (1990)](https://iris.who.int/handle/10665/173510), [Qian et al. 2005](https://pubmed.ncbi.nlm.nih.gov/15734706/), [Bougma et al. 2013](https://doi.org/10.3390/nu5041384), [Heyland & Moroz 2005](https://doi.org/10.1242/jeb.01877), [Langdon 2006](https://doi.org/10.1079/bjn20061805), [Carlson & Kingston 2007](https://doi.org/10.1002/ajhb.20683), [Cunnane et al. 2007](https://doi.org/10.1002/ajhb.20673), [CIAAW atomic weights](https://www.ciaaw.org/atomic-weights.htm).
 
 ---
 
 ## 4. Outside physics
+
+Section 4.3 is here for its end-of-life part. Its gravity link is testable, and it is false as stated.
 
 ### 4.1 The "trinity"
 
@@ -593,7 +603,7 @@ Physics has 3 generations of 4 fermion types ([1.3](#13-three-sets-of-four)). Th
 
 Claim: "During end-of-life care, memories are able to penetrate deeper into the subconscious mind ... my perception of time is affected by gravity in relation to bosons."
 
-**Verdict: partly true. The end-of-life phenomena are real and documented. The link to gravity and bosons is outside physics.** "Penetrate deeper into the subconscious" is not a defined, measured construct.
+**Verdict: partly true. The end-of-life phenomena are real and documented. The link to gravity is false as stated (about 1e-16 per metre; no part in felt time).** "Penetrate deeper into the subconscious" is not a defined, measured construct, and "in relation to bosons" is too vague to test; those parts are outside physics.
 
 **What is documented.**
 
@@ -643,6 +653,8 @@ The verifier recomputed every number and found no arithmetic errors. It made the
 | ⁴⁰K betas vs solar-neutrino interactions | 3.7e9 | About 3e9 (2.6e9–3.6e9, Borexino-scaled) |
 | Dark matter outside space-time | False | Unsupported |
 | Neutrinos and perception | False | Unsupported / physically implausible |
+
+**Changed on 18 October 2026, after comparison with [`../letters/words.md`](../letters/words.md).** The gravity link in 4.3 (outside physics → false as stated); the Clay status in 2.1 (now from the primary sources); the Borexino row and the popular figures in 2.3 (now sourced); gene counts across annotations in 3.1; the WHO wording in 3.4; the brane example in 2.4; the rounding of the weak range in 2.1 (197.3269804 MeV fm / 80362.5 MeV = 2.45546e-3 fm, which `particle_cluster_output.txt` prints as 2.4555e-18 m). `physbio_factcheck_results.json` was not changed.
 
 ---
 

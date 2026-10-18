@@ -1,0 +1,5 @@
+ours:   results/series.json, orders 0..14
+theirs: ../audit_v2/exact/z12_unit.json, orders 0..12, amplitudes ['1', '1', '1', '1']
+Z: 61 harmonic polynomials compared for n <= 12, mismatches: 0 []
+E: 53 harmonic polynomials compared for n <= 12, mismatches: 0 []
+agree entry for entry (Fraction equality): True

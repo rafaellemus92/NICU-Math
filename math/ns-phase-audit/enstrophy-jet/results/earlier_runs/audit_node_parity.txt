@@ -1,0 +1,17 @@
+n  m  degree  poly-in-nu (monomial coefficients, low->high)
+0 0 0 bound 0 parity_ok True deg_ok True ['5/4']
+1 0 1 bound 1 parity_ok True deg_ok True ['0', '-7/2']
+1 1 0 bound 0 parity_ok True deg_ok True ['1/8']
+2 0 2 bound 2 parity_ok True deg_ok True ['5/8', '0', '11/2']
+2 1 1 bound 1 parity_ok True deg_ok True ['0', '-5/8']
+3 0 3 bound 3 parity_ok True deg_ok True ['0', '-145/36', '0', '-19/3']
+3 1 2 bound 2 parity_ok True deg_ok True ['-1/24', '0', '17/12']
+4 0 4 bound 4 parity_ok True deg_ok True ['-3/80', '0', '41/3', '0', '35/6']
+4 1 3 bound 3 parity_ok True deg_ok True ['0', '1/16', '0', '-49/24']
+5 0 5 bound 5 parity_ok True deg_ok True ['0', '-25289/48600', '0', '-2963/90', '0', '-67/15']
+5 1 4 bound 4 parity_ok True deg_ok True ['2869/86400', '0', '239/480', '0', '43/20']
+6 0 6 bound 6 parity_ok True deg_ok True ['8500748131/210161952000', '0', '145723/23328', '0', '3767/60', '0', '131/45']
+6 1 5 bound 5 parity_ok True deg_ok True ['0', '-908723/3110400', '0', '-769/288', '0', '-107/60']
+6 2 0 bound 0 parity_ok True deg_ok True ['-6487/3110400']
+log (nu=1/28) == node_1: True
+ALL PARITY/DEGREE CHECKS PASS

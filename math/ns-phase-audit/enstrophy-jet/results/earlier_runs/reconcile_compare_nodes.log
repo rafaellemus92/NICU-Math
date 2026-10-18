@@ -1,0 +1,48 @@
+nodes: ['-1/3', '-1/5', '-1/9', '-2/3', '-3/2', '1/3', '1/5', '2/3', '3', '3/5', '4/3', '5/2']  nmax: {'-1/3': 11, '-1/5': 11, '-1/9': 11, '-2/3': 11, '-3/2': 11, '1/3': 11, '1/5': 11, '2/3': 11, '3': 11, '3/5': 11, '4/3': 11, '5/2': 11}
+ nu=-1/3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=-1/5: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=-1/9: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=-2/3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=-3/2: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=1/3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=1/5: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=2/3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=3/5: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=4/3: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+ nu=5/2: imag!=0 entries 0, div!=0 0, reality viol 0, support viol 0, mean force nonzero False, modes [8, 28, 68, 190, 472, 974, 1814, 3098, 4938, 7496, 10934, 15404]
+
+[1] pointwise exact mismatches vs exact agent: 0 []
+[2] c[n,-M]!=c[n,M]: 0
+
+[3] interpolation on 12 nodes, n<=11: polynomial mismatches vs exact agent: 0
+    (min,max) nu-degree of my interpolated c[n,M], M>=0:
+     n= 0 M0:(0, 0)
+     n= 1 M0:(1, 1)  M1:(0, 0)
+     n= 2 M0:(0, 2)  M1:(1, 1)
+     n= 3 M0:(1, 3)  M1:(0, 2)
+     n= 4 M0:(0, 4)  M1:(1, 3)
+     n= 5 M0:(1, 5)  M1:(0, 4)
+     n= 6 M0:(0, 6)  M1:(1, 5)  M2:(0, 0)
+     n= 7 M0:(1, 7)  M1:(0, 6)  M2:(1, 1)
+     n= 8 M0:(0, 8)  M1:(1, 7)  M2:(0, 2)
+     n= 9 M0:(1, 9)  M1:(0, 8)  M2:(1, 3)  M3:(0, 0)
+     n=10 M0:(0, 10)  M1:(1, 9)  M2:(0, 4)  M3:(1, 1)
+     n=11 M0:(1, 11)  M1:(0, 10)  M2:(1, 5)  M3:(0, 2)
+    mine c[7, 0] = ['0', '-8116327869497/13975769808000', '0', '-198133/6075', '0', '-188431/1890', '0', '-74/45']
+    mine c[7, 1] = ['-47271934743389/3354184753920000', '0', '56494201/32659200', '0', '6011/840', '0', '769/630']
+    mine c[7, 2] = ['0', '207269/14515200']
+    mine c[7, 3] = []
+    mine c[8, 0] = ['-5439242774343981284111/455483732420503987200000', '0', '1913515603495187/335418475392000', '0', '156698159/1360800', '0', '24427/180', '0', '103/126']
+    mine c[8, 1] = ['0', '1176915069013/37529339904000', '0', '-70442269/8709120', '0', '-6469/480', '0', '-1793/2520']
+    mine c[8, 2] = ['7035947189629/6708369507840000', '0', '-7261/241920']
+    mine c[8, 3] = []
+    mine c[8, 4] = []
+    mine c[9, 3] = ['-21381938959/211843247616000']
+    mine c[10, 3] = ['0', '22945853676929/20125108523520000']
+    mine c[11, 3] = ['36664195910726308371192257/649337608938670484152320000000', '0', '-7655275345450021/1518008185774080000']
+
+[4a] parity violations in my interpolants: []
+[4b] structural degree-law violations (deg <= n, n-1, n-3M): []
+[4c] +-nu pair parity violations: [] pairs: ['1/5', '1/3', '2/3']
+[4d] energy identity violations: []

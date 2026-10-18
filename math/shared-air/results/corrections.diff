@@ -1,0 +1,233 @@
+--- shared_air_original.html
++++ web/public/shared-air/index.html
+@@ -268,7 +268,7 @@
+         <span class="key"><em id="phaseNote">locking — · other parent —</em></span>
+       </div>
+       <canvas id="phStrip" role="img" aria-label="Synchrogram: mom's cardiac phase at each infant heartbeat"></canvas>
+-      <p class="small muted">A synchrogram. Each dot is one infant beat, placed by how far mom is through her own cardiac cycle. Scattered dots mean the hearts are timing independently. Horizontal bands mean the infant's beats fall at preferred moments of mom's cycle. The locking index is 0 for random, 1 for locked; the other parent gives the chance level.</p>
++      <p class="small muted">A synchrogram. Each dot is one infant beat, placed by how far mom is through her own cardiac cycle. Scattered dots mean the hearts are timing independently. Horizontal bands mean the infant's beats fall at preferred moments of mom's cycle. The locking index is 0 for random, 1 for locked; the other parent gives the chance level. It looks for 1:1, 2:1 and 3:1 and reports the strongest. A 3:2 rhythm also puts three bands on mom’s cycle, so it shows up as 3:1; ratios such as 4:3 or 5:3 would need a different index.</p>
+     </div>
+ 
+     <div class="sync-row" aria-live="polite">
+@@ -276,7 +276,7 @@
+       <div class="sync-cell"><span class="label">Infant · other parent</span><span class="num" id="syncR">—</span></div>
+       <div class="sync-cell bond"><span class="label">Difference</span><span class="num" id="syncB">—</span></div>
+     </div>
+-    <p class="sync-note">Rate synchrony is the peak correlation of 5-second heart rate within ±10 seconds of lag, over the last 90 seconds. The other parent shares the room but not the bond, so the difference is the part the room can't explain. One window is noisy. The tests below average many sessions.</p>
++    <p class="sync-note">Rate synchrony is the peak correlation of 5-second heart rate within ±10 seconds of lag, over the last 90 seconds. The other parent shares the room but not the bond, so the difference is the part the room can't explain, as long as both adults take in the room alike. They are built alike here, but a mom who is asleep reacts less to the alarms and one out of the room misses them, and then the difference averages below zero even in the alike world, where there is no bond, though any single window can still read above zero. One window is noisy. The tests below average many sessions.</p>
+ 
+     <div class="controls">
+       <fieldset>
+@@ -372,12 +372,12 @@
+       <canvas class="chart" id="c1" role="img" aria-label="Rate synchrony with mom, room-mate and random surrogate in three worlds"></canvas>
+       <div class="finding" id="f1"></div>
+       <div class="run-row"><button class="run" data-exp="room">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="room">Default settings</span></div>
+-      <div class="bedside"><h4>At the bedside</h4><p>Record a second adult in the same pod at the same time: another parent, or a nurse sitting nearby. Pseudo-pairs built from other days remove the room along with the bond, so beating them proves only that the room is shared.</p></div>
++      <div class="bedside"><h4>At the bedside</h4><p>Record a second adult in the same pod at the same time: another parent, or a nurse sitting nearby. Pseudo-pairs built from other days remove the room along with the bond, so beating them proves only that the room is shared. Match that adult to mom as closely as you can. Someone calmer, noisier or out of earshot of the alarms correlates differently with the infant even when no bond exists, so subtracting correlations can manufacture a difference or hide one.</p></div>
+     </article>
+ 
+     <article class="test" id="t2">
+       <header><p class="eyebrow">Test 2</p><h3>Who moves first?</h3></header>
+-      <p>The same sessions, now asking about direction. For every lag from −15 to +15 seconds, the infant–other-parent correlation is subtracted from the infant–mom correlation. What remains is the part of the timing the room can't explain. Positive lag means the infant changed first.</p>
++      <p>The same sessions, now asking about direction. For every lag from −15 to +15 seconds, the infant–other-parent correlation is subtracted from the infant–mom correlation. What remains is the part of the timing the room can't explain, provided both adults take in the room alike (in these sessions they do). Positive lag means the infant changed first.</p>
+       <canvas class="chart" id="c2" role="img" aria-label="Bond-specific cross-correlation by lag in three worlds"></canvas>
+       <div class="finding" id="f2"></div>
+       <div class="run-row"><button class="run" data-exp="room">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="room">Default settings</span></div>
+@@ -395,11 +395,11 @@
+ 
+     <article class="test" id="t4">
+       <header><p class="eyebrow">Test 4</p><h3>Is more coupling better?</h3></header>
+-      <p>Perceived world. Responsiveness is swept from 0 to 3. A heel stick lands at 80 seconds. Recovery is the time until the infant's heart rate returns within 10 bpm of baseline and stays there 15 seconds. The lower panel shows rate synchrony at each setting. Fourteen runs per point; the band is the middle half of runs. In the physical world this sweep does nothing: responsiveness isn't in its equations.</p>
++      <p>Perceived world. Responsiveness is swept from 0 to 3. A heel stick lands at 80 seconds. Recovery is the first time the infant's heart rate is back within 10 bpm of baseline and stays there 15 seconds; a later relapse doesn't count. The lower panel shows rate synchrony at each setting. The stored curves use 200 runs per point and a run with your settings uses 30; the band is the middle half of runs. In the physical world this sweep does nothing: responsiveness isn't in its equations.</p>
+       <canvas class="chart" id="c4" role="img" aria-label="Recovery time and synchrony versus responsiveness"></canvas>
+       <div class="finding" id="f4"></div>
+       <div class="run-row"><button class="run" data-exp="sweep">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="sweep">Default settings</span></div>
+-      <div class="bedside"><h4>At the bedside</h4><p>Measure recovery, not harmony. After a heel stick or suctioning, time how long heart rate and saturation take to return to baseline when the infant is held by mom versus lying in the bed. Code mom's response latency from video. Jaffe and Beebe found that mid-range vocal coordination at 4 months predicted secure attachment and the highest coordination predicted insecure attachment. This model produces the same shape from a delayed feedback loop alone, which shows the mechanism is possible, not that it is the one at work.</p></div>
++      <div class="bedside"><h4>At the bedside</h4><p>Measure recovery, not harmony. After a heel stick or suctioning, time how long heart rate and saturation take to return to baseline when the infant is held by mom versus lying in the bed. Code mom's response latency from video. Jaffe, Beebe and colleagues found that a mid-range degree of mother–infant vocal-rhythm coordination at 4 months predicted secure attachment at 12 months; higher coordination predicted disorganized or anxious-resistant attachment, and lower coordination avoidant attachment. The model gets a similar shape from two mechanisms of its own: a delayed response that overshoots, and a capacity to soothe that gives out as mom’s own arousal climbs. That shows the shape can arise this way, not that it does. A different measure, how fast the last of the arousal fades from the pair as a whole, is best at a much lower responsiveness (below 0.1 at the default settings). Above that, what fades last is mom’s own arousal: soothing the infant can’t speed it up, and her arousal leaking back to the infant slows it a little. That measure describes the pair’s return after something that stirs mom directly, such as an alarm, not the infant’s heart rate after a heel stick.</p></div>
+     </article>
+ 
+     <article class="test" id="t5">
+@@ -409,7 +409,7 @@
+       <canvas class="chart" id="c5b" role="img" aria-label="Phase-locking index against pulse strength"></canvas>
+       <div class="finding" id="f5"></div>
+       <div class="run-row"><button class="run" data-exp="room">Run dots with my settings</button><button class="run" data-exp="pulse">Run curve with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="pulse">Default settings</span></div>
+-      <div class="bedside"><h4>At the bedside</h4><p>This needs beat times from both ECGs, not monitor heart rates. Plot the synchrogram and compare against twin surrogates. Van Leeuwen and colleagues did exactly this for six mothers and their fetuses with magnetocardiography and found brief epochs of 3:2, 5:3 and 4:3 locking, more often during fast paced maternal breathing, with no support for a direct path through breathing movements. That is what weak forcing near a ratio produces: intermittent locking, not a locked rhythm. After birth, the medium changes from amniotic fluid and tissue to air and skin.</p></div>
++      <div class="bedside"><h4>At the bedside</h4><p>This needs beat times from both ECGs, not monitor heart rates. Plot the synchrogram and compare against twin surrogates. Van Leeuwen and colleagues did exactly this with maternal and fetal magnetocardiography in six pregnant women breathing at paced rates. They found brief epochs of 3:2, 5:3 and 4:3 locking, and at fast breathing rates more of them than in surrogate data, but no evidence of a direct effect of maternal breathing movements on fetal heart rate. An earlier, larger study of theirs found about as many epochs in surrogates as in real pairs, and a later one concludes the coupling is present but generally weak; how it travels is not established. That is what weak forcing near a ratio produces: intermittent locking, not a locked rhythm. After birth, the medium changes from amniotic fluid and tissue to air and skin.</p></div>
+     </article>
+ 
+     <article class="test" id="t6">
+@@ -426,21 +426,23 @@
+     <p class="eyebrow">How it's built</p>
+     <h2 id="build-h">Three levels, each built from the one below</h2>
+     <div class="ladder">
+-      <div class="rung"><div class="lvl">Cells<small>Level 1</small></div><p>The sinoatrial node is 24 pacemaker cells. Each is a phase oscillator with its own natural rate (about ±7% scatter), joined to the others by gap junctions. A heartbeat is the moment the population completes a cycle together. Breathing comes from 12 respiratory rhythm cells built the same way. Vagal tone slows the pacemakers and sympathetic drive speeds them. Each inspiration briefly withdraws vagal tone, which produces respiratory sinus arrhythmia without being programmed in. Temperature scales every pacemaker's rate at Q10 = 2.2.</p></div>
++      <div class="rung"><div class="lvl">Cells<small>Level 1</small></div><p>The sinoatrial node is 24 pacemaker cells (16 in the batch tests, to keep them fast). Each is a phase oscillator with its own natural rate (about ±7% scatter), joined to the others by gap junctions. A heartbeat is the moment the population completes a cycle together. Breathing comes from 12 respiratory rhythm cells (8 in the tests) built the same way. Vagal tone slows the pacemakers and sympathetic drive speeds them. Each inspiration briefly withdraws vagal tone, which produces respiratory sinus arrhythmia without being programmed in. Temperature scales every pacemaker's rate at Q10 = 2.2.</p></div>
+       <div class="rung"><div class="lvl">Person<small>Level 2</small></div><p>One hidden variable, arousal, drives vagal withdrawal, sympathetic drive and breathing rate. It relaxes toward baseline (about 30 s for the infant, 20 s for an adult) and carries its own noise. A heel stick raises the infant's arousal. An alarm raises everyone's. Asleep, mom's arousal settles lower and she perceives nothing.</p></div>
+       <div class="rung"><div class="lvl">Pair, perceived<small>Level 3</small></div><p>Mom perceives the infant's distress after a delay. It raises her own arousal (contagion) and drives a soothing action that lowers the infant's arousal over about four seconds. Her capacity to soothe falls as her own arousal climbs. Her arousal also leaks back to the infant (mirroring). All worlds share a slow unit noise (light, sound, activity) and the alarms. Singing or prayer adds a small calming input and raises the infant's vagal tone by 12%, a placeholder for the channel a music therapy study would measure.</p></div>
+       <div class="rung"><div class="lvl">Pair, physical<small>Level 3</small></div><p>Two channels, both needing skin-to-skin contact and neither needing anyone to notice. Heat: the infant's temperature drifts toward mom's chest with a time constant of about seven minutes, and the pacemaker cells run faster as they warm. Pulse: each maternal heartbeat is a brief push on every infant pacemaker cell, shaped like a pressure pulse. In this world the perceived paths are cut; in the perceived world these are.</p></div>
+     </div>
+     <div class="eq" role="region" aria-label="Model equations" tabindex="0"><pre>cell k     dθₖ/dt = ωₖ·(1 + 0.25·S)(1 − 0.4·V)·Q10^(T/10) + K_gap·r·sin(ψ − θₖ) − ε·P(ψ_mom)·sin θₖ
+-           V = V₀·(1 − 0.8·A)·(1 − RSA·insp),   S = 0.1 + 0.5·A⁺,   P(ψ) = e^{2(cos ψ − 1)} − mean
++           V = V₀·clamp(1 − 0.8·A, 0, 1.5)·(1 − RSA·insp),   S = 0.1 + 0.5·A⁺,   A⁺ = max(A, 0),   P(ψ) = e^{2(cos ψ − 1)} − mean
+ infant     dAᵢ/dt = (−Aᵢ + 0.8·U)/30 − C + g·0.04·Aₘ(t−τ) − 0.02·Aᵢ³ + noise
+ mom        dAₘ/dt = (−(Aₘ − A₀) + 0.8·U)/(20/steadiness) + g·0.10·Aᵢ(t−τ) − 0.02·Aₘ³ + noise
+-soothing   dC/dt  = (g·0.30·Aᵢ(t−τ)·cap(Aₘ) − C)/4,   cap = 1/(1 + (Aₘ/0.8)²)
++soothing   dC/dt  = (g·0.30·Aᵢ(t−τ)·cap(Aₘ) − C)/4,   cap = 1/(1 + (Aₘ⁺/0.8)²)
++voice      with mom present, adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt, and multiplies the infant’s V₀ by 1.12
+ heat       dT/dt  = contact·(T_chest − T)/400 + (1 − contact)·(0 − T)/400
+ perceived  g = responsiveness × presence × awake,   ε = 0,   heat off
+ physical   g = 0,   ε = pulse × contact,   heat on
+ alike      g = 0,   ε = 0,   heat off
+-locking    2:1 holds when |ω_infant − 2·ω_mom| &lt; ε·a₂/2,   a₂ = 0.19 (second harmonic of P)</pre></div>
++locking    2:1, to first order, when |ω_infant − 2·ω_mom| &lt; ε·a₂/2,   a₂ = 0.19 (second harmonic of P)
++           the exact range is solved numerically for one forced phase (Test 5)</pre></div>
+     <div class="aside">
+       <p class="subhead">A note on scale</p>
+       <p>A cell is mostly water, and it is tempting to reach for Navier–Stokes. But at a cell's size the Reynolds number is about 10⁻⁵. The inertial term that makes those equations hard vanishes, and what remains is Stokes flow: linear, time-reversible, no turbulence. At the cell, water matters as the solvent for the ion gradients that set the pacemaker's rate, and the right equations are Hodgkin–Huxley, not Navier–Stokes. Navier–Stokes is the physics of the infant's aorta, where the Reynolds number runs into the thousands and the flow is pulsatile. It describes each body from the inside. After birth no fluid connects the two bodies; what they share is heat, pressure, sound, light and air.</p>
+@@ -457,7 +459,8 @@
+       <li>The direction of influence. Test 2's lag follows from assumptions about contagion and soothing.</li>
+       <li>Much of the physiology. Arousal is one number. Real infants carry pain, sedation, cortisol and illness. An infant with trisomy 18 and a cardiac lesion would change nearly every parameter.</li>
+       <li>Cellular detail. The cells are phase oscillators. They capture synchronization, not ion channels, action potential shape or conduction.</li>
+-      <li>The one stage where two bodies are truly fluid-coupled: the placenta and the amniotic fluid, where Van Leeuwen's prenatal locking was recorded. That is before this model begins.</li>
++      <li>Life before birth. The fetus floats in amniotic fluid. In the placenta, maternal blood bathes the fetal villi across a thin barrier that passes heat, gases, water and nutrients. The two bloods are normally kept apart, though a few fetal cells cross into the mother. Van Leeuwen's prenatal locking was recorded in that setting, before this model begins.</li>
++      <li>Ratios other than n:1. The locking index checks the first three harmonics of mom's cycle, so it looks for 1:1, 2:1 and 3:1. In effect it counts the bands the infant's beats form on mom's cycle: a 3:2 rhythm reads exactly like 3:1, and 4:3, 5:3 or 4:1 read near zero. Naming the actual ratio in real recordings needs n:m analysis, as in the prenatal work.</li>
+       <li>Whose good the response serves. The equations describe how two bodies move each other. Nothing in them distinguishes care from skilled manipulation.</li>
+     </ul>
+     <p class="closing">If one of these worlds is the real one, the math can describe the breath. It still won't be the life the breath carries.</p>
+@@ -539,6 +542,39 @@
+   function pulseShape(psi) { return Math.exp(C.kappa * (Math.cos(psi) - 1)) - PMEAN; }
+   // amplitude of the pulse's n-th harmonic (for the locking threshold)
+   function pulseHarmonic(n) { let s = 0; for (let i = 0; i < 720; i++) { const p = i / 720 * TAU; s += pulseShape(p) * Math.cos(n * p); } return 2 * s / 720; }
++  // Exact 2:1 locking for one forced phase, dth/dt = omega - eps*P(Omega t)*sin(th): the node reduced to a single
++  // phase, no noise. Locked when some starting phase advances exactly two turns per maternal cycle (RK4 period map).
++  function locked21(omega, Omega, eps) {
++    const n = 128, G = 32, h = TAU / Omega / n, P = new Float64Array(2 * n + 1);
++    for (let k = 0; k <= 2 * n; k++) P[k] = pulseShape(Omega * k * h / 2);
++    let lo = Infinity, hi = -Infinity;
++    for (let g = 0; g < G; g++) {
++      const th0 = g / G * TAU; let x = th0;
++      for (let k = 0; k < n; k++) {
++        const p0 = P[2 * k], p1 = P[2 * k + 1], p2 = P[2 * k + 2];
++        const k1 = omega - eps * p0 * Math.sin(x);
++        const k2 = omega - eps * p1 * Math.sin(x + h / 2 * k1);
++        const k3 = omega - eps * p1 * Math.sin(x + h / 2 * k2);
++        const k4 = omega - eps * p2 * Math.sin(x + h * k3);
++        x += h / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
++      }
++      const d = x - th0 - 2 * TAU;
++      if (d < lo) lo = d; if (d > hi) hi = d;
++    }
++    return lo <= 0 && hi >= 0;
++  }
++  // Range of eps (up to epsMax) over which that phase locks 2:1: { on, off }, null where it never starts or never ends.
++  function lockRange21(omega, Omega, epsMax) {
++    epsMax = epsMax || 40; const step = 0.25;
++    const edge = (a, b, want) => { for (let i = 0; i < 30; i++) { const m = (a + b) / 2; if (locked21(omega, Omega, m) === want) b = m; else a = m; } return (a + b) / 2; };
++    let on = locked21(omega, Omega, 0) ? 0 : null, off = null;
++    for (let e = step; e <= epsMax + 1e-9; e += step) {
++      const L = locked21(omega, Omega, e);
++      if (L && on === null) on = edge(e - step, e, true);
++      if (!L && on !== null) { off = edge(e - step, e, false); break; }
++    }
++    return { on, off };
++  }
+ 
+   // ---------- Level 1 and 2: a person built from cells ----------
+   function Person(kind, rng, gauss, opt) {
+@@ -684,7 +720,7 @@
+     const p = this.p;
+     this.infant.gap = p.gapInfant;
+     this.infant.vagal = p.vagalInfant;
+-    this.infant.voice = !!p.voice;
++    this.infant.voice = !!p.voice && p.presence > 0;
+   };
+ 
+   // A monitor alarm reaches everyone in the room.
+@@ -936,7 +972,7 @@
+   function* expSweep(params, opt) {
+     opt = opt || {};
+     const Ks = opt.Ks || [0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3];
+-    const R = opt.R || 14, dur = 220, tStick = 80;
++    const R = opt.R || 30, dur = 220, tStick = 80;
+     const taus = [params.tau, params.tau * 2];
+     const out = { Ks, R, window: dur - tStick, curves: [] };
+     let done = 0; const total = Ks.length * R * taus.length;
+@@ -980,6 +1016,12 @@
+     const a2 = pulseHarmonic(2);
+     const wI = TAU * out.hrI[0] / 60, wM = TAU * out.hrM[0] / 60;
+     out.detune = Math.abs(wI - 2 * wM); out.a2 = a2; out.epsLock = out.detune / (a2 / 2); out.omegaI = wI;
++    // exact range for one forced phase at these rates, and for an infant 10 bpm above or below twice mom's rate
++    out.detuneSigned = wI - 2 * wM;
++    const lr = lockRange21(wI, wM, 40), d10 = TAU * 10 / 60;
++    out.epsLockExact = lr.on; out.epsLockOff = lr.off; yield 1;
++    out.eps10Above = lockRange21(2 * wM + d10, wM, 40).on; yield 1;
++    out.eps10Below = lockRange21(2 * wM - d10, wM, 40).on;
+     return out;
+   }
+ 
+@@ -1032,7 +1074,7 @@
+ 
+   function runToEnd(gen) { let r = gen.next(); while (!r.done) r = gen.next(); return r.value; }
+ 
+-  return { DEFAULTS, KINDS, C, WORLDS, Session, Person, mulberry32, pearson, ccf, series, smoothDecimate, mean, sem, median, quantile, recoveryTime, peakSync, pli, pliMax, phaseStart, pulseShape, pulseHarmonic, expRoom, expVent, expSweep, expPulse, expContact, runToEnd, TAU };
++  return { DEFAULTS, KINDS, C, WORLDS, Session, Person, mulberry32, pearson, ccf, series, smoothDecimate, mean, sem, median, quantile, recoveryTime, peakSync, pli, pliMax, phaseStart, pulseShape, pulseHarmonic, locked21, lockRange21, expRoom, expVent, expSweep, expPulse, expContact, runToEnd, TAU };
+ })();
+ if (typeof module !== 'undefined') module.exports = Model;
+ 
+@@ -1601,12 +1643,13 @@
+     let bj = 0; c1.rec.forEach((v, i) => { if (v < c1.rec[bj]) bj = i; });
+     const last = Ks.length - 1;
+     const recTxt = (c, i) => c.rec[i] >= d.window - 16 ? 'not recovered' : Math.round(c.rec[i]) + ' s';
++    const st4 = ranWith.sweep, def = !st4 || SKEYS.every(k => k === 'K' || Math.abs(st4[k] - D[k]) < 1e-9); // K is swept, so its slider doesn't matter
+     $('#f4').innerHTML =
+       '<p>Recovery is fastest at responsiveness <span class="num">' + Ks[bi] + '</span> (<span class="num">' + Math.round(c0.rec[bi]) + ' s</span>). With no bond it takes <span class="num">' + recTxt(c0, 0) + '</span>. ' + (c0.censored[last] > d.R / 2
+         ? 'At <span class="num">' + Ks[last] + '</span>, <span class="num">' + c0.censored[last] + ' of ' + d.R + '</span> runs never settle within the window.'
+-        : 'At <span class="num">' + Ks[last] + '</span> the median is <span class="num">' + recTxt(c0, last) + '</span>, and <span class="num">' + c0.censored[last] + ' of ' + d.R + '</span> runs never settle.') + ' The response overshoots, mom’s arousal climbs, and her capacity to soothe drops.</p>' +
++        : 'At <span class="num">' + Ks[last] + '</span> the median is <span class="num">' + recTxt(c0, last) + '</span>, and <span class="num">' + c0.censored[last] + ' of ' + d.R + '</span> runs never settle.') + ' Two things slow it at high responsiveness. The delayed soothing overshoots, and the rebound carries heart rate back out of the band, which lifts the median. And as mom’s arousal climbs, her capacity to soothe drops' + (def ? '; from a responsiveness of about 2 this creates a second, stuck state in which both stay aroused, and noise pushes some runs into it' : ', which can trap the pair in a state where both stay aroused') + '.' + (c0.censored[last] > 0 ? ' Those are the runs that never settle.' : '') + '</p>' +
+       '<p>Synchrony rises the whole way, from <span class="num">' + c0.sync[0].toFixed(2) + '</span> to <span class="num">' + c0.sync[last].toFixed(2) + '</span>. The most synchronized pairs are the least regulated. The baseline above zero is the shared room, and it is noisy: two slow signals in a three-minute window correlate by chance more often than intuition expects.</p>' +
+-      '<p>Doubling the delay moves the best setting to <span class="num">' + Ks[bj] + '</span> and narrows it. The same eagerness, mistimed, overshoots.</p>';
++      '<p>Doubling the delay moves the best setting to <span class="num">' + Ks.filter((k, i) => c1.rec[i] - c1.rec[bj] < 0.5).join('–') + '</span> and narrows it. The same eagerness, mistimed, overshoots' + (def ? '; at 3 s the resting state itself starts to oscillate above a responsiveness of about 1.6' : '') + '.</p>';
+   }
+ 
+   // Test 5
+@@ -1630,13 +1673,14 @@
+     const ticks = []; for (let v = 0; v <= yMax + 1e-9; v += 0.2) ticks.push(Math.round(v * 10) / 10);
+     hgrid(ctx, x0, x1, Y, ticks, v => v === 0 ? '0' : v.toFixed(1));
+     ctx.font = '700 12px ' + FONT_UI; axisText(ctx, 'Phase locking against pulse strength, physical world', x0, 14, 'left', 'alphabetic', T.ink);
+-    const eps10 = (Model.TAU * 10 / 60) / (d.a2 / 2);
+-    for (const [e, lab] of [[d.epsLock, 'locks at these rates'], [eps10, '10 bpm off a ratio']]) {
+-      if (e > eMax) continue;
++    const marks = [[d.epsLockExact, 'locks at these rates']];
++    if (d.eps10Above != null && !(marks[0][0] != null && Math.abs(X(d.eps10Above) - X(marks[0][0])) < 16)) marks.push([d.eps10Above, '10 bpm above 2:1']);
++    for (const [e, lab] of marks) {
++      if (e == null || e > eMax) continue;
+       const x = Math.round(X(e)) + 0.5;
+       ctx.strokeStyle = T['ink-2']; ctx.setLineDash([3, 3]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bot); ctx.stroke(); ctx.setLineDash([]);
+       ctx.font = '500 10px ' + FONT_UI;
+-      ctx.save(); ctx.translate(x - 4, top + 4); ctx.rotate(Math.PI / 2); axisText(ctx, lab, 0, 0, 'left', 'alphabetic', T['ink-2']); ctx.restore();
++      ctx.save(); ctx.translate(x + 3, top + 4); ctx.rotate(Math.PI / 2); axisText(ctx, lab, 0, 0, 'left', 'alphabetic', T['ink-2']); ctx.restore();
+     }
+     ctx.strokeStyle = T.room; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]); ctx.beginPath();
+     eps.forEach((e, i) => { const x = X(e), y = Y(d.room[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+@@ -1665,12 +1709,18 @@
+   function writeF5() {
+     const r = cur.room, d = cur.pulse;
+     const h = r.worlds.physical, c = r.worlds.perceived, a = r.worlds.alike;
+-    const eps10 = (Model.TAU * 10 / 60) / (d.a2 / 2);
+-    const pushPct = e => Math.round(e * 0.69 / d.omegaI * 100);
++    const wAbove = 2 * Model.TAU * d.hrM[0] / 60 + Model.TAU * 10 / 60; // the hypothetical infant's own rate
++    const pushPct = (e, w) => Math.round(e * 0.69 / (w || d.omegaI) * 100);
++    const sgn = d.detuneSigned != null ? d.detuneSigned : -d.detune, below = sgn < 0;
++    const exact = d.epsLockExact != null ? 'about <span class="num">' + d.epsLockExact.toFixed(1) + '</span>' : 'no locking at any strength up to 40';
++    const above10 = d.eps10Above != null ? 'needs about <span class="num">' + d.eps10Above.toFixed(0) + '</span>, a push of about <span class="num">' + pushPct(d.eps10Above, wAbove) + '%</span> of each cell’s own rate at the peak of every maternal beat' : 'never locks 2:1 at any strength up to 40';
++    const below10 = d.eps10Below != null ? 'needs about <span class="num">' + d.eps10Below.toFixed(0) + '</span>' : 'never locks 2:1 at any strength up to 40';
++    const lastI = d.eps.length - 1;
+     const ratio = Object.entries(h.ratioCount).sort((x, y) => y[1] - x[1])[0];
+     $('#f5').innerHTML =
+       '<p>At the slider’s strength, the physical world locks at <span class="num">' + h.plRealMean.toFixed(2) + '</span> against mom versus <span class="num">' + h.plRoomMean.toFixed(2) + '</span> against the other parent (difference <span class="num">' + fmtS(h.plMean) + '</span> ' + ci95(h.plMean, h.plSem) + ', mostly <span class="num">' + ratio[0] + ':1</span>). Perceived <span class="num">' + fmtS(c.plMean) + '</span>, alike <span class="num">' + fmtS(a.plMean) + '</span>: nothing. With Test 1 this is a double dissociation. Perception shows in rates and not in beats; contact shows in beats and not in rates.</p>' +
+-      '<p>How strong is strong? At the default rates the pair sits <span class="num">' + (d.detune * 60 / Model.TAU).toFixed(1) + ' bpm</span> from 2:1, so locking needs only <span class="num">' + d.epsLock.toFixed(1) + '</span>. That closeness is an accident of the chosen rates. A pair 10 bpm from the nearest ratio needs <span class="num">' + eps10.toFixed(0) + '</span>, a push of about <span class="num">' + pushPct(eps10) + '%</span> of each cell’s own rate at the peak of every maternal beat. A pressure wave through two chest walls does nothing like that. What weak forcing near a ratio gives instead is intermittent locking, which is what the prenatal recordings show.</p>';
++      '<p>How strong is strong? At these rates the infant’s heart sits <span class="num">' + (Math.abs(sgn) * 60 / Model.TAU).toFixed(1) + ' bpm</span> ' + (below ? 'below' : 'above') + ' twice mom’s. The usual first-order formula says locking needs <span class="num">' + d.epsLock.toFixed(1) + '</span>. Solving the forced phase equation exactly gives ' + exact + (d.epsLockExact == null && !below ? '' : ', because besides pulling the infant’s cells toward the ratio, the pulse also slows them slightly on average, which here ' + (below ? 'works against' : 'adds to') + ' that pull') + '. Even at <span class="num">' + d.eps[lastI] + '</span> the simulated sessions reach a locking index of only <span class="num">' + d.real[lastI].toFixed(2) + '</span>: breathing swings, noise and session-to-session scatter keep knocking the pair out of lock.</p>' +
++      '<p>' + (Math.abs(sgn) * 60 / Model.TAU < 5 ? 'The closeness to 2:1 is an accident of the chosen rates. ' : 'How close a pair sits to 2:1 is set by its rates. ') + 'An infant 10 bpm above twice mom’s rate ' + above10 + '; one 10 bpm below ' + below10 + '. A pressure wave through two chest walls does nothing like that. What weak forcing near a ratio gives instead is intermittent locking, which is what the prenatal recordings show.</p>';
+   }
+ 
+   // Test 6

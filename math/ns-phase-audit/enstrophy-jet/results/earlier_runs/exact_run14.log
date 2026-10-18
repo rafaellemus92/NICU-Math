@@ -1,0 +1,14 @@
+order 1: modes=28 entries=36 time=0.0s total=0.0s
+order 2: modes=68 entries=126 time=0.0s total=0.0s
+order 3: modes=190 entries=464 time=0.0s total=0.0s
+order 4: modes=472 entries=1250 time=0.0s total=0.0s
+order 5: modes=974 entries=2642 time=0.1s total=0.1s
+order 6: modes=1814 entries=4984 time=0.2s total=0.3s
+order 7: modes=3098 entries=8598 time=0.5s total=0.9s
+order 8: modes=4938 entries=13788 time=1.6s total=2.5s
+order 9: modes=7496 entries=21040 time=4.9s total=7.4s
+order 10: modes=10934 entries=30830 time=12.1s total=19.5s
+order 11: modes=15404 entries=43596 time=31.2s total=50.7s
+order 12: modes=21124 entries=59974 time=78.7s total=129.4s
+order 13: modes=28296 entries=80578 time=181.3s total=310.8s
+order 14: modes=37128 entries=106000 time=401.2s total=711.9s

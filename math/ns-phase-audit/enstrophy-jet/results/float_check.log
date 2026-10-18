@@ -1,0 +1,55 @@
+grid 32^3, 32 phases, orders 0..14, rotational form, float64
+err = max_m |c_float - c_exact| / S,  zero = max |c_float| / S over m with c_exact = 0,  S = max_m |c_exact|
+
+nu = 0
+  n= 0  harmonics m>=0 [0]  err 9.1e-16  zero 9.1e-16
+  n= 1  harmonics m>=0 [1]  err 9.9e-16  zero 9.9e-16
+  n= 2  harmonics m>=0 [0]  err 9.2e-16  zero 9.2e-16
+  n= 3  harmonics m>=0 [1]  err 1.1e-15  zero 1.1e-15
+  n= 4  harmonics m>=0 [0]  err 1.8e-15  zero 1.8e-15
+  n= 5  harmonics m>=0 [1]  err 1.0e-15  zero 1.0e-15
+  n= 6  harmonics m>=0 [0, 2]  err 1.9e-15  zero 1.1e-15
+  n= 7  harmonics m>=0 [1]  err 1.1e-15  zero 1.1e-15
+  n= 8  harmonics m>=0 [0, 2]  err 4.6e-15  zero 4.6e-15
+  n= 9  harmonics m>=0 [1, 3]  err 1.8e-15  zero 1.8e-15
+  n=10  harmonics m>=0 [0, 2]  err 3.2e-14  zero 3.2e-14
+  n=11  harmonics m>=0 [1, 3]  err 1.2e-14  zero 1.0e-14
+  n=12  harmonics m>=0 [0, 2, 4]  err 6.5e-13  zero 6.5e-13
+  n=13  harmonics m>=0 [1, 3]  err 8.1e-14  zero 6.0e-14
+  n=14  harmonics m>=0 [0, 2, 4]  err 3.8e-13  zero 3.8e-13
+
+nu = 1/28
+  n= 0  harmonics m>=0 [0]  err 9.1e-16  zero 9.1e-16
+  n= 1  harmonics m>=0 [0, 1]  err 1.3e-15  zero 1.3e-15
+  n= 2  harmonics m>=0 [0, 1]  err 8.7e-16  zero 8.7e-16
+  n= 3  harmonics m>=0 [0, 1]  err 1.1e-15  zero 1.1e-15
+  n= 4  harmonics m>=0 [0, 1]  err 1.6e-15  zero 1.6e-15
+  n= 5  harmonics m>=0 [0, 1]  err 1.3e-15  zero 1.3e-15
+  n= 6  harmonics m>=0 [0, 1, 2]  err 1.3e-15  zero 1.1e-15
+  n= 7  harmonics m>=0 [0, 1, 2]  err 1.4e-15  zero 1.4e-15
+  n= 8  harmonics m>=0 [0, 1, 2]  err 1.1e-14  zero 8.3e-15
+  n= 9  harmonics m>=0 [0, 1, 2, 3]  err 4.6e-15  zero 2.6e-15
+  n=10  harmonics m>=0 [0, 1, 2, 3]  err 2.7e-14  zero 1.0e-14
+  n=11  harmonics m>=0 [0, 1, 2, 3]  err 1.1e-14  zero 6.8e-15
+  n=12  harmonics m>=0 [0, 1, 2, 3, 4]  err 4.6e-14  zero 4.6e-14
+  n=13  harmonics m>=0 [0, 1, 2, 3, 4]  err 6.3e-14  zero 2.8e-14
+  n=14  harmonics m>=0 [0, 1, 2, 3, 4]  err 1.7e-13  zero 1.5e-13
+
+nu = 1/3
+  n= 0  harmonics m>=0 [0]  err 9.1e-16  zero 9.1e-16
+  n= 1  harmonics m>=0 [0, 1]  err 8.4e-16  zero 8.4e-16
+  n= 2  harmonics m>=0 [0, 1]  err 8.0e-16  zero 8.0e-16
+  n= 3  harmonics m>=0 [0, 1]  err 8.4e-16  zero 8.4e-16
+  n= 4  harmonics m>=0 [0, 1]  err 8.7e-16  zero 8.7e-16
+  n= 5  harmonics m>=0 [0, 1]  err 8.6e-16  zero 8.6e-16
+  n= 6  harmonics m>=0 [0, 1, 2]  err 8.6e-16  zero 8.6e-16
+  n= 7  harmonics m>=0 [0, 1, 2]  err 7.6e-16  zero 7.6e-16
+  n= 8  harmonics m>=0 [0, 1, 2]  err 8.1e-16  zero 8.1e-16
+  n= 9  harmonics m>=0 [0, 1, 2, 3]  err 7.9e-16  zero 7.9e-16
+  n=10  harmonics m>=0 [0, 1, 2, 3]  err 7.0e-16  zero 7.0e-16
+  n=11  harmonics m>=0 [0, 1, 2, 3]  err 7.6e-16  zero 7.6e-16
+  n=12  harmonics m>=0 [0, 1, 2, 3, 4]  err 8.3e-16  zero 8.3e-16
+  n=13  harmonics m>=0 [0, 1, 2, 3, 4]  err 8.3e-16  zero 8.3e-16
+  n=14  harmonics m>=0 [0, 1, 2, 3, 4]  err 9.2e-16  zero 9.2e-16
+
+worst scaled error over all nu and n: 6.5e-13   (15.7s)

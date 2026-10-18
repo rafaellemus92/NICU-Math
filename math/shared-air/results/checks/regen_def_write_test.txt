@@ -1,0 +1,12 @@
+pulse 4.4 s
+DEF.pulse reproduced exactly
+sweep R = 200 134.3 s
+tau 1.5 median [39.25,17,12.75,10.875,10.25,12.125,22.5,23.5,50.125] never recover [21,2,0,0,0,0,11,46,82]
+tau 3 median [39.25,17.625,13.75,13.75,23.5,56.5,140.25,140.25,140.25] never recover [21,3,0,0,0,31,120,148,154]
+DEF.sweep reproduced exactly (every field, both curves)
+DEF written to <scratch copy of shared_air.html>
+
+real	2m18.780s
+user	2m16.653s
+sys	0m0.325s
+cmp: the written copy is byte-identical to shared_air.html

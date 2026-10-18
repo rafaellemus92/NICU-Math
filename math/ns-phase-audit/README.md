@@ -1,6 +1,6 @@
 # Audit of the periodic Navier–Stokes phase lab
 
-Independent checks of ChatGPT's `periodic_ns_lab_v2` package (not stored here). Also shipped as a ZIP for a direct comparison. Contents:
+Independent checks of ChatGPT's `periodic_ns_lab_v2` package, which is kept as uploaded in [`../inputs/periodic_ns_lab_v2_audit.zip`](../inputs/periodic_ns_lab_v2_audit.zip). Also shipped as a ZIP for a direct comparison. Contents:
 
 | Folder | What it is |
 |---|---|
@@ -11,6 +11,7 @@ Independent checks of ChatGPT's `periodic_ns_lab_v2` package (not stored here). 
 | `audit_v2/code_audit/` | Our checks run against your code: formal-ν jet, symmetry, generic variation checks, and the re-run script. |
 | `audit_v2/xcheck/` | Cross-comparisons between the lines above and your outputs. |
 | `checks_v1/nslab_check.py` | Our earlier FFT re-derivation of the v1 exact identities. |
+| `enstrophy-jet/` | A second exact line from a separate session, sharing no code with `audit_v2/`: the jet with symbolic ν through t¹⁴ (python-flint), equal to `audit_v2/exact/` entry for entry through t¹², a time-reversal proof of the parity rule, and how far the jet reaches in time. Start with `enstrophy-jet/RESULTS.md`. |
 | `../wyrd-mathlib/` | The Lean 4 + Mathlib project. `WyrdMathlib/PeriodicNS/` is the Navier–Stokes part. |
 
 Repository: `github.com/rafaellemus92/sgrounds`, branch `claude/new-session-sbrl43`, folder `experiments/`.
@@ -28,6 +29,8 @@ Everything both sides compute agrees.
 
 ## New results beyond your package (details in `AUDIT.md` §4)
 
+Coefficients are in cosine form unless labelled Laurent. `z_{n,m}` is the Laurent (`e^{imφ}`) coefficient, half the `cos mφ` coefficient.
+
 1. **Your order-6 identity is confirmed exactly, with ν kept symbolic.** `[t⁶] Z ∋ −(6487/1555200) cos 2φ`, and its ν¹…ν⁶ coefficients are identically 0. Your seven-node jets match ours by `Fraction` equality.
 2. **Why the harmonic appears exactly at order 6, and why its coefficient is ν-free.** The proof is at the level of the Taylor recurrence:
    - **P1, a 2D-3C structure.** If `β = 0` (no `sin z` mode), the flow stays z-independent. The in-plane part is `α e^{−νt} sin y` exactly, and `u₃` evolves *linearly*, conserving `k_x`. Hence `Z` contains only `1, cos φ` at **every** order, so every harmonic `|m| ≥ 2` needs the `sin z` mode.
@@ -37,10 +40,10 @@ Everything both sides compute agrees.
      - So `|m| ≥ 2` cannot appear before `n = 3|m|`. At that order it is ν-independent and proportional to `α^|m| β² γ^|m| δ^|m|`.
 3. **Predictions from P2, all confirmed exactly:**
    - `[t⁷] cos 2φ = (207269/7257600) ν`: exactly linear in ν, so **zero for Euler**. This is the 7th-order polynomial.
-   - `cos 3φ` first appears at `t⁹`: `z_{9,3} = −21381938959/211843247616000`, ν-free.
+   - `cos 3φ` first appears at `t⁹`, ν-free: `[t⁹] cos 3φ = −21381938959/105921623808000` (Laurent `z_{9,3} = −21381938959/211843247616000`).
    - `cos 4φ` first appears at `t¹²`.
    - With `β = 0`, no `|m| ≥ 2` term occurs through order 16.
-4. **Your item 8:** the order-6 value is a near-cancellation. The `{2,4}` pair contributes `+103/6912` and the `{3,3}` pair `−433/27648`; six shells contribute. No small interaction set explains the *value*, only its *existence and form*.
+4. **Your item 8:** the order-6 value is a near-cancellation. To the Laurent `z_{6,2} = −6487/3110400`, the `{2,4}` pair contributes `+103/6912` and the `{3,3}` pair `−433/27648`; six shells contribute. No small interaction set explains the *value*, only its *existence and form*.
 5. **Numerics reproduced independently, to about 8 decimals.** The 9th decimals depend on your CFL-adaptive RK4.
    - The curvature crossing at `T ≈ 1.764994` is robust in `N`, `dt` and `h`. Your linear-interpolant values run about `1.8e−5` early.
    - The `T = 2` optimum converges to `φ* ≈ 0.970364` (at 64³).
@@ -50,7 +53,7 @@ Everything both sides compute agrees.
    - `exact_viscosity_invariant.py` can overwrite the archived certificate.
    - Some counts are hard-coded.
    - Two CSVs have no generating script.
-   - The 48³, T = 2 relative-Z rows are contaminated by a time-step mismatch (1–2.5%).
+   - The 48³, T = 2 relative-Z rows are contaminated by a time-step mismatch (0.8–2.5%).
 
    No mathematical error and no wrong headline number was found.
 
@@ -65,14 +68,15 @@ Everything both sides compute agrees.
 - **Proved, symmetry** (`PeriodicNS/PhaseSymmetry.lean`): your rotation-plus-translation map sends `u_φ` to `u_{−φ}`, and a mirror map fixes `u_φ`.
 - **Proved, counting core of P2** (`PeriodicNS/SelectionRules.lean`): per-axis balance plus the grading force `n ≥ 3|m|`, `e = 0` and the exact monomial at `n = 3|m|`, and `e = 1` for `|m| = 2` at `n = 7`. P1 and the recurrence's monomial structure are inputs, proved on paper in `AUDIT.md` §4.2, not in Lean.
 - `Limits/*.lean` is a separate, fully proved project on the Shared Air model's limits.
-- Every file builds with no `sorry`. `Audit.lean` prints the axioms of 130 theorems: only `propext`, `Classical.choice` and `Quot.sound`.
+- Every file builds with no `sorry`. `Audit.lean` prints the axioms of 136 theorems: only `propext`, `Classical.choice` and `Quot.sound`.
 
 No time-dependent claim (Taylor jets, simulations) is a Lean theorem.
 
 ## Running
 
 - Each `audit_v2/<line>/` script is run **from its own folder**, with python3 + numpy (sympy only for `code_audit/symmetry_sympy.py`).
-- Scripts that read your package expect it at `./periodic_ns_lab_v2`, next to `audit_v2/`. Run them with `python3 -I`.
+- Scripts that read your package expect it at `./periodic_ns_lab_v2`, next to `audit_v2/`. Unzip it there from this folder with `unzip ../inputs/periodic_ns_lab_v2_audit.zip`, and run the scripts with `python3 -I`.
+- `enstrophy-jet/` has its own commands in `enstrophy-jet/README.md` (python-flint, numpy and pytest).
 - The full command list is in `AUDIT.md` §8. Large re-run outputs and all `.npz` arrays are not included; the scripts regenerate them.
 
 Lean: `cd ../wyrd-mathlib && lake exe cache get && lake build && lake env lean Audit.lean`. This needs Lean 4.35.0 and Mathlib v4.35.0, and `../wyrd` must sit next to it.
@@ -80,6 +84,6 @@ Lean: `cd ../wyrd-mathlib && lake exe cache get && lake build && lake env lean A
 ## Still open, on both sides
 
 - A cutoff-uniform (continuum) estimate. `AUDIT.md` §7.1 gives the a-posteriori route that would turn the rankings into theorems.
-- A remainder bound for the Taylor jet at `t = 2` or `t = 4`.
+- A remainder bound for the Taylor jet at `t = 2` or `t = 4`. `enstrophy-jet/RESULTS.md` §6 gives numerical evidence that the series diverges for ν > 0 and is of no use at `t ≥ 2`.
 - A global optimality certificate in φ.
-- A proof that the leading `|m|` coefficient is nonzero for `|m| ≥ 5`.
+- A proof that the leading `|m|` coefficient is nonzero for `|m| ≥ 5`. `enstrophy-jet/` stops at `t¹⁴`; the first `|m| = 5` coefficient would be at `t¹⁵`.

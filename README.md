@@ -29,8 +29,12 @@ The `math/` folder is separate from the app above: nothing in the app uses it.
 It holds Lean 4 proofs, audits and numerical checks done with Claude in
 October 2026: the coupled prime-26 pangram (smallest sum 4296, proved in Lean),
 Lean + Mathlib proofs about the rainbow, body water, the Shared Air model and
-periodic Navier–Stokes fields, an audit of ChatGPT's Navier–Stokes phase lab,
-a physics and biology fact-check, a 1D Hou–Luo blowup lab, and the prime-word
+periodic Navier–Stokes fields, an audit of ChatGPT's Navier–Stokes phase lab
+with a second exact enstrophy series (`math/ns-phase-audit/enstrophy-jet/`),
+an audit of the Shared Air page (`math/shared-air/`; the page itself is
+`web/public/shared-air/`, live at https://nicu-math.vercel.app/shared-air),
+a physics and biology fact-check with a plain-language companion and a draft
+letter (`math/letters/`), a 1D Hou–Luo blowup lab, and the prime-word
 perfect-pangram search (formerly `pangram/` at the root).
 
 Start with [`math/README.md`](math/README.md). CI builds both Lean projects on

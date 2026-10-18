@@ -25,7 +25,7 @@ body {
 .katex-display { margin: 1.5em 0; overflow-x: auto; padding: 0.5em 0; }
 .katex-display > .katex { text-align: left; }
 
-/* On phones the nav wraps to two rows; keep the page content clear of it. */
+/* On phones the nav wraps to two or three rows; keep the page content clear of it. */
 @media (max-width: 520px) {
-  body > main { padding-top: 112px !important; }
+  body > main { padding-top: 128px !important; }
 }

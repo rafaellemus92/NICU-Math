@@ -1,0 +1,8 @@
+sweep R = 14 9.7 s
+tau 1.5 median [37.75,18.75,13.625,11.625,10.625,10,9.125,20.875,140.25] never recover [0,0,0,0,0,0,1,4,10]
+tau 3 median [37.75,20,15.75,14.875,14.25,23,64.625,140.25,140.25] never recover [0,0,0,0,0,0,6,9,12]
+R differs from the stored R = 200 - no comparison made
+
+real	0m9.784s
+user	0m9.531s
+sys	0m0.149s
