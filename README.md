@@ -1,27 +1,87 @@
-# NICU Evidence Search & Scenario Engine — Extended (Full Code)
+# NICU-Math — synthetic research and education
 
-**Features**
-- PDF ingestion (folder or single file)
-- Hybrid retrieval: pgvector semantic + Postgres full‑text (FTS)
-- Cross‑encoder reranker (MS‑MARCO MiniLM) for precision
-- PICO‑lite extraction (year, N, study type, effect) from snippets
-- Bayesian scenario endpoint (priors + LRs ± CI → posterior)
-- Streamlit UI: Evidence (table), Scenario, Admin ingest
-- Docker Compose for db/api/ui
+FastAPI lives in `api/app/`, Streamlit in `ui/app.py`, and the existing math
+archive in `math/`. Root `main.py` remains a compatibility API entrypoint. Start in **offline mode**: no API key, Postgres, PDF library,
+model download or paid API call is needed. Do not enter patient data. Existing
+scenario coefficients are unvalidated toy models, not treatment recommendations.
+The integrated `physiology/` track includes a closed-form two-compartment
+passive-emptying teaching model. Broader respiratory and hemodynamic models remain
+future work; none of these models is validated for patient care.
 
-## Quickstart (Docker)
-1) Copy `.env.example` → `.env`
-2) Put a few PDFs into `./library/`
-3) `docker compose up --build`
-4) Open http://localhost:8501 → Evidence → “Search & Build Table”
+The web demo and `navier_stokes/` now distinguish synthetic waveforms from an
+incomplete conjecture. See [corrections and analytical checks](navier_stokes/README.md)
+and the [retired-claim ledger](navier_stokes/CLAIMS.md). No conditional regularity
+theorem or clinical-to-PDE equivalence is established by those tools.
 
-## Local (no Docker)
-- Start Postgres with pgvector (e.g. `docker run --name nicu-db -e POSTGRES_PASSWORD=nicu -p 5432:5432 -d pgvector/pgvector:pg16`)
-- `python -m venv .venv && source .venv/bin/activate`
-- `pip install -r api/requirements.txt`
-- `uvicorn app.main:app --app-dir api/app --reload`
-- `pip install -r ui/requirements.txt`
-- `streamlit run ui/app.py`
+## Web runtime
+
+The locked web dependency tree requires **Node.js ≥22** (Supabase 2.118.0),
+even though Next.js alone permits ≥20.9. Verification used Node 24.19.0.
+From `web/`, use `npm ci` and `npm run build`; no dependency versions are changed
+by the synthetic-pipeline repair. The Python repair and separate schematic web
+demo have different documented models; neither is clinically validated.
+
+## Local startup
+Use Python 3.11 or 3.12, from repository root:
+```
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements-offline.txt
+NICU_OFFLINE=1 .venv/bin/python -m uvicorn api.app.main:app --host 127.0.0.1 --port 8000
+```
+In a second terminal:
+```
+STREAMLIT_BROWSER_GATHER_USAGE_STATS=false .venv/bin/python -m streamlit run ui/app.py --server.address 127.0.0.1
+```
+Open http://localhost:8501 for Streamlit. The API homepage at http://localhost:8000
+links to `/docs` and `/healthz` and explains the synthetic-only scope. It does not
+host Streamlit. `/healthz` reports `status: ok`, `mode: offline`.
+Scenario endpoints run synthetic computations; `/search` and `/answer` return 503
+in offline mode. No upload interface or static document serving is enabled.
+Dependency installation needs network on first setup; running scenarios does not.
+
+## Local Docker alternative
+```
+docker compose config --quiet
+docker compose up --build
+```
+Open http://localhost:8501. Both ports bind to loopback. No `.env` is required.
+`docker compose down` stops the local services. The retained database service is
+under the optional `evidence` profile and is not started by default.
+
+## Smoke tests
+```
+.venv/bin/python -m pip install -r requirements-test.txt
+NICU_OFFLINE=1 .venv/bin/python -m unittest tests.test_smoke tests.test_requirements tests.test_optional_pdf -v
+```
+Tests block outbound socket connections and cover API lifespan, health, disabled
+evidence routes, seeded scenario invariants, request bounds and UI error handling.
+They do not establish clinical validity or verify the legacy evidence pipeline.
+Optional PDF tests skip when those dependencies are absent. To check the optional
+install too, use a fresh virtual environment, install both `requirements.txt` and
+`requirements-test.txt`, run `python -m pip check`, then run the same test command.
+The optional tests check PDF dependency compatibility and in-memory synthetic text
+extraction; they do not ingest documents or call external services.
+
+## Legacy evidence tools and credentials
+`requirements.txt` additionally lists the legacy database/PDF/OpenAI dependencies.
+These tools are retained for a separate integration review, not part of the default
+runnable path. They expect `OPENAI_API_KEY`; `NICU_OPENAI_KEY` is not a code setting
+and may be a user-chosen secret name in the hosting setup. This repository cannot
+verify that external setup. No key is required for this task or the offline tests.
+Do not paste keys into chat or Git. Do not enable external services or map credentials
+without a separately authorized task. `NICU_OFFLINE=0` opts into legacy API routes;
+they additionally require Postgres/pgvector and have not been integration-validated.
+The supplied Docker image intentionally installs offline dependencies only.
+
+No patient data, secrets or licensed PDF full texts in the repository. `.env`, PDFs,
+local libraries and generated bytecode are ignored; historical root bytecode was removed during layout reconciliation. No new paid service or infrastructure is needed.
+
+## Collaboration and research
+- [Shared guidance](AGENTS.md), imported by [CLAUDE.md](CLAUDE.md).
+- [Research index](docs/RESEARCH_INDEX.md): evidence categories and limitations.
+- [Handoff](docs/HANDOFF.md): baseline, changes, checks and review scope.
+- [Pangram research](math/pangram-prime-words/README.md): preserved independent mathematical work;
+  its longer reproduction suite is separate from startup smoke tests.
 
 ## Math lab (math/)
 
@@ -35,3 +95,39 @@ perfect-pangram search (formerly `pangram/` at the root).
 
 Start with [`math/README.md`](math/README.md). CI builds both Lean projects on
 push ([`.github/workflows/lean.yml`](.github/workflows/lean.yml)).
+
+## Reconciled layout and hosting
+
+PR #3 package boundaries and PR #5 research scaffolds are reconciled here;
+see [RESEARCH.md](RESEARCH.md) and [the handoff](docs/HANDOFF.md) for retained and
+deferred choices. Root `requirements.txt` is a flat combined manifest for build parsers that reject
+includes; a regression test keeps it synchronized with the per-service files.
+The local offline/test convenience manifests use standard pip includes.
+For API-only offline development install `api/requirements-offline.txt`; for
+the UI install `ui/requirements.txt`. Run ingestion helpers as package modules
+(e.g. `python -m api.app.ingest_library --help`), not as direct file scripts.
+External ingestion remains disabled by default and unvalidated.
+
+Vercel compatibility is assessed separately in [HOSTING.md](docs/HOSTING.md).
+A valid FastAPI build does not host the Streamlit UI. No Vercel settings or
+deployment are changed by this reconciliation.
+
+## Web application and focused physiology checks
+
+The existing Next.js application lives in `web/`, including `/shared-air`.
+Run `npm ci` and `npm run build` there. No separate lint script or ESLint
+configuration is present; `next build` performs the configured build checks.
+The Python API and Streamlit interface above remain separate services.
+For Vercel, use Next.js with root `web` and default build/install/output settings;
+see [hosting notes](docs/HOSTING.md) before changing project settings.
+
+The two-compartment teaching model from PR #13 has its own focused suite:
+
+```sh
+.venv/bin/python -m pip install pytest scipy
+.venv/bin/python -m pytest -q tests/physiology
+```
+
+NumPy is already in the application requirements. These model checks are
+software/numerical verification, not patient-care validation. No other research
+claims are rerun by the scoped startup command above.

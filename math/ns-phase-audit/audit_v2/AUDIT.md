@@ -92,7 +92,7 @@ The repository's default branch is an unrelated web app; the proofs live on this
 |---|---|---|---|
 | Equation | Unforced 3D incompressible NS. Rotational form with Leray projection. | NS not formalised. Only static functionals E, Z, D, S of given fields. | Lean covers t = 0 functionals only |
 | Domain | [0,2π]³, periodic | Same | Same |
-| Normalisation | `norm='forward'`, volume averages, Z = ½⟨|ω|²⟩ | Integrals divided by volume | Same values: E = 1, Z = 5/4, D = 7/2, S = cos φ/4 |
+| Normalisation | `norm='forward'`, volume averages, Z = ½⟨\|ω\|²⟩ | Integrals divided by volume | Same values: E = 1, Z = 5/4, D = 7/2, S = cos φ/4 |
 | Initial data | u_φ = (sin y, sin z, cos x − cos(x+y+φ)) | v = u_0; family u_φ in progress | v = u_0. Package test 24 checks numerically that −u_0 and u_π have identical diagnostics. The Lean work states this as a translation identity. |
 | Forcing | None | None | Same |
 | Viscosity | 1/28, hard-coded | 1/28 where a viscosity is used | Same. νD = 1/8, so dZ/dt(0) = cos φ/4 − 1/8 in both. This matches the package's "Initial Z′" column (0.125, 0.016103519, −0.263892558). |
@@ -119,7 +119,7 @@ The repository's default branch is an unrelated web app; the proofs live on this
 |---|---|---|---|---|
 | 1 | `ns_solver.py` is unforced 3D periodic NS with strict cubic dealiasing and ν = 1/28; normalisation, projection, reality, zero mean and shell-flux sign are all correct | **PASS** | R, N-ind | **Equation (read in full).** The right-hand side is `P_K P(u×curl u) − ν\|k\|² u` with no forcing. ν = 1/28 is hard-coded in the production paths and appears in all 84 metadata files. **Dealiasing.** The cutoff K = ⌊(N−1)/3⌋ gives 3K < N. The N = 24 nonlinearity equals the alias-free N = 64 evaluation to 2.8e-17. As a counterexample showing the strict inequality matters, K = 8 at N = 24 gives an aliasing error of 3.6e-2. **Reality and divergence.** Hermitian defect 1.6e-16 and \|k·u\| = 4.9e-18. **Shell flux.** The budget closes to 1.3e-9, and Π > 0 means forward transfer. **Independent DNS.** Validated against four exact decaying solutions (errors 1.4e-15 to 3.2e-13). |
 | 2 | Run the 27 tests; independently check the velocity, tangent and second-variation equations | **PASS** (with a defect) | N-pkg, X, N-ind | **Tests.** `python -m pytest -v` passes all 27. **Defect.** Bare `pytest -q` fails collection (section 6, item B1). **What the tests cover.** Sensitivity tests 1–4 and 7 run only at 16³ and T ≤ 0.2. **Generic check.** For random independent (u, w, r), the variation right-hand sides and the dZ, d²Z formulas are exact to about 1e-15 (5-point stencils on a degree-4 polynomial). **Production times.** Richardson finite differences of the plain solver at 24³ give d²Z(1.76) = −0.0020361, d²Z(1.77) = +0.0024648 and d²Z(φ\*, T = 2) = −0.1707845, all equal to the variational values. **Independent tangent solver.** Line (c) reproduces the curvature crossing (section 5.4). |
-| 3 | Reproduce the sweep and the 32³/48³/64³ runs; test the rankings at t = 2 and t = 4; compare whole Fourier fields | **PASS** for rankings; **PARTIAL** for field comparison | N-ind, N-pkg | **Rankings.** Hold at N = 24, 32, 48 and 64 with margins ≥ 0.025 (t = 2) and ≥ 0.10 (t = 4), about 10³–10⁶ times every grid or integrator difference. **Re-runs.** All 33 sweep, 3 time-refinement and 9 refinement runs reproduce bitwise with the package code. **Full-field L² column.** Reproduced only with the package code. **Relative-Z column.** Independently reproduced for every 32³ row and every T = 4 row. The 48³, T = 2 rows differ by 1–2.5% (section 5.5). **Selection effects (acknowledged in `RESULTS.md`).** 0.971073 was optimised at 24³ only, and 2.159845 = 22π/32 is a sweep grid point. |
+| 3 | Reproduce the sweep and the 32³/48³/64³ runs; test the rankings at t = 2 and t = 4; compare whole Fourier fields | **PASS** for rankings; **PARTIAL** for field comparison | N-ind, N-pkg | **Rankings.** Hold at N = 24, 32, 48 and 64 with margins ≥ 0.025 (t = 2) and ≥ 0.10 (t = 4), about 10³–10⁶ times every grid or integrator difference. **Re-runs.** All 33 sweep, 3 time-refinement and 9 refinement runs reproduce bitwise with the package code. **Full-field L² column.** Reproduced only with the package code. **Relative-Z column.** Independently reproduced for every 32³ row and every T = 4 row. The 48³, T = 2 rows differ by 0.8–2.5% (section 5.5). **Selection effects (acknowledged in `RESULTS.md`).** 0.971073 was optimised at 24³ only, and 2.159845 = 22π/32 is a sweep grid point. |
 | 4 | Local optimiser at 24³ and 32³: stationary point versus global optimum | **PASS** (local stationary maximum); global optimum **UNPROVEN** | N-ind | **Reproduced** to about 1e-8 in φ by independent tangent-Newton and golden-section searches. Z_φφ ≈ −0.170 at every N. **New results.** N = 48 gives φ\* = 0.9703653579; N = 64 gives φ\* = 0.9703643925. φ\* converges to about 0.970364. **Global optimality.** No global certificate exists, and the package does not claim one. |
 | 5 | Phase-reflection symmetry; sign change of ∂²_φ Z(T,0) between T = 1.76 and 1.77 | **PASS** | X, N-ind | **Symmetry.** F\[u\](x) = R u(Rx+b) with R = diag(−1,−1,1) and b = (0,0,π) maps u_φ to u_{−φ}. This is checked with sympy for general amplitudes, and the cubic cutoff and RK4 commute with it exactly. **Numerical check.** Z(T,+0.5) − Z(T,−0.5) is at most 8.9e-16 over [0,2], and the fields map to within 2.8e-15. **Sign change.** Holds at N = 24–64, dt ∈ {0.01, 0.005, 0.0025} and h ∈ {0.04, 0.02, 0.01}, by both the tangent method and finite differences. The 9-decimal crossing values are **PARTIAL** (section 6, item B3). |
 | 6 | Taylor recurrence; [t⁶ cos 2φ]Z = −6487/1555200 for every ν; only m ∈ {0,±1} at orders 0–5 | **PASS** | X | **Recurrence.** Re-derived independently, with the pressure fully accounted for by P. **Value.** Obtained exactly, with ν symbolic, by line (a) (two exact implementations) and by line (d)'s formal-ν code. Line (b) confirms it in long double to a relative 5e-18. **Package jets.** Equal by Fraction equality, with 0 mismatches over orders 0–6 at all 7 nodes. **Orders 0–5.** Contain only m ∈ {0,±1}, as exact polynomials in ν. **Structural reason.** Section 4. |
@@ -144,7 +144,7 @@ The repository's default branch is an unrelated web app; the proofs live on this
 | Local phase optimisation table (24³, 32³) | **PASS** | N-ind | See item 4 and section 5.3. Correctly labelled as local and not certified global. |
 | Curvature at φ = 0 changes sign between 1.76 and 1.77 on 24³, 32³ and 48³ | **PASS** | N-ind | See item 5. Also holds at 64³. |
 | Linear crossing estimates 1.764523827, 1.764968015, 1.764976046 | **PARTIAL** | N-ind | Correct as linear interpolants, which is how they are labelled. The true crossings are about 1.8e-5 later, so 9 decimals overstate the accuracy (item B3). |
-| Spatial comparison table against 64³ | **PARTIAL** | N-ind, N-pkg | **Relative Z.** All 32³ rows and all T = 4 rows reproduce independently to 0.05% or better. The 48³, T = 2 rows differ by 1–2.5% because of time-step contamination (item B4). **Full-field L².** Reproduced with the package code only. |
+| Spatial comparison table against 64³ | **PARTIAL** | N-ind, N-pkg | **Relative Z.** All 32³ rows and all T = 4 rows reproduce independently to 0.05% or better. The 48³, T = 2 rows differ by 0.8–2.5% because of time-step contamination (item B4). **Full-field L².** Reproduced with the package code only. |
 | Temporal comparison table at 32³ | **PASS** | N-ind, N-pkg | **dt = 0.005 row.** Reproduced independently: 2.255288136558, to about 1e-12. **Other rows.** Reproduced with the package code. |
 | Order-6 exact result: −(6487/1555200) t⁶ cos 2φ, ν-independent, only m ∈ {0,±1} at orders 0–5 | **PASS** | X | See item 6 and section 4. |
 | "Local derivative identity; no remainder estimate permits t = 2 or t = 4" | **PASS** (statement accurate) | Logic | No remainder bound exists anywhere (section 7). |
@@ -188,6 +188,7 @@ The repository's default branch is an unrelated web app; the proofs live on this
 * **Consistency with t = 0 values.** [t²]Z = 5/8 − (5/4)ν cos φ + (11/2)ν². This is Z''(0)/2, consistent with v1 and with package tests 21–22: Z''(0) = 921/784 at φ = 0 and 1061/784 at φ = π, for ν = 1/28.
 * **Float agreement.** Over all n ≤ 12, all m, ν ∈ {0, 1/28, 1/7} and both float discretisations, the exact and float tables agree to at most 2.1e-15 absolute.
 * **DNS agreement.** A from-scratch DNS matches the order-10 series to 7e-15 at t = 0.05 and 4e-14 at t = 0.1, at both ν = 0 and ν = 1/28.
+* **Agreement with `../enstrophy-jet/`.** That folder's exact series, made in a separate session, agrees with `exact/z12_unit.json` entry for entry through n = 12 (61 Z and 53 E harmonic polynomials, Fraction equality) and extends it to n = 14; its c[n,m] is z_{n,m} here ([`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md#1-the-family-and-the-conventions) §1).
 
 ### 4.2 Structural explanation
 
@@ -234,13 +235,13 @@ We kept the full PDE: no interactions were deleted. Write Z as a polynomial in t
 
 | Prediction | Result | Source |
 |---|---|---|
-| β = 0 gives no \|m\| ≥ 2 harmonic | Exact symbolic-ν runs to **n = 16** (two amplitude sets) and to n = 10 (three sets) give max\|m\| = 1. Float runs to n = 12 sit at the 9e-16 noise floor. The field-level mechanism (k_z = 0, u₂ = 0, u₁ = α(−ν)ⁿ/n! sin y, k_x locking, linearity in γ and δ) is confirmed exactly. **New finite-time DNS** (N = 24, T = 1, 2, 4): the \|m\| = 2–4 harmonics of Z and E are at most 1.9e-15. In the β = 1 control, \|Z₂\| = 1.1e-3, 2.3e-2 and 3.2e-2. | (a), (b), (x) |
+| β = 0 gives no \|m\| ≥ 2 harmonic | Exact symbolic-ν runs to **n = 16** (two amplitude sets) and to n = 10 (three sets) give max\|m\| = 1. Float runs to n = 12 sit at the 9e-16 noise floor. The field-level mechanism (k_z = 0, u₂ = 0, u₁ = α(−ν)ⁿ/n! sin y, k_x locking, linearity in γ and δ) is confirmed exactly. **New finite-time DNS** (N = 24, T = 1, 2, 4; `xcheck/p1_finite_time.log`): the \|m\| = 2–4 harmonics of Z and E are at most 4.4e-15 absolute (the largest is the Euler run with unit amplitudes, T = 4, m = 4, where Z ≈ 5) and at most 1.2e-15 at ν = 1/28. In the β = 1 control, \|Z₂\| = 1.1e-3, 2.3e-2 and 3.2e-2. | (a), (b), (x) |
 | Grading d + e = n + 2 | Exact: scaling the amplitudes by λ ∈ {2, −3/5} gives λ^{n+2−e} for every n ≤ 9. Float: λ-homogeneity holds to 6e-15. | (a), (b) |
 | Selection rules | Zero violations: exact univariate interpolation for n ≤ 9, float per-variable DFTs for n ≤ 12. For m = 1, β⁰ terms do occur, as P2 allows. | (a), (b) |
 | n = 6, m = 2 is ν-free and equals −6487/3110400 · α²β²γ²δ² | Exact at amplitudes (2,3,5,7): −317863/3456 = 44100 × unit value. Exact at (1,2,1,3): 36 × unit value. Exact at (½, −⅔, ¾, 5/7). Float: random signed tuples deviate by at most 6e-14 relative. | (a), (b) |
 | [t⁷] m = 2 is C ν with C ≠ 0 | **z_{7,2} = (207269/14515200) ν exactly**, so the cos 2φ coefficient of [t⁷]Z is (207269/7257600) ν. The ν⁰ term is zero (long double: −2.2e-21). **DNS check:** the e^{2iφ} harmonic differs between ν = 0 and ν = 1/28 by 5.016e-11 at t = 0.1. The series gives 5.015e-11 including higher orders, and 5.10e-11 from the t⁷ term alone. | (a), (b), (x) |
-| First cos 3φ at n = 9 | **z_{9,3} = −21381938959/211843247616000**, ν-independent, with monomial α³β²γ³δ³. Long double agrees to 7.5e-18 relative. Next order: z_{10,3} = (22945853676929/20125108523520000) ν. | (a), (b) |
-| First cos 4φ at n = 12 | z_{12,4} = −36714890439535371262123/39287653650070819209216000000, ν-independent, with monomial α⁴β²γ⁴δ⁴. \|m\| ≥ 5 is absent through n = 12. | (a), (b) |
+| First cos 3φ at n = 9 | **z_{9,3} = −21381938959/211843247616000**, so the cos 3φ coefficient of [t⁹]Z is −21381938959/105921623808000 ≈ −2.0187e-4. It is ν-independent, with monomial α³β²γ³δ³. Long double agrees to 7.5e-18 relative. Next order: z_{10,3} = (22945853676929/20125108523520000) ν, cos 3φ coefficient (22945853676929/10062554261760000) ν. | (a), (b) |
+| First cos 4φ at n = 12 | z_{12,4} = −36714890439535371262123/39287653650070819209216000000, so the cos 4φ coefficient of [t¹²]Z is −36714890439535371262123/19643826825035409604608000000 ≈ −1.8690e-6. It is ν-independent, with monomial α⁴β²γ⁴δ⁴. \|m\| ≥ 5 is absent through n = 12. | (a), (b) |
 | At finite time, the m = 2 harmonic is even in β and O(β²) | At Z(T = 1), ν = 1/28, c₂/β² = −1.1909e-3, −1.2035e-3, −1.2067e-3 and −1.2075e-3 for β = 0.4, 0.2, 0.1, 0.05. β = −0.1 gives the same value as +0.1. | (x) |
 
 For reference, the next even order is [t⁸] cos 2φ = 7035947189629/3354184753920000 − (7261/120960) ν². Its ν⁰ part is not a single monomial, as expected.
@@ -250,8 +251,8 @@ For reference, the next even order is [t⁸] cos 2φ = 7035947189629/33541847539
 | Statement | Status |
 |---|---|
 | P1 at the level of the Taylor recurrence, for all (α, γ, δ, ν) | **Proved** (analytic induction re-derived by the cross-check) |
-| P1 at the solution level (finite T) | **Verified numerically** to 2e-15 through T = 4. A proof would follow the same lines, since the k_z = 0 subspace is invariant and the u₃ equation is linear, but we have not written it out. |
-| P2: grading, selection rules, "no \|m\| harmonic before n = 3\|m\|", e = 0 and the forced monomial at n = 3\|m\| | **Proved**, given P1 |
+| P1 at the solution level (all T) | **Paper proof**, not refereed and not in Lean: [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) sections 1 and 5 (ChatGPT/Codex; for E, Z and S, every T and every (α, γ, δ) with ν > 0), and the same argument for Z in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md) §4.2. **Verified numerically** through T = 4: with β = 0 the \|m\| = 2–4 harmonics stay at or below 4.4e-15 absolute (1.2e-15 at ν = 1/28; `xcheck/p1_finite_time.log`), which is rounding level. |
+| P2: grading, selection rules, "no \|m\| harmonic before n = 3\|m\|", e = 0 and the forced monomial at n = 3\|m\| | **Proved**, given P1. The parity rule e ≡ n − m (mod 2) also has a second proof that does not use the grading, by time reversal (Rule A in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md#41-rule-a-time-reversal-parity) §4.1). That folder also checks this parity and P2's bound deg_ν z_{n,m} ≤ n − 3\|m\| for \|m\| ≥ 2 (its Rule B) on every coefficient through n = 14, and every power of ν they allow occurs. |
 | [t⁷] m = 2 coefficient is ∝ ν and zero for Euler | Form **proved**. Constant **computed exactly**: 207269/14515200. |
 | Leading coefficient at n = 3\|m\| is nonzero | **Computed** for \|m\| = 2, 3, 4. **Unproven** for \|m\| ≥ 5. |
 
@@ -437,7 +438,7 @@ The full-field L² column (for example 4.0827e-4 at φ = 0, T = 4, 48³) was rep
   * The bias is about 1.8e-5 at every grid. The values are correctly labelled as linear interpolants, but 9 decimals exceed their accuracy by about four orders of magnitude.
 * **B4. Spatial relative-Z column.**
   * At φ = 0, T = 2, 48³ the package prints 4.6168e-8. A fixed-dt comparison gives 4.4995e-8.
-  * The cause is that the table compares a fixed-dt 48³ run with a CFL-adaptive 64³ run, so a time-step error of about 2–3e-9 absolute contaminates the 48³, T = 2 rows (1–2.5%).
+  * The cause is that the table compares a fixed-dt 48³ run with a CFL-adaptive 64³ run, so a time-step error of about 1.4–2.6e-9 absolute contaminates the 48³, T = 2 rows (0.8–2.5%; the ratio column of section 5.5, from `xcheck/spatial_relZ.log`).
   * Printing 5 significant digits overstates what these rows measure.
 * **C1 9th decimal.**
   * The 64³ sampled peak at φ = 0 is printed as 2.240711313; fixed-dt RK4 gives 2.240711306.
@@ -494,6 +495,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
 * **What exists so far.**
   * The Lean repository has a Galerkin cutoff bound and a variable-coefficient Gronwall lemma. These are the kind of ingredients step (b) needs, but they are not connected to an NS evolution, which is not formalised.
   * The a-priori alternative is a bound on sup_{t ≤ T} Z_K(t) uniform in K. For this data on [0, 4] that is essentially the regularity question itself, and it is not available.
+  * [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) argues on paper for a continuum, all-time statement for this family, but only for |β| below an uncomputed radius; its own formula gives below 10⁻²¹ at α = γ = δ = 1, ν = 1/28. It does not apply to the β = 1 data audited here.
 
 ### 7.2 No remainder bound for the Taylor jet at t = 2 or t = 4
 
@@ -503,6 +505,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
   * the order-10 series matches the DNS to 1e-14 for t ≤ 0.1 and to 6e-9 at t = 0.3;
   * the order-12 series matches to 1.8e-10 at t = 0.2, ν = 1/7, which is the size of the truncation term.
 * Convergence of the series was not proved.
+* Numerical evidence on that point is in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md#6-what-the-jet-cannot-tell-you) §6. Carried to t⁴⁰ in floating point, the series looks divergent for ν > 0. Stopped at its smallest term, it matches the package's 64³ run (ν = 1/28, φ = 0.971073) to about 3e-5 at t = 1 but only to about 5e-2 at t = 1.5.
 
 ### 7.3 Global optimality in φ
 
@@ -521,7 +524,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
 ### 7.5 Smaller open points
 
 * **Leading coefficients for \|m\| ≥ 5.** The coefficient at n = 3\|m\| is computed nonzero only for \|m\| = 2, 3, 4.
-* **P1 at the solution level.** Verified numerically through T = 4; the proof has not been written out.
+* **P1 at the solution level.** Verified numerically through T = 4. A paper proof for all T is written out in [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) sections 1 and 5 (for E, Z and S) and, for Z, in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md) §4.2. Neither is refereed or in Lean.
 * **Phase lemma check.** The exact line's phase lemma was cross-checked against the generic complex implementation for three parameter sets only, though the lemma itself is proved.
 * **Lean coverage.** No time-dependent statement is formalised in Lean.
 

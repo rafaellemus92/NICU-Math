@@ -32,6 +32,14 @@ noise, baseline `0`, steadiness `1`, zero delay) this is exact:
 Not proved: the size of the disturbance that flips the pair (the basin
 boundary), and anything about delay or noise. As the source says, this is one
 mechanism that could produce the shape, not evidence that it is the one at work.
+
+Numerically (not proved here; `math/shared-air/AUDIT.md` §4, with the 200-seed
+runs in `math/shared-air/results/adjudication/`): this second state explains
+Test 4's runs that never recover, which appear with or without the delay, but
+the rise of Test 4's median at high responsiveness needs the delay. With noise
+off, the `+1` heel stick alone does not flip the pair for `g ≤ 3` (at `g = 3`
+the smallest infant kick that does is about `1.33` at `τ = 0.02 s` and `1.41`
+at `τ = 1.5 s`); noise carries runs into the second state.
 -/
 
 namespace Wyrd.Limits

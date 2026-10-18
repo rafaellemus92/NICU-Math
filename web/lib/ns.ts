@@ -1,4 +1,4 @@
-// Core Navier-Stokes calculations for client-side demo
+// Prescribed, floored RC-shaped synthetic demo; not a Navier-Stokes solution.
 // Simplified TypeScript port of navier_stokes/formulation.py + analysis.py
 
 export const CONST = {
@@ -11,7 +11,7 @@ export const CONST = {
   respiratory_rate: 40.0,
 } as const
 
-export type Classification = 'smooth' | 'approaching' | 'critical' | 'singular'
+export type Classification = 'higher_compliance' | 'intermediate_compliance' | 'declining_compliance' | 'low_compliance' | 'insufficient_data'
 
 export interface BreathResult {
   index: number
@@ -32,8 +32,8 @@ export interface SimulationParams {
   peep: number            // cmH2O
   pip: number             // cmH2O
   noiseLevel: number
-  surfactantAtBreath: number | null  // null = no surfactant
-  surfactantEffect: number           // fractional compliance recovery
+  recoveryAtBreath: number | null  // null = no prescribed recovery
+  recoveryFraction: number           // fractional compliance recovery
 }
 
 export const DEFAULT_PARAMS: SimulationParams = {
@@ -44,23 +44,25 @@ export const DEFAULT_PARAMS: SimulationParams = {
   peep: 5.0,
   pip: 20.0,
   noiseLevel: 0.03,
-  surfactantAtBreath: null,
-  surfactantEffect: 0.6,
+  recoveryAtBreath: null,
+  recoveryFraction: 0.6,
 }
 
-export function classifyRegularity(
+export function classifyCompliance(
   compliance: number,
   trend: number,
   cLow = 0.3,
   cHigh = 1.0,
 ): Classification {
-  if (compliance < cLow) return trend <= 0 ? 'singular' : 'critical'
-  if (compliance < cHigh) return trend < -0.1 ? 'critical' : 'approaching'
-  return 'smooth'
+  if (!(0 < cLow && cLow < cHigh && Number.isFinite(cHigh))) throw new RangeError('Invalid thresholds')
+  if (!Number.isFinite(compliance) || !Number.isFinite(trend) || compliance < 0) return 'insufficient_data'
+  if (compliance < cLow) return 'low_compliance'
+  if (compliance < cHigh) return trend < -0.1 ? 'declining_compliance' : 'intermediate_compliance'
+  return 'higher_compliance'
 }
 
 export function laplacePressure(gamma: number, radius: number): number {
-  if (radius <= 0) return Infinity
+  if (!Number.isFinite(radius) || radius <= 0 || !Number.isFinite(gamma) || gamma < 0) throw new RangeError('Invalid gamma or radius')
   return 2.0 * gamma / radius
 }
 
@@ -81,6 +83,14 @@ function gaussianRandom(rng: () => number): number {
 }
 
 export function simulate(params: SimulationParams): BreathResult[] {
+  const finite = [params.nBreaths, params.compliance0, params.complianceDecay, params.resistance,
+    params.peep, params.pip, params.noiseLevel, params.recoveryFraction].every(Number.isFinite)
+  if (!finite || !Number.isInteger(params.nBreaths) || params.nBreaths < 0 ||
+      params.compliance0 <= 0 || params.resistance <= 0 || params.pip <= params.peep ||
+      params.noiseLevel < 0 || params.complianceDecay < 0 || params.recoveryFraction < 0 ||
+      (params.recoveryAtBreath !== null && (!Number.isInteger(params.recoveryAtBreath) || params.recoveryAtBreath < 0))) {
+    throw new RangeError('Invalid synthetic simulation parameters')
+  }
   const rng = mulberry32(42)
   const results: BreathResult[] = []
   const dP = params.pip - params.peep
@@ -89,10 +99,10 @@ export function simulate(params: SimulationParams): BreathResult[] {
     let cEff = params.compliance0 * (1.0 - params.complianceDecay * b)
     cEff = Math.max(cEff, 0.05)
 
-    // Surfactant rescue
-    if (params.surfactantAtBreath !== null && b >= params.surfactantAtBreath) {
-      const recovery = params.compliance0 * params.surfactantEffect
-      const breathsSince = b - params.surfactantAtBreath
+    // Arbitrary prescribed recovery; not a treatment model
+    if (params.recoveryAtBreath !== null && b >= params.recoveryAtBreath) {
+      const recovery = params.compliance0 * params.recoveryFraction
+      const breathsSince = b - params.recoveryAtBreath
       const rampup = 1 - Math.exp(-breathsSince / 5)
       cEff = cEff + recovery * rampup
     }
@@ -105,7 +115,7 @@ export function simulate(params: SimulationParams): BreathResult[] {
     const tidalVolume = cEff * dP
     const qPeak = dP / (params.resistance * 1e-3)
 
-    // PV loop area estimate (hysteresis from RC model)
+    // Heuristic area descriptor, not a solved mechanical energy balance
     const pvArea = tidalVolume * dP * (1 - Math.exp(-1 / (tau * 2 + 0.01)))
 
     // Trend from recent history
@@ -130,14 +140,15 @@ export function simulate(params: SimulationParams): BreathResult[] {
       pvArea,
       peakPressure: params.pip + gaussianRandom(rng) * params.noiseLevel * dP,
       tidalVolume,
-      classification: classifyRegularity(cEff, trend),
+      classification: classifyCompliance(cEff, trend),
     })
   }
 
   return results
 }
 
-// Generate a single P-V loop for visualization
+// Schematic P-V curve: independently imposed pressure and exponential flow resets.
+// No coupled RC ODE or spatial PDE is solved. Units: cmH2O, mL, seconds.
 export function generatePVLoop(
   compliance: number,
   resistance: number,
@@ -178,7 +189,7 @@ export function generatePVLoop(
       flow = -(dP / (resistance * 1e-3)) * Math.exp(-tExp / Math.max(tau, 0.01))
     }
 
-    vol += flow * dt * 1e-3 // rough mL
+    vol += flow * dt // mL: flow is mL/s, dt is s
     p.push(pVal)
     v.push(vol)
   }
@@ -189,8 +200,9 @@ export function generatePVLoop(
 }
 
 export const CLASSIFICATION_COLORS: Record<Classification, string> = {
-  smooth: '#4ade80',
-  approaching: '#facc15',
-  critical: '#f97316',
-  singular: '#ef4444',
+  higher_compliance: '#4ade80',
+  intermediate_compliance: '#facc15',
+  declining_compliance: '#f97316',
+  low_compliance: '#ef4444',
+  insufficient_data: '#888899',
 }

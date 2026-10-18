@@ -4,5 +4,9 @@ const nextConfig = {
   async rewrites() {
     return [{ source: '/shared-air', destination: '/shared-air/index.html' }]
   },
+  // The former "Proof Outline" page is now "Conjecture and Gaps" at /outline.
+  async redirects() {
+    return [{ source: '/proof', destination: '/outline', permanent: false }]
+  },
 }
 export default nextConfig

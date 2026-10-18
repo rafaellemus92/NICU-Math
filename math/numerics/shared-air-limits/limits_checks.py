@@ -14,7 +14,7 @@ def index(k,n,m,psi0=0.3):
 for (n,m) in [(2,1),(3,1),(3,2),(5,3),(4,3)]:
     print(f"{n}:{m}", [round(index(k,n,m),12) for k in (1,2,3,4,5)])
 # 2. first-order resonant average of sin(l*theta)*P(psi), theta=n s+a, psi=m s+b
-P=lambda x: np.exp(2*(np.cos(x)-1)) - 0.30851657 # approx mean e^{-2} I0(2)
+P=lambda x: np.exp(2*(np.cos(x)-1)) - np.exp(-2)*np.i0(2) # minus its exact mean e^{-2} I0(2) = 0.3085083226 (the page's PMEAN)
 s=np.linspace(0,2*np.pi,200001)[:-1]; ds=s[1]-s[0]
 def avg(l,n,m,a=0.4,b=1.1): return float(np.sum(np.sin(l*(n*s+a))*P(m*s+b))*ds)
 for (l,n,m) in [(1,2,1),(1,3,1),(1,3,2),(1,5,3),(1,4,3),(2,3,2),(3,5,3),(2,5,3)]:

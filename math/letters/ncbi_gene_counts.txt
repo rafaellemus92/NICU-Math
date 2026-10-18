@@ -1,0 +1,29 @@
+# Protein-coding human genes per chromosome, NCBI Gene, queried 18 October 2026.
+# Query for each chromosome <n> (source [58] in words.md), via NCBI E-utilities esearch, db=gene, rettype=count:
+#   <n>[chr] AND "Homo sapiens"[orgn] AND "genetype protein coding"[Properties] AND alive[prop]
+# Counts change between NCBI releases; Ensembl 116 gives different counts (see words.md, part 2).
+# chromosome count
+1 2093
+2 1267
+3 1069
+4 794
+5 946
+6 1064
+7 975
+8 793
+9 794
+10 741
+11 1321
+12 1036
+13 354
+14 627
+15 633
+16 882
+17 1179
+18 277
+19 1459
+20 547
+21 254
+22 478
+X 871
+Y 109

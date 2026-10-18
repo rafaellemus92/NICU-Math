@@ -1,0 +1,59 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0 -- /usr/bin/python3
+rootdir: <nslab>/audit/pkg
+plugins: anyio-4.15.1
+collecting ... collected 27 items
+
+tests/test_sensitivity.py::test_initial_variations PASSED                [  3%]
+tests/test_sensitivity.py::test_derivative_of_rhs PASSED                 [  7%]
+tests/test_sensitivity.py::test_same_base_step PASSED                    [ 11%]
+tests/test_sensitivity.py::test_objective_derivatives PASSED             [ 14%]
+tests/test_sensitivity.py::test_initial_objective_independent_of_phase PASSED [ 18%]
+tests/test_sensitivity.py::test_phase_reflection_identity PASSED         [ 22%]
+tests/test_sensitivity.py::test_evolved_phase_evenness PASSED            [ 25%]
+tests/test_solver.py::test_exact_rational_initial_check PASSED           [ 29%]
+tests/test_solver.py::test_projection_and_reality PASSED                 [ 33%]
+tests/test_solver.py::test_plus_minus_initial PASSED                     [ 37%]
+tests/test_solver.py::test_continuous_phase_formula PASSED               [ 40%]
+tests/test_solver.py::test_translation_invariant_relative_phase PASSED   [ 44%]
+tests/test_solver.py::test_rotational_matches_advective PASSED           [ 48%]
+tests/test_solver.py::test_random_energy_and_enstrophy_balances PASSED   [ 51%]
+tests/test_solver.py::test_direct_triad_convolution PASSED               [ 55%]
+tests/test_solver.py::test_beltrami_exact_decay PASSED                   [ 59%]
+tests/test_solver.py::test_inviscid_energy_small_step PASSED             [ 62%]
+tests/test_solver.py::test_shell_sums PASSED                             [ 66%]
+tests/test_solver.py::test_amplitude_scaling PASSED                      [ 70%]
+tests/test_solver.py::test_invalid_inputs PASSED                         [ 74%]
+tests/test_solver.py::test_exact_entire_phase_family PASSED              [ 77%]
+tests/test_solver.py::test_exact_second_derivatives PASSED               [ 81%]
+tests/test_solver.py::test_short_time_high_mode_generation PASSED        [ 85%]
+tests/test_solver.py::test_dynamic_translation_equivalence PASSED        [ 88%]
+tests/test_solver.py::test_checkpoint_segment_equivalence PASSED         [ 92%]
+tests/test_solver.py::test_taylor_second_derivative PASSED               [ 96%]
+tests/test_time_series.py::test_sixth_order_phase_harmonic PASSED        [100%]
+
+============================== slowest durations ===============================
+9.70s call     tests/test_time_series.py::test_sixth_order_phase_harmonic
+0.87s call     tests/test_sensitivity.py::test_objective_derivatives
+0.60s call     tests/test_sensitivity.py::test_evolved_phase_evenness
+0.25s call     tests/test_solver.py::test_checkpoint_segment_equivalence
+0.20s call     tests/test_solver.py::test_inviscid_energy_small_step
+0.15s call     tests/test_solver.py::test_direct_triad_convolution
+0.11s call     tests/test_solver.py::test_beltrami_exact_decay
+0.11s call     tests/test_solver.py::test_dynamic_translation_equivalence
+0.09s call     tests/test_sensitivity.py::test_same_base_step
+0.07s call     tests/test_solver.py::test_continuous_phase_formula
+0.05s call     tests/test_solver.py::test_exact_entire_phase_family
+0.05s call     tests/test_solver.py::test_exact_second_derivatives
+0.02s call     tests/test_solver.py::test_taylor_second_derivative
+0.02s call     tests/test_solver.py::test_short_time_high_mode_generation
+0.01s call     tests/test_sensitivity.py::test_derivative_of_rhs
+0.01s call     tests/test_solver.py::test_projection_and_reality
+0.01s call     tests/test_sensitivity.py::test_initial_variations
+0.01s call     tests/test_solver.py::test_plus_minus_initial
+0.01s call     tests/test_solver.py::test_exact_rational_initial_check
+0.01s call     tests/test_sensitivity.py::test_initial_objective_independent_of_phase
+0.01s call     tests/test_solver.py::test_random_energy_and_enstrophy_balances
+
+(60 durations < 0.005s hidden.  Use -vv to show these durations.)
+============================= 27 passed in 12.51s ==============================

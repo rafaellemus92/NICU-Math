@@ -1,0 +1,92 @@
+exact_b2_check.py: exact b-interpolated time-Taylor coefficients of E, Z, S
+python 3.13.16, numpy 2.5.3; series code ns-phase-audit/audit_v2/exact/nsseries.py (unchanged), order t^10
+  b =    0: series done in   0.6 s
+  b =  1/3: series done in  14.4 s
+  b = -1/3: series done in  15.0 s
+  b =  1/2: series done in  14.8 s
+  b = -1/2: series done in  14.7 s
+  b =    1: series done in  14.8 s
+  b =   -1: series done in  15.8 s
+  b =  3/2: series done in  15.1 s
+  b = -3/2: series done in  15.5 s
+  b =    2: series done in  15.4 s
+  b =   -2: series done in  15.1 s
+  b =    3: series done in  15.5 s
+  b =   -3: series done in  14.1 s
+  b =  5/2: series done in  14.4 s
+
+(1) Interpolation in b through 13 values (0, 1/3, -1/3, 1/2, -1/2, 1, -1, 3/2, -3/2, 2, -2, 3, -3), held out 5/2:
+    coefficients: 943
+    odd_b_power_nonzero: 0
+    held_out_failures: 0
+    degree_bound_violations: 0
+    => every t^n coefficient of E, Z (n <= 10) and S (n <= 9) is exactly even in b,
+       for every phase harmonic and power of nu
+
+(2) b^2 coefficients at t = 0 (exact; every nu and phi):
+    E2(0) = [(1/4)]
+    Z2(0) = [(1/4)]
+    S2(0) = 0
+
+(3) Low orders of the b^2 coefficients (cos(m phi) amplitudes, nu symbolic):
+    [t^0] E2 = [(1/4)]
+    [t^1] E2 = [(-1/2) nu]
+    [t^2] E2 = [(1/2) nu^2]
+    [t^3] E2 = [(-1/4) nu + (-1/3) nu^3]
+    [t^0] Z2 = [(1/4)]
+    [t^1] Z2 = [(-1/2) nu]
+    [t^2] Z2 = [(3/8) + (1/2) nu^2]
+    [t^3] Z2 = [(-73/36) nu + (-1/3) nu^3] + [(-1/12)] cos(1 phi)
+    [t^0] S2 = 0
+    [t^1] S2 = [(3/4)]
+    [t^2] S2 = [(-7/2) nu] + [(-1/4)] cos(1 phi)
+
+(4) [t^6] cos 2phi of Z2 = (-6487/1555200)   (expected -6487/1555200, no nu terms)
+
+(5) First order at which a |m| >= 2 harmonic appears in the b^(2j) part; the rule of
+    PROOF.md section 5 is n >= 3|m| + 2(j-1) for Z, 3|m| - 1 + 2(j-1) for S and
+    3|m| + 1 + 2(j-1) for E (E only through a factor nu):
+    Z: b^2, |m| = 2: rule allows t^6 and later; first seen at t^6
+    Z: b^2, |m| = 3: rule allows t^9 and later; first seen at t^9
+    Z: b^4, |m| = 2: rule allows t^8 and later; first seen at t^8
+    Z: b^6, |m| = 2: rule allows t^10 and later; first seen at t^10
+    S: b^2, |m| = 2: rule allows t^5 and later; first seen at t^5
+    S: b^2, |m| = 3: rule allows t^8 and later; first seen at t^8
+    S: b^4, |m| = 2: rule allows t^7 and later; first seen at t^7
+    S: b^6, |m| = 2: rule allows t^9 and later; first seen at t^9
+    E: b^2, |m| = 2: rule allows t^7 and later; first seen at t^7, with no nu^0 term
+    E: b^2, |m| = 3: rule allows t^10 and later; first seen at t^10, with no nu^0 term
+    E: b^4, |m| = 2: rule allows t^9 and later; first seen at t^9, with no nu^0 term
+    violations of the rule within the computed orders: 0
+
+(6) b^0 part: largest phase harmonic |m| in E, Z, S at any computed order = 1
+
+(7) Leading b^4 terms (first nonzero order; the b^4 remainder is genuinely of order b^4):
+    [b^4 t^3] S = [(13/216)]
+    [b^4 t^4] Z = [(13/864)]
+    [b^4 t^5] E = [(-13/2160) nu]
+
+(8) response.py (N = 48, K = 15, RK4 dt = 0.00125) against the exact series, nu = 1/28, phi = 0.37:
+    quantity     t     response.py               exact series (to t^n)    |diff|    digits  last term
+    E(U)       0.02  +7.4856958873252810e-01  +7.4856958873252799e-01   1.1e-16   15.8   1.5e-24
+    Z(U)       0.02  +1.0026041352259223e+00  +1.0026041352259221e+00   2.2e-16   15.7   5.2e-23
+    S(U)       0.02  +2.4237394604126955e-01  +2.4237394604126994e-01   3.9e-16   14.8   3.7e-21
+    E2         0.02  +2.4964304112518193e-01  +2.4964304112518171e-01   2.2e-16   15.1   3.4e-22
+    Z2         0.02  +2.4979190636255957e-01  +2.4979190636255930e-01   2.8e-16   15.0   9.4e-22
+    S2         0.02  +1.4855544367222943e-02  +1.4855544367225072e-02   2.1e-15   12.8   1.8e-18
+    E(U)       0.05  +7.4641669534985089e-01  +7.4641669534985056e-01   3.3e-16   15.4   1.5e-20
+    Z(U)       0.05  +1.0068252956828267e+00  +1.0068252956828267e+00   0.0e+00    inf   5.0e-19
+    S(U)       0.05  +2.5615446194777408e-01  +2.5615446194777458e-01   5.0e-16   14.7   1.4e-17
+    E2         0.05  +2.4910763616216861e-01  +2.4910763616216805e-01   5.6e-16   14.7   3.3e-18
+    Z2         0.05  +2.5002728945463615e-01  +2.5002728945463559e-01   5.6e-16   14.7   9.0e-18
+    S2         0.05  +3.6586626570995484e-02  +3.6586626571001847e-02   6.4e-15   12.8   7.0e-15
+    E(U)       0.10  +7.4280717348009762e-01  +7.4280717348009739e-01   2.2e-16   15.5   1.5e-17
+    Z(U)       0.10  +1.0146730903327210e+00  +1.0146730903327212e+00   2.2e-16   15.7   5.1e-16
+    S(U)       0.10  +2.7869940825870204e-01  +2.7869940825870310e-01   1.1e-15   14.4   7.2e-15
+    E2         0.10  +2.4821199154680681e-01  +2.4821199154680543e-01   1.4e-15   14.3   3.4e-15
+    Z2         0.10  +2.5181784093327036e-01  +2.5181784093327986e-01   9.5e-15   13.4   9.2e-15
+    S2         0.10  +7.1286875296399141e-02  +7.1286875297512570e-02   1.1e-12   10.8   3.6e-12
+    response.py time: 29.3 s
+    fewest digits over t = 0.02, 0.05, 0.1: E(U) 15.4, Z(U) 15.7, S(U) 14.4, E2 14.3, Z2 13.4, S2 10.8
+
+total wall time 225 s

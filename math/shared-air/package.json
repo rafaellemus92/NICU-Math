@@ -1,0 +1,17 @@
+{
+  "name": "shared-air",
+  "private": true,
+  "description": "Node scripts that check the Shared Air page (web/public/shared-air/index.html). No dependencies; Playwright is optional (tools/render.js).",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "quick": "node tools/quick_check.js",
+    "lock": "node tools/lock_proto.js",
+    "theory": "node tools/theory_check.js",
+    "kick": "node tools/kick_check.js",
+    "room": "node tools/room_check.js 60 1000",
+    "within-mom": "node tools/within_mom_check.js 60 1000",
+    "adjudicate-smoke": "node tools/adjudicate.js 1.5 0 20 300000",
+    "regen-check": "node tools/regen_def.js",
+    "render": "node tools/render.js"
+  }
+}

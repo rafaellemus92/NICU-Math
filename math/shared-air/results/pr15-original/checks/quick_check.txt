@@ -1,0 +1,13 @@
+page shared_air.html
+sha256 b5249de8a6c00c895150d8fd5e2e87e6d8fb7ef47b18bf77599ac3807200e295
+Model exports 31: DEFAULTS KINDS C WORLDS Session Person mulberry32 pearson ccf series smoothDecimate mean sem median quantile recoveryTime peakSync pli pliMax phaseStart pulseShape pulseHarmonic locked21 lockRange21 expRoom expVent expSweep expPulse expContact runToEnd TAU
+expPulse 4.5 s
+all 16 DEF.pulse fields match
+infant 149.59 bpm, mom 76.27 bpm; infant minus twice mom: -2.95 bpm (-0.309 rad/s)
+2:1 onset, first-order formula: 3.314 | exact single phase: 4 | range closes at: 19.709
+infant 10 bpm above 2:1 locks from: 8.376 | 10 bpm below: never (eps <= 40)
+locking index at eps 16: 0.426 (other parent 0.075)
+
+real	0m4.576s
+user	0m4.453s
+sys	0m0.231s

@@ -3,7 +3,8 @@ import Mathlib
 /-!
 # Ratios other than n:1
 
-The Shared Air model's locking index looks for 2:1 and 3:1. Prenatal recordings
+The Shared Air model's locking index checks the harmonics `n = 1, 2, 3`, so it
+looks for 1:1, 2:1 and 3:1. Prenatal recordings
 (van Leeuwen and colleagues) found brief 3:2, 5:3 and 4:3 epochs. Two exact facts
 about what a harmonic index and the model's forcing can and cannot see.
 

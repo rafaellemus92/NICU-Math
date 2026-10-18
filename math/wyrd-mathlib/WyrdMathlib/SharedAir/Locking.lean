@@ -14,9 +14,17 @@ That is the source's `|ω − 2Ω| < ε a₂/2`. It is exact for the averaged eq
 only; for the full noisy, modulated population model it is a first-order
 approximation. Also, for 2:1 locking the first circular moment can vanish even
 under perfect locking (phases `0` and `π`). So a 2:1 index should use the second
-harmonic (or analyse `θ − 2ψ` directly). The source does not give its index's
-implementation, so this is a check to make, not a proven defect. The source's
+harmonic (or analyse `θ − 2ψ` directly). The source text does not give its
+index's implementation, but the page's code does: its index (`pliMax`) takes the
+best of the 1st, 2nd and 3rd harmonics, so this first-moment problem does not
+arise there (`math/shared-air/AUDIT.md` §2, C11, and §5). The source's
 `a₂ ≈ 0.19` matches `2e⁻² I₂(2) ≈ 0.18648` numerically; that value is not proved here.
+
+Nor are the exact thresholds. For one forced phase with noise off, at the page's
+stored rates (the infant 2.95 bpm below twice mom's rate), locking starts at pulse
+strength `ε ≈ 4.0002`, against `3.3135` from the first-order condition above, and
+the locking range closes again at `ε ≈ 19.709` (numerical, from the RK4 period
+map; `math/shared-air/tools/lock_proto.js`).
 -/
 
 namespace Wyrd.SharedAir
