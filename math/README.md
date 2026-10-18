@@ -472,7 +472,14 @@ independently. Folder [`phase-family-perturbation/`](phase-family-perturbation/)
   trouble and the measured amplification of a small perturbation is a factor
   426 in enstrophy against the bound's 10⁷¹. The gap is the Grönwall factor,
   not the quantifiers; closing it needs a computed bound on the linearized
-  propagator, not a better inequality.
+  propagator, not a better inequality. The evaluated range is not a certified
+  one: its constants are sampled and summed numerically.
+- **Cross-check.** The separate note `all-time-phase-response/` (branch
+  `codex/all-time-phase-response`) proves the same small-b statement with
+  symbolic constants and integrates the variational equations for the b²
+  coefficients directly. Its harmonics of E₂, Z₂, S₂ at T = 0.5 agree with
+  the finite-b simulations here to 0.5% at b = 1/4 and to 7% at b = 1, the
+  departure scaling as b⁴ as the theorem says.
 
 ---
 

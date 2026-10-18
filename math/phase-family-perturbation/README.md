@@ -20,6 +20,7 @@ and of the [ns-phase-audit](../ns-phase-audit/).
 | [`perturbation_growth.py`](perturbation_growth.py) | Measured growth of u_b − u₀ in L² and H¹, to set beside the Grönwall factors | numpy |
 | [`reduced_family_t20.py`](reduced_family_t20.py) | b = 0 on the long run's time grid, eight phases, to t = 20 | numpy |
 | [`measured_constants.py`](measured_constants.py) | The measured constants of the b² bound from the long run and the b = 0 baseline | numpy |
+| [`crosscheck_variational.py`](crosscheck_variational.py) | The finite-b harmonics at T = 0.5 against the archive's direct integration of the variational equations (section 6) | standard library |
 | [`exact_nu_poly_amp.py`](exact_nu_poly_amp.py) | The audit's exact rational Taylor jet ([`../ns-phase-audit/audit_v2/code_audit/exact_nu_poly.py`](../ns-phase-audit/audit_v2/code_audit/exact_nu_poly.py)) with the four amplitudes as command-line rationals | standard library |
 | [`base_flow_norms.py`](base_flow_norms.py) | Sup norms of the b = 0 flow over time and the integrals that an explicit perturbation bound needs | numpy |
 | [`agmon_constant.py`](agmon_constant.py) | The constant in ‖f‖_∞ ≤ C_A ‖∇f‖^{1/2} ‖Δf‖^{1/2} on the torus, from lattice sums | numpy |
@@ -90,17 +91,21 @@ coefficients are polynomials of degree 10 and contain b⁴: the ratio at t⁸ is
 acquires b⁴ corrections at order t⁸, which is what the simulations see.
 
 **Checked by simulation** (`results/full_family_dns.log`, N = 24, ν = 1/28,
-eight phases, a = c = d = 1). The cos 2φ coefficient of Z:
+eight phases, a = c = d = 1; the dealiasing cutoff is the strict one,
+K = (N − 1)/3 = 7, so that 3K < N and the cubic product in S is averaged
+exactly on the grid; an earlier version of these runs used K = N/3 = 8, which
+lets the boundary shell alias, and changed the numbers below in the seventh
+digit). The cos 2φ coefficient of Z:
 
 | t | b = 1 | b = 1/2 | b = 1/4 | b = 0 | ratio 1 : 1/2 | prediction for b = 1 |
 |---|---|---|---|---|---|---|
 | 0.1 | −4.050e-9 | −1.013e-9 | −2.534e-10 | 1e-16 | 4.00 | −4.069e-9 |
 | 0.5 | −5.146e-5 | −1.312e-5 | −3.298e-6 | 3e-16 | 3.92 | −5.721e-5 |
-| 1.0 | −2.213e-3 | −5.907e-4 | −1.501e-4 | 4e-16 | 3.75 | −3.151e-3 |
+| 1.0 | −2.213e-3 | −5.908e-4 | −1.501e-4 | 6e-16 | 3.75 | −3.151e-3 |
 
 The prediction is the t⁶ and t⁷ terms alone; at t = 0.1 it is within 0.5%, and
 the departure at later times is the higher orders, not b⁴, since the ratios for
-1/2 : 1/4 stay at 3.98 and 3.94. The cos 2φ coefficient of S is larger and
+1/2 : 1/4 stay at 3.98 and 3.93. The cos 2φ coefficient of S is larger and
 earlier, −2.42e-7 at t = 0.1 for b = 1 against the leading-order value
 6·(−6487/1555200)·t⁵ = −2.50e-7 (and −2.43e-7 with the ν t⁶ term), with the
 same ratio 4.00 between b = 1 and b = 1/2. The cos 3φ coefficient of Z at
@@ -211,7 +216,7 @@ t = 100, after which it decays.
 | | energy ratio | enstrophy ratio | the bound's factor at the same time |
 |---|---|---|---|
 | b = 0.1, t = 2 | 5.8 | 29 | Φ(2) = 10²² |
-| b = 0.1, t = 4.5 (enstrophy peak) | 46 | 426 | Φ(4.5) ≈ 10⁶⁵ |
+| b = 0.1, t = 4.5 (enstrophy peak) | 49 | 426 | Φ(4.5) ≈ 10⁶⁵ |
 | b = 0.1, t = 10 (energy peak) | 56 | 144 | e^{2I₁(10)} = 10²¹, Φ(10) = 10⁹⁹ |
 | b = 0.1, t = 20 | 26 | 40 | |
 | b = 1, t = 2.5 (peak) | 4.1 | 15 | |
@@ -230,24 +235,24 @@ measured constants of the bound (`measured_constants.py`,
 
 | | b = 1/4 | b = 1 |
 |---|---|---|
-| sup_t \|cos 2φ coefficient of Z\| / b² | 0.54 (t = 6) | 0.11 (t = 3) |
+| sup_t \|cos 2φ coefficient of Z\| / b² | 0.55 (t = 6) | 0.11 (t = 3) |
 | sup_t \|cos 3φ coefficient of Z\| / b² | 0.17 (t = 4.5) | 0.009 (t = 5.5) |
 | sup_t \|cos 2φ coefficient of S\| / b² | 0.48 (t = 4) | 0.14 (t = 2.5) |
 | sup_t (φ-mean of S_b − S₀) / b² | 2.0 (t = 3.5) | 0.9 (t = 2.5) |
 | sup_t (φ-mean of Z_b − Z₀) / b² | 2.0 (t = 8) | 0.9 (t = 2.5) |
-| ∫₀²⁰ (φ-mean of S_b − S₀) dt / b² | 15.2 | 4.3 |
+| ∫₀²⁰ (φ-mean of S_b − S₀) dt / b² | 15.0 | 4.2 |
 
 For comparison, ∫₀²⁰ S₀ dt = 2.62 and the first harmonic of Z₀ peaks at 0.25.
 Three things follow. The constant of the harmonic bound is of order one, not
-small: at b = 1/4 the second harmonic of Z reaches 0.54 b² = 0.034, a sixth of
+small: at b = 1/4 the second harmonic of Z reaches 0.55 b² = 0.034, a sixth of
 the first harmonic, by t = 6. The b² law holds at b = 1 only to about t = 1;
-after that the second harmonic saturates, at 0.11 instead of the 0.54 the
+after that the second harmonic saturates, at 0.11 instead of the 0.55 the
 quadratic law would give (the ratio of the b = 1 value to sixteen times the
 b = 1/4 value is 0.98 at t = 0.5, 0.92 at t = 1, 0.76 at t = 2, 0.51 at t = 3,
 0.20 at t = 4). And the restored mode does sustain stretching for a while:
 at b = 1/4 the φ-averaged stretching at t = 8 is three times the base flow's,
-and the accumulated extra stretching over [0, 20] is 0.95, a third of the base
-flow's 2.62; at b = 1 it is 4.3, more than the base flow's own. Everything
+and the accumulated extra stretching over [0, 20] is 0.94, a third of the base
+flow's 2.62; at b = 1 it is 4.2, more than the base flow's own. Everything
 decays by t ≈ 15, and nothing grows. One more observation that belongs to the
 reduced family itself: the cos φ coefficient of Z changes sign near t = 3.4
 at b = 0, so the member that gains enstrophy fastest at first (cos φ = 1) has
@@ -270,10 +275,41 @@ than 10⁶⁵), in place of exp ∫ G; with that, the cubic term is handled by t
 same Bernoulli step with a sane constant. That is a concrete, bounded project, and
 it is the only route I can see from this family to a statement about b = 1.
 
+## 6. Cross-check with the all-time phase response note
+
+A separate package, "all-time phase response" (Codex, 18 October; branch
+`codex/all-time-phase-response`, folder `math/all-time-phase-response/`),
+proves the same small-b statement with symbolic constants and, instead of
+finite-b simulations, integrates the variational equations for the first and
+second coefficients q₁, q₂ directly and reports the φ-harmonics of the b²
+coefficients (E₂, Z₂, S₂) at T = 0.5, N = 24, twelve phases. Its nine tests
+and its remainder check (raw quartic ratios 15.9986 to 15.9993, i.e. the
+error after subtracting the b² term scales as b⁴) reproduce on this machine.
+Two things in its README about this folder were right and are fixed here:
+the "10⁻⁸⁰ is safe" wording (now "evaluated, not certified", above) and the
+dealiasing cutoff (section 2).
+
+`crosscheck_variational.py` sets its coefficients against this folder's
+finite-b harmonics (O_b − O₀)/b² at the same T, from `results/long_b.json`
+and the b = 0 baseline. Ratio of this folder's value to the archive's:
+
+| harmonic | E, b = 1/4 | Z, b = 1/4 | S, b = 1/4 | E, b = 1 | Z, b = 1 | S, b = 1 |
+|---|---|---|---|---|---|---|
+| m = 0 (φ-mean) | 1.000 | 1.000 | 1.001 | 1.000 | 1.002 | 1.018 |
+| m = 1 (cos φ) | 0.998 | 0.997 | 0.995 | 0.970 | 0.956 | 0.926 |
+| m = 2 (cos 2φ) | 0.999 | 0.998 | 0.998 | 0.979 | 0.974 | 0.965 |
+| m = 3 (cos 3φ) | 0.997 | 0.997 | 0.996 | 0.957 | 0.948 | 0.937 |
+
+Two independent methods, a finite-difference in b of the full equations and
+a direct solution of the variational equations, agree on every harmonic of
+every observable to 0.5% at b = 1/4, and the departure at b = 1 is sixteen
+times larger, which is the b⁴ term the theorem predicts. The values in
+`results/crosscheck_variational.out.txt` are the ones in this table.
+
 ## Running
 
-From this folder; Python 3 with numpy, except the exact jet, which needs only
-the standard library.
+From this folder; Python 3 with numpy, except the exact jet and the
+cross-check, which need only the standard library.
 
 ```sh
 python3 reduced_family.py > results/reduced_family.out.txt          # 1 min
@@ -282,6 +318,7 @@ SAVE=0.5 OUT=results/long_b.json python3 full_family_dns.py 24 0.035714285714285
 python3 perturbation_growth.py 0.1 20 0.005 > results/growth_b0.1.log          # also 1.0; 2 min each
 python3 reduced_family_t20.py > results/reduced_family_t20.out.txt            # 1 min
 python3 measured_constants.py > results/measured_constants.out.txt
+python3 crosscheck_variational.py > results/crosscheck_variational.out.txt   # reads results/atpr_refined.json
 python3 exact_nu_poly_amp.py 9 results/jet9_unit.json                       # 3 min
 python3 exact_nu_poly_amp.py 9 results/jet9_generic.json a=1/2 b=1/3 c=2 d=1/5
 python3 base_flow_norms.py 1 > results/base_flow_norms_a1.out.txt           # 30 s; also 0.3 and 0.1
@@ -293,8 +330,14 @@ The saved outputs were produced with Python 3.11.17 and numpy 2.4.6.
 ## What is not claimed
 
 - Section 1 is an analytic argument checked numerically, not a Lean theorem.
-- Section 3 proves nothing about b = 1; it proves that b = 10⁻⁸⁰ is safe at
-  ν = 1/28, and the simulations show b = 1 is fine on the interval computed.
+- Section 3 proves nothing about b = 1. Its chain of inequalities is standard,
+  but the constants in 3.3 are evaluated, not certified: the sup norms are
+  sampled from a numerical solution, the Agmon constant is a numerically
+  summed lattice sum with a margin, and no truncation or tail error is
+  enclosed. So "|b| < 10⁻⁸⁰" is what the evaluated chain gives, not a
+  certified radius; a certified version would be at least as small. The
+  simulations show b = 1 is fine on the interval computed, which is not a
+  statement about any radius either.
 - Harmonics in the initial phase φ are one-parameter information. Bounding
   them does not bound fine spatial scales, and nothing here bears on the
   regularity problem.

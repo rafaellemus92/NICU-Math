@@ -1,5 +1,5 @@
 """Full family u0 = (a sin y, b sin z, c cos x - d cos(x+y+phi)) under 3D periodic NS,
-pseudo-spectral (2/3 dealiased, Leray projection, Lawson RK4), for several b.
+pseudo-spectral (strict 2/3 dealiasing, 3K < N; Leray projection, Lawson RK4), for several b.
 
 At each saved time the phi-harmonics of E, Z, D, S over an 8-point phi grid are
 printed: A (constant), B1 (cos phi), B2 (cos 2phi), B3; sine parts are reported
@@ -21,7 +21,7 @@ def make_solver(N, nu, dt):
     kx, ky, kz = np.meshgrid(k1, k1, k1, indexing="ij")
     K = np.array([kx, ky, kz])
     k2 = kx ** 2 + ky ** 2 + kz ** 2
-    kmax = N // 3
+    kmax = (N - 1) // 3          # strict 2/3 rule, 3*kmax < N: no aliasing into the retained shell, and the cubic product's grid average is exact
     mask = (np.abs(kx) <= kmax) & (np.abs(ky) <= kmax) & (np.abs(kz) <= kmax)
     inv = np.where(k2 == 0, 0.0, 1.0 / np.where(k2 == 0, 1.0, k2))
 

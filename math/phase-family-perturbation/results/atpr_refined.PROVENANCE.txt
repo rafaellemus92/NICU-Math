@@ -1,0 +1,1 @@
+atpr_refined.json is a byte-for-byte copy of results/refined.json from the review archive all-time-phase-response.zip (Codex, 18 October 2026; sha256 of the ZIP 95665c2d73cc0565...), committed on branch codex/all-time-phase-response as math/all-time-phase-response/results/refined.json.
