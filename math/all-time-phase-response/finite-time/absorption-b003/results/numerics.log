@@ -1,0 +1,7 @@
+  step 2500/12500  t=0.050  |grad q1^N|=0.707888  cell int|r|=4.33e-10  int|grad r|=8.62e-10
+  step 5000/12500  t=0.100  |grad q1^N|=0.712668  cell int|r|=4.31e-10  int|grad r|=8.63e-10
+  step 7500/12500  t=0.150  |grad q1^N|=0.721310  cell int|r|=4.28e-10  int|grad r|=8.67e-10
+  step 10000/12500  t=0.200  |grad q1^N|=0.733669  cell int|r|=4.26e-10  int|grad r|=8.74e-10
+  step 12500/12500  t=0.250  |grad q1^N|=0.749610  cell int|r|=4.24e-10  int|grad r|=8.84e-10
+wrote results/numerics.json  (wall 135 s)
+|grad q1^N|(T) = 0.749610   sum int|r| = 5.370e-06   sum int|grad r| = 1.085e-05   sum int|r_W|_*3 = 5.275e-05   max tail at nodes = 4.45e-10   outer-shell fraction Q = 1.5e-10, W = 1.4e-35
