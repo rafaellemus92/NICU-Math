@@ -29,6 +29,7 @@ it is, how certain it is, and where to find it.
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
 | [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
+| [`oscillation/`](oscillation/) | Phase locking: the Adler equation, the circle map (Arnold tongues) and vortex-stretching triads as a Kuramoto-type sum | Checked numerically |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
 
 ---
@@ -399,9 +400,46 @@ the lab brief [`hou-luo-1d/hou-luo/CLAUDE.md`](hou-luo-1d/hou-luo/CLAUDE.md).
 
 The files the user uploaded during the work: two versions of the Shared Air
 model, ChatGPT's two audit ZIPs, ChatGPT's Navier–Stokes lab packages v1 and
-v2, and the original pangram script.
+v2, the original pangram script, and (18 October) two Helical Lab briefs with
+part 1 of 4 of their phase-only Navier–Stokes ensemble.
 [`inputs/README.md`](inputs/README.md) describes each file in one line. Four
 screenshots from the conversation are not included.
+
+---
+
+## 7. Phase locking: from two rhythms to the triads of a turbulent field (18 October)
+
+**Checked numerically.** Folder [`oscillation/`](oscillation/); its README
+has the definitions, the tables and the limits.
+
+- **The Adler equation** dφ/dt = Δω − K sin φ for two coupled rhythms: lock
+  iff |Δω| < K, recovery rate √(K² − Δω²), one phase slip every
+  2π/√(Δω² − K²) outside the lock. The neonatal example of the brief
+  (caregiver 12/min, infant 51.6/min, 4:1 target, Δω = −0.377 rad/s): at
+  K = 0.28 a slip every 24.9 s, at K = 0.65 locked with disturbances decaying
+  at 0.53 /s. Properties of the equation; no pair has been measured.
+- **The sine circle map** and its Arnold tongues: the 0:1 tongue is exactly
+  |Ω| ≤ K/2π, the p/q tongue's width scales like K^q (at K = 0.8: 1/2 0.0485,
+  1/3 0.0164, 2/5 0.0036, 3/7 0.0011, 13/17 too narrow to detect), the golden mean
+  survives quasi-periodic to K = 1, and there is no chaos for K ≤ 1. Eleven
+  checks in `oscillation/test_locking.py`. This is the general p:q picture
+  behind the Shared Air model's first-order 2:1 theorems (section 2.4) and
+  its listed limit "ratios other than n:1" (section 2.5).
+- **The triad bridge.** `oscillation/triads.py` writes vortex stretching as
+  S = Σ_{k+p+q=0} (ω̂(k)·ip)(ω̂(q)·û(p)) = Σ |c| cos φ, a Kuramoto-type sum,
+  and measures its order parameter R = |S|/Σ|c| on the Helical Lab's
+  phase-only ensemble (part 1 of 4, 63 cases, N = 24, ν = 1/28, T = 0.5). On
+  the phase family of section 2.6 the sum reproduces E = 1, Z = 5/4, D = 7/2
+  and S = cos φ/4 to 2e-15 (`oscillation/test_triads.py`), with Σ|c| = 3/4 for
+  every φ, so R = |cos φ|/3 there. On the 63 ensemble cases the sums agree
+  with the lab's own diagnostics to 2.5e-14; R rises from 0.038 at t = 0 to
+  0.114 at t = 0.5 and S turns positive in every case, while the initial
+  stretching S(0) alone predicts ΔZ with correlation +0.89 and R(0) adds
+  nothing to it. Tables in `oscillation/README.md`, data in
+  `oscillation/results/triad_coherence.json`.
+  This is an identity at one instant on given data, not a dynamics: periodic
+  Navier–Stokes has no linear dispersion, so nothing "locks", and nothing here
+  bears on regularity or on the lab's negative forecast result.
 
 ---
 
