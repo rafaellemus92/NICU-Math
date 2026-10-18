@@ -114,7 +114,17 @@ scaffolds. Any use near real patients requires separate clinical
 validation, data-handling approval, and the clinician's judgment —
 which is where it belongs anyway.
 
-## 7. Related work in-tree
+## 7. Deployment
+
+See [`docs/deployment.md`](docs/deployment.md). Short version: Vercel
+auto-deploys are **paused** (ignored build step) until the baseline
+is green; Railway is the chosen host for the FastAPI + pgvector
+backend when the UI needs it web-reachable; Supabase is the auth path
+once NICU-Math needs sign-in, same account as sgrounds. The research
+spine stays silent on hosting; `docs/deployment.md` is where hosting
+decisions live and are revised.
+
+## 8. Related work in-tree
 
 - `hou-luo/` — adaptive-mesh 1D Hou-Luo singularity-tracking (open
   PR #1 by @rafaellemus92). Treat as the inviscid blow-up candidate
