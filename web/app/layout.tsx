@@ -4,8 +4,8 @@ import 'katex/dist/katex.min.css'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: 'Navier-Stokes Regularity in the Neonatal Lung',
-  description: 'Conditional regularity of NS solutions in bounded domains with surface-tension boundary conditions — evidence from neonatal respiratory mechanics.',
+  title: 'Respiratory Mechanics: Models and Conjectures',
+  description: 'Synthetic respiratory teaching models and an incomplete fluid-dynamics conjecture with explicit gaps. Not validated for patient care.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

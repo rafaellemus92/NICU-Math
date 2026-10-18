@@ -8,6 +8,11 @@ The integrated `physiology/` track includes a closed-form two-compartment
 passive-emptying teaching model. Broader respiratory and hemodynamic models remain
 future work; none of these models is validated for patient care.
 
+The web demo and `navier_stokes/` now distinguish synthetic waveforms from an
+incomplete conjecture. See [corrections and analytical checks](navier_stokes/README.md)
+and the [retired-claim ledger](navier_stokes/CLAIMS.md). No conditional regularity
+theorem or clinical-to-PDE equivalence is established by those tools.
+
 ## Local startup
 Use Python 3.11 or 3.12, from repository root:
 ```

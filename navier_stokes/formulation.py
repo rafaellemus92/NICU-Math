@@ -1,90 +1,8 @@
-"""
-Navier-Stokes formulation for neonatal respiratory flow.
+"""Synthetic respiratory descriptors and elementary spherical identities.
 
-THE PHYSICAL SYSTEM
-===================
-A neonate's lung is a bounded domain Omega in R^3 — branching airways
-terminating in ~30,000 alveoli (term) or far fewer (preterm). The fluid
-transitions from liquid-filled (fetal) to air-filled (postnatal) at birth.
-
-The incompressible Navier-Stokes equations govern the airflow:
-
-    du/dt + (u . grad)u = -grad(p)/rho + nu * laplacian(u) + f
-    div(u) = 0
-
-where:
-    u(x,t) = velocity field in the airway
-    p(x,t) = pressure field
-    rho     = air density (~1.2 kg/m^3, but varies with humidification)
-    nu      = kinematic viscosity of air (~1.5e-5 m^2/s)
-    f       = body forces (gravity on the fluid column, surfactant-driven
-              surface tension at the air-liquid interface)
-
-THE REGULARITY QUESTION — CLINICAL TRANSLATION
-===============================================
-The Millennium Problem asks: given smooth initial data u_0, does the
-solution u(x,t) remain smooth for all t > 0?
-
-In the neonatal lung, we observe three regimes:
-
-1. SMOOTH REGIME (adequate surfactant):
-   - Surface tension gamma is low (~25 mN/m with surfactant vs ~70 mN/m without)
-   - Laplace pressure P = 2*gamma/r stays bounded as alveolar radius r varies
-   - Flow remains laminar (Re ~ 1-100 in neonatal airways)
-   - The solution stays smooth. The baby breathes.
-
-2. SINGULAR REGIME (surfactant deficiency — RDS):
-   - gamma is high (~70 mN/m)
-   - As r -> 0 (alveolar collapse), P = 2*gamma/r -> infinity
-   - This is a finite-time singularity analog: the pressure field develops
-     a 1/r blow-up at the collapsing interface
-   - Clinically: atelectasis, respiratory failure, death without intervention
-   - The solution "blows up." The baby cannot breathe.
-
-3. INTERVENTION REGIME (exogenous surfactant):
-   - Artificial surfactant administered -> gamma drops
-   - The 1/r singularity is regularized
-   - The solution returns to smooth. The baby breathes again.
-
-This is not metaphor. This is the Laplace-Young equation coupled to NS
-in a real physical system where we can measure:
-    - Pressure (ventilator data)
-    - Flow (ventilator flow sensors)
-    - Compliance (volume/pressure = how "smooth" the system is)
-    - The regularization parameter (surfactant presence/absence)
-
-THE CONJECTURE
-==============
-The neonatal lung provides empirical evidence for a conditional regularity
-result: NS solutions in bounded domains with surface-tension boundary
-conditions remain regular if and only if the surface tension coefficient
-gamma satisfies gamma * (1/r_min) < C for some critical constant C
-depending on domain geometry and Reynolds number.
-
-Surfactant deficiency violates this condition. The clinical data
-(ventilator waveforms, compliance curves) encode the approach to and
-retreat from this singularity threshold.
-
-MEASUREMENT PLAN
-================
-From a single ventilated neonate (N=1), the ventilator records at 100 Hz:
-    - Pressure P(t)     [cmH2O]
-    - Flow Q(t)         [mL/s]
-    - Volume V(t)       [mL, integrated from flow]
-    - FiO2              [fraction]
-
-Derived quantities:
-    - Dynamic compliance C_dyn = delta_V / delta_P
-    - Resistance R = delta_P / Q_peak
-    - Time constant tau = R * C_dyn
-    - Work of breathing W = integral(P dV) per cycle
-
-Phase space trajectory: (P(t), Q(t), V(t)) traces a loop each breath.
-As surfactant fails, these loops deform -> the attractor changes shape.
-As surfactant is given, the attractor reforms.
-
-This is directly analogous to monitoring energy ||u||_{H^1} in NS:
-compliance collapse = H^1 norm blowup = loss of regularity.
+No diagnostic here determines spatial Navier-Stokes regularity. Pressure,
+flow and volume traces do not reconstruct a three-dimensional velocity field.
+All examples are teaching instruments, not validated for patient care.
 """
 
 import numpy as np
@@ -98,7 +16,7 @@ from typing import Optional
 
 @dataclass(frozen=True)
 class NeonatalConstants:
-    """Physical parameters for neonatal lung fluid dynamics."""
+    """Illustrative fixed parameters; not patient-specific or clinically calibrated."""
     rho_air: float = 1.2           # kg/m^3 (humidified, body temp)
     nu_air: float = 1.5e-5         # m^2/s kinematic viscosity
     gamma_surfactant: float = 0.025    # N/m surface tension WITH surfactant
@@ -114,52 +32,36 @@ CONST = NeonatalConstants()
 
 
 # ============================================================
-# Laplace pressure and the singularity threshold
+# Static spherical pressure identity
 # ============================================================
 
 def laplace_pressure(gamma: float, radius: float) -> float:
-    """
-    Laplace-Young equation for a spherical alveolus.
-    P = 2 * gamma / r
+    """Spherical static pressure jump 2*gamma/r, in Pa for N/m and m.
 
-    This is where the singularity lives:
-    as r -> 0 (alveolar collapse), P -> infinity.
-    Surfactant keeps gamma low, bounding P even as r decreases.
-    """
-    if radius <= 0:
-        return float('inf')
+    At every fixed positive gamma this diverges as r approaches zero.
+    Reducing gamma to another positive constant changes the coefficient,
+    not that limit. This identity supplies no radius evolution equation."""
+    _positive(radius, 'radius')
+    _nonnegative(gamma, 'gamma')
     return 2.0 * gamma / radius
 
 
-def critical_radius(gamma: float, p_max: float) -> float:
-    """
-    Minimum alveolar radius before Laplace pressure exceeds p_max.
-    r_crit = 2 * gamma / p_max
-
-    Below this radius, the pressure singularity dominates and
-    the alveolus collapses (atelectasis).
-    """
-    if p_max <= 0:
-        return float('inf')
+def pressure_reference_radius(gamma: float, p_max: float) -> float:
+    """Radius at which 2*gamma/r equals a chosen positive pressure, not a collapse threshold."""
+    _positive(p_max, 'p_max')
+    _nonnegative(gamma, 'gamma')
     return 2.0 * gamma / p_max
 
 
-def regularity_parameter(gamma: float, r_min: float, nu: float, L: float) -> float:
-    """
-    Dimensionless regularity parameter Lambda.
+def capillary_pressure_ratio(gamma: float, r_min: float, nu: float, L: float) -> float:
+    """Dimensionless ratio (gamma/r)/(rho*nu**2/L**2).
 
-    Lambda = (gamma / r_min) * (L^2 / (rho * nu^2))
-
-    When Lambda >> 1, surface tension forces dominate viscous dissipation
-    and the solution approaches singular behavior.
-    When Lambda << 1, viscosity regularizes the flow.
-
-    This is the neonatal analog of the Reynolds number for the
-    surface-tension-driven blowup mechanism.
-    """
+    Uses half the spherical pressure jump by convention. It is a scale
+    comparison, not a regularity criterion or calibrated clinical score."""
     rho = CONST.rho_air
-    if r_min <= 0 or nu <= 0:
-        return float('inf')
+    for value, name in ((r_min, 'r_min'), (nu, 'nu'), (L, 'L')):
+        _positive(value, name)
+    _nonnegative(gamma, 'gamma')
     return (gamma / r_min) * (L ** 2) / (rho * nu ** 2)
 
 
@@ -168,38 +70,44 @@ def regularity_parameter(gamma: float, r_min: float, nu: float, L: float) -> flo
 # ============================================================
 
 def reynolds_number(Q: float, d: float, nu: float = CONST.nu_air) -> float:
-    """
-    Re = u * d / nu where u = Q / A, A = pi * (d/2)^2
-
-    Neonatal airways: Re ~ 1-100 (laminar to transitional).
-    This is far from turbulent (Re ~ 4000), which is why the
-    regularity question is actually tractable here — we're in a
-    regime where smooth solutions SHOULD exist, and the only
-    mechanism for blowup is the surface tension singularity.
-    """
+    """Bulk Re = abs(Q)/A * d/nu; Q in m^3/s, d in m. No regularity inference."""
+    _positive(d, "d")
+    _positive(nu, "nu")
+    if not np.isfinite(Q):
+        raise ValueError("Q must be finite")
     A = np.pi * (d / 2) ** 2
     u = abs(Q) / A if A > 0 else 0.0
     return u * d / nu
 
 
 # ============================================================
-# Compliance as a regularity proxy
+# Synthetic cycle descriptors
 # ============================================================
 
 @dataclass
 class BreathCycle:
-    """One respiratory cycle extracted from ventilator data."""
+    """Synthetic cycle: time s, pressure cmH2O, flow mL/s, volume mL. Not clinical validation."""
     time: np.ndarray        # seconds within cycle
     pressure: np.ndarray    # cmH2O
     flow: np.ndarray        # mL/s
     volume: np.ndarray      # mL (integrated)
 
     @property
+    def valid(self) -> bool:
+        """Whether aligned finite arrays contain at least two ordered samples."""
+        arrays = [np.asarray(x) for x in (self.time, self.pressure, self.flow, self.volume)]
+        return (all(x.ndim == 1 and len(x) == len(arrays[0]) and
+                    np.all(np.isfinite(x)) for x in arrays)
+                and len(arrays[0]) >= 2 and bool(np.all(np.diff(arrays[0]) > 0)))
+
+    @property
     def dynamic_compliance(self) -> float:
         """C_dyn = delta_V / delta_P [mL/cmH2O]"""
+        if not self.valid:
+            return float("nan")
         dV = np.max(self.volume) - np.min(self.volume)
         dP = np.max(self.pressure) - np.min(self.pressure)
-        return dV / dP if dP > 0 else float('inf')
+        return dV / dP if dP > 0 else float("nan")
 
     @property
     def resistance(self) -> float:
@@ -221,121 +129,136 @@ class BreathCycle:
 
     @property
     def phase_area(self) -> float:
-        """
-        Area enclosed by the P-V loop.
-        Larger area = more hysteresis = further from equilibrium.
-        As surfactant fails, this area changes characteristic shape.
-        """
+        """Absolute integral P dV [cmH2O*mL]; geometric descriptor, not a PDE diagnostic."""
         _trapz = getattr(np, 'trapezoid', getattr(np, 'trapz', None))
         return abs(float(_trapz(self.pressure, self.volume)))
 
 
 # ============================================================
-# Singularity proximity detector
+# Compliance descriptors
 # ============================================================
 
 @dataclass
-class RegularityState:
-    """Assessment of how close the system is to singular behavior."""
+class ComplianceState:
+    """Descriptive synthetic compliance summary; thresholds have no clinical validation."""
     compliance: float           # mL/cmH2O
-    compliance_trend: float     # derivative (negative = approaching singularity)
-    lambda_param: float         # regularity parameter
+    compliance_trend: float     # mL/cmH2O per breath
+    capillary_ratio: float         # dimensionless scale ratio
     re_max: float              # max Reynolds number in cycle
     pv_loop_area: float        # phase space area
-    classification: str         # 'smooth' | 'approaching' | 'critical' | 'singular'
+    classification: str         # descriptive category or insufficient_data
 
 
-def classify_regularity(
+def classify_compliance(
     compliance: float,
     compliance_trend: float,
-    c_threshold_low: float = 0.3,   # mL/cmH2O — below this is critical
-    c_threshold_high: float = 1.0,  # mL/cmH2O — above this is smooth
+    c_threshold_low: float = 0.3,   # illustrative mL/cmH2O threshold
+    c_threshold_high: float = 1.0,  # illustrative mL/cmH2O threshold
 ) -> str:
-    """
-    Classify the regularity state from compliance measurements.
+    """Describe compliance using illustrative thresholds in mL/cmH2O.
 
-    In NS terms:
-    - 'smooth': ||u||_{H^1} bounded, solution regular
-    - 'approaching': ||u||_{H^1} growing, approaching critical threshold
-    - 'critical': near the blowup threshold, intervention needed
-    - 'singular': compliance near zero = alveolar collapse = "blowup"
-    """
+    Trend units are mL/cmH2O per breath. Missing/nonfinite or negative
+    compliance yields insufficient_data. These labels imply no treatment
+    decision, PDE regularity or patient-specific diagnosis."""
+    if not (0 < c_threshold_low < c_threshold_high < float("inf")):
+        raise ValueError("thresholds must be finite, positive and increasing")
+    if not np.isfinite(compliance) or not np.isfinite(compliance_trend) or compliance < 0:
+        return 'insufficient_data'
     if compliance < c_threshold_low:
-        return 'singular' if compliance_trend <= 0 else 'critical'
+        return 'low_compliance'
     if compliance < c_threshold_high:
-        return 'critical' if compliance_trend < -0.1 else 'approaching'
-    return 'smooth'
+        return 'declining_compliance' if compliance_trend < -0.1 else 'intermediate_compliance'
+    return 'higher_compliance'
 
 
 # ============================================================
-# Surfactant as regularization
+# Illustrative surface-tension response
 # ============================================================
 
-def surfactant_regularization(
+def surface_tension_response(
     gamma_0: float,
     surfactant_concentration: float,
     c_half: float = 0.5,
 ) -> float:
-    """
-    Surface tension as a function of surfactant concentration.
+    """Illustrative saturating response gamma_0*c_half/(c+c_half).
 
-    gamma(c) = gamma_water * (1 - c / (c + c_half))
-
-    At c = 0 (no surfactant): gamma = gamma_water ~ 70 mN/m
-    At c >> c_half: gamma -> 0 (full regularization)
-    At clinical levels: gamma ~ 25 mN/m
-
-    This is the regularization operator. In PDE terms, adding surfactant
-    is analogous to adding a viscosity term that prevents blowup.
-    The clinical question "how much surfactant to give" maps directly to
-    "how much regularization is needed to maintain smooth solutions."
-    """
-    gamma_water = CONST.gamma_no_surfactant
-    return gamma_water * (1.0 - surfactant_concentration / (surfactant_concentration + c_half))
+    Concentration and c_half share arbitrary units. Not a dose-response
+    calibration or a proof of smoothing. Positive finite gamma still
+    leaves the 2*gamma/r limit unbounded as r approaches zero."""
+    _nonnegative(gamma_0, 'gamma_0')
+    _nonnegative(surfactant_concentration, 'surfactant_concentration')
+    _positive(c_half, 'c_half')
+    return gamma_0 * c_half / (surfactant_concentration + c_half)
 
 
 # ============================================================
-# Energy functional (the NS quantity to monitor)
+# Plug-flow energy per unit length
 # ============================================================
 
-def energy_from_ventilator(
-    pressure: np.ndarray,
+def kinetic_energy_per_length(
     flow: np.ndarray,
-    dt: float,
 ) -> np.ndarray:
-    """
-    Approximate the kinetic energy of airflow from ventilator data.
+    """Kinetic energy per unit length [J/m] under a uniform plug-flow assumption.
 
-    E(t) ~ (1/2) * rho * integral(u^2 dV) ~ (1/2) * rho * Q(t)^2 / A_eff
-
-    In NS regularity theory, the energy inequality is:
-        ||u(t)||^2 + 2*nu * integral_0^t ||grad u||^2 ds <= ||u_0||^2
-
-    If this inequality is violated, the solution has lost regularity.
-    We approximate this from measurable quantities.
-    """
+    Flow input is mL/s; a fixed illustrative cross-section A is assumed.
+    Returns rho*Q_SI**2/(2*A), not total energy or an NS energy balance."""
     rho = CONST.rho_air
     A_eff = np.pi * (CONST.airway_diameter_trachea / 2) ** 2
-    flow_m3s = flow * 1e-6  # mL/s -> m^3/s
+    flow_m3s = np.asarray(flow, dtype=float) * 1e-6  # mL/s -> m^3/s
     kinetic = 0.5 * rho * (flow_m3s ** 2) / A_eff
 
-    dissipation = np.cumsum(kinetic) * dt
     return kinetic
 
 
-def enstrophy_proxy(flow: np.ndarray, dt: float) -> np.ndarray:
-    """
-    Enstrophy (integral of vorticity squared) is the key quantity in
-    NS regularity — if enstrophy stays bounded, the solution is smooth.
+def squared_flow_time_derivative(flow: np.ndarray, dt: float) -> np.ndarray:
+    """Squared temporal derivative of scalar flow, (dQ/dt)^2.
 
-    We approximate it from the flow signal's derivative (a proxy for
-    velocity gradient, which relates to vorticity in the airway).
-
-    Omega(t) ~ (dQ/dt)^2
-
-    When this spikes — rapid flow acceleration/deceleration — the
-    system is experiencing high vorticity, approaching turbulent transition.
-    In the collapsing alveolus, this diverges.
-    """
+    For Q in mL/s and dt in seconds, units are mL^2/s^4. A temporal
+    scalar derivative is not spatial curl or enstrophy. Requires a finite
+    one-dimensional signal with at least two samples and positive dt."""
+    _positive(dt, 'dt')
+    flow = np.asarray(flow, dtype=float)
+    if flow.ndim != 1 or len(flow) < 2 or not np.all(np.isfinite(flow)):
+        raise ValueError("flow must contain at least two finite samples")
     dQdt = np.gradient(flow, dt)
     return dQdt ** 2
+
+
+def _positive(value: float, name: str) -> None:
+    if not np.isfinite(value) or value <= 0:
+        raise ValueError(f"{name} must be finite and positive")
+
+
+def _nonnegative(value: float, name: str) -> None:
+    if not np.isfinite(value) or value < 0:
+        raise ValueError(f"{name} must be finite and nonnegative")
+
+
+def sphere_volume_rate(radius: float, radial_speed: float) -> float:
+    """d(4*pi*r^3/3)/dt = 4*pi*r^2*r_dot [m^3/s].
+
+    For a closed material boundary this equals integral(u.n dS).
+    Incompressibility and the divergence theorem require zero flux,
+    so a positive-radius material sphere cannot shrink or expand.
+    Nonzero output is an incompatibility check, not an admissible solution.
+    """
+    _positive(radius, 'radius')
+    if not np.isfinite(radial_speed):
+        raise ValueError('radial_speed must be finite')
+    return float(4 * np.pi * radius**2 * radial_speed)
+
+
+def static_sphere_pressure(gamma: float, radius: float, p_ext: float = 0.0) -> float:
+    """Pressure of a stationary spherical equilibrium, p_ext + 2*gamma/r.
+
+    Outward n and kappa=2/r; stress T=-p I+2*mu*D(u).
+    Traction convention: (T_in-T_out)n = -gamma*kappa*n,
+    with T_out=-p_ext I. For u=0, constant p and zero body force,
+    the bulk PDE, incompressibility, kinematic and traction conditions
+    hold for every finite gamma>=0 and radius>0. No universal gamma
+    threshold can force all these equilibria to blow up. This does
+    not disprove an existential claim about other initial data.
+    """
+    if not np.isfinite(p_ext):
+        raise ValueError('p_ext must be finite')
+    return float(p_ext + laplace_pressure(gamma, radius))

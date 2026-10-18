@@ -1,19 +1,8 @@
-"""
-Ventilator waveform data ingestion.
+"""Synthetic waveform fixtures and legacy local CSV parsing.
 
-Clinical ventilators (Draeger Babylog, SLE 6000, Avea) export waveform
-data at 100-200 Hz. This module ingests that data and extracts breath
-cycles for analysis.
-
-Data sources:
-    - CSV export from ventilator (most common)
-    - Binary waveform files (device-specific)
-    - Manual entry of per-breath summary statistics
-
-Privacy: all patient identifiers must be stripped before ingestion.
-Store only: gestational_age, birth_weight, postnatal_age, and the
-waveform data itself. No names, MRNs, or dates of birth.
-"""
+Use synthetic data only. Existing metadata fields and parsers are not a
+privacy guarantee or approval for patient-data processing. Database/schema
+review is separate; this task neither enables nor accesses a database."""
 
 import csv
 import json
@@ -27,7 +16,7 @@ from .formulation import BreathCycle
 
 @dataclass
 class PatientContext:
-    """De-identified patient context for a recording session."""
+    """Legacy metadata structure, used here only for fictional synthetic fixtures."""
     gestational_age_weeks: float     # e.g., 28.3
     birth_weight_grams: int          # e.g., 980
     postnatal_age_days: int          # e.g., 2
@@ -64,12 +53,7 @@ def load_csv_waveform(
     volume_col: Optional[str] = None,
     sample_rate_hz: float = 100.0,
 ) -> WaveformRecording:
-    """
-    Load ventilator waveform from CSV.
-
-    Expected format: columns for time (or index), pressure, flow,
-    optionally volume. Units: seconds, cmH2O, mL/s, mL.
-    """
+    """Read a local synthetic fixture CSV: seconds, cmH2O, mL/s, optional mL. Not approved for patient data."""
     time_vals = []
     pressure_vals = []
     flow_vals = []
@@ -171,19 +155,20 @@ def generate_synthetic_waveform(
     resistance: float = 80.0,           # cmH2O/(L/s)
     peep: float = 5.0,                  # cmH2O
     pip: float = 20.0,                  # cmH2O
-    compliance_decay: float = 0.0,      # per-breath decay (simulate RDS)
+    compliance_decay: float = 0.0,      # prescribed fractional decrement per breath
     noise_level: float = 0.05,
     seed: Optional[int] = None,
 ) -> WaveformRecording:
-    """
-    Generate synthetic ventilator waveform data.
+    """Generate a prescribed RC-shaped waveform, not a Navier-Stokes solution.
 
-    With compliance_decay > 0, simulates progressive surfactant
-    depletion / RDS: compliance drops breath-by-breath, approaching
-    the singularity threshold.
-
-    With compliance_decay = 0, simulates stable breathing (smooth regime).
-    """
+    Compliance follows max(C0*(1-decay*b), 0.05) mL/cmH2O; the time
+    constant is additionally floored at 0.01 s. Pressure ramps and
+    inspiratory/expiratory flow resets are imposed independently, so this
+    is not even a coupled solution of a single driven RC ODE. Noise is
+    seeded when seed is given. No treatment or disease model is fitted.
+    Synthetic teaching use only; not validated for patient care."""
+    if n_breaths < 1 or int(n_breaths) != n_breaths:
+        raise ValueError('n_breaths must be a positive integer')
     rng = np.random.default_rng(seed)
     breath_period = 60.0 / respiratory_rate
     ti_ratio = 0.35  # inspiratory time fraction
@@ -195,7 +180,7 @@ def generate_synthetic_waveform(
 
     for b in range(n_breaths):
         c_eff = compliance * (1.0 - compliance_decay * b)
-        c_eff = max(c_eff, 0.05)  # floor at near-collapse
+        c_eff = max(c_eff, 0.05)  # arbitrary positive demonstration floor
 
         n_samples = int(breath_period * sample_rate)
         t = np.linspace(0, breath_period, n_samples, endpoint=False)

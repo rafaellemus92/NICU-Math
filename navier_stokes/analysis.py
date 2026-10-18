@@ -1,30 +1,12 @@
-"""
-Singularity proximity analysis for neonatal respiratory waveforms.
-
-Given ventilator data (pressure, flow, volume at 100-200 Hz), this module
-detects approach to and retreat from the compliance singularity — the
-point where alveolar collapse causes a finite-time blowup analog in the
-pressure field.
-
-The core idea: compliance C_dyn = dV/dP is the measurable regularity
-proxy. When C_dyn → 0, the system approaches singular behavior
-(atelectasis). The rate and trajectory of compliance decline encode
-the approach to blowup, and surfactant administration provides a
-measurable regularization event.
-
-Three analysis axes:
-1. Time-series: compliance trend, change-point detection, decay rate
-2. Phase-space: P-V loop geometry, attractor reconstruction
-3. Spectral: enstrophy evolution, frequency content near collapse
-"""
+"""Descriptive analysis of synthetic waveforms. No PDE or clinical diagnostic is inferred."""
 
 import numpy as np
 from typing import List, Tuple, Optional
 from dataclasses import dataclass
 
 from .formulation import (
-    BreathCycle, RegularityState, classify_regularity,
-    regularity_parameter, energy_from_ventilator, enstrophy_proxy,
+    BreathCycle, ComplianceState, classify_compliance,
+    capillary_pressure_ratio, kinetic_energy_per_length, squared_flow_time_derivative,
     CONST,
 )
 
@@ -48,20 +30,14 @@ def analyze_compliance_trend(
     cycles: List[BreathCycle],
     window: int = 20,
 ) -> ComplianceTrend:
-    """
-    Analyze the compliance trajectory over a sequence of breaths.
-
-    Fits a local linear model and detects acceleration (curvature).
-    A negative slope with negative curvature = accelerating collapse
-    (the system is approaching the singularity faster than linearly).
-    """
+    """Fit descriptive linear/quadratic trends, not a collapse or singularity predictor."""
     compliances = np.array([c.dynamic_compliance for c in cycles])
     indices = np.arange(len(compliances), dtype=float)
 
-    if len(compliances) < 3:
+    if len(compliances) < 3 or not np.all(np.isfinite(compliances)):
         return ComplianceTrend(
             values=compliances, times=indices,
-            slope=0.0, half_life=None, curvature=0.0, changepoints=[],
+            slope=float("nan"), half_life=None, curvature=float("nan"), changepoints=[],
         )
 
     # Linear trend
@@ -94,14 +70,7 @@ def analyze_compliance_trend(
 
 
 def _detect_changepoints(series: np.ndarray, window: int) -> List[int]:
-    """
-    Simple change-point detection via sliding-window mean shift.
-
-    A changepoint is declared when the difference between the mean
-    of the preceding and following windows exceeds 2 standard deviations
-    of the full series. This catches surfactant administration events
-    (sudden compliance improvement) and collapse onset (sudden decline).
-    """
+    """Heuristic mean shifts exceeding twice the full-series standard deviation; no causal attribution."""
     if len(series) < 2 * window:
         return []
 
@@ -124,20 +93,14 @@ def estimate_decay_exponent(
     compliances: np.ndarray,
     t0: int = 0,
 ) -> Tuple[float, float]:
-    """
-    Fit C(t) ~ C_0 * (T* - t)^alpha near a collapse event.
+    """Heuristic power-law fit using a linearly extrapolated zero crossing.
 
-    In NS blowup theory, the approach to singularity follows a
-    power law. If compliance decays as (T* - t)^alpha:
-      alpha > 0: finite-time singularity at t = T*
-      alpha ~ 0.5: consistent with self-similar blowup
-      alpha ~ 1: linear decay (less severe)
-
-    Returns (alpha, T_star_estimate).
-    """
+    Returns (alpha, relative_breath_index). The extrapolation and fallback
+    horizon n*1.5 are fitting choices, not predicted event times or evidence
+    of PDE blowup. Insufficient data return (nan, nan)."""
     c = compliances[t0:]
-    if len(c) < 5 or np.min(c) <= 0:
-        return (0.0, 0.0)
+    if len(c) < 5 or not np.all(np.isfinite(c)) or np.min(c) <= 0:
+        return (float("nan"), float("nan"))
 
     n = len(c)
     t = np.arange(n, dtype=float)
@@ -149,7 +112,7 @@ def estimate_decay_exponent(
 
     T_star = -coeffs[1] / coeffs[0]
     if T_star <= n:
-        T_star = n * 1.5  # singularity hasn't happened yet
+        T_star = n * 1.5  # arbitrary fitting horizon, not an event forecast
 
     # Fit log(C) vs log(T* - t)
     dt_to_star = T_star - t
@@ -180,18 +143,10 @@ class PhaseSpaceMetrics:
 
 
 def pv_loop_geometry(cycle: BreathCycle) -> PhaseSpaceMetrics:
-    """
-    Compute geometric properties of the pressure-volume loop.
+    """Describe a sampled P-V curve; area in cmH2O*mL.
 
-    As the system approaches singularity:
-    - Area collapses (less volume exchanged per pressure swing)
-    - Eccentricity increases (loop degenerates toward a line)
-    - Centroid shifts to higher pressure, lower volume
-    - Orientation rotates (compliance axis tilts)
-
-    These geometric changes in phase space are the measurable
-    signature of approaching blowup in the bounded NS system.
-    """
+    Eccentricity and orientation depend on the numerical axis units;
+    these are not invariant attractor or PDE regularity measurements."""
     p = cycle.pressure
     v = cycle.volume
 
@@ -233,19 +188,11 @@ def phase_space_trajectory(
     return [pv_loop_geometry(c) for c in cycles]
 
 
-def attractor_divergence(
+def loop_metric_distance(
     metrics: List[PhaseSpaceMetrics],
     reference_idx: int = 0,
 ) -> np.ndarray:
-    """
-    Measure how far each breath's P-V loop has diverged from a reference.
-
-    Uses Euclidean distance in the 5D metric space
-    (area, eccentricity, centroid_p, centroid_v, orientation).
-
-    Increasing divergence = the attractor is deforming = approaching
-    regime change (smooth → singular or singular → smooth after surfactant).
-    """
+    """Reference-scaled distance between loop descriptors; no dynamical attractor is reconstructed."""
     if not metrics:
         return np.array([])
 
@@ -265,87 +212,59 @@ def attractor_divergence(
 
 
 # ============================================================
-# 3. Spectral / enstrophy analysis
+# 3. Temporal flow derivative analysis
 # ============================================================
 
-def enstrophy_evolution(
+def flow_derivative_evolution(
     cycles: List[BreathCycle],
     dt: float,
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Track enstrophy proxy across breaths.
-
-    Returns (per_breath_mean_enstrophy, per_breath_peak_enstrophy).
-
-    In NS regularity theory, bounded enstrophy implies regularity.
-    If mean enstrophy grows without bound, the solution is losing
-    regularity. In the neonatal lung, this corresponds to
-    increasingly violent pressure/flow oscillations as alveoli
-    collapse and re-recruit.
-    """
+    """Per-breath mean and peak of (dQ/dt)^2 [mL^2/s^4], not spatial enstrophy."""
     means = np.zeros(len(cycles))
     peaks = np.zeros(len(cycles))
 
     for i, c in enumerate(cycles):
-        omega = enstrophy_proxy(c.flow, dt)
+        omega = squared_flow_time_derivative(c.flow, dt)
         means[i] = np.mean(omega)
         peaks[i] = np.max(omega)
 
     return means, peaks
 
 
-def energy_dissipation_rate(
+def scaled_flow_derivative_index(
     cycles: List[BreathCycle],
     dt: float,
 ) -> np.ndarray:
-    """
-    Estimate energy dissipation rate per breath.
+    """Historical scaled temporal-flow index nu*mean((dQ_SI/dt)^2)/A.
 
-    In the NS energy inequality:
-        d/dt ||u||^2 + 2*nu * ||grad u||^2 = <f, u>
-
-    The dissipation term 2*nu * ||grad u||^2 must balance the forcing.
-    If dissipation cannot keep up with forcing, energy grows
-    unboundedly → loss of regularity.
-
-    We estimate dissipation from the flow signal as:
-        epsilon ~ nu * mean((dQ/dt)^2) / A_eff
-    """
+    Units m^6/s^5. This is not energy dissipation and has no validated
+    physiological interpretation. Prefer the unscaled derivative diagnostic."""
     nu = CONST.nu_air
     A_eff = np.pi * (CONST.airway_diameter_trachea / 2) ** 2
     rates = np.zeros(len(cycles))
 
     for i, c in enumerate(cycles):
         flow_m3s = c.flow * 1e-6
-        dQdt = np.gradient(flow_m3s, dt)
+        dQdt = np.sqrt(squared_flow_time_derivative(flow_m3s, dt))
         rates[i] = nu * np.mean(dQdt ** 2) / A_eff
 
     return rates
 
 
 # ============================================================
-# 4. Singularity proximity score
+# 4. Synthetic compliance summary
 # ============================================================
 
-def singularity_proximity(
+def summarize_compliance(
     cycles: List[BreathCycle],
     gamma: float = CONST.gamma_no_surfactant,
     r_min: float = CONST.alveolar_radius_preterm,
-) -> RegularityState:
-    """
-    Comprehensive singularity proximity assessment.
-
-    Combines all analysis axes into a single RegularityState
-    that classifies how close the system is to blowup.
-
-    This is the function a clinician would call on a window of
-    ventilator data to get an assessment of the patient's
-    respiratory regularity state.
-    """
-    if not cycles:
-        return RegularityState(
-            compliance=0.0, compliance_trend=0.0, lambda_param=float('inf'),
-            re_max=0.0, pv_loop_area=0.0, classification='singular',
+) -> ComplianceState:
+    """Summarize synthetic compliance; missing or invalid cycles yield insufficient_data."""
+    if not cycles or any(not c.valid or not np.isfinite(c.dynamic_compliance) for c in cycles):
+        return ComplianceState(
+            compliance=float('nan'), compliance_trend=float('nan'), capillary_ratio=float('nan'),
+            re_max=float('nan'), pv_loop_area=float('nan'), classification='insufficient_data',
         )
 
     # Compliance
@@ -358,9 +277,9 @@ def singularity_proximity(
     else:
         slope = 0.0
 
-    # Regularity parameter
+    # Pressure scale ratio
     L = CONST.airway_diameter_trachea
-    lam = regularity_parameter(gamma, r_min, CONST.nu_air, L)
+    lam = capillary_pressure_ratio(gamma, r_min, CONST.nu_air, L)
 
     # Reynolds number (max across all cycles)
     re_max = 0.0
@@ -375,12 +294,12 @@ def singularity_proximity(
     area_mean = float(np.mean(areas))
 
     # Classification
-    classification = classify_regularity(c_mean, slope)
+    classification = classify_compliance(c_mean, slope)
 
-    return RegularityState(
+    return ComplianceState(
         compliance=c_mean,
         compliance_trend=slope,
-        lambda_param=lam,
+        capillary_ratio=lam,
         re_max=re_max,
         pv_loop_area=area_mean,
         classification=classification,
@@ -388,24 +307,18 @@ def singularity_proximity(
 
 
 # ============================================================
-# 5. Surfactant response detection
+# 5. Descriptive compliance increases
 # ============================================================
 
-def detect_surfactant_response(
+def detect_compliance_increases(
     cycles: List[BreathCycle],
     window: int = 10,
     improvement_threshold: float = 0.3,
 ) -> List[dict]:
-    """
-    Detect compliance jumps consistent with surfactant administration.
+    """Find relative increases in sliding mean compliance.
 
-    Surfactant is the regularization operator. When administered:
-    - Compliance jumps upward (the singularity is regularized)
-    - P-V loop area changes characteristic shape
-    - Enstrophy drops (flow becomes smoother)
-
-    Returns a list of detected events with breath index and magnitude.
-    """
+    Descriptive heuristic only: cannot identify a treatment, mechanism,
+    PDE regularization or clinical response. Threshold is illustrative."""
     if len(cycles) < 2 * window:
         return []
 
@@ -422,8 +335,8 @@ def detect_surfactant_response(
                 'compliance_before': float(pre),
                 'compliance_after': float(post),
                 'improvement_ratio': float((post - pre) / pre),
-                'classification_before': classify_regularity(pre, -0.05),
-                'classification_after': classify_regularity(post, 0.05),
+                'classification_before': classify_compliance(pre, 0.0),
+                'classification_after': classify_compliance(post, 0.0),
             })
 
     return events
