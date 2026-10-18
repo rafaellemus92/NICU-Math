@@ -1,0 +1,140 @@
+lattice_sums.py -- certified lattice-sum bounds on T^3
+python 3.12.3  numpy 2.0.2  decimal precision 50
+a = sqrt(3)/2 = 0.8660254037844386467637231707529361834714026269052
+a2 = sqrt(2)/2 = 0.70710678118654752440084436210484903928483593768845
+[check] closed-form tail antiderivatives vs Simpson quadrature: worst rel. diff = 3.52e-16
+[check] 2-D cube-complement constant C2_4 = 2.570796326794893, closed form 1+pi/2 = 2.570796326794897
+
+======================================================================================================================
+CUBE PARTIAL SUMS  P_R = sum over max|k_i| <= R,  certified upper bound U_R = P_R + (T3)/(T2) tail bound
+(printed certified numbers are rounded UP to 12 significant digits; realised float64 rounding = |fsum - 50-digit|)
+======================================================================================================================
+
+Lambda4  (p = 4.0, kind = 3d)
+   R  lattice pts  partial (fsum, float64) float rounding     tail bound  certified upper tail/partial  time[s]
+  50      1030301        16.32549328435671       7.96e-17     0.25762408    16.5831173611       1.578%     0.00
+ 100      8120601        16.42838647918794       4.02e-16     0.12722483    16.5556113029       0.774%     0.04
+ 150     27270901        16.46291408851078       1.47e-15    0.084467719    16.5473818066       0.513%     0.07
+ 200     64481201        16.48022116771334       1.11e-15    0.063220518    16.5434416853       0.384%     0.16  <- first R meeting 0.5 %
+ 250    125751501        16.49061928502501       7.66e-16    0.050514022    16.5411333069       0.306%     0.30
+     minimal R for the 0.5 % criterion (from the tail formula): R = 156  -> 3.066e+07 lattice points
+
+Lambda4_osc  (p = 4.0, kind = osc)
+   R  lattice pts  partial (fsum, float64) float rounding     tail bound  certified upper tail/partial  time[s]
+  50      1030301        10.29968918965245       7.02e-16     0.25762408    10.5573132664       2.501%     0.00
+ 100      8120601        10.40182896036911       3.03e-16     0.12722483    10.5290537841       1.223%     0.03
+ 150     27270901        10.43621554709253       1.71e-17    0.084467719    10.5206832652       0.809%     0.07
+ 200     64481201        10.45347307733183       5.87e-16    0.063220518    10.5166935949       0.605%     0.16
+ 250    125751501        10.46384821385123       5.20e-16    0.050514022    10.5143622357       0.483%     0.29  <- first R meeting 0.5 %
+     minimal R for the 0.5 % criterion (from the tail formula): R = 246  -> 1.198e+08 lattice points
+
+Lambda4_mean  (p = 4.0, kind = 2d)
+   R  lattice pts  partial (fsum, float64) float rounding     tail bound  certified upper tail/partial  time[s]
+  50        10201         6.02580409470426       1.06e-16   0.0012791086    6.02708320327       0.021%     0.00  <- first R meeting 0.5 %
+ 100        40401        6.026557518818837       9.86e-17  0.00031695482    6.02687447363       0.005%     0.02
+ 150        90601        6.026698541418252       3.19e-16  0.00014045334    6.02683899476       0.002%     0.05
+ 200       160801        6.026748090381509       3.67e-16 0.000078888428    6.02682697881       0.001%     0.12
+ 250       251001        6.026771071173779       3.99e-16 0.000050443887    6.02682151506       0.001%     0.23
+     minimal R for the 0.5 % criterion (from the tail formula): R = 11  -> 5.290e+02 lattice points
+
+Lambda3  (p = 3.5, kind = 3d)
+   R  lattice pts  partial (fsum, float64) float rounding     tail bound  certified upper tail/partial  time[s]
+  50      1030301        25.81078564033503       1.42e-15      3.6091016    29.4198871554      13.983%     0.06
+ 100      8120601         26.7477314670431       1.08e-15      2.5325149    29.2802463412       9.468%     0.21
+ 150     27270901        27.16482611054674       5.48e-16      2.0625293    29.2273553630       7.593%     0.52
+ 200     64481201        27.41392442059033       1.65e-15      1.7839327    29.1978570494       6.507%     0.92
+ 250    125751501        27.58408629401356       9.03e-16      1.5943818    29.1784680929       5.780%     1.46
+     minimal R for the 0.5 % criterion (from the tail formula): R = 37928  -> 4.365e+14 lattice points
+
+======================================================================================================================
+BALL PARTIAL SUMS  P'_R = sum over 0 < |k| <= R  with TWO-SIDED certified tail enclosure
+(all from the exact r(n) histogram at R = 250; lower bounds rounded DOWN, upper bounds rounded UP)
+======================================================================================================================
+
+Lambda4  (p = 4.0)
+   R       partial (fsum)     tail lower     tail upper  certified lower  certified upper      width width/value
+  50    16.28094165018867     0.23886885     0.26504515    16.5198105095    16.5459867905   2.62e-02    1.58e-03
+ 100    16.40664291437635     0.12247565     0.12900893    16.5291185645    16.5356518354   6.53e-03    3.95e-04
+ 150     16.4485410823402    0.082347686    0.085250475    16.5308887684    16.5337915570   2.90e-03    1.76e-04
+ 200     16.4694825839979    0.062025349    0.063657994    16.5315079338    16.5331405778   1.63e-03    9.87e-05
+ 250      16.482049762037    0.049748089    0.050792930    16.5317978512    16.5328426917   1.04e-03    6.32e-05
+
+Lambda4_osc  (p = 4.0)
+   R       partial (fsum)     tail lower     tail upper  certified lower  certified upper      width width/value
+  50    10.25538769924384     0.23752508     0.26386758    10.4929127889    10.5192552792   2.63e-02    2.50e-03
+ 100    10.38014502383679     0.12215086     0.12870489    10.5022958912    10.5088499062   6.55e-03    6.24e-04
+ 150    10.42186867870235    0.082204937    0.085113871    10.5040736164    10.5069825497   2.91e-03    2.77e-04
+ 200    10.44274910585206    0.061945498    0.063580735    10.5046946041    10.5063298401   1.64e-03    1.56e-04
+ 250    10.45528799514363    0.049697153    0.050743322    10.5049851489    10.5060313164   1.05e-03    9.96e-05
+
+Lambda4_mean  (p = 4.0)
+   R       partial (fsum)     tail lower     tail upper  certified lower  certified upper      width width/value
+  50    6.025553950944824   0.0011775603   0.0013437697    6.02673151128    6.02689772063   1.66e-04    2.76e-05
+ 100     6.02649789053956  0.00030403863  0.00032478276    6.02680192917    6.02682267330   2.07e-05    3.44e-06
+ 150    6.026672403637852  0.00013660366  0.00014274832    6.02680900730    6.02681515196   6.14e-06    1.02e-06
+ 200    6.026733478145843 0.000077259518 0.000079851534    6.02681073766    6.02681332968   2.59e-06    4.30e-07
+ 250    6.026761766893367 0.000049608391 0.000050935442    6.02681137528    6.02681270234   1.33e-06    2.20e-07
+
+Lambda3  (p = 3.5)
+   R       partial (fsum)     tail lower     tail upper  certified lower  certified upper      width width/value
+  50    25.47450293110196      3.4554966      3.6610192    28.9299996043    29.1355220407   2.06e-01    7.05e-03
+ 100    26.51577348540227      2.4776819      2.5502618    28.9934554498    29.0660351866   7.26e-02    2.50e-03
+ 150    26.97707261569364      2.0325833      2.0720824    29.0096559745    29.0491549822   3.95e-02    1.36e-03
+ 200    27.25196628201012      1.7644497      1.7901033    29.0164160346    29.0420694844   2.57e-02    8.83e-04
+ 250    27.43959555989597      1.5804269      1.5987825    29.0200225209    29.0383780035   1.84e-02    6.32e-04
+
+======================================================================================================================
+CONSISTENCY CHECKS
+======================================================================================================================
+      Lambda4: cube U decreasing True, P increasing True, U>=all P True, ball enclosures nested True True, cube U >= ball lower True True  -> OK
+  Lambda4_osc: cube U decreasing True, P increasing True, U>=all P True, ball enclosures nested True True, cube U >= ball lower True True  -> OK
+ Lambda4_mean: cube U decreasing True, P increasing True, U>=all P True, ball enclosures nested True True, cube U >= ball lower True True  -> OK
+      Lambda3: cube U decreasing True, P increasing True, U>=all P True, ball enclosures nested True True, cube U >= ball lower True True  -> OK
+Lambda4 = Lambda4_osc + Lambda4_mean on every cube partial sum (50-digit): True
+Lambda4_mean closed form 4*zeta(2)*beta(2) = 6.02681203969195 lies in certified enclosure [6.02681137528511, 6.02681270233536]: True
+ALL CONSISTENCY CHECKS PASSED: True
+
+======================================================================================================================
+FINAL TABLE  (cube partial sums at R = 250, i.e. 125,751,501 lattice points in 3-D, 251,001 in 2-D)
+certified upper = partial(50-digit) + closed-form tail bound (T3)/(T2) + 1e-30, rounded UP; sqrt rounded UP
+======================================================================================================================
+     quantity    p   partial sum (fsum)  rigorous tail bound  certified upper bound   derived const sqrt tail/partial
+      Lambda4  4.0    16.49061928502501      0.0505140218195          16.5411333069        4.06707921080       0.306%
+  Lambda4_osc  4.0    10.46384821385123      0.0505140218195          10.5143622357        3.24258573298       0.483%
+ Lambda4_mean  4.0    6.026771071173779   0.0000504438860927          6.02682151506        2.45495855669       0.001%
+      Lambda3  3.5    27.58408629401356        1.59438179884          29.1784680929        5.40170973794       5.780%
+
+     quantity        sharper two-sided certified enclosure (ball, R = 250)      sqrt(upper)
+      Lambda4                               [16.5317978512, 16.5328426917]    4.06605984851
+  Lambda4_osc                               [10.5049851489, 10.5060313164]    3.24130086792
+ Lambda4_mean                               [6.02681137528, 6.02681270234]    2.45495676181
+      Lambda3                               [29.0200225209, 29.0383780035]    5.38872693718
+
+0.5 % criterion (certified tail bound <= 0.5 % of the cube partial sum):
+        Lambda4: met at R = 200 (64,481,201 points, 0.16 s incl. decimal check)
+    Lambda4_osc: met at R = 250 (125,751,501 points, 0.29 s incl. decimal check)
+   Lambda4_mean: met at R = 50 (10,201 points, 0.00 s incl. decimal check)
+        Lambda3: NOT met for R <= 250 -- the tail decays like R^(3-p) = R^-0.5, the criterion would need R ~ 3e4 (~1e14 points); use the two-sided ball enclosure above instead, whose certified upper bound exceeds the certified lower bound by 0.063 %.
+
+======================================================================================================================
+PLAIN NUMERICAL ESTIMATES OF THE FULL SUMS  -- NOT CERTIFIED, for reference only
+======================================================================================================================
+C_4   = int_(max|y_i|>=1) |y|^-4   dy = 10.445037016405   (vs 4 pi = 12.566370614359 for the ball exterior)
+C_3.5 = int_(max|y_i|>=1) |y|^-3.5 dy = 22.871176743231   (vs 8 pi = 25.132741228718)
+C2_4  = 1 + pi/2 = 2.570796326795;  C2_3.5 = 3.591294810993
+     quantity  (E1) cube P_R + C_p L^(3-p)   (E2) ball P_R + 4piR^(3-p)/(p-3)  (E3) enclosure midpoint       sqrt(E3)
+      Lambda4                16.5323160396                      16.5323152445            16.5323202714   4.0659956064
+  Lambda4_osc                10.5055039997                      10.5055032121            10.5055082326   3.2412201765
+ Lambda4_mean                 6.0268120399                       6.0268120324             6.0268120388   2.4549566267
+      Lambda3                29.0291421855                      29.0291296824            29.0292002622   5.3878753013
+(E1)-(E3) are estimates with uncontrolled (though small) error; only the certified columns above are rigorous.
+
+EXACT TAIL FORMULAS USED (certified columns):
+  3-D cube (Lambda4, Lambda4_osc, Lambda3):  T_R <= 4*pi*[ s0^(3-p)/(p-3) + 2a*s0^(2-p)/(p-2) + a^2*s0^(1-p)/(p-1) ],
+        s0 = R + 1/2 - sqrt(3)/2, a = sqrt(3)/2;  p=4: 4*pi*[1/s0 + a/s0^2 + a^2/(3 s0^3)];
+        p=3.5: 4*pi*[2/sqrt(s0) + (4a/3)/s0^1.5 + (2a^2/5)/s0^2.5].
+  2-D cube (Lambda4_mean):                   T_R <= 2*pi*[ s0^(2-p)/(p-2) + a2*s0^(1-p)/(p-1) ],
+        s0 = R + 1/2 - sqrt(2)/2, a2 = sqrt(2)/2;  p=4: 2*pi*[1/(2 s0^2) + a2/(3 s0^3)].
+  Ball enclosure: same primitives with s0 = R -+ 2a (3-D) / R -+ 2a2 (2-D) and (s +- a)^2 / (s +- a).
+
+Total wall time: 5.7 s

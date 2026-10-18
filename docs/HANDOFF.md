@@ -1,6 +1,32 @@
 # Startup and collaboration handoff — 2026-10-18
 
-## PR19 independent-review corrections (current)
+## Finite-time enstrophy error bound (current, Claude)
+
+Owner: Claude Code (session "Navier Stokes-Speech"). Branch
+`claude/enstrophy-finite-time-bound`, based on main `2b14eeaa3d6a432e357f9ae0b9b2c936a725f6aa`.
+User authorized one bounded mathematical task after PR #19: an explicit, certified
+finite-time bound on the enstrophy error of the phase family after subtracting its
+quadratic response in b, with one targeted reviewer and no paid runs, long DNS, website
+edits, merges or overwriting of archived outputs. Scope: the new folder
+`math/all-time-phase-response/finite-time/` (note, two scripts, logs), one index row in
+`math/README.md` and `docs/RESEARCH_INDEX.md`, and this section. Nothing else is changed.
+
+Result (paper argument with every constant explicit, evaluated as rigorous upper bounds):
+a certified admissible radius β₁(T) at the H¹ level and |Z(u_b) − Z(U) − b²Z2| ≤ C_Z(T) b⁴
+on [0, T] for |b| < β₁(T). At a = c = d = 1, ν = 1/28: β₁ = 1.1×10⁻³ (T = 0.25), 2.1×10⁻⁴
+(T = 0.5), 6.3×10⁻⁶ (T = 1), against the all-time ceiling 7.2×10⁻²²; C_Z is 10¹⁶–10⁴⁰ above
+the measured remainder, and the obstructing estimate (Agmon/dissipation source bounds, not
+the propagator) and one improvement are documented in the note. Labels: mathematical proof
+with symbolic→evaluated constants (not formalized); numerical evidence only for the
+consistency checks.
+
+Validation: `constants.py` (under 1 s), `check_bounds.py` (N = 24, dt = 0.005, T = 1, three
+b values, about 15 s; every bound exceeds its measurement; the Section 5 identity holds to
+6×10⁻¹⁶), certified lattice sum for the Agmon constant. Not run: Lean, any DNS beyond N = 24
+and T = 1, the all-time package's own pilots (unchanged). Independent review: one targeted
+reviewer (recorded in the folder README when complete).
+
+## PR19 independent-review corrections (historical, Codex)
 
 Owner: Codex. Base e55d74e336270f5a5c3ae52c45a78c6523ef9347.
 See [correction dispositions and fresh verification](reconciliation/CORRECTIONS.md).
