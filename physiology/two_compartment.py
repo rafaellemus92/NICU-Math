@@ -116,13 +116,13 @@ def passive_retained_fraction(compartments: Sequence[Compartment], P_0: float,
 
 
 def main() -> None:
-    """Print the deterministic unit-scale comparison (R = C = P_0 = 1)."""
+    """Print float64 approximations and same-formula consistency (R=C=P_0=1)."""
     for name, fractions in (("A", (0.5, 0.5)), ("B", (0.9, 0.1))):
         compartments = [Compartment(2.0, c) for c in fractions]
         expected = (np.exp(-1.0) if name == "A" else
                     0.9 * np.exp(-1.0 / 1.8) + 0.1 * np.exp(-5.0))
         retained = passive_retained_fraction(compartments, 1.0, 1.0)
-        print(f"{name}: retained={retained:.17g}; closed-form error={abs(retained - expected):.3e}")
+        print(f"{name}: retained={retained:.17g}; formula-consistency discrepancy={abs(retained - expected):.3e}")
 
 
 if __name__ == "__main__":

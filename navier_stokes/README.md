@@ -54,14 +54,47 @@ universal proof or a formal proof certificate.
 
 ## Synthetic diagnostics and units
 
-The Python generator prescribes C_b = max(C₀(1 − decay·b), 0.05) mL/cmH2O and
-τ = max(R C_b × 10⁻³, 0.01) s, with R in cmH2O/(L/s). Pressure ramps and
-exponential flow resets are imposed separately. The web generator also adds an
-optional arbitrary recovery ramp, with compliance floors of 0.05 before noise
-and 0.02 after noise. Neither is a Navier–Stokes solver or a coupled driven RC
-ODE solution. No surfactant pharmacology or clinical threshold is fitted. The CLI uses zero
-noise because the simple flow-crossing segmenter can overcount breaths in noisy
-fixtures; segmentation is not validated for clinical signals.
+The Python generator now solves the linear equation
+R_mL dV/dt + V/C_b = P − PEEP separately on constant-pressure phases.
+C_b = max(C₀(1 − decay·b), 0.05) mL/cmH2O is **prescribed**, and
+R_mL = R × 10⁻³ converts R from cmH2O/(L/s). Tau is exactly R_mL C_b;
+the previous 0.01 s floor is removed. Inspiration occupies 35% of a cycle.
+Volume is continuous across pressure and compliance changes; the initial
+volume is the periodic steady state for the first compliance. This is a
+synthetic linear teaching model, not a Navier–Stokes or patient model.
+
+The sampled cycle period is the nearest integer number of sampling intervals
+(at least 20). Pressure and flow samples represent interval averages; volume
+samples represent left edges. Flow is computed from exact endpoint volume
+differences, avoiding the former independently reset pulses and misaligned
+quadrature. Gaussian flow noise is integrated without detrending. The model
+supplies known complete acquisition edges; CSV records default to unknown
+edges and assume interval-average flow if volume must be integrated.
+
+Segmentation uses pressure hysteresis: thresholds at 30% and 70% of the
+10th-to-90th percentile pressure span, each confirmed for 40 ms; onsets must
+be at least 300 ms apart. The detected onset is the first sample of a
+confirmed high run. No interior ground-truth boundaries are used. Unknown
+initial high phases and trailing cycles are discarded; explicitly known
+complete synthetic edges are retained. Cropped records must clear the edge
+flags. Cycle timestamps now retain the recording origin. The old `flow_threshold`
+argument is removed; `min_phase_seconds` and `min_cycle_seconds` are keyword-only
+to prevent old positional flow thresholds from silently changing units. Flat pressure gives
+no cycles; nonfinite/misaligned waveforms are rejected. This detector assumes
+distinct pressure phases and is not validated for spontaneous breathing,
+variable baselines, high-frequency ventilation, or clinical recordings.
+
+The volume-range/pressure-range descriptor is **not prescribed C**. Even
+without noise, finite inspiration and expiration limit the volume excursion.
+For constant C in periodic steady state its continuous-time value is
+C(1−A)(1−B)/(1−AB), with A=exp(−T_in/τ), B=exp(−T_out/τ).
+Sampling can miss the peak, and extrema are biased by noise. No clinical
+calibration or unbiased parameter recovery is asserted. The CLI reports the
+prescribed schedule separately and now exercises default noise again.
+
+The separate web demo remains a prescribed, floored RC-shaped illustration
+with an arbitrary recovery ramp. It is unchanged by this Python pipeline
+repair and is not a coupled RC ODE solver. Neither demo models treatment.
 
 - `classify_compliance` / `classifyCompliance`: descriptive synthetic bins;
   low below 0.3, intermediate below 1.0, higher from 1.0 mL/cmH2O. Within the
@@ -79,6 +112,10 @@ fixtures; segmentation is not validated for clinical signals.
 - `loop_metric_distance`: reference-scaled descriptor distance, not an attractor
   reconstruction. PCA loop geometry depends on axis units. Power-law fitting
   and its extrapolated zero crossing do not predict clinical events.
+  `estimate_decay_exponent` now returns `DecayFit(status, exponent, horizon, reason)`.
+  Invalid/nondeclining fits or crossings within the observed window have no
+  exponent/horizon. A resolved horizon is relative to the selected window,
+  conditional on the chosen fit form; it is not an event prediction.
 
 Misleading former API names have been replaced, and in-repository callers updated.
 `estimate_critical_constant` now raises `NotImplementedError` because the assumed
@@ -95,5 +132,6 @@ used. The retained legacy metadata/CSV parser is not a de-identification guarant
 or approval to process clinical data. The existing database schema requires a
 separate privacy/data-model review; this correction does not enable, migrate,
 access or remove it. Shared Air coupling multipliers remain placeholders; no
-speech model is introduced. Periodic-flow, Lean and two-compartment results are
-unchanged and their research suites are not rerun here.
+speech model is introduced. Periodic-flow and Lean work are unchanged and not
+rerun. The two-compartment model is unchanged; its focused suite is rerun to
+record numerical verification versions alongside the precision-label correction.

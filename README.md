@@ -13,6 +13,14 @@ incomplete conjecture. See [corrections and analytical checks](navier_stokes/REA
 and the [retired-claim ledger](navier_stokes/CLAIMS.md). No conditional regularity
 theorem or clinical-to-PDE equivalence is established by those tools.
 
+## Web runtime
+
+The locked web dependency tree requires **Node.js ≥22** (Supabase 2.118.0),
+even though Next.js alone permits ≥20.9. Verification used Node 24.19.0.
+From `web/`, use `npm ci` and `npm run build`; no dependency versions are changed
+by the synthetic-pipeline repair. The Python repair and separate schematic web
+demo have different documented models; neither is clinically validated.
+
 ## Local startup
 Use Python 3.11 or 3.12, from repository root:
 ```

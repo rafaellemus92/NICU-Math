@@ -5,14 +5,15 @@ from .proof_outline import proof_summary
 
 
 def run_demo():
-    print("Synthetic prescribed RC-shaped waveforms; not Navier-Stokes solutions")
+    print("Synthetic square-pressure RC model; not a Navier-Stokes solution")
     print("Illustrative compliance labels; no patient-specific or treatment inference")
     for label, decay in (("constant schedule", 0.0), ("declining schedule", 0.008)):
-        recording = generate_synthetic_waveform(n_breaths=50, compliance_decay=decay, noise_level=0, seed=42)
+        recording = generate_synthetic_waveform(n_breaths=50, compliance_decay=decay, noise_level=0.05, seed=42)
         cycles = segment_breaths(recording)
         state = summarize_compliance(cycles)
         means, peaks = flow_derivative_evolution(cycles, 1 / recording.sample_rate_hz)
-        print(f"{label}: {len(cycles)} cycles; {state.classification}; C={state.compliance:.4f} mL/cmH2O")
+        print(f"{label}: prescribed C0=1.0 mL/cmH2O, decay={decay}; {len(cycles)} cycles")
+        print(f"  waveform range descriptor={state.compliance:.4f} mL/cmH2O; {state.classification}")
         print(f"  mean squared flow time derivative: {means.mean():.4f} mL^2/s^4")
     print(proof_summary())
 
