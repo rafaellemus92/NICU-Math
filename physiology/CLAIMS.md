@@ -22,18 +22,22 @@ Every claim in `physiology/` lives in exactly one tier below. See
   B: (0.9C, 0.1C). Both equilibrate at the same initial driving
   pressure P₀ > 0, hence both start with total excess volume CP₀.
   After release to zero driving pressure, at t = RC:
-  A = exp(−1) = **0.36787944117144233**;
-  B = 0.9 exp(−1/1.8) + 0.1 exp(−5) = **0.51705187336359804**.
+  A = exp(−1) ≈ **0.36787944117144233**;
+  B = 0.9 exp(−1/1.8) + 0.1 exp(−5) ≈ **0.51705187336359804**.
   **Verified at machine precision** (implemented in PR #13; the original
   scaffold called this pending PR #7, now the startup reconciliation):
-  analytically derived closed forms, floating evaluation discrepancy
-  0.000e+00 in both unit-scale cases; not a formal proof certificate.
+  analytically derived closed forms, float64 formula self-consistency discrepancy
+  0.000e+00 in both unit-scale cases (the same expressions, not independent
+  verification). Displayed decimal values are approximations; the exponential
+  expressions are exact under the model assumptions. Not a formal proof certificate.
   See [physiology/two_compartment.py](two_compartment.py) and
   [derivation and limits](two_compartment.md). Tests:
   [`tests/physiology/test_two_compartment.py`](../tests/physiology/test_two_compartment.py),
   **41 passed**; headline errors < 1e−10 and at float64 roundoff scale;
   independent solve_ivp maximum absolute volume errors **7.981e−11**
   (symmetric) and **2.604e−11** (heterogeneous), both < 1e−6.
+  Reverification environment: **NumPy 2.0.2, SciPy 1.18.1**; numerical
+  integration agreement is not certification of all displayed digits.
   Verified implementation commit: `aa73b1350b14f18608a1a1564906cd3fc7fa2645`.
   This is a summary-statistic obstruction for independent passive linear
   compartments, with no shared dynamic chest-wall coupling. Volumes are

@@ -1,7 +1,45 @@
 # Startup and collaboration handoff — 2026-10-18
 
 
-## Fluid/respiratory claim correction (current follow-up)
+## Synthetic breath analysis repair (current)
+
+Owner: Codex. Branch `codex/fix-synthetic-breath-analysis`, based on verified
+PR #16 head `14fe98a43ca49784540de8fcb03a9f931754975e`. User authorized a
+separate stacked draft PR targeting `codex/correct-fluid-claims`, testing,
+independent review and push. Repository intentionally public, synthetic code
+only. No patient data, schema work, settings, merge or manual deployment.
+
+Failing regressions were committed first in `660945e`: 50 prescribed breaths
+produced 48 clean or 468 noisy segments, both assertions failed on the base.
+Acceptance criteria were recorded in `navier_stokes/CLAIMS.md` before repair.
+Implementation replaces flow-tail crossings with confirmed pressure phases,
+adds explicit complete/partial acquisition-edge policy, and uses one consistent
+piecewise RC solution for pressure, volume and interval-average flow. Tau no
+longer has a hidden floor. The waveform descriptor remains distinct from
+prescribed compliance and retains measurable noise bias. DecayFit reports
+invalid/unresolved outcomes without manufacturing a finite horizon.
+
+Scope also includes physiology precision/provenance wording and verified Node
+minimum/handoff corrections. No convexity theorem, renderer hardening, web
+consumer changes, dependency changes, or unrelated research runs.
+Validation at the repair implementation:
+- `/tmp/nicu-integration-venv/bin/python -m pytest -q -s tests/navier_stokes tests/physiology`:
+  **135 passed in 1.02s** (63 new pipeline cases, 31 prior claim corrections,
+  41 physiology cases). NumPy 2.0.2 / SciPy 1.18.1; ODE errors unchanged at
+  7.981e−11 and 2.604e−11. No periodic-flow/Lean or unrelated research suite run.
+- `NICU_OFFLINE=1 /tmp/nicu-integration-venv/bin/python -m unittest
+  tests.test_smoke tests.test_requirements tests.test_optional_pdf -v`:
+  **11 tests, OK**, 1.266s. Expected Streamlit bare-mode warning only.
+- compileall for navier_stokes/physiology/api/ui/tests, the noisy CLI demo and
+  whitespace checks passed. No web consumer/source changed, so web builds are
+  not rerun for this Python/docs-only follow-up.
+- Before/after metrics, noise bias and tested detector limits are recorded in
+  `navier_stokes/CLAIMS.md`; the 0.8609 default noisy descriptor is not C=1.0.
+Independent review of the exact implementation commit is requested before push;
+its outcome and automatic checks will be reported in the draft PR.
+
+
+## Fluid/respiratory claim correction (completed draft PR #16)
 
 Owner: Codex. Branch: `codex/correct-fluid-claims`, based on exact integration
 commit `ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`. User authorized a separate
@@ -46,15 +84,18 @@ noisy fixtures; this limitation is documented, not presented as clinical validat
 
 Independent review of implementation `745e846634033478beadda96da27951660d93678`
 found the core mathematical corrections sound under stated assumptions and no
-changes to protected research/schema/dependency files. Exact follow-up review
-is requested before publication.
+changes to protected research/schema/dependency files. Follow-up commit
+`14fe98a43ca49784540de8fcb03a9f931754975e` received independent review with
+no remaining blockers. Draft PR #16 targets the integration branch; Vercel
+deployment, Preview Comments and Agent Review succeeded (zero suggestions).
+No GitHub Actions runs were listed. Nothing was merged.
 
 No unrelated research runs, clinical validation, database tests or general PDE
 verification were performed. Numerical samples check the implementation of
 analytically derived identities, not universal propositions.
 
 
-## Next.js security migration (current follow-up)
+## Next.js security migration (completed on PR #14)
 
 Owner: Codex. Base: `8226201409adaf43e432398ad54ef522b5fade8f` on
 `codex/integrate-research-workspace` / PR #14. User explicitly authorized a major
@@ -75,7 +116,8 @@ https://nextjs.org/docs/app/guides/upgrading/version-16.
 Only web dependencies/lockfile and Next-generated TypeScript compatibility
 changes were needed: react-jsx, ES2017 target, generated route/root-param types
 and dev type inclusion. Application source, UI features, web hosting settings,
-math/physiology code and research records are unchanged. Node >=20.9 is required;
+math/physiology code and research records are unchanged. The full locked tree requires Node >=22 (Supabase 2.118.0);
+Next.js alone requires >=20.9;
 local verification used Node 24.19.0. No new lint framework installed.
 
 Passed:
@@ -101,12 +143,12 @@ exploitability or a comprehensive security assessment. Reports are temporary
 
 Existing homepage/demo/proof content still surfaces regularity/blowup and
 clinical-transition language; preservation is not scientific or clinical
-validation. A separate content review is pending; no patient-data feature was
+validation. The subsequent content correction is recorded in PR #16; no patient-data feature was
 enabled. Python/research suites were not rerun for web-only dependency changes.
 Exact commit, independent review and automatic preview outcome are recorded in
 PR #14 and final delivery. Historical implementation/test evidence follows.
 
-## Integration of current main, startup PR #7 and physiology PR #13 (current)
+## Integration of main, startup PR #7 and physiology PR #13 (historical base)
 
 Implementation owner: Codex. Branch: `codex/integrate-research-workspace`.
 User explicitly approved the broader integration, testing, push and a new draft
@@ -441,7 +483,7 @@ findings with paths/lines. Pay attention to offline isolation, dependency scope,
 legacy behavior changes and clinical claim boundaries. No second implementation
 owner should edit this task concurrently. A human decides subsequent integration.
 
-The branch is not pushed. To review from another checkout, the user must decide
-whether to authorize publishing this branch to the existing private repository or
-transfer the commit locally. Neither visibility changes nor additional access are
-required by this handoff. Do not automatically push, merge or deploy.
+Historical startup status above is retained for chronology. Subsequent user
+authorization permitted publication, and the repository is intentionally public.
+Current scoped work remains synthetic-only; no patient data, secrets or
+restricted source PDFs may be published. No merge or manual deployment is authorized.

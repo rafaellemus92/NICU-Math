@@ -87,7 +87,7 @@ def reynolds_number(Q: float, d: float, nu: float = CONST.nu_air) -> float:
 @dataclass
 class BreathCycle:
     """Synthetic cycle: time s, pressure cmH2O, flow mL/s, volume mL. Not clinical validation."""
-    time: np.ndarray        # seconds within cycle
+    time: np.ndarray        # seconds from recording origin for segmented cycles
     pressure: np.ndarray    # cmH2O
     flow: np.ndarray        # mL/s
     volume: np.ndarray      # mL (integrated)
@@ -102,7 +102,11 @@ class BreathCycle:
 
     @property
     def dynamic_compliance(self) -> float:
-        """C_dyn = delta_V / delta_P [mL/cmH2O]"""
+        """Waveform range descriptor delta_V/delta_P [mL/cmH2O], not prescribed C.
+
+        Finite phase duration, sampling and measurement noise can bias it.
+        This scalar is not a calibrated compliance estimator.
+        """
         if not self.valid:
             return float("nan")
         dV = np.max(self.volume) - np.min(self.volume)

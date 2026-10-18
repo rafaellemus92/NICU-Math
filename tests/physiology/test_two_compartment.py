@@ -2,6 +2,7 @@
 
 import numpy as np
 import pytest
+import scipy
 from scipy.integrate import solve_ivp
 
 from physiology.two_compartment import (
@@ -38,6 +39,8 @@ def test_headline(R, C, P_0):
 @pytest.mark.parametrize("index", [0, 1])
 def test_solve_ivp_crosscheck(index):
     """Independent ODE integration, including the required symmetric case."""
+    if index == 0:
+        print(f"Verification versions: NumPy {np.__version__}, SciPy {scipy.__version__}")
     compartments = cases(R=3., C=2.)[index]
     grid = np.linspace(0., 30., 101)
     initial = np.array([c.C * 4. for c in compartments])

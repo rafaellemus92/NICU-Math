@@ -89,43 +89,48 @@ def _detect_changepoints(series: np.ndarray, window: int) -> List[int]:
     return changepoints
 
 
-def estimate_decay_exponent(
-    compliances: np.ndarray,
-    t0: int = 0,
-) -> Tuple[float, float]:
-    """Heuristic power-law fit using a linearly extrapolated zero crossing.
+@dataclass(frozen=True)
+class DecayFit:
+    """Descriptive fit outcome; horizon is relative to the selected breath window.
 
-    Returns (alpha, relative_breath_index). The extrapolation and fallback
-    horizon n*1.5 are fitting choices, not predicted event times or evidence
-    of PDE blowup. Insufficient data return (nan, nan)."""
-    c = compliances[t0:]
-    if len(c) < 5 or not np.all(np.isfinite(c)) or np.min(c) <= 0:
-        return (float("nan"), float("nan"))
+    A resolved fit is an extrapolation under a chosen power-law form, not
+    a predicted event, uncertainty bound or physiological calibration.
+    Unresolved/invalid fits carry no fabricated exponent or finite horizon.
+    """
+    status: str
+    exponent: Optional[float]
+    horizon: Optional[float]
+    reason: str
 
+
+def estimate_decay_exponent(compliances: np.ndarray, t0: int = 0) -> DecayFit:
+    """Fit only when a positive declining series extrapolates beyond its window.
+
+    Descriptor index i represents breath interval [i,i+1), so the observed
+    window ends at n, not n-1. A linear zero crossing at/before n is
+    unresolved; it is never replaced by n*1.5. At least five finite positive
+    values are needed. t0 selects a nonnegative integer start index.
+    """
+    raw = np.asarray(compliances, dtype=float)
+    if raw.ndim != 1 or isinstance(t0, bool) or not isinstance(t0, (int, np.integer)) or t0 < 0:
+        return DecayFit('invalid', None, None, 'expected a 1D series and nonnegative integer t0')
+    c = raw[t0:]
+    if len(c) < 5 or not np.all(np.isfinite(c)) or np.any(c <= 0):
+        return DecayFit('invalid', None, None, 'need at least five finite positive descriptors')
     n = len(c)
     t = np.arange(n, dtype=float)
-
-    # Estimate T* by extrapolating linear fit to zero
-    coeffs = np.polyfit(t, c, 1)
-    if coeffs[0] >= 0:
-        return (0.0, float('inf'))
-
-    T_star = -coeffs[1] / coeffs[0]
-    if T_star <= n:
-        T_star = n * 1.5  # arbitrary fitting horizon, not an event forecast
-
-    # Fit log(C) vs log(T* - t)
-    dt_to_star = T_star - t
-    valid = dt_to_star > 0.1
-    if np.sum(valid) < 3:
-        return (0.0, T_star)
-
-    log_c = np.log(c[valid])
-    log_dt = np.log(dt_to_star[valid])
-    alpha_coeffs = np.polyfit(log_dt, log_c, 1)
-    alpha = alpha_coeffs[0]
-
-    return (float(alpha), float(T_star))
+    if np.ptp(c) <= 10 * np.finfo(float).eps * np.max(c):
+        return DecayFit('unresolved', None, None, 'no resolved decline')
+    slope, intercept = np.polyfit(t, c, 1)
+    if slope >= 0:
+        return DecayFit('unresolved', None, None, 'nondeclining linear fit')
+    horizon = -intercept / slope
+    if not np.isfinite(horizon) or horizon <= n:
+        return DecayFit('unresolved', None, None, 'linear zero crossing is not beyond the observed window')
+    exponent = float(np.polyfit(np.log(horizon - t), np.log(c), 1)[0])
+    if not np.isfinite(exponent) or exponent <= 0:
+        return DecayFit('unresolved', None, None, 'no finite positive decay exponent')
+    return DecayFit('resolved', exponent, float(horizon), 'descriptive extrapolation only')
 
 
 # ============================================================

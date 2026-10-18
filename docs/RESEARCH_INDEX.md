@@ -33,3 +33,9 @@ See [navier_stokes/CLAIMS.md](../navier_stokes/CLAIMS.md) and its analytical
 derivations. This separates respiratory motivation, an incomplete conjecture,
 analytical sanity checks and synthetic numerical demonstrations. No changes to
 periodic-flow/Lean artifacts or the two-compartment result; no clinical validation.
+
+Synthetic-pipeline follow-up: pressure-phase segmentation and consistent
+piecewise RC sampling replace the former noisy crossing detector. See the
+pre-recorded acceptance checks and measured limitations in
+[navier_stokes/CLAIMS.md](../navier_stokes/CLAIMS.md). This is software/model
+consistency, not clinical validation or a new fluid-dynamics theorem.

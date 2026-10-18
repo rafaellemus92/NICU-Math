@@ -35,8 +35,8 @@ initial excess volume CP₀ in this model.
 
 | Case | (C₁, C₂) | (τ₁, τ₂) | Retained fraction at t = RC |
 |---|---|---|---|
-| A | (C/2, C/2) | (RC, RC) | exp(−1) = 0.36787944117144233 |
-| B | (0.9C, 0.1C) | (1.8RC, 0.2RC) | 0.9 exp(−1/1.8) + 0.1 exp(−5) = 0.51705187336359804 |
+| A | (C/2, C/2) | (RC, RC) | exp(−1) ≈ 0.36787944117144233 |
+| B | (0.9C, 0.1C) | (1.8RC, 0.2RC) | 0.9 exp(−1/1.8) + 0.1 exp(−5) ≈ 0.51705187336359804 |
 
 The difference is approximately 0.14917243219215571 of the initial excess
 volume. Equal total compliance and initial excess volume do not determine
@@ -67,11 +67,17 @@ python -m pytest -q -s tests/physiology
 ```
 
 The unit-scale script evaluates both headline expressions with absolute
-floating-point discrepancy 0.000e+00. Tests check total compliance, initial
+formula self-consistency discrepancy 0.000e+00. Both sides evaluate the same
+expressions; zero discrepancy is not independent verification. The expressions
+are exact under the stated model assumptions; printed decimals approximate
+them in float64. Tests check total compliance, initial
 volume, time constants, headline errors below 1e−10 (also float64 roundoff
 scale), shape and domain behavior, and independent SciPy `solve_ivp`
 integration of both symmetric and heterogeneous cases below 1e−6 absolute
-volume error. Production uses NumPy only; SciPy is used only in tests.
+volume error. This is an independent numerical ODE integration crosscheck,
+not a proof or certification of all displayed digits. Production uses NumPy
+only; SciPy is used only in tests. Reverification environment: **NumPy 2.0.2,
+SciPy 1.18.1**; versions recorded here do not add dependency requirements.
 
 ## Strict significance and limits
 
