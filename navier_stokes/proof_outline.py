@@ -52,6 +52,8 @@ import numpy as np
 from dataclasses import dataclass
 from typing import List, Optional
 
+from .formulation import CONST
+
 
 # ============================================================
 # Formal statement of the conjecture

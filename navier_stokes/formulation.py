@@ -216,7 +216,8 @@ class BreathCycle:
     @property
     def work_of_breathing(self) -> float:
         """W = integral(P dV) [cmH2O * mL]"""
-        return float(np.trapz(self.pressure, self.volume))
+        _trapz = getattr(np, 'trapezoid', getattr(np, 'trapz', None))
+        return float(_trapz(self.pressure, self.volume))
 
     @property
     def phase_area(self) -> float:
@@ -225,7 +226,8 @@ class BreathCycle:
         Larger area = more hysteresis = further from equilibrium.
         As surfactant fails, this area changes characteristic shape.
         """
-        return abs(float(np.trapz(self.pressure, self.volume)))
+        _trapz = getattr(np, 'trapezoid', getattr(np, 'trapz', None))
+        return abs(float(_trapz(self.pressure, self.volume)))
 
 
 # ============================================================
