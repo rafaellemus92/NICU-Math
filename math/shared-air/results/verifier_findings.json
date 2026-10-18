@@ -1,0 +1,795 @@
+{
+ "about": "Independent checks of ChatGPT's \"Shared Air proof audit\", run on the ORIGINAL page (before corrections). Line numbers in the evidence refer to the original HTML. Verifiers checked the claims; challenges tried to refute the verifiers. Script paths pointed to a temporary session scratchpad and are removed; the scripts are not part of this folder.",
+ "task": "Independently verify ChatGPT's Shared Air proof audit: theorem algebra, what the optimum means, simulator ablation, water/phase/statistics claims, literature",
+ "verifiers": [
+  {
+   "key": "algebra",
+   "claims": [
+    {
+     "id": "C1",
+     "claim": "Linearization at A0=0, U=0, no noise, steadiness 1: x'=-x/30+(g/25)y(t-tau)-z, y'=-y/20+(g/10)x(t-tau), z'=-z/4+(3g/40)x(t-tau); D(s,g,tau)=(s+1/30)(s+1/20)(s+1/4)+(3g/40)(s+1/20)e^{-s tau}-(g^2/250)(s+1/4)e^{-2 s tau}",
+     "verdict": "CONFIRMED",
+     "evidence": "I linearized the code itself (Session.prototype.step, lines 731-747) in sympy, with U=0, voice off, awake (A0m=0), presence=1, perceived world (so g=K) and selfReg=1 (Ta=20). The RHS is 0 at the origin. Jacobian rows over [x, y, z, x(t-tau), y(t-tau)]: [-1/30, 0, -1, 0, g/25], [0, -1/20, 0, g/10, 0], [0, 0, -1/4, 3g/40, 0]. The rows are the same on both branches of max(Am,0). The delays sit exactly where claimed: mirroring uses AmD, while contagion and soothing use AiD. cap() takes the current (undelayed) M.A. cap(0)=1 and cap'(0+)=cap'(0-)=0; cap''(0+)=-25/8 but cap''(0-)=0, so cap is C^1 and not C^2. That is enough for linearization. Its derivative term is multiplied by AiD=0 anyway. det(sI-J0-J1 e^{-s tau}) minus the claimed D simplifies to 0, so the e^{-s tau} is on the hg term and the e^{-2 s tau} on the g^2 term. Mismatches between the displayed equations and the code: (a) the displayed cap is 1/(1+(Am/0.8)^2) without max(Am,0), while the code uses AmPos=max(M.A,0). (b) The code has voice terms (-0.006 infant, -0.004 mom, vagal x1.12) that the displayed arousal equations omit. (c) The code's delay is round(tau/dt)*dt with at least one step (0.02 s), so tau=0 cannot be represented, and the slider range is 0.5-3.5 s. (d) Steadiness divides only mom's 20-s time constant (b=steadiness/20); this matches the display. ChatGPT also hedges that the origin is 'not necessarily its default operating equilibrium'. With the defaults (awake, voice off, U zero-mean) it is the noise-free equilibrium. For g>~2.07, though, it is not the only attractor (see new findings).",
+     "key_numbers": "a=1/30, b=1/20, d=1/4, r=1/25, q=1/10, h=3/40, c=1/250; Jacobian residual 0; cap''(0+)=-25/8"
+    },
+    {
+     "id": "C2",
+     "claim": "rho(g)=-max Re s has a unique global maximizer g*~0.0803558863 with rho(g*)~0.0482709206 /s (tau=0)",
+     "verdict": "CONFIRMED",
+     "evidence": "s* is the only real root of H, i.e. of the irreducible integer cubic 7680 s^3+4096 s^2+3308 s+151=0. The other two roots are complex: -0.24253 +/- 0.59033i. Computed at 40 digits: s*=-0.04827092064398199080, g*=(75/8)(s*+1/20)/(s*+1/4)=0.08035588629272775093. At (s*,g*): P=2e-44, dP/dg=0 (tangency) and dP/ds=0.00331>0 (simple root). numpy.roots on 1,000,001 g-points over [0,10] gives exactly one interior local maximum, at g=0.08036. rho rises strictly on [0,g*] and falls strictly on [g*,10]. Bounded scalar refinement gives rho_max=0.04827092064398207. The dominant root is real for every sampled g in (0,10]. The result holds for tau=0 only. With delay the maximizer moves slightly: about 0.075 at tau=1.5 and about 0.070 at tau=3 to 3.5, with rho_max 0.04827 in each case.",
+     "key_numbers": "s*=-0.048270920643982, g*=0.080355886292728, rho*=0.048270920643982; rho*/rho(0)=1.4481 < b/a=1.5"
+    },
+    {
+     "id": "C3",
+     "claim": "Stable iff 0<=g<g_c=15/8+sqrt(2265)/24~3.8580006724 (tau=0)",
+     "verdict": "CONFIRMED",
+     "evidence": "sympy finds that the positive root of P(0,g)=abd+hbg-cdg^2 equals 15/8+sqrt(2265)/24=3.858000672381798933. Routh-Hurwitz also needs A2*A1>A0. I verified symbolically that A2*A1-A0=(a+b)(b+d)(a+d)+hg(a+d)-cg^2(a+b), whose positive zero is g_H=64.08, far above g_c. So the exact tau=0 stability interval is [0,min(g_c,g_H))=[0,g_c). Numerically rho(g_c-1e-9)=+1.57e-11 and rho(g_c+1e-9)=-1.57e-11, rho has a single sign change on the [0,10] grid, and it never restabilizes. Caveat: this is local, linear stability of the origin. In the noise-free code model a second, stable high-arousal equilibrium exists from g~2.069, and the saddle between the two merges into the origin at g_c (see new findings). So 'stable' here does not mean globally attracting.",
+     "key_numbers": "g_c=3.858000672381799 (exact 15/8+sqrt(2265)/24); g_H(Hopf, tau=0)=64.0816"
+    },
+    {
+     "id": "C4",
+     "claim": "rho(0)=.033333, rho(1)=.038554, rho(3)=.012859, rho(4)=-.002250",
+     "verdict": "CONFIRMED",
+     "evidence": "numpy.roots of the exact cubic (coefficients 1/3, 9/400+3g/40-g^2/250, 1/2400+3g/800-g^2/1000; checked with Fractions) reproduces all four values to six decimals. At g=1, 3 and 4 the dominant root is real and the others are a complex pair (for example, at g=4: 0.00225 and -0.16779+/-0.48073i). mpmath at 40 digits agrees. Other values: rho(0.25)=.046827, rho(0.5)=.044164, rho(0.75)=.041399, rho(1.5)=.032634, rho(2)=.026393, rho(2.5)=.019809.",
+     "key_numbers": "0.033333, 0.038554, 0.012859, -0.002250"
+    },
+    {
+     "id": "C5",
+     "claim": "General theorem (r,q,h>0, 0<a<b, d>=3b-2a, c=rq): P=(s+b)/(s+d)H-c(s+d)(g-G)^2; unique dominant real root on (-b,inf); g*=G(s*); g_c formula; s'(0)=-h/(d-a)",
+     "verdict": "CONFIRMED",
+     "evidence": "Every step checks out symbolically in sympy, and the hypotheses are necessary for the stated conclusion. Steps: (1) the general 3x3 characteristic polynomial equals P with c=rq. (2) The identity residual is 0. (3) Step A: P(-b,g)=-cg^2(d-b), which is negative because d>=3b-2a>b. P_ss(-b)=2(a+d-2b)=2(b-a)+2e when d=3b-2a+e, so P is strictly convex on [-b,inf) and has exactly one simple root there. The s^2 coefficient is a+b+d. A complex pair therefore has real part -(a+b+d+s1)/2, which is below s1 whenever s1>-(a+b+d)/3. That holds because (a+b+d)/3-b=(b-a+e)/3>0 (it only needs d>=2b-a). (4) Step C: H(-b)=(a-b)(d-b)^2<0 and H(-a)=h^2(b-a)/(4c)>0. H' equals (s+d)(3s+d+2a)+h^2/(4c), and 3s+d+2a at s=-b equals e>=0. (5) Step D: the g_c formula is the positive root of P(0,g). (6) s'(0)=h/(a-d)=-9/26. Adversarial test: 2500 random sets satisfying the hypotheses, log-uniform over several decades and including the boundary d=3b-2a. 1873 passed every check in float64. The 627 float64 'failures' all came from near-coincident roots or tiny g* (down to about 1e-11). Re-run at 40 digits in mpmath, all 627 pass: max(rho-(-s*))/(-s*)=2e-35, rho(g*)=-s* to 2e-35, a positive gap away from g*, and stability exactly on [0,g_c). So 2500/2500 pass. Violating sets (float64 counts; examples confirmed at 40 digits or exactly): d in (b,3b-2a): 680/1500 fail. d<=b: 1378/1500 fail. a>b: 1500/1500 fail. Concrete failures: (E1) a>b inside the artifact's own slider, at steadiness 0.5 (b=1/40<a=1/30). Here P(-b,g)<0, so rho(g)<b=rho(0) for every g>0 and the optimum is g=0, with no positive optimum (the formula gives G(s*)=-0.0436). The same happens at steadiness 2/3. (E3) a=0.012, b=0.057, d=0.089, h=0.14, c=0.063: two global maximizers g=130/981 -/+ sqrt(1740492845)/343350=0.011011 and 0.254024. Both attain the trace bound rho=(a+b+d)/3=79/1500 exactly (q(g)=0 with p>0). The theorem's -s*=0.056393 exceeds that bound, and the actual rho(G(s*))=0.050803. (E4) a=0.0025, b=0.0476, d=0.00166, h=0.116, c=1.66: a Hopf crossing at g_H=0.014384 comes before g_c=2.0038. (E2) Steadiness 2.5 violates d>=3b-2a, yet the conclusion still holds (g*=0.3014, -s*=0.12085), consistent with ChatGPT calling the conditions sufficient. In the artifact's slider range (0.5-2.5) the hypotheses hold only for steadiness in (2/3, 19/9].",
+     "key_numbers": "identity residual 0; s'(0)=-9/26; 2500/2500 pass (627 needed 40-digit precision); E1 st=0.5: max_{g>0} rho=0.0249993<rho(0)=0.025; E3 maximizers 0.011011, 0.254024 with rho=79/1500; E4 g_H=0.014384<g_c=2.0038"
+    },
+    {
+     "id": "C6",
+     "claim": "(delay half) g>g_c => unstable for every tau>=0 [the 'delay is not required' half is out of scope for this check]",
+     "verdict": "CONFIRMED",
+     "evidence": "Proof: D(0,g,tau)=P(0,g) because e^0=1, and this is negative for g>g_c. For real s>=0, the hg term is >=0 and e^{-2 s tau}<=1, so D(s)>=(s+a)(s+b)(s+d)-(g^2/250)(s+1/4), which tends to +inf. By the IVT there is a positive real root, so the linear DDE has a growing e^{st} solution. The RHS is C^1 (cap is C^1), so the linearized-instability principle carries this over to the nonlinear system. Numerics: brentq finds a positive real root for every g in {g_c(1+1e-6), 3.9, 4, 5, 10, 50} and tau in {0, 0.02, 0.5, 1.5, 3, 3.5, 10, 100, 1000}. For example, at g=4: 2.25e-3 (tau=0), 2.05e-3 (1.5), 1.89e-3 (3), 3.6e-5 (1000). This matches ChatGPT's audit_results examples. The 'delay may add instabilities below g_c' remark also holds, with a threshold. A Chebyshev IGD discretization of the spectrum (refined by Newton) and a direct solve of D(i w)=0 show that a Hopf pair crosses below g_c only for tau>tau_c=1.5741 s (at g=g_c, omega=0.4882). Smallest Hopf delay by gain: 1.836 s (g=3), 2.089 (2.5), 2.490 (2), 3.202 (1.5). So at the artifact's default tau=1.5 the origin's stability boundary is still the static g_c. At tau=3 (Test 4's second curve) the origin loses stability by Hopf at g=1.6117 (omega~0.303 rad/s, period ~20.7 s). Stability boundary g_s: tau=2: 2.652; tau=3.5: 1.364; tau=10: 0.517. I did not assess the 'delay is not required' half.",
+     "key_numbers": "tau_c=1.5741 s; g_s(tau=3)=1.6117 (Hopf); g_s(tau<=1.5)=g_c; positive real root at g=4: 0.00225 (tau=0) to 3.6e-5 (tau=1000)"
+    }
+   ],
+   "new_findings": [
+    "rho does not track the artifact's Test 4 curve; it points the other way over most of the sweep. Exact result: for g>0, rho(g)<rho(0)=a exactly when P(-a,g)<0, i.e. g>h(b-a)/(c(d-a))=75/52=1.4423 (tau=0); with delay the threshold is (75/52)e^{-a tau}=1.372 at tau=1.5. At tau=1.5, rho for K=[0,.25,.5,.75,1,1.5,2,2.5,3] is [.03333,.04664,.04379,.04087,.03788,.03174,.02539,.01884,.01207]. That falls monotonically after K~0.08, while Test 4's median recovery falls from 37.75 s (K=0) to 9.125 s (K=2). Asymptotic decay at K=2 is slower than with no coupling at all. The theorem's optimum (g*~0.08) is not Test 4's optimum (K~2). rho can improve on rho(0) by at most a factor of b/a=1.5 (actual maximum 1.448), whereas Test 4 shows about a 4x speed-up. So the theorem says nothing about the shape of the Test 4 plot.",
+    "Universal bounds: for g>0, rho(g)<b=steadiness/20 (from P(-b,g)<0), so mom's own relaxation sets a floor on the asymptotic recovery time constant (>20 s at steadiness 1). In general rho(g)<=(a+b+d)/3 (trace bound).",
+    "Bistability that the linear analysis cannot see: the noise-free code model (tau-independent equilibria) has a saddle-node at g_sn~2.0689, with the fold at (Ai,Am,C)~(0.709,1.523,0.095). Past it, a stable high-arousal equilibrium exists because mom's high arousal shuts off cap. It sits at (Ai,Am)=(1.20,2.03) at g=2.25, (1.50,2.34) at 2.5 and (1.91,2.79) at 3. The saddle moves toward the origin, reaching (0.104,0.555) at g=3, and merges with it at g_c. At g_c the origin hands its stability to a nearby equilibrium on the Am<0 side (at g=4: (-0.040,-0.307), stable), so crossing g_c is not a dramatic loss of regulation.",
+    "Running the artifact's own JS (node, Session with the Test 4 protocol, seeds 5000-5013) reproduces the stored DEF values. At tau=1.5: K=2.5 median 20.875 with 4 censored; K=3 median 140.25 with 10 censored. At tau=3: K=2 median 64.625 with 6 censored. Every censored run at tau=1.5 ends with Am~2.3 (K=2.5) or ~2.78 (K=3), matching the predicted high equilibrium. These runs lock in 2-48 s after the heel stick. With noise switched off (gauss->0) the heel stick recovers for every K<=3 at tau=1.5. So the upturn in Test 4 at tau=1.5 is noise-driven escape into the cap-induced high-arousal attractor. It is neither the linear instability at g_c (3.86, outside the sweep) nor a delay effect. At tau=3 a delay-induced Hopf (g=1.61) is added; noise-free K=2 at tau=3 does not recover. This bears on C6's 'delay not required', C7 and C15, which belong to other checkers.",
+    "The zero-delay theorem lies outside the artifact's own settings. The tau slider runs 0.5-3.5 s, and the code's minimum delay is 1 step = 0.02 s. The hypotheses hold only for steadiness in (2/3, 19/9], while the slider runs 0.5-2.5. For steadiness <=2/3 the spectral optimum is g=0. Even so, rho at tau=0.5 and 1.5 stays within 0.0015 of the tau=0 curve for g<=3."
+   ],
+   "summary": "C1 through C5 and the delay half of C6 are confirmed. ChatGPT's linearization matches the artifact's code exactly. The determinant D(s,g,tau) has the delay factors on the right terms. The completing-the-square theorem is correct, and each of its steps checks out symbolically. g*, rho(g*), g_c=15/8+sqrt(2265)/24, s'(0)=-9/26 and the four table values all reproduce. g>g_c gives a positive real root for every tau>=0.\n\nThe display differs from the code in small ways that do not affect the linearization. The displayed cap omits max(Am,0), the voice terms are not shown, and the code's delay has a minimum of one 0.02-s step.\n\nThe hypotheses matter. 2500/2500 parameter sets that satisfy them pass (627 needed 40-digit precision). When they are violated the conclusion can fail, with concrete examples:\n- At steadiness <=2/3, which is inside the artifact's own slider, the best gain is g=0.\n- With d<3b-2a there can be two global maximizers.\n- With d<b a Hopf crossing comes before g_c.\n\nThe more important points are about scope:\n- rho is not Test 4's statistic, and it moves the opposite way over most of the sweep. rho(g)<rho(0) for g>75/52, yet Test 4 recovers 4x faster at K=2. rho can never exceed b, i.e. at most 1.5x the uncoupled rate.\n- Test 4's slowdown at tau=1.5 comes from a noise-driven escape into a high-arousal attractor. That attractor is created at a saddle-node at g~2.07, which the linear theorem cannot see. Running the artifact's own JS confirms that every censored run ends in that state.\n- At tau=3 a delay-induced Hopf at g~1.61 adds to the slowdown. Hopf crossings below g_c require tau>1.574 s."
+  },
+  {
+   "key": "meaning",
+   "claims": [
+    {
+     "id": "C1",
+     "claim": "Zero-delay linearization x'=-x/30+(g/25)y-z, y'=-y/20+(g/10)x, z'=-z/4+(3g/40)x; delayed characteristic function D(s,g,tau).",
+     "verdict": "CONFIRMED",
+     "evidence": "I checked it line by line against Session.prototype.step (Ti=30, Ta=20/selfReg, cMir=0.04, cCont=0.10, cCare=0.30, Tc=4, cap'(0)=0, cubic has zero slope at 0). det(sI-A0-A1 e^{-s tau}) expands exactly to ChatGPT's D. Independent check: the rightmost roots from Chebyshev collocation plus Newton agree with the artifact's own Euler/ring-buffer map (dt=0.02) to about 1e-5 /s at every g tested, for tau=0.02, 1.5 and 3.",
+     "key_numbers": "r=1/25, q=1/10, h=3/40; collocation vs Euler-map rate, e.g. tau=1.5, g=3: -0.012073 vs -0.012075"
+    },
+    {
+     "id": "C2",
+     "claim": "rho(g) has a unique maximizer g*~0.0803558863 with rho*~0.0482709206.",
+     "verdict": "CONFIRMED",
+     "evidence": "A bounded scalar optimization of max Re eig(A(g)) gives g*=0.08035588, rho*=0.0482709206. The completing-the-square identity behind it checks by direct algebra. At tau=1.5 and tau=3 the delayed spectrum keeps essentially the same optimum (rho=0.048263 and 0.048241 at g=0.08).",
+     "key_numbers": "g*=0.080356, rho*=0.048271 /s (1/rho*=20.7 s)"
+    },
+    {
+     "id": "C3",
+     "claim": "Stable iff 0<=g<g_c=15/8+sqrt(2265)/24~3.8580006724 (tau=0).",
+     "verdict": "CONFIRMED",
+     "evidence": "P(0,g)=abd+hbg-cdg^2 has its positive root at exactly this value. The argument-principle count of roots with Re s>0 is 0 at g=3.85 and 1 at g=3.87 (at tau=0.02 and also at tau=1.5).",
+     "key_numbers": "g_c=3.8580006724"
+    },
+    {
+     "id": "C4",
+     "claim": "rho(0)=.033333, rho(1)=.038554, rho(3)=.012859, rho(4)=-.002250.",
+     "verdict": "CONFIRMED",
+     "evidence": "numpy eigenvalues of A(g) reproduce all four values to 6 digits.",
+     "key_numbers": "0.0333333, 0.0385544, 0.0128589, -0.0022500"
+    },
+    {
+     "id": "C5",
+     "claim": "General theorem: completing-the-square identity, dominance of the real root, g*=G(s*), g_c formula, s'(0)=-h/(d-a)=-9/26.",
+     "verdict": "CONFIRMED",
+     "evidence": "I checked the identity P=(s+b)/(s+d)H - c(s+d)(g-G)^2 by expanding it by hand, and the g_c formula from P(0,g)=0. Implicit differentiation at (s,g)=(-a,0) gives s'(0)=-h(b-a)/((b-a)(d-a))=-9/26. The sufficient condition d>=3b-2a holds (0.25>=0.0833). The fine-grid spectra agree. I spot-checked only the step-A dominance argument, not the whole proof in detail.",
+     "key_numbers": "s'(0)=-9/26"
+    },
+    {
+     "id": "C6",
+     "claim": "'Delay is not required for this effect' (the intermediate-coupling recovery optimum); and g>g_c => unstable for every tau>=0.",
+     "verdict": "PARTLY",
+     "evidence": "The exact phrase is not in proof_notes.md; the closest text is §1.6, last paragraph. INSTABILITY HALF: confirmed for the linearization. D(0,g,tau)=P(0,g) for every tau, and the argument-principle count shows 1 root with Re s>0 at g=3.87 for both tau=0.02 and tau=1.5. 'DELAY NOT REQUIRED' HALF: the conclusion is true of the artifact, but ChatGPT's evidence does not show it. (a) The zero-delay spectral optimum sits at g=0.08, about 25x below Test 4's minimum. (b) Deterministic finite-threshold recovery at tau~0 decreases monotonically over the whole range g=0..3.8, in both the linear and the full nonlinear model. Linear, artifact criterion: 47.5 s at g=0, 28.25 s at g*, 9.0 s at g=1, 7.0 s at g=2, 6.5 s at g=3, 6.0 s at g=3.8. The artifact's own JS with all noise zeroed gives 41.75 s down to 7.25 s at g=3. So there is no U-shape at tau=0.02 in deterministic dynamics. (c) The artifact's stochastic Test 4 at tau=0.02 (one Euler step of delay, same seeds) does keep the U-shape. Medians were 37.75, 18.75, 12.875, 10.625, 9.625, 8.625 and 8.5 s at K=2, 8.5 s at K=2.25, 9.75 s at K=2.5, then 140.25 s (censored) for K>=2.75; censored runs were 1, 3, 5, 9 and 11 of 14 at K=2, 2.25, 2.5, 2.75 and 3. The delay-free cause is a nonlinear saddle-node bistability from cap(Am): a stable high-arousal equilibrium appears at g_SN=2.0689. Without cap, no such equilibrium exists before g_c. Noise then kicks runs into it, and every censored tau=0.02 run ended with A_m>1. §1.6 does mention 'saturation', but ChatGPT never shows that this is the mechanism.",
+     "key_numbers": "g_SN=2.0689 (cap on) vs 3.859 (cap off); tau=0.02 stochastic min 8.5 s at K=2-2.25, censoring 11/14 at K=3; deterministic tau=0.02 recovery monotone, 47.5 s -> 6.5 s over g=0..3"
+    },
+    {
+     "id": "C7",
+     "claim": "Headline: the equations prove a finite amount of coupling maximizes recovery speed, while stronger coupling eventually slows recovery and destabilizes the equilibrium.",
+     "verdict": "OVERSTATED",
+     "evidence": "What is proven concerns rho, the asymptotic decay rate of the linearization at tau=0, and rho does not describe recovery speed as Test 4 measures it. For g>=~0.04 the rho-defining mode is mom's own relaxation: its eigenvector has |x|:|y|~0.11-0.13, and its rate can never beat 1/20 /s. In the heel-stick initial condition (1,0,0) that mode's x-amplitude is only 0.033-0.049 for g in [0.2,3.8] (0.106 at g*). That is below the 10-bpm threshold A_+10=0.2232 for every g>0.0585, so it never decides when HR re-enters the band. Over g in [0.08,3], rho and finite-threshold recovery speed move in opposite directions. rho predicts g=3 is 3.75x slower than g*; the deterministic recovery at g=3 is 4.3x faster (6.5 s vs 28.25 s). 'Destabilizes the equilibrium' holds only at g_c=3.858, outside the sweep. In the artifact the high-coupling failure inside the sweep comes from other things. At tau=1.5 it is the coexisting high-arousal attractor (g>2.069), while the rest state stays locally stable up to 3.858. At tau=3 it is a delay Hopf at 1.612. ChatGPT's notes do say rho is not Test 4's statistic, but the headline's 'recovery speed' wording ignores that caveat.",
+     "key_numbers": "slow-mode x-share 0.033-0.049 vs A_10=0.2232; recovery at g*=28.25 s vs 6.5 s at g=3 (tau~0, linear)"
+    },
+    {
+     "id": "C15",
+     "claim": "The responsiveness sweep stops at g=3 < g_c, so the theorem does not validate that plot.",
+     "verdict": "CONFIRMED",
+     "evidence": "True, and the gap is wider than stated. Every feature of the Test 4 plot comes from something the zero-delay theorem does not cover. (1) The tau=3 curve's blow-up matches a delay Hopf at g_H(3)=1.61170683 (omega=0.30311 rad/s, period 20.7 s), inside the sweep. Deterministic recovery there is 51.75 s at g=1.5, 113 s at 1.6, and censored for g>=1.7. Stochastically, at K=2 only 2 of 6 censored runs had A_m>1, and late SD(HR) was 17 bpm, i.e. oscillation. (2) The tau=1.5 blow-up (4/14 censored at K=2.5, 10/14 at K=3) happens far below both linear boundaries: g_c=3.858, and the Hopf at g_H(1.5)=4.22727 (omega=0.5114). With noise off the artifact recovers in about 21 s up to g=3.8. All 10 censored K=3 runs ended stuck high (A_m>1): noise-triggered switching across the saddle-node at 2.069. (3) The tau=1.5 minimum near K~2 is set by a delayed-soothing rebound lobe: the 5-s mean HR rebound reaches +9.8 bpm at g=1.9 and +10.3 bpm at g=2.0, so deterministic recovery jumps from 8.5 s to 23 s. None of this involves g*=0.08.",
+     "key_numbers": "g_H(1.5)=4.22727, g_H(3)=1.61171, g_c=3.85800, g_SN=2.06889"
+    }
+   ],
+   "new_findings": [
+    "Short answer: no. ChatGPT's spectral optimum g*~0.08 tells you nothing about Test 4's recovery minimum near K~2. The rho-defining mode is mom-dominated for g>=~0.04 and carries only 3-5% of the infant's heel-stick deviation (x-amplitude 0.033-0.049 for g in [0.2,3.8]), which is already inside the 10-bpm band (A_+10=0.2232) for every g>0.0585. The 10-bpm recovery is set by the fast infant-soothing pair (x-z, decay rate 0.143-0.166 /s at tau=0, oscillatory for g>0.156, frequency growing with g).",
+    "Mechanism in brief: the infant's kick loads almost entirely onto the fast x-z soothing pair, and the band is crossed while that pair still dominates; more coupling swings it back faster, so finite-threshold recovery keeps improving. rho's optimum is an avoided crossing between the infant mode (-1/30) and mom's own relaxation (-1/20, a hard floor on the rate). That mode is invisible at a finite threshold. This is the difference between an asymptotic rate and a finite-threshold time.",
+    "HR map from Person.stepCells, using breath-averaged inspiration mean(insp)=0.8/pi (exact, since f is affine in insp): HR(0)=145.405 bpm; dHR/dA=44.09 bpm/unit for A>0 and 26.36 for A<0; A_+10=0.223186; A_-10=-0.379420; the vagal clamp floors HR at -16.47 bpm. With insp=0 instead: HR(0)=142.68, A_+10=0.214218, A_-10=-0.350435. The artifact's own deterministic beat-based baseline is 145.318 bpm.",
+    "Deterministic recovery, Euler dt=0.02 with the artifact's ring buffer, heel stick +1 at t=80, artifact recoveryTime(). At tau=0.02 it is monotone non-increasing in g on [0,3.8]: linear 47.5 s down to 6.0 s; nonlinear 41.0 s down to 6.75 s. No U-shape exists inside [0,3]. At tau=1.5: linear minimum 8.5 s at g=1.4, rising to 48 s at g=3 and 198 s at g=3.8; nonlinear minimum 8.0 s at g=1.8-1.9, then a jump to 22.5 s at g=2.0 and about 21-22 s up to 3.8. At tau=3: linear minimum 11.75 s at g=0.7; nonlinear 10.75 s at g=0.9; censored for g>=1.6-1.7. dt=0.005 gives the same minima. The artifact's own JS Session with all noise zeroed matches the Python port to within 0.25-0.75 s; its tau=1.5 minimum is 8.5 s at g=1.8-1.9, jumping to 23 s at g=2.0.",
+    "Linear time course after the kick, x(t) at t=5/10/20/40/80 s, tau=0: g=0: .846/.717/.513/.264/.069; g*=0.08: .802/.605/.324/.089/.0072; g=1: .385/-.084/.0027/.0042/.0015; g=3: -.080/-.097/.018/.025/.0155. At g=1 the response is smaller than at g* at every one of these times.",
+    "Delayed linear spectrum: at tau=1.5 the rightmost root is the real, mom-dominated mode for every g<g_c, so rho(tau=1.5) is nearly identical to rho(tau=0) (0.0317 vs 0.0326 at g=1.5). The stability boundary is the delay-independent g_c=3.858; the Hopf pair crosses at g=4.22727221 (omega=0.51140808). At tau=3 the Hopf at g=1.61170683 (omega=0.30310935) is the boundary. At tau=0.02 there is no Hopf crossing below g=12. The argument-principle counts agree everywhere. Delay does reduce the damping of the oscillatory pair at tau=1.5 (Re -0.071 at g=1.5, -0.027 at g=3, -0.009 at g=3.8), and that is what produces the rebound lobes and the stepwise growth of linear recovery time.",
+    "Nonlinear bistability that neither ChatGPT nor the artifact describes: the deterministic model has a saddle-node at g_SN=2.0689, independent of tau. It creates a stable high-arousal equilibrium (infant HR +42 to +85 bpm, A_m 1.7-3.3) and a saddle that approaches the origin as g->g_c. It exists only because of cap(Am); with cap set to 1, no nontrivial equilibrium appears before g_c. With no noise, the heel stick alone drives the system into this state for g>=3.3 (tau=0.02) or g>=3.4 (tau=1.5).",
+    "The artifact's recoveryTime() uses a first 15-s hold, so it reports recovery for runs that later relapse. With no noise, at g>=3.3 (tau=0.02) the infant 'recovers' in about 7 s, then relapses into the high-arousal state 40-254 s after the stick.",
+    "The artifact's stored Test 4 defaults reproduce exactly from its code (both curves, medians and censoring counts). Running the same sweep at tau=0.02 keeps the U-shape: median minimum 8.5 s at K=2-2.25, censored runs 5/14 at K=2.5, 9/14 at K=2.75 and 11/14 at K=3. Every censored run at tau=0.02, and at tau=1.5 with K<=3.5, ended with A_m>1, i.e. stuck in the high-arousal state. This contradicts the artifact's own Test 4 bedside text ('This model produces the same shape from a delayed feedback loop alone'). At the default tau=1.5 the shape does not need the delay; delay only adds the rebound at K~2 and dominates at tau=3 through the Hopf at 1.61. The artifact's finding text ('mom's arousal climbs, and her capacity to soothe drops') names the right mechanism; the bedside text names the wrong one.",
+    "Verdicts: C6 (the 'delay not required' half) is PARTLY right. The conclusion holds for the artifact's noisy model, but the supporting argument (the zero-delay rho optimum) is irrelevant; the real delay-free cause is the cap-induced saddle-node plus noise. C7 is OVERSTATED: rho is not recovery speed, and the two move in opposite directions over [0.08,3]. C15 is CONFIRMED and understates the gap: the Hopf at 1.61 (tau=3) and the saddle-node at 2.07 both fall inside the sweep, and the theorem covers neither."
+   ],
+   "summary": "rho(g) is a poor proxy for Test 4's recovery time, and ChatGPT's optimum g*~0.08 says nothing about the Test 4 minimum near K~2. ChatGPT's numbers C1-C5 are correct: the linearization matches the code, g*=0.080356, rho*=0.048271, g_c=3.858, the rho table, and s'(0)=-9/26.\n\n**Why rho does not apply.** For g >= ~0.04 the mode that sets rho is mom's own slow relaxation, whose rate can never exceed 1/20 /s. It carries only 3-5% of the infant's heel-stick deviation, which is already inside the 10-bpm band (A_+10=0.2232). Whether HR is back within 10 bpm is decided by the fast infant-soothing pair (decay 0.14-0.17 /s), which swings back faster as coupling grows.\n\n**Recovery with no noise.** At tau~0, recovery gets steadily faster across g=0-3.8:\n- linear model: 47.5 s at g=0, 28 s at g*, 9 s at g=1, 6.5 s at g=3;\n- full nonlinear model: 41 s down to 6.75 s;\n- so there is no U-shape inside [0,3].\n\nThe artifact's own JS code with noise switched off agrees with my Python port to within 0.25-0.75 s.\n\n**Where the Test 4 U-shape comes from instead:**\n- **A coexisting high-arousal state.** For g > 2.069 the nonlinear model has a stable state with infant HR 42-85 bpm above baseline. It exists only because of cap(Am), the drop in mom's soothing capacity as her arousal rises. Noise kicks runs into it.\n- **A rebound from delayed soothing.** At tau=1.5 a second HR peak crosses +10 bpm at g~2, so recovery jumps from 8.5 s to 23 s.\n- **A delay-driven oscillation at tau=3.** The rest state loses stability through oscillation at g_H=1.612 (period 20.7 s), inside the sweep.\n\n**Delayed stability limits.** At tau=1.5 the rest state stays stable up to g_c=3.858, the same limit as with no delay. The first oscillatory crossing comes later, at 4.227.\n\n**The artifact itself.** Its Test 4 defaults reproduce exactly from its code. Re-running the noisy sweep with tau=0.02 (one time step of delay) keeps the U-shape: the median minimum is 8.5 s at K=2-2.25, and 11 of 14 runs never recover at K=3. Every censored run ended with mom stuck high (A_m>1). So the artifact's sentence that the shape comes \"from a delayed feedback loop alone\" is wrong at its default tau=1.5. Its own finding text (\"mom's arousal climbs, and her capacity to soothe drops\") names the right mechanism. A side issue: the artifact's recovery rule takes the first 15-s window back in band and misses later relapses. With no noise and g >= 3.3, runs \"recover\" in about 7 s, then relapse 40-254 s later.\n\n**Verdicts:**\n- **C6, \"delay not required\": PARTLY.** The conclusion holds for the noisy artifact, but ChatGPT's argument doesn't show it. The real delay-free cause is the high-arousal state plus noise, not the rho optimum. The exact phrase does not appear in the zip; I judged its substance. The other half of C6 (g > g_c means unstable for every tau) is confirmed for the linearization.\n- **C7: OVERSTATED.** What is proven is about rho, and rho and recovery speed move in opposite directions over g=0.08-3.\n- **C15: CONFIRMED, and it understates the gap.** The tau=3 oscillation threshold (1.612) and the high-arousal state (from 2.069) both fall inside the sweep, and the theorem covers neither."
+  },
+  {
+   "key": "ablation",
+   "summary": "I ran the artifact's own simulator to find what produces Test 4's U-shape. I copied lines 468-1037 of the artifact HTML into model.js. The only patch is a cap==1 toggle, `C.capOff ? 1 : ...`, on artifact line 732. With the defaults left alone, the copy reproduces the stored Test 4 data exactly in both curves (tau=1.5 and tau=3): rec, recLo, recHi, sync, syncSem and censored all match to 3 dp. Both expSweep and my own runner, which uses seeds 5000+i, dur 220, a heel stick at 80 s, BATCH_CELLS {16,8}, a 10 bpm band held 15 s, and counts a run as censored when rt>=124, give that match.\n\nMain result: delay is not what produces the curve the artifact shows. With the same seeds and the delay removed (tau=0.02, a 1-step lag), the 14-run medians are [37.75,18.75,12.875,10.625,9.625,8.625,8.5,9.75,140.25] with censored [0,0,0,0,0,0,1,5,11]. The stored tau=1.5 curve is [37.75,18.75,13.625,11.625,10.625,10,9.125,20.875,140.25] with censored [0,0,0,0,0,0,1,4,10].\n\nWithout delay the rising arm needs all three of the following. Remove any one and recovery time keeps falling, out to K=8:\n- the soothing-capacity cap\n- the mirroring loop (cMir)\n- arousal noise\n\nMechanism: with cap on, a saddle-node at g~2.07 creates a stable high-arousal state. At g=3 that state sits at Ai~1.9, Am~2.8, cap~0.08. It coexists with the stable baseline (Ai=Am=0, the resting state), and noise plus the heel stick knock the pair into it. At K=3, tau=1.5, all 24 of 24 censored runs end stuck in that state and none oscillate. The cubic term k3 is not needed.\n\nA delayed negative loop on its own (cap==1, cMir=0, even with k3=0) is also enough. At tau=1.5 the minimum is at K=0.75 and every run is censored from K>=2.75, and every censored run oscillates. The delay needed for any interior minimum within [0,3] lies between 0.25 and 0.5 s. A strong rise needs tau>=1.0-1.25 s, and linear Hopf at g<=3 needs tau>=1.32 s. At tau=3 the rise is a genuine delay effect (Hopf at g=1.5995).\n\nI also checked the linear stability of the simulator's exact discretized map, which matches the code. For tau<=1.5 the first instability is the real-root crossing at g=3.858001, the same for every delay up to 1.5 s. A Hopf comes first only for tau>=1.56 s, and any instability at g<=3 needs tau>=1.82 s. So the tau=1.5 curve never crosses a linear boundary, yet its median rises 14x. ChatGPT's linear rho does not predict Test 4. With cap==1 the linearization is unchanged, and at tau=0.02 recovery improves steadily from 36.6 s to 6.0 s at K=3.75 (4.0 s at K=8), with nothing censored. This holds even though rho(3)=0.0129 is below rho(0)=0.0333, and even past g_c, where the instability is a mild pitchfork offset of 10 bpm or less.\n\nA placebo run with no heel stick, scored the same way, is still censored in 10 of 40 runs at K=3, tau=1.5, and 29 of 40 at tau=3. Much of the high-K censoring is therefore not about recovering from the stick.\n\nVerdicts:\n- C6 (PARTLY): its conclusion holds for the artifact's effect, but by a nonlinear mechanism that ChatGPT's linear proof cannot see. Its 'g>g_c unstable for all tau' part is correct.\n- C15 (PARTLY): it is true that the theorem does not validate the plot, but the reason given is incomplete. The tau=3 curve crosses its own delayed boundary at 1.60, and the tau=1.5 rise is nonlinear.\n- The artifact's sentence: true that a delayed loop alone is sufficient, but misleading as an explanation of the curve it shows.",
+   "claims": [
+    {
+     "id": "C6",
+     "claim": "Delay is not required for the intermediate-coupling recovery optimum; and g>g_c => unstable for every tau>=0.",
+     "verdict": "PARTLY",
+     "evidence": "Simulator (same seeds) with the delay removed (tau=0.02) keeps the artifact's U: 40-run minimum 8.25 s at K=1.75, 25/40 censored at K=3; the 14-run curve is nearly identical to the stored tau=1.5 curve. So 'delay not required' holds for the artifact's effect. But ChatGPT's mechanism is linear (rho optimum at g*=0.080, loss of stability at g_c=3.858), and it does not produce this effect in the simulator. With cap==1 (the same linearization, since cap'(0)=0) at tau=0.02, recovery falls steadily to K=8 with no censoring, even past g_c, where the instability is only a symmetric pitchfork to small offsets (Ai=+/-0.218, about 10 bpm, at g=8). Without delay the U needs all three of cap, cMir and arousal noise: removing any one gives a steady decline (tables vi, vii, viii; noise-off N_t0.02). Mechanism: a saddle-node at g~2.07 creates a high-arousal attractor, and every censored run at K=2.5 and 3 (tau=1.5 or 0.02) is stuck in it. The 'g>g_c unstable for all tau' part is correct: D(0)=1/2400+3g/800-g^2/1000 does not depend on tau, so D(0)<0 forces a positive real root. The discrete map confirms the first instability at 3.858001 for every lag up to 77 steps. For tau>=1.56 s a Hopf comes earlier (2.615 at tau=2; 1.5995 at tau=3), so g_c is a sufficient condition, not the stability boundary.",
+     "key_numbers": "tau=0.02 14-run: med [37.75,18.75,12.875,10.625,9.625,8.625,8.5,9.75,140.25], cens [0,0,0,0,0,0,1,5,11] vs stored tau=1.5 [37.75,18.75,13.625,11.625,10.625,10,9.125,20.875,140.25], [0,0,0,0,0,0,1,4,10]. cap==1, tau=0.02: K=0 36.6 s -> K=3.75 6.375 s -> K=8 6.0 s, 0 censored. Linear rho(0,1,3)=0.0333,0.0386,0.0129. Saddle-node g~2.07; high state at g=3: Ai=1.914, Am=2.791, cap=0.08."
+    },
+    {
+     "id": "C15",
+     "claim": "The artifact's responsiveness sweep stops at g=3, below g_c, so the theorem does not validate that plot.",
+     "verdict": "PARTLY",
+     "evidence": "It is true that K_max=3 < 3.858 and that the theorem does not validate the plot, but the stated reason is incomplete and partly misleading. (1) The plotted curves are at tau=1.5 and tau=3, not tau=0. On the simulator's discretized map, the tau=3 system goes Hopf-unstable at g=1.5995 (omega=0.302 rad/s), inside the sweep. With arousal noise off, tau=3 is censored in all 40 runs from K=1.75, and at K=2, 15 of 17 censored runs oscillate. (2) The tau=1.5 curve crosses no linear boundary up to 3.858, yet its median rises from 10.1 to 140.25. The cause is the nonlinear saddle-node (g~2.07) created by cap plus mirroring, with noise-driven trapping: 24/24 censored runs at K=3 are stuck in the high state and none oscillate. (3) Sweeping past g_c would not validate the plot either. With cap on at tau=0.02, censoring peaks near K=3.75 (29/40) and falls to 0 by K=8, where the median is 3.0 s, the metric's floor. ChatGPT's optimum g*=0.080 is also far from the simulated optimum at K~1-2.",
+     "key_numbers": "Discrete-map first instability (default couplings): 3.858001 (real) for tau<=1.5; 2.615 Hopf at tau=2; 1.5995 Hopf at tau=3. Hopf before pitchfork needs tau>=1.56 s; any instability at g<=3 needs tau>=1.82 s. 40-run argmin: tau=1.5 K=1 (10.125 s); tau=3 K=0.5 (14.125 s). Extended tau=0.02, K=3.75..8: cens [29,24,22,16,14,13,8,5,1,0]."
+    },
+    {
+     "id": "ART-T4",
+     "claim": "Artifact Test 4 text: 'This model produces the same shape from a delayed feedback loop alone.'",
+     "verdict": "PARTLY",
+     "evidence": "As a sufficiency claim it is true. A pure delayed negative loop (cap==1, cMir=0, tau=1.5, even k3=0 and noise-off) gives an interior minimum and then a rise to full censoring, from oscillation (37/37 censored runs at K=3 oscillate). As a description of the curve the model shows, it is wrong. At the default tau=1.5, removing the delay leaves the curve essentially unchanged; the rise comes from capacity collapse plus mirroring (saddle-node bistability) plus noise, not from delayed feedback. Deterministically, delay contributes only a mild step at tau=1.5: 8.5 -> 22.5 s, no censoring. The f4 narrative 'The response overshoots...' (lines 1598-1610) is hard-coded text; at tau=1.5 the censored runs do not oscillate.",
+     "key_numbers": "cap1+mir0, tau=1.5 (40 runs): min 10.625 at K=0.75; cens 25/40 at K=2.5, 38/40 at K=2.75. Noise-off default tau=1.5: min 8.5 at K=1.75, then about 20.5-22.5 s, 0 censored."
+    },
+    {
+     "id": "C1",
+     "claim": "Linearization x'=-x/30+(g/25)y-z, y'=-y/20+(g/10)x, z'=-z/4+(3g/40)x; D(s,g,tau) with e^{-s tau} and e^{-2 s tau} terms.",
+     "verdict": "CONFIRMED",
+     "evidence": "Code lines 739-747: all three cross-terms use the same delayed buffer (AiD, AmD). cap uses max(Am,0)^2, so cap(0)=1 and cap'(0)=0. The cubic term vanishes at the origin. Expanding the determinant gives (s+a)(s+b)(s+d) + h e^{-s tau}(s+b) - (g^2/250) e^{-2 s tau}(s+d), with h=3g/40."
+    },
+    {
+     "id": "C2",
+     "claim": "rho(g) has its unique global maximizer at g*~0.0803558863, rho*~0.0482709206.",
+     "verdict": "CONFIRMED",
+     "evidence": "Continuous tau=0, 3x3 eigenvalues, grid search plus bounded optimizer: g*=0.08035588, rho*=0.0482709206. The discrete map at tau=0.02 gives -0.04829 at g*. Uniqueness was checked only on the grid over [0,5].",
+     "key_numbers": "g*=0.0803558787 (optimizer tolerance), rho*=0.0482709206"
+    },
+    {
+     "id": "C3",
+     "claim": "Stable iff 0<=g<g_c=15/8+sqrt(2265)/24~3.8580006724 (tau=0).",
+     "verdict": "CONFIRMED",
+     "evidence": "First instability of the simulator's discretized map is at g=3.858001 (real eigenvalue lambda=1) for every lag up to 77 steps (tau<=1.54 s). For tau>=1.56 s a Hopf occurs earlier, so g_c is the boundary only for small delays. In the simulator, crossing g_c with cap==1 is a mild pitchfork (no extra censoring up to K=8)."
+    },
+    {
+     "id": "C4",
+     "claim": "rho(0)=.033333, rho(1)=.038554, rho(3)=.012859, rho(4)=-.002250.",
+     "verdict": "CONFIRMED",
+     "evidence": "Continuous tau=0: [0.033333, 0.038554, 0.012859, -0.00225]. The simulator's discrete map at tau=0.02 gives growth rates -0.03334, -0.03856, -0.01285, +0.00225; at tau=1.5: -0.03334, -0.03789, -0.01207, +0.00205."
+    },
+    {
+     "id": "C7",
+     "claim": "A finite amount of coupling can maximize recovery speed, while stronger coupling eventually slows recovery and destabilizes the equilibrium.",
+     "verdict": "OVERSTATED",
+     "evidence": "Correct as a statement about the linear decay rate rho, but not about recovery in the artifact. Simulated recovery keeps improving about 4x beyond g*=0.08, out to K~1-2. With cap==1 at tau=0.02 it improves steadily to K=8 even though rho falls and the origin goes unstable at 3.858 (a mild pitchfork). The real loss of recovery in the simulator is a nonlinear saddle-node, which the linearization cannot see."
+    }
+   ],
+   "new_findings": [
+    "REPRODUCTION: expSweep run from my copy of artifact lines 468-1037 matches DEF.sweep exactly (line 1043): every field (rec, recLo, recHi, sync, syncSem, censored) for both tau=1.5 and tau=3. My own runner (ablate.js) matches rec, quantiles and censored too (differences only in Python vs JS rounding of x.xxx5).",
+    "PROTOCOL (artifact lines 936-959): seeds 5000+i; R=14; dur 220 s; heel stick at 80 s; alarms off; no roommate; cells {nSA:16,nR:8}; recoveryTime band 10 bpm, hold 15 s, search starts at stick+3 s, baseline = 30 s pre-stick 5-s-smoothed HR; censored if rt>=124; censored value 140.25; second curve uses tau=params.tau*2.",
+    "TABLE (i) default tau=1.5, 40 runs, K=[0,.25,...,3.75]: med=[36.625,17,12.75,11.125,10.125,10.5,11.75,10.5,11.75,21.875,21.875,57.375,140.25,140.25,140.25,140.25]; IQR=[28.25-58.312,14.75-22.875,11.75-14.875,10.5-13.375,9.5-12.438,9-15.812,8.938-16.875,8.5-22.75,8.5-22.938,8.5-30.438,9.25-140.25,20.188-140.25,24.812-140.25,80.062-140.25,90.375-140.25,140.25-140.25]; cens=[0,0,0,0,0,0,0,0,2,6,13,18,24,28,28,31]. 14-run at stored K = stored exactly.",
+    "TABLE (ii) tau=0.02 (1-step lag), 40 runs: med=[36.625,17,12.25,10.25,9.25,8.75,8.5,8.25,8.25,8.375,8.625,140.25,140.25,140.25,140.25,140.25]; IQR=[28.25-58.312,14.438-22.688,11.375-13.812,9.5-11.562,8.75-10.562,8.25-10.25,7.938-9.562,7.5-9.312,7.25-10.062,7-35.562,7-140.25,7-140.25,7.5-140.25,7.75-140.25,7.875-140.25,7.812-140.25]; cens=[0,0,0,0,0,0,0,0,2,8,14,21,25,28,29,29]. 14-run: med=[37.75,18.75,12.875,10.625,9.625,8.625,8.5,9.75,140.25], cens=[0,0,0,0,0,0,1,5,11]. Extended K=[3.75,4,4.25,4.5,4.75,5,5.5,6,7,8]: med=[140.25,140.25,140.25,6.5,6.25,6,5.75,4.125,3,3], cens=[29,24,22,16,14,13,8,5,1,0]. At high K the pair already sits in the high state before the stick, so 'recovery' = 3 s floor.",
+    "TABLE (ii') tau=0.25 (JS Math.round(12.5)=13 steps, so 0.26 s), 40 runs: med=[36.625,17,12.25,10.25,9.25,8.875,8.5,8.25,8.25,8.5,8.5,74.75,140.25,140.25,140.25,140.25]; IQR=[28.25-58.312,14.438-22.688,11.375-14.062,9.5-11.812,8.938-11,8.438-10.312,8-9.562,7.5-9.312,7.438-10.062,7.25-28,7-140.25,7-140.25,7.5-140.25,7.75-140.25,8.125-140.25,14.875-140.25]; cens=[0,0,0,0,0,0,0,0,2,6,14,20,25,27,28,29]. 14-run: med=[37.75,18.75,12.875,10.625,9.625,8.625,8.5,9.5,140.25], cens=[0,0,0,0,0,0,1,5,11].",
+    "TABLE (iii) tau=1.5, cap==1, 40 runs: med=[36.625,16.5,12.5,10.875,10.25,16.125,16.875,23.125,23,23.5,27.75,34.125,43.875,64,84.625,108.125]; IQR=[28.25-58.312,14.25-20.688,11.75-15,10-13.062,9.25-18.5,9.375-18.062,14.938-24.75,15.75-24.75,21.625-24.625,22.188-30.062,21.938-37.125,22.688-51.062,26.688-65.25,39.375-87.75,53.25-117.5,77.375-140.25]; cens=[0,0,0,0,0,0,0,0,0,0,0,0,1,4,8,19]. 14-run: med=[37.75,17.75,13.5,11,9.875,15.875,23,27.75,34.75], cens=[0,0,0,0,0,0,0,0,1]. K 3.75..8: cens=[19,33,36,37,39,40,40,40,40,40].",
+    "TABLE (iv) tau=1.5, cMir=0, 40 runs: med=[36.625,16.625,12.375,11.25,10.875,16.5,17.625,24,24.5,40.75,68.125,140.25,140.25,140.25,140.25,140.25]; IQR=[28.25-58.312,14.438-20.5,11.5-13.812,10.25-13,9.438-18.5,9-20.688,14.562-26,15.625-26.75,20-34.562,23.438-70.188,29.938-100.5,63.875-140.25,131.75-140.25,140.25-140.25,140.25-140.25,140.25-140.25]; cens=[0,0,0,0,0,0,0,0,0,1,8,21,30,35,39,38]. 14-run: med=[37.75,18.625,12.625,11.625,10.75,14.375,22.75,54.875,140.25], cens=[0,0,0,0,0,0,0,2,11].",
+    "TABLE (v) tau=1.5, k3=0, 40 runs: med=[44.5,18.25,13.5,11.125,11,11,12.125,16.25,22.875,24.5,67.625,140.25,140.25,140.25,140.25,140.25]; IQR=[32.375-88.938,15.938-24.062,12.438-15.312,10.688-13.375,9.75-15.188,9.438-17.188,9.25-23.188,8.938-27,9-140.25,13.25-140.25,20.625-140.25,27.438-140.25,112.375-140.25,130.312-140.25,134.5-140.25,140.25-140.25]; cens=[3,0,0,0,0,0,4,5,12,15,18,25,29,30,30,34]. 14-run: med=[51.875,19.25,14.25,11.875,12,10.375,11.875,140.25,140.25], cens=[0,0,0,0,0,3,3,9,11].",
+    "TABLE (vi) tau=0.02, cap==1, cMir=0 (pure undelayed negative loop), 40 runs: med=[36.625,15.875,11.75,9.75,8.625,8,7.5,7.25,7,6.75,6.5,6.5,6.25,6.25,6,6]; IQR=[28.25-58.312,13.938-20.062,10.75-12.375,9-10.25,8.25-9.25,7.75-8.25,7.25-7.75,7-7.5,6.75-7.25,6.5-7,6.25-6.75,6.25-6.5,6.188-6.5,6-6.5,6-6.25,5.75-6.062]; cens all 0. 14-run: med=[37.75,17.5,11.875,9.75,8.75,7.5,6.75,6.625,6.375], cens 0. K 3.75..8: med=[6,5.75,5.75,5.75,5.5,5.5,5.5,5.25,4.5,4], cens 0. No U.",
+    "TABLE (vii) tau=0.02, cMir=0, 40 runs: med=[36.625,16.375,11.875,10,9,8.25,7.75,7.5,7.25,7,6.75,6.75,6.5,6.5,6.5,6.25]; IQR=[28.25-58.312,14.188-20.625,11-13.312,9.25-11.062,8.5-9.75,7.938-9,7.5-8.25,7.25-7.75,7-7.562,6.75-7.5,6.5-7.25,6.5-7,6.25-6.75,6.25-6.75,6.188-6.75,6-6.75]; cens 0. 14-run: med=[37.75,18.375,12.375,10,9,8,7.25,6.875,6.5], cens 0. K 3.75..8: med=[6.25,6.25,6.25,6.125,6,6,6,5.75,5.75,5.5], cens 0. No U.",
+    "TABLE (viii) tau=0.02, cap==1, 40 runs: med=[36.625,16.625,11.875,9.875,8.75,8.25,7.75,7.5,7.25,7,6.75,6.75,6.5,6.5,6.5,6.375]; IQR=[28.25-58.312,14.312-20.562,11-12.75,9.25-10.562,8.438-9.5,7.75-8.75,7.5-8.25,7.25-7.75,7-7.5,6.75-7.25,6.5-7,6.5-7,6.5-7,6.25-6.75,6.25-6.75,6.25-6.562]; cens 0. 14-run: med=[37.75,18,12.125,10.125,9,7.875,7.25,6.75,6.75], cens 0. K 3.75..8: med=[6.375,6.25,6.25,6.25,6,6,6,6,6,6], cens 0. No U, even past g_c=3.858.",
+    "TABLE (ix) tau=3 default, 40 runs: med=[36.625,17,14.125,14.875,20.375,24.375,39.875,52.125,77.5,140.25,140.25,140.25,140.25,140.25,140.25,140.25]; IQR=[28.25-58.312,15.188-21.438,12.938-22.812,11.75-24.062,11.75-32.812,13-44.312,16.5-90.938,17.938-140.25,28.25-140.25,40.562-140.25,63.875-140.25,then 140.25-140.25 except K=3: 140.25-140.25]; cens=[0,0,0,0,0,1,4,12,17,24,27,32,31,38,38,38]. 14-run = stored exactly.",
+    "EXTRA delayed-negative-loop-alone tables (40 runs). cap1+mir0, tau=1.5: med=[36.625,16.25,12.25,10.625,17.5,17.875,25,25.5,40.75,70.625,140.25 x6], cens=[0,0,0,0,0,0,0,0,0,2,25,38,37,38,40,40]; 14-run med=[37.75,17.25,12.625,10.75,9.625,24,45.375,140.25,140.25], cens=[0,0,0,0,0,0,0,8,12]. Same plus k3=0: med=[44.5,17,12.5,11,18.125,18.5,25,26,48,76.75,140.25 x6], cens=[3,0,0,0,0,0,0,0,1,3,27,39,38,38,40,40]. cap1+mir0, tau=3: med=[36.625,16.875,13.5,24,43.75,97.875,140.25 x10], cens=[0,0,0,0,2,14,40,39,40 x8]. cap1, tau=3: med=[36.625,16.75,13.5,22.75,31.75,55.125,140.25 x10]. mir0, tau=3: med=[36.625,17.125,13.875,20.75,32.625,64,140.25 x10]. cap1+mir0 by delay: tau=0.25 no U in [0,3] (6.5 at K=3, then a step to 10.375 at 3.25; 0 cens); tau=0.5 min 7.5 at K=1.75, 11.75 at K=3, 16.75 at 3.75 (0 cens); tau=1.0 min 9.5 at K=1, 42.5 at K=3, cens 22/40 at 3.75; tau=1.25 min 10.125 at K=1, 140.25 at K=3 (24/40 cens).",
+    "EXTRA: k3=0, tau=0.02: med=[44.5,18.125,12.75,10.75,9.5,9,8.625,8.625,8.5,8.875,140.25 x6], cens=[3,0,0,0,0,0,4,5,12,16,23,24,28,26,31,30], so the cubic is not needed. Default tau=1.0: med=[36.625,16.75,12.625,10.75,9.75,9,9,9.125,9.125,12.75,19.25,80.5,140.25 x4], cens=[0,0,0,0,0,0,0,0,2,6,13,20,24,27,28,30]. Default tau=2.0: med=[36.625,17.125,12.75,11.625,12,12,14,16.625,23.875,26.625,42.25,140.25 x5], cens=[0,0,0,0,0,0,0,0,2,6,15,21,30,33,35,38]. No soothing (cCare=0), tau=1.5: med=[36.625,37.625,67.875,131.5,140.25,140.25,26,7,4.125,3 x7], cens=[0,5,10,20,30,28,17,8,3,3,3,2,2,2,0,0]. That is an inverted U and then the 3-s metric floor, so soothing is necessary for the descending arm.",
+    "NOISE-OFF (infant/adult sig=0, sigU=0; cell phase noise kept), 40 runs. Default tau=1.5: med=[41,16.25,12.25,10.75,9.75,9.25,8.75,8.5,22.5,22.5,22.25,21.75,21.5,21,20.75,20.5], 0 cens (mild 2.65x deterministic step). Default tau=0.02: steady decline 41 -> 7.0, 0 cens. Default tau=3: med=[41,16.625,13,11.5,32.25,32,51.5,140.25 x9], all 40 censored from K=1.75 (Hopf 1.5995). cap1 tau=0.02: decline to 6.5. mir0 tau=0.02: decline to 6.25. cap1+mir0 tau=1.5: med=[41,16,12,10.5,9.5,16,25.75,25,40,69.5,140.25 x6], all 40 censored from K=2.5. cap1 tau=1.5: 47.75 at K=3, 121.25 at 3.75 (9 cens). Conclusion: at tau<=1.5 the censoring in the shown curve needs noise.",
+    "PLACEBO (no heel stick, same metric), 40 runs, cens per K: default tau=1.5 [2,0,0,0,0,0,0,0,0,0,4,6,10,16,20,24] (median 3 s up to K=3); tau=0.02 [2,0,0,0,0,0,0,0,0,0,4,6,12,19,22,25]; tau=3 [2,0,0,0,0,0,0,13,22,25,27,32,29,30,39,38]; cap1 tau=0.02 [2,0 x15]; cap1+mir0 tau=1.5 [2,0,0,0,0,0,0,0,0,1,6,23,36,36,40,40]. At K=0 even the placebo has q75=17.75 s and 2/40 censored, because spontaneous noise alone breaks the ±10 bpm band.",
+    "CENSORED-RUN CLASSIFICATION (40 runs; stuck-high = mean Am over 140-220 s > 1.5; oscillating = infant A range > 0.8): tau=1.5 K=3: 24/24 stuck-high, 0 oscillating; tau=1.5 K=2.5: 13/13 stuck-high; tau=0.02 K=3: 25/25 stuck-high; tau=3 K=2: 15/17 oscillating; tau=3 K=3: 26 stuck, 5 oscillating; cap1+mir0 tau=1.5 K=3: 37/37 oscillating, K=2.75: 38/38 oscillating; cap1 tau=1.5 K=3: 1/1 oscillating.",
+    "EQUILIBRIA (U=0, no noise; same for any tau), cap on: saddle-node at g~2.07. g=2.25: stable high state Ai=1.200, Am=2.034, cap=0.13; saddle at Ai=0.347, Am=1.070. g=2.5: high state 1.497/2.343, cap 0.10. g=3: high state Ai=1.914, Am=2.791, cap=0.08 (quasi-static infant HR about +77 bpm); saddle at Ai=0.104, Am=0.555. The saddle reaches the origin at 3.858. Cap off: a symmetric pitchfork at 3.858 with small offsets (Ai=+/-0.040 at g=4, +/-0.218 at g=8).",
+    "LINEAR (exact eigenvalues of the simulator's Euler/integer-lag map at the origin, dt=0.02). First instability, default couplings: 3.858001 (real) for tau=0.02, 0.26, 0.5, 0.75, 1.0, 1.5; 2.615357 Hopf (omega 0.399) at tau=2; 1.599543 Hopf (omega 0.302) at tau=3. cMir=0: none up to g=12 for tau<=0.26; 7.436 (tau 0.5), 5.142 (0.75), 3.874 (1.0), 2.654 (1.5, omega 0.412), 2.037 (2.0), 1.413 (3.0). Hopf before pitchfork from tau>=1.56 s; any instability at g<=3 needs tau>=1.82 s (default) or 1.32 s (cMir=0). So mirroring holds off the delayed Hopf. Damping of the oscillatory mode at g=3: -0.157/s (tau 0.02), -0.0256/s (tau 1.5), +0.0638/s (tau 3).",
+    "NECESSARY/SUFFICIENT (criterion: interior minimum and later median >= 1.5x the minimum). Within K in [0,3]: sufficient sets are (a) delay >= ~0.5 s with only the soothing negative loop (cap1, mir0, even k3=0, even noise-off; strong for tau >= 1.0-1.25 s), or (b) no delay with cap AND cMir AND arousal noise. Not necessary individually: delay, cap, cMir, k3. Necessary: the soothing loop (cCare>0), plus either a large enough delay or the cap+cMir+noise combination. Same answer within [0,3.75], except that tau=0.25 cap1+mir0 shows a 1.6x step at K=3.25. In the artifact's default tau=1.5 configuration, the plotted rise comes from route (b); delay alone adds only a mild deterministic step (8.5 -> 22.5 s).",
+    "ROBUSTNESS: the location of the optimum depends on sample size. The stored 14-run argmin is K=2 (9.125 s). With 40 runs on a finer grid the argmin is K=1 (10.125 s) and K=2 gives 11.75, so the floor is flat (about 10-12 s) from K=0.75 to 2. The f4 text 'Recovery is fastest at responsiveness 2' rests on 14-run noise.",
+    "SIMULATOR ODDITIES (artifact line numbers): (1) lines 587 and 626: cell phase noise (rng()-0.5)*0.04 and *0.06 is added per step and not scaled by sqrt(dt), so cell noise intensity depends on dt; the arousal, U and temperature noises at 721, 741-742, 745, 753 and 756 are scaled correctly. (2) line 724: lag = max(1, round(tau/dt)) gives a minimum delay of 0.02 s; JS round(12.5)=13, so tau=0.25 runs at 0.26 s; the lag is silently capped at bufN-1=401 steps (8.02 s; bufN set on line 671). (3) The equations block line 438 writes cap = 1/(1+(Am/0.8)^2), but the code (731-732) uses max(Am,0); line 435 omits the [0,1.5] clamp on vagal scale (line 608). (4) line 747: 'soothing' C is linear in delayed Ai and turns negative (arousing) when Ai(t-tau) < 0. (5) line 949 counts rt>=124 as censored while recoveryTime (854-859) can return real recoveries up to 125 s; the censored value 140.25 enters the median and quantiles, so the plotted 140.25 medians are not recovery times. (6) lines 851-853: recovery is relative to the pre-stick baseline with a 3-s floor, so a pair already in a pathological high-arousal state 'recovers' in 3 s (tau=0.02 K=7-8; cCare=0 K>=2.25). (7) lines 1598-1610 (writeF4): the mechanism text ('The response overshoots, mom's arousal climbs, and her capacity to soothe drops'; 'The same eagerness, mistimed, overshoots') is hard-coded, not computed; at tau=1.5 no censored run oscillates. (8) line 940: the second curve is params.tau*2, so it is 'tau=3' only at the default slider."
+   ]
+  },
+  {
+   "key": "water_phase_stats",
+   "claims": [
+    {
+     "id": "C8",
+     "claim": "Water cells: aggregate counterexample; under K_i=kappa n_i, Delta = K_tot sum w_i (r_i-rbar)^2/(r_i rbar^2) >= 0, exact iff equal r_i, equal r_i stay equal; without the assumption the sign can differ.",
+     "verdict": "CONFIRMED",
+     "evidence": "Exact Fractions: v=(1,1) gives V_I'=0 and v=(1/2,3/2) gives 2/3, with V_E=2 and W=4 in both. ChatGPT never wrote Delta down; I used Delta = true V_I' - K_tot(N_I/V_I - n_E/V_E). With K_i=kappa n_i, true V_I' = K_tot(sum w_i/r_i - n_E/V_E). Because sum w_i=1 and sum w_i r_i = rbar, the sum w_i (r_i-rbar)^2/(r_i rbar^2) expands to sum w_i/r_i - 1/rbar, which gives the identity. Also checked symbolically (sympy, m=4) and with 1000 random exact-rational instances (m=2..8): 0 failures, min Delta>0. Equal ratios give Delta=0 exactly. Invariance: r_i' = (K_i/n_i)(1/r_i - n_E/V_E), so when K_i/n_i is constant the field is tangent to {v=n r}; uniqueness of solutions keeps the state there. Numerically the ratio spread stays at 1.1e-15 over t in [0,5], but grows to 0.257 when K is not proportional to n. Sign counterexample: n=(1,1), v=(1/2,3/2), K=(1/10,1), n_E=2, V_E=2 gives true V_I'=-7/30 while the lumped law gives 0, so Delta=-7/30. Swapping K gives +29/30.",
+     "key_numbers": "0 vs 2/3; Delta=-7/30 and +29/30; 1000/1000 identity checks"
+    },
+    {
+     "id": "C9",
+     "claim": "F dissipates with F'=-sum K_i(n_i/v_i-n_E/V_E)^2; unique equilibrium v_i*=W n_i/(n_E+sum n); no periodic orbit; E'<=-2 m K_min E with m=min n_i/W^2.",
+     "verdict": "CONFIRMED",
+     "evidence": "sympy (m=3) confirms the gradient, F' = grad F . v' = -sum K_i(...)^2, the Hessian diag(n_i/v_i^2) + (n_E/V_E^2) 11^T, v* and V_E*. Uniqueness: n_i/v_i = n_E/V_E = lambda forces lambda = N/W. Bound, step by step: (1) E' = -d^T grad F(v) = -d^T(grad F(v) - grad F(v*)), with d = v - v*. (2) That difference equals the integral of Hess F along the segment v*->v. The segment stays in the domain {v_i>0, sum v<W} because the domain is convex. (3) Hess >= diag(n_i/v_i^2) >= (min n/W^2) I, since the 11^T part is PSD and v_i<W everywhere in the domain. (4) |d|^2 >= K_min d^T diag(K)^-1 d = 2 K_min E. All steps hold. Pointwise test on 1e5 random interior states: E' + 2mK_min E <= -3.09 (2mK_min E) every time, so the bound is never close to tight. 200 random instances integrated with Radau (rtol 1e-10): 0 violations, max (E - bound)/E0 = 0. The bound is very loose: the true asymptotic decay rate of E is 6.8x to 3180x the bound rate (median 112x). F is a strict Lyapunov function, so there are no nonconstant periodic orbits.",
+     "key_numbers": "0/200 violations; true/bound rate median 112x (range 6.8-3180)"
+    },
+    {
+     "id": "C10",
+     "claim": "Z1'=(K/2)(Z1-conj(Z1)Z2); config A gives R'=K/4 and config B gives R'=0 at the same Z1=1/2; copying 6 times gives 24 cells; forcing adds (eps P/2)(1-Z2).",
+     "verdict": "CONFIRMED",
+     "evidence": "sympy per-cell residuals are 0 for both the coupling and the forcing terms. On 1000 random phase sets (m=2..60, including clustered ones) the formula matches the direct sum to 1.3e-15 and a central difference to 2e-10. Exact moments: A has Z1=1/2, Z2=0, R'=K/4; B has Z1=1/2, Z2=1, R'=0. The 24-cell copies are identical, and RK4 gives R' = 0.25000 and 0 at K=1. B is in fact an equilibrium (Z1'=0, every theta_j'=0). Artifact code (Person.stepCells) updates th += (w*wf + kSA*(sn*c - cs*s) - F*s)*dt, where cs and sn are the cell means of cos and sin. That term is exactly K_gap Im(Z1 e^{-i theta}) = K_gap r sin(psi - theta), and F = eps*pulseShape(mom psi). Noise is added as (rng()-0.5)*0.06 per step: uniform +-0.03 rad, variance 3e-4 rad^2 per step, not scaled by dt. The effective diffusion D = 7.5e-3 rad^2/s at dt=0.02 scales as 1/dt (respiratory cells: +-0.02, D = 3.3e-3). Arousal noise, by contrast, is correctly sqrt(dt)-scaled. No experiment changes dt, so this is a hidden calibration constant.",
+     "key_numbers": "R'_A=K/4, R'_B=0, max err 1.3e-15"
+    },
+    {
+     "id": "C11",
+     "claim": "a2=2e^-2 I_2(2)~0.1864780666; the locking inequality is first-order averaging; a first-moment index can vanish for 2:1.",
+     "verdict": "PARTLY",
+     "evidence": "a2 is confirmed three ways: scipy iv gives 0.18647806660946678, the replicated 720-point sum differs by 8e-17, and the artifact's own pulseHarmonic(2) run in node gives 0.18647806660946686. The first-order derivation is right: with phi = theta - 2 Omega t, phi' = (w - 2 Omega) - (eps a2/2) sin phi. ChatGPT did not quantify the error, though, and it is large. For theta' = w - eps P(Omega t) sin theta with w=15.665 and Omega=2pi*76.27/60 (delta=-0.30895), the exact threshold from the stroboscopic lifted-map criterion is eps_c = 4.0002, 21% above 3.3135; RK4 bisection gives 4.0001 and the artifact's Euler dt=0.02 gives 3.993. Second-order averaging explains the gap: the strong first harmonic (a1 = 0.4305) pulls the mean frequency by -0.003962 eps^2, so locking needs eps a2/2 > |delta| + c eps^2. That predicts 3.990, and predicts that the tongue closes again at 19.55 (exact: 19.709). For the mirror detuning +0.309 the exact threshold is 2.948 (second order: 2.945), so first order errs by about 20% in a direction set by the sign of the detuning. 16-cell population (K_gap=6, 7% scatter, no noise, mean frequency w): eps_c = 4.04-4.23, median 4.10, over 12 draws. The artifact's own Session reduced to the deterministic case (RSA, noise and heat off, each seed's detuning set to -0.309) gives 4.10-4.21 over 12 seeds. The first-moment concern does not apply to the artifact: pli computes |mean exp(i n 2pi phi)| and pliMax takes the max over n in {1,2,3}, so n=2 catches 2:1 (ratioCount picks n=2 in 29-30 of 30 sessions).",
+     "key_numbers": "first-order 3.314; exact 4.000 (single phase), 4.10 median (16 cells); 2nd-order 3.990; tongue closes 19.7"
+    },
+    {
+     "id": "C12",
+     "claim": "X=U+e1, M=U+e2, O=U+3e3 gives Corr(X,M)-Corr(X,O)=1/2-1/sqrt(20)>0 with no direct coupling, so the mom-minus-other-parent contrast is not automatically a coupling effect.",
+     "verdict": "CONFIRMED",
+     "evidence": "Exact (sympy and enumeration over +-1 variables): Corr(X,M)=1/2, Corr(X,O)=sqrt(5)/10, difference 0.276393. The covariance contrast is 0, since Cov(X,M)=Cov(X,O)=1. In general the covariance contrast is a_X(a_M - a_O), so it fails when the loadings on U differ (a_M=3/2 gives Cov diff 1/2 and Corr diff 0.088). A noisier mom flips the sign (Corr diff -0.276). Inside the model the concern does not bite. The room adult is built as the same KINDS.adult, with the same wU=0.8 weight on U, the same Ta, the same sig, gap and vagal. In Session.alarm it gets the same 0.35 kick when presence>0 and awake, and every room experiment forces presence=1, awake=true, voice=false. So in the alike world (I,M) and (I,R) are equal in distribution, and E[any statistic difference] = 0. Stored DEF.room alike: bondMean -0.022, bondSem 0.055 (physical -0.004 +- 0.053; perceived 0.208 +- 0.025). I reproduced every DEF.room number exactly by running the artifact's expRoom in node. Asymmetries appear only off-protocol, in the live view: an asleep mom gets half the alarm kick and a -0.3 set point, and voice applies to mom only.",
+     "key_numbers": "0.27639; Cov contrast 0; alike bond -0.022+-0.055"
+    },
+    {
+     "id": "C14",
+     "claim": "Two-compartment osmotic model: V_I*/V_E* = n_I/n_E; K sets only the time scale.",
+     "verdict": "CONFIRMED",
+     "evidence": "sympy: V_I* = W n_I/(n_I + n_E), and the ratio is n_I/n_E. f/K does not depend on K, so the substitution s = K t removes K entirely (for constant K). An extra fact: the linear relaxation rate is K (n_I+n_E)^3/(W^2 n_I n_E).",
+     "key_numbers": "V_I*=W n_I/(n_I+n_E)"
+    }
+   ],
+   "new_findings": [
+    "The artifact's Test 5 text says 'locking needs only 3.3', but its own stored curve contradicts that. I reran it in node and reproduced DEF.pulse exactly (PLI 0.074..0.426, room 0.08..0.075). At eps=16, five times the claimed threshold, PLI is 0.426, only about 22% of 20-s windows are locked, and 0 of 6 sessions lock fully. The infant's beat-count frequency moves away from 2:1 as eps rises: detuning goes from -0.28 at eps=0 to -0.87 rad/s at eps=16. Causes: (a) the first-order error (+21%, see C11); (b) the detuning is a 6-session mean of widely scattered per-session values (Test-5 seeds: -0.69 to +0.11 rad/s; SD about 0.5 rad/s across the 30 alike-world sessions); (c) RSA and noise. With the mean detuning set to -0.309, the artifact as written never locks fully up to eps=20 (best locked fraction 0.25). With RSA, noise and heat removed, 4 of 6 lock. With each session's detuning fixed at -0.309, all 12 lock between 4.10 and 4.21.",
+    "Second-order averaging of theta' = w - eps P(Omega t) sin theta: the mean-frequency shift is -c eps^2 with c = sum over nonresonant terms of (a_k/2)^2/(2(2 Omega - nu)) = 0.003962. Locking requires |delta - c eps^2| < eps a2/2. The 2:1 tongue is therefore asymmetric (thresholds 3.99 vs 2.95 for delta = -/+0.309) and closes near eps = 19.7. Larger forcing does not mean more 2:1 locking.",
+    "The Ott-Antonsen closure ChatGPT omitted: on the wrapped-Cauchy manifold Z2 = Z1^2, so R' = (K/2) R (1 - R^2), which is 3K/16 at R=1/2, between configs A (K/4) and B (0). 1e5 sampled wrapped-Cauchy phases (rho=1/2) give R' = 0.18785 +- 0.0007 at K=1 against 0.1875. Integrating all 1e5 oscillators over 3 time units stays within 9.5e-4 of the closed-form OA solution. Watanabe-Strogatz: identical oscillators with theta' = omega(t) + Im(H e^{-i theta}) reduce exactly to 3 ODEs plus N-3 constants of motion. A and B differ in those constants, and OA corresponds to uniformly distributed constants. With heterogeneous (Lorentzian) frequencies the OA manifold attracts, so after transients R does obey a closed ODE. ChatGPT's 'no closure' holds for arbitrary microstates but is not the whole story.",
+    "The artifact's locking index pliMax (n in {1,2,3}) detects p:q locking only when p divides n. So 3:2 is reported as '3:1', and 4:3, 5:3 and 5:2 give exactly 0. Those are the very ratios (Van Leeuwen) that the artifact cites in its Test 5 bedside box. A 1:1 lock also scores 1 at n=2.",
+    "Chance level of the locking index: with iid uniform phases and N=674 beats, n=2 alone gives 0.035 and the max over n gives 0.050. The null worlds actually show 0.060-0.080 because of serial dependence. The other-parent control goes through identical processing and is exchangeable with mom, so it matches this inflation in expectation: alike plMean +0.016 +- 0.009, perceived -0.014 +- 0.009. Per-session PLI does not track the constant-drift sinc prediction (r = -0.01), so the inflation is not simply accidental closeness to 2:1. In real data the control matches only if the other adult's heart-rate distribution matches mom's, because the chance level depends on |f_I - 2 f_adult|.",
+    "Recorded infant HR (time-sampled 60/last IBI) is biased upward under forcing, because each HR value is weighted by the next IBI and the 2:1 drive makes IBIs alternate. At eps=16 it reads 150.48 bpm against 143.84 bpm by beat count; at the default eps=6 the gap is about 0.9 bpm, and at eps=0 it is 0.12 bpm. Only hrI[0] enters epsLock. But the same recorded HR feeds the physical-world HR series in Tests 1 and 6.",
+    "Beyond the UI's sweep (the UI passes eps up to 16; the code's default list also contains 24 and 32), the infant's heart is captured: beat-count rate is about 105 bpm at eps=32 and 76 bpm (1:1 with mom) at eps=48.",
+    "Water extras: with K_i proportional to n_i, (r_i - r_j)' = -kappa (r_i - r_j)/(r_i r_j), so the ratio spread shrinks and Delta -> 0 along every trajectory. The exponential bound is valid but 7x to 3000x conservative.",
+    "Real-data analysis would need: a control adult exchangeable with mom with respect to shared inputs and intrinsic variability, or measured room covariates to condition on (alarms, light, sound, staff activity); covariance or model-based coupling estimates (VAR or state-space with a latent room factor) rather than raw correlation differences; nulls built from many time-matched same-pod adults; corrections for autocorrelation and for max-over-lags and max-over-n inflation (twin or IAAFT surrogates); per-session detuning; p:q (n:m) synchronization indices from beat-level ECG; and manipulations (contact on/off, presence) for causal identification, with power taken from pilot variance rather than the model's assumed effect."
+   ],
+   "summary": "ChatGPT's water, phase and statistics math holds up. C8, C9, C10, C12 and C14 are confirmed with exact or symbolic checks, and its harmonic value a2 = 0.1864780666 is confirmed three ways (Bessel, the 720-point sum, and the artifact's own JS). C11 is only partly right: ChatGPT correctly calls the locking inequality first-order, but never measures how far off it is. For the artifact's numbers the exact 2:1 threshold of the single forced phase equation is 4.000, not 3.314 (+21%). Second-order averaging explains the gap: the strong first harmonic pulls the infant's frequency down by 0.00396 eps^2, giving 3.990, and the tongue closes again near eps 19.7. With the detuning reversed, the exact threshold is 2.948 instead. A 16-cell population, and the artifact's own Session reduced to its deterministic core, lock at about 4.10 (range 4.04-4.23). The 'first moment vanishes for 2:1' worry does not apply, because pliMax takes the max over n = 1, 2, 3. That index does miss 4:3 and 5:3, and labels 3:2 as '3:1'. The correlation-contrast counterexample (0.2764) is exact and the covariance contrast there is 0. Inside the model, though, the other parent is exchangeable with mom (same adult type, same weight on shared noise, same alarm kick under the test protocol). The stored alike-world bond of -0.022 +- 0.055 reflects that, and I reproduced every stored Test 1/5 number exactly by running the artifact's code. The main new finding: the artifact's claim 'locking needs only 3.3' is contradicted by its own simulation. At eps = 16 the locking index is 0.43 and no session locks fully. The reasons are the first-order error, large scatter in detuning from session to session, breathing-driven heart-rate modulation (RSA) and noise. ChatGPT also left out the Ott-Antonsen closure, R' = (K/2)R(1-R^2) = 3K/16 at R = 1/2, checked with 1e5 phases. Smaller code notes: cell noise is not scaled with dt, and the recorded infant heart rate reads high under forcing."
+  },
+  {
+   "key": "literature",
+   "claims": [
+    {
+     "id": "C13",
+     "claim": "Physiology: (a) the Abdominal Key chapter's Hartnoll (2000) row reverses AGA/SGA (original: SGA 906 mL/kg, AGA 844); (b) the ECW share of TBW is about 70% at 24 wk (60/86) and about 56% at term (44/78); (c) StatPearls' 2/3 ICF and 1/3 ECF are fractions of TBW.",
+     "verdict": "CONFIRMED",
+     "evidence": "All three parts hold; details are in C13a, C13b and C13c. The core claim (a) is confirmed from the primary abstract and, separately, from the chapter's own prose, which contradicts its own table.",
+     "key_numbers": "906-844 = 62; 60/86 = 30/43 = 0.6977; 44/78 = 22/39 = 0.5641; 28/42 = 2/3; 14/42 = 1/3"
+    },
+    {
+     "id": "C13a",
+     "claim": "The chapter's Table 2.2 Hartnoll row (AGA n=35: 906 (833-954); SGA n=7: 844 (637-958); P=.019) has the groups reversed; the original has SGA 906, AGA 844.",
+     "verdict": "CONFIRMED",
+     "evidence": "PRIMARY: the verbatim abstract of Hartnoll G, Bétrémieux P, Modi N, Arch Dis Child Fetal Neonatal Ed 2000;83:F56-F59 (Europe PMC REST record for PMID 10873174, the same text on the PMC1721099 page) says: 'RESULTS -- Forty two preterm infants were studied. SGA infants had a significantly higher body water content than AGA infants (906 (833-954) and 844 (637-958) ml/kg respectively; median (range); p = 0.019).' INTERNAL: the chapter's own prose (abdominalkey.txt line 80) says 'In SGA preterm neonates the mean TBW content was 62 mL/kg higher than in AGA preterm neonates', and its abstract (line 37) says SGA infants have higher TBW. Its other prose figures match its table (term SGA +76 = Cheek 825-749; +102 = Cassady 790-688). The Hartnoll row as printed gives SGA-AGA = -62, not +62, so only that row is swapped. Group sizes are not in the abstract. The full text is scanned, and PMC, BMJ and Europe PMC PDFs are behind proof-of-work, Cloudflare or 403 gates. So the 35/7 split is seen only in the chapter, though 35+7 = 42 matches 'Forty two'. The narrow range (833-954) sitting with the small group (n=7) is weakly consistent with the chapter swapping the values but not the n's. Small chapter error: it says 'mean' where the paper reports medians. Confidence that the chapter reversed the values is about 99%; confidence in the 35 AGA / 7 SGA split is moderate.",
+     "key_numbers": "SGA 906 (833-954), AGA 844 (637-958) mL/kg, median (range), p = 0.019, N = 42; the chapter's split AGA 35 / SGA 7 is unverified"
+    },
+    {
+     "id": "C13b",
+     "claim": "ECW/TBW is about 70% at 24 wk (60/86) and about 56% at term (44/78).",
+     "verdict": "CONFIRMED",
+     "evidence": "Exact arithmetic: 60/86 = 30/43 = 0.697674 and 44/78 = 22/39 = 0.564103. The reading that 60% is a share of body weight, not of TBW, is supported by the chapter (line 65), whose term figures 44% ECW + 34% ICW + 22% solids sum to 100% of body weight with ECW+ICW = TBW = 78. At 24 wk that implies ICW 26% and solids 14%. A classic 59% ECW at 24 wk would give 0.686, still about 70%. The chapter's wording ('most of it (60%) is in the ECW compartment') is ambiguous, but the body-weight reading is the only one consistent with its term numbers.",
+     "key_numbers": "30/43 = 0.6977; 22/39 = 0.5641"
+    },
+    {
+     "id": "C13c",
+     "claim": "StatPearls 'Physiology, Water Balance': TBW is 60% of body weight; 2/3 ICF and 1/3 ECF are fractions of TBW.",
+     "verdict": "CONFIRMED",
+     "evidence": "The NCBI page and statpearls.com are blocked here (reCAPTCHA or Cloudflare), so the wording comes from search-engine excerpts of the chapter: 'For a 70 kg man, 60% of total body weight is water, amounting to 42 L'; 'Of the 42 L of water in the body, two-thirds is within the intracellular fluid (ICF) space, which equates to 28 L'; 'One-third of the total body water is the ECFV, equivalent to 14 L'; 75% (10.5 L) interstitial, 25% (3.5 L) plasma. So 28/42 = 2/3 of TBW, or 2/5 of body weight. Metadata (Europe PMC): Tobias A, Ballard BD, Mohiuddin SS. StatPearls, NBK541059, PMID 31082103, updated 2022-10-03.",
+     "key_numbers": "TBW 3/5 of body; ICF 2/3 of TBW = 2/5 of body; ECF 1/3 of TBW = 1/5 of body; ISF 3/4 and plasma 1/4 of ECF"
+    },
+    {
+     "id": "R1",
+     "claim": "Y. Mori, 'Mathematical properties of pump-leak models of cell volume control and electrolyte balance', J. Math. Biol. 65 (2012) 875-918, arXiv:1104.4097.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref, Semantic Scholar, arXiv and Europe PMC agree: sole author Yoichiro Mori; J Math Biol 65(5):875-918; DOI 10.1007/s00285-011-0483-8; PMID 22042535; online 2011-11-01, print 2012-11; arXiv:1104.4097 (v1 2011-04-20). The abstract confirms ChatGPT's description: 'The key analytical tool is a free energy relation ... used as a Lyapunov function'. It proves a unique, globally asymptotically stable steady state for linear I-V channels. Note: Crossref also lists an Erratum, DOI 10.1007/s00285-011-0499-0, J Math Biol 64(5):873-916 (2012).",
+     "key_numbers": "vol 65, issue 5, pp 875-918, DOI 10.1007/s00285-011-0483-8"
+    },
+    {
+     "id": "R2",
+     "claim": "H. Nakao, 'Phase reduction approach to synchronisation of nonlinear oscillators', Contemp. Phys. 57 (2016) 188-214, arXiv:1704.03293.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref, Semantic Scholar and arXiv agree: Hiroya Nakao; Contemporary Physics 57(2):188-214; DOI 10.1080/00107514.2015.1094987; online 2015-10-20, print 2016-04-02. The arXiv entry 1704.03293 (posted 2017-04-11, after publication) carries journal_ref 'Contemporary Physics 57, 188-214 (2016)'. Its title spells it 'synchronization'; the journal uses 'synchronisation'. The abstract covers phase reduction, phase locking to periodic forcing and mutual synchronization, consistent with ChatGPT's description.",
+     "key_numbers": "vol 57, issue 2, pp 188-214"
+    },
+    {
+     "id": "R3",
+     "claim": "Hartnoll G, Betremieux P, Modi N. Body water content of extremely preterm infants at birth. Arch Dis Child Fetal Neonatal Ed 2000;83:F56-F59.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Gary Hartnoll, Pierre Bétrémieux, Neena Modi; Arch Dis Child Fetal Neonatal Ed 83(1):F56-F59, 2000-07; DOI 10.1136/fn.83.1.F56; PMID 10873174; PMC1721099. Methods: Hammersmith and Queen Charlotte's, 25-30 wk; ECF by bromide dilution, TBW by H2-18O dilution. Results as in C13a. Per-group n is unverified (chapter only).",
+     "key_numbers": "N = 42; SGA 906 vs AGA 844 mL/kg; p = 0.019"
+    },
+    {
+     "id": "R4",
+     "claim": "The Abdominal Key chapter: 'Body Composition in the Fetus and Newborn: Effects of Intrauterine Growth Aberration' (ch. 2, Nephrology and Fluid/Electrolyte Physiology: Neonatology Questions and Controversies), used as a source.",
+     "verdict": "PARTLY",
+     "evidence": "The text and growth figures are usable (TBW 94% first trimester, 86% at 24 wk with 60% ECW, 78% at term with 44/34/22), but Table 2.2's Hartnoll row is swapped (C13a). Minor possible error: the table cites 'Wagen and coworkers (1986)'. The only matching paper I found is van der Wagen A, Okken A, Zweens J, Zijlstra WG, Acta Paediatr Scand 1985;74(1):57-61 (DOI 10.1111/j.1651-2227.1985.tb10921.x), which Hartnoll 2000 also cites as 1985. A separate 1986 paper cannot be ruled out.",
+     "key_numbers": "swapped row: printed AGA 906 / SGA 844; correct SGA 906 / AGA 844"
+    },
+    {
+     "id": "R5",
+     "claim": "Exact lumping of kinetic systems: Wei & Kuo 1969.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Wei J, Kuo JCW. Lumping analysis in monomolecular reaction systems. Analysis of the exactly lumpable system. Ind Eng Chem Fundam 1969;8(1):114-123, DOI 10.1021/i160029a019. Companion: Kuo JCW, Wei J. ... Analysis of approximately lumpable system. Ind Eng Chem Fundam 1969;8(1):124-133, DOI 10.1021/i160029a020.",
+     "key_numbers": "8(1):114-123; 8(1):124-133"
+    },
+    {
+     "id": "R6",
+     "claim": "Exact lumping, general theory: Li & Rabitz.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Li G, Rabitz H. A general analysis of exact lumping in chemical kinetics. Chem Eng Sci 1989;44(6):1413-1430, DOI 10.1016/0009-2509(89)85014-6. Nonlinear case: Li G, Rabitz H, Tóth J. A general analysis of exact nonlinear lumping in chemical kinetics. Chem Eng Sci 1994;49(3):343-361, DOI 10.1016/0009-2509(94)87006-3.",
+     "key_numbers": "44(6):1413-1430; 49(3):343-361"
+    },
+    {
+     "id": "R7",
+     "claim": "Lumpability of Markov chains: Kemeny & Snell.",
+     "verdict": "CONFIRMED",
+     "evidence": "Kemeny JG, Snell JL. Finite Markov Chains. Princeton, NJ: Van Nostrand; 1960. Existence and date are confirmed by its 1960-61 reviews (Amer Math Monthly 67(10):1039, DOI 10.2307/2309264; Am J Sociol 66(4):427-428). Reprinted by Springer (Undergraduate Texts in Mathematics), 1976. Secondary sources place the strong-lumpability criterion at Theorem 6.3.2 (Section 6.3, about p. 124 in the 1976 edition) and weak lumpability in Section 6.4. I did not see the book text itself.",
+     "key_numbers": "Van Nostrand 1960; Springer 1976; Section 6.3 (secondary sources)"
+    },
+    {
+     "id": "R8",
+     "claim": "Ott & Antonsen 2008 (Chaos).",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Ott E, Antonsen TM. Low dimensional behavior of large systems of globally coupled oscillators. Chaos 2008;18(3):037113, DOI 10.1063/1.2930766. This is the established closure Z_k = Z_1^k. It requires N to infinity and a specific invariant manifold. Neither of ChatGPT's C10 configurations lies on it: A has Z2 = 0 against Z1^2 = 1/4, and B has Z2 = 1 against 1/4. That is consistent with ChatGPT's non-closure point.",
+     "key_numbers": "18(3):037113"
+    },
+    {
+     "id": "R9",
+     "claim": "Watanabe & Strogatz 1994 (Physica D).",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Watanabe S, Strogatz SH. Constants of motion for superconducting Josephson arrays. Physica D 1994;74(3-4):197-253, DOI 10.1016/0167-2789(94)90196-1. Preceded by Watanabe S, Strogatz SH. Integrability of a globally coupled oscillator array. Phys Rev Lett 1993;70(16):2391-2394, DOI 10.1103/PhysRevLett.70.2391. The modern form is Marvel SA, Mirollo RE, Strogatz SH. Identical phase oscillators with global sinusoidal coupling evolve by Möbius group action. Chaos 2009;19(4):043104, DOI 10.1063/1.3247089. Also Pikovsky A, Rosenblum M. Partially integrable dynamics of hierarchical populations of coupled oscillators. Phys Rev Lett 2008;101:264103. These are the established names for C10: identical sinusoidally coupled oscillators have 3 macroscopic variables plus N-3 constants of motion, so Z1 alone is not closed.",
+     "key_numbers": "74:197-253; 70:2391-2394; 19:043104; 101:264103"
+    },
+    {
+     "id": "R10",
+     "claim": "Jensen's-inequality aggregation bias: Ruel & Ayres 1999 TREE 'Jensen's inequality predicts effects of environmental variation'.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Ruel JJ, Ayres MP. Jensen's inequality predicts effects of environmental variation. Trends Ecol Evol 1999;14(9):361-366, DOI 10.1016/S0169-5347(99)01664-X. ChatGPT's Delta in C8 is a Jensen gap of the convex map r -> 1/r (concentration n_i/v_i = 1/r_i). Closest exact-aggregation analogue in ecology: Iwasa Y, Andreasen V, Levin S. Aggregation in model ecosystems. I. Perfect aggregation. Ecol Model 1987;37(3-4):287-302, DOI 10.1016/0304-3800(87)90030-5; II. Approximate aggregation, IMA J Math Appl Med Biol 1989;6(1):1-23, DOI 10.1093/imammb/6.1.1-a.",
+     "key_numbers": "14(9):361-366"
+    },
+    {
+     "id": "R11",
+     "claim": "Scale transition: Chesson et al.",
+     "verdict": "CONFIRMED",
+     "evidence": "Chesson P, Donahue MJ, Melbourne BA, Sears ALW. Scale transition theory for understanding mechanisms in metacommunities. Ch. 12 in Holyoak M, Leibold MA, Holt RD (eds), Metacommunities: Spatial Dynamics and Ecological Communities. Univ. Chicago Press, 2005, pp. 279-306. The table of contents gives a start of 279 and the next chapter at 307, so the end page is inferred. Journal versions (Crossref): Melbourne BA, Chesson P. The scale transition: scaling up population dynamics with field data. Ecology 2006;87(6):1478-1488; Chesson P. Scale transition theory: its aims, motivations and predictions. Ecol Complexity 2012;10:52-68, DOI 10.1016/j.ecocom.2011.11.002.",
+     "key_numbers": "pp. 279-306 (end page inferred); 87(6):1478-1488; 10:52-68"
+    },
+    {
+     "id": "R12",
+     "claim": "Ideal osmotic free energy / Kedem-Katchalsky water flux.",
+     "verdict": "CONFIRMED",
+     "evidence": "Crossref: Kedem O, Katchalsky A. Thermodynamic analysis of the permeability of biological membranes to non-electrolytes. Biochim Biophys Acta 1958;27:229-246, DOI 10.1016/0006-3002(58)90330-5. Their J_v = L_p(dp - sigma*dpi), with sigma = 1 and dp = 0, gives C8's v_i' = K_i(n_i/v_i - n_E/V_E) in osmolar units. C9's F = -sum n_i log v_i - n_E log V_E is the ideal-dilute (van 't Hoff) mixing free energy used as a Lyapunov function, as in Mori 2012 (R1). C14's V_I*/V_E* = n_I/n_E is the Boyle-van 't Hoff relation: Lucké B, McCutcheon M. The living cell as an osmotic system and its permeability to water. Physiol Rev 1932;12(1):68-139, DOI 10.1152/physrev.1932.12.1.68.",
+     "key_numbers": "27:229-246; 12(1):68-139"
+    },
+    {
+     "id": "R13",
+     "claim": "Artifact Test 4: Jaffe & Beebe (Rhythms of dialogue in infancy, Monogr Soc Res Child Dev 2001) found that mid-range vocal coordination at 4 months predicted secure attachment and the highest coordination predicted insecure attachment.",
+     "verdict": "CONFIRMED",
+     "evidence": "Citation: Jaffe J, Beebe B, Feldstein S, Crown CL, Jasnow MD. Rhythms of dialogue in infancy: coordinated timing in development. Monogr Soc Res Child Dev 2001;66(2):i-viii, 1-132; PMID 11428150. The abstract says 'midrange degree of mother-infant and stranger-infant coordination was optimal for attachment (Strange Situation), whereas high (\"tight\") stranger-infant coordination in the lab was optimal for cognition (Bayley Scales)'; N = 88 infants, 410 recordings. The high end comes from a secondary source, Scheidt CE et al., Front Psychol 2021;12:696448: 'High-range synchrony by contrast was associated with insecure disorganized attachment, and low-range synchrony with avoidant attachment'. Caveats: the artifact omits that LOW coordination also predicted insecurity (avoidant), and the full inverted-U actually fits its U-shaped recovery curve better than its text says. Midrange optimality held for strangers too. High coordination was optimal for cognition. And the measure is vocal-rhythm timing, not physiological recovery.",
+     "key_numbers": "N = 88 infants, 410 recordings; 4-month coordination vs 12-month outcomes"
+    },
+    {
+     "id": "R14",
+     "claim": "Artifact Test 5: Van Leeuwen and colleagues used magnetocardiography in six mothers and fetuses and found brief 3:2, 5:3 and 4:3 locking epochs, more often during fast paced maternal breathing, with no support for a direct path through breathing movements.",
+     "verdict": "PARTLY",
+     "evidence": "Citation: Van Leeuwen P, Geue D, Thiel M, Cysarz D, Lange S, Romano MC, Wessel N, Kurths J, Grönemeyer DH. Influence of paced maternal breathing on fetal-maternal heart rate coordination. PNAS 2009;106(33):13661-13666, DOI 10.1073/pnas.0901049106, PMID 19597150, PMC2728950. CONFIRMED from the abstract: paced breathing at 10, 12, 15 and 20 cpm; twin surrogates; 'a clear increase in synchronization epochs mostly at high maternal respiratory rates in the original but not in the surrogate data'. The group's 2014 PLoS ONE paper (9(8):e106036, open access) restates that 20 cpm favoured and 10 cpm reduced synchronization. Magnetocardiography is confirmed. SNIPPET-LEVEL only (PNAS full text blocked): ratios 3:2 (46%), 5:3 (23%), 4:3 (17%), with 2:1, 5:4 and 7:4 each under 10%. Six subjects comes from the group's conference paper on the same protocol ('6 healthy pregnant women, 34th-40th week'), not seen in the PNAS text. UNVERIFIED: 'no support for a direct path through breathing movements'. A 2023 scoping review (Nichting et al., PLoS ONE 18:e0287245) says no study has directly investigated the pathways. Context the artifact omits: the earlier study (Van Leeuwen et al., BMC Physiol 2003;3:2; 177 MCGs, 62 pregnancies) found no real-vs-surrogate difference in the number of epochs (712 vs 741), only phase preferences. The 2014 study concludes coupling is 'present but generally weak'.",
+     "key_numbers": "10/12/15/20 cpm; ratios 46/23/17% (snippet); 2003: 712 vs 741 epochs, real vs surrogate"
+    },
+    {
+     "id": "R15",
+     "claim": "Named sources for the remaining ChatGPT results (C11, C12, C5/C6), verified by Crossref.",
+     "verdict": "CONFIRMED",
+     "evidence": "C11: a2 = 2e^-2 I_2(2) is the cos(2psi) coefficient from the Jacobi-Anger / modified-Bessel expansion of exp(2cos psi). Its value, 0.18647806660946678, matches a direct Fourier integral. The harmonic-matched n:m index is Tass P, Rosenblum MG, Weule J, Kurths J, Pikovsky A, Volkmann J, Schnitzler A, Freund HJ. Phys Rev Lett 1998;81(15):3291-3294, DOI 10.1103/PhysRevLett.81.3291. Synchrograms: Schäfer C, Rosenblum MG, Kurths J, Abel HH. Nature 1998;392:239-240. Textbook: Pikovsky, Rosenblum, Kurths, Synchronization (CUP 2001), DOI 10.1017/CBO9780511755743. The moment hierarchy Z_k is Daido H, Prog Theor Phys 1992;88(6):1213-1218. C12 is exactly Spearman's attenuation: Corr = sqrt(rel_X*rel_O) with reliabilities 1/2, 1/2, 1/10, giving 1/2 and 1/sqrt(20). Spearman C. Am J Psychol 1904;15(1):72-101, DOI 10.2307/1412159. C5/C6: single-gain root locus (Evans WR, Trans AIEE 1950;69(1):66-69, DOI 10.1109/T-AIEE.1950.5060121). D(0,g,tau) does not depend on tau, so a real root crossing at s=0 is unstable for every delay. Background: Hale JK, Verduyn Lunel SM, Introduction to Functional Differential Equations, Springer Applied Mathematical Sciences 99, 1993.",
+     "key_numbers": "a2 = 0.18647806660946678; Corr gap 0.2763932023"
+    }
+   ],
+   "new_findings": [
+    "The chapter contradicts itself. Its prose says SGA preterm TBW was '62 mL/kg higher than in AGA', but its table gives SGA-AGA = -62 for Hartnoll. Its other prose differences (+76 Cheek, +102 Cassady) match the table exactly. So only the Hartnoll row is swapped.",
+    "The Hartnoll split of 35 AGA / 7 SGA is seen only in the chapter. The paper's full text is scanned, and every PDF source is behind a gate (PMC proof-of-work, BMJ Cloudflare, Europe PMC 403). 35+7 = 42 matches the abstract's 'Forty two'.",
+    "The chapter says 'mean' TBW where Hartnoll reports medians (range). The chapter's 'Wagen 1986' probably refers to van der Wagen et al., Acta Paediatr Scand 1985;74:57-61; that is a possible year error.",
+    "A separate project in the same workspace (goldbach_circle) uses only the qualitative 'SGA: more water, less fat' (compartments.md lines 16, 203, 219; compartments_report.py lines 198, 317, 337). That matches the original paper, not the swapped row. Hartnoll, 906 and 844 appear nowhere; the '0.844' in escapes.md line 55 is an unrelated number. No statement there depends on the disputed row. Its 60/44/28% ECW and 2/3-1/3 StatPearls figures match the body-weight and TBW readings confirmed here. Nothing was edited.",
+    "C12's counterexample is exactly Spearman's (1904) attenuation formula, with reliabilities 1/2, 1/2 and 1/10. Unequal measurement noise alone changes correlations.",
+    "Neither C10 configuration is on the Ott-Antonsen manifold (Z2 = Z1^2): A has Z2 = 0 and B has Z2 = 1, against Z1^2 = 1/4. This is consistent with the Watanabe-Strogatz/Möbius result that Z1 alone is not closed for identical oscillators.",
+    "The artifact's Jaffe & Beebe sentence leaves out that LOW coordination also predicted insecure (avoidant) attachment. The inverted-U with both ends bad matches the model's U-shaped recovery curve better than the text admits. The measure was vocal timing, and high stranger-infant coordination was optimal for cognition.",
+    "The artifact's Van Leeuwen citation leaves out that the 2003 BMC Physiology study found no real-vs-surrogate difference in the number of synchronization epochs (712 vs 741). The 2014 study calls the coupling 'present but generally weak'. The clause 'no support for a direct path through breathing movements' could not be verified.",
+    "Mori 2012 also has a Crossref-listed Erratum (DOI 10.1007/s00285-011-0499-0, J Math Biol 64(5):873-916). The arXiv version of Nakao's paper spells the title 'synchronization'.",
+    "Environment note: WebFetch fails DNS for every host. NCBI, BMJ and StatPearls serve bot challenges, and web.archive.org connections are reset. Evidence came from Europe PMC REST, Crossref, Semantic Scholar, the arXiv API, PLOS and search-engine excerpts."
+   ],
+   "summary": "C13 holds in all three parts. (a) The Abdominal Key chapter does reverse Hartnoll 2000, about 99% confidence. The primary abstract, via Europe PMC and PMC, reads verbatim: 'SGA infants had a significantly higher body water content than AGA infants (906 (833-954) and 844 (637-958) ml/kg respectively; median (range); p = 0.019).' The chapter's own prose ('SGA ... 62 mL/kg higher than AGA') also contradicts its table row. The 35 AGA / 7 SGA split appears only in the chapter, though it sums to the abstract's 42. (b) ECW/TBW is 60/86 = 0.698 at 24 wk and 44/78 = 0.564 at term. The chapter's term figures sum to 100% of body weight, which supports the body-weight reading. (c) StatPearls' 2/3 ICF and 1/3 ECF are fractions of the 42 L of TBW (28 L and 14 L); this is from search excerpts because the page itself is blocked. The user's goldbach_circle repo does not depend on the disputed row. Both of ChatGPT's references are correct: Mori, J Math Biol 65(5):875-918, DOI 10.1007/s00285-011-0483-8, online 2011, print 2012; Nakao, Contemp Phys 57(2):188-214, DOI 10.1080/00107514.2015.1094987. All requested established-idea citations were verified with full details (Wei & Kuo, Li & Rabitz, Kemeny & Snell, Ott & Antonsen, Watanabe & Strogatz, Ruel & Ayres, Chesson et al., Kedem & Katchalsky), plus Iwasa et al. for perfect aggregation, Boyle-van 't Hoff (Lucké & McCutcheon), Spearman attenuation for C12 and Tass n:m indices for C11. The artifact's Jaffe & Beebe claim is accurate but incomplete: low coordination also predicted insecure (avoidant) attachment. Its Van Leeuwen claim is partly verified: MCG, paced breathing, more epochs at fast rates, twin surrogates and the 3:2/5:3/4:3 ratios are supported, but six subjects rests on a conference paper and 'no direct path through breathing movements' is unverified. It also omits the null count result of the 2003 study."
+  }
+ ],
+ "challenges": [
+  {
+   "key": "refute-meaning",
+   "claims": [
+    {
+     "id": "M1",
+     "claim": "Verifiers' central conclusion, narrow form: ChatGPT's spectral optimum g*≈0.080 tells you nothing about Test 4's recovery statistic (infant HR, 5-s mean, back within 10 bpm and held 15 s after a heel stick), whose minimum is near K≈2. rho is a poor proxy for that statistic.",
+     "verdict": "CONFIRMED",
+     "evidence": "My attempt to refute this failed. (a) In the deterministic heel-stick runs, the argmin of Test 4's own rule is g=2.6 at tau=0 (exact), 2.875 at tau=0.02 and 1.775 at tau=1.5 on the nonlinear Euler map. That is the artifact's own update rule, ported to Python. (b) Rank correlation between the Test-4-rule time T(g) and 1/rho(g): -0.918 at tau=0 and -0.998 for g>=g*. On the nonlinear tau=1.5 map it is -0.11, i.e. unrelated. (c) The artifact's stored medians (which I reproduced exactly by running its expSweep) against rho from the artifact's own step map at tau=1.5: Spearman -1.000 over K in [0.25,2] and +0.18 over all K. (d) Running the same seeds with and without the stick, the infant-only paired response has its argmin at 0.35-2 (heel and alarm). (e) Parameter scan over steadiness 0.5-2.5, infant vagal 0-1 and tau 0.5-3.5: the Test 4 rule's argmin lies in 0.43-3.0 and never follows g*(steadiness), which ranges 0-0.30. The closest case is steadiness 2.5, vagal 1, tau 3.5: argmin 0.43 against g*=0.30. That is a coincidence, because at vagal 1 and tau 3.5 the argmin sits at 0.43-0.48 for every steadiness.",
+     "key_numbers": "T4-rule argmin 2.6 (tau=0), 1.775 (tau=1.5 NL); Spearman(T4,1/rho) -0.918 / -0.11; DEF vs rho_tau1.5 Spearman -1.000 on K in [0.25,2]"
+    },
+    {
+     "id": "M2",
+     "claim": "Steelman for Test 4's statistic: a tighter band, or the long-time tail, makes rho govern infant recovery after a heel stick and moves the optimum to about 0.08.",
+     "verdict": "REFUTED",
+     "evidence": "The tighter-band argument holds only in the limit, and the approach is logarithmic. As eps->0, T(g,eps) -> ln(c(g)/eps)/rho(g), where c(g) is the slow mode's x-amplitude (0.033-0.049 for g>=0.2, 0.105 at g*). So argmin_g approaches g* only like 1/ln(1/eps). Exact tau=0 asymptotics put the argmin at 0.41 for eps=6.7e-3, 0.24 at 4.5e-5 and 0.16 at 1e-10. It comes within 100% of g* only at eps~1e-10.4 arousal units, within 50% at ~1e-23, within 25% at ~1e-48 and within 10% at ~1e-123. Full simulations agree. With the artifact's rule at a band of 1e-4 bpm the argmin is still 0.18-0.20, for tau 0, 0.02 and 1.5, linear and nonlinear. For infant |x| with eps=1e-10 it is 0.14-0.15. The long-time tail behaves the same way. g* leaves the infant closer to baseline than g=1 only after t>158 s, when |x|=7.5e-5 (0.003 bpm). Against g=2 that is t>93 s (0.14 bpm), and against g=0.25 t>681 s (|x|~5e-16). The noise floor (infant arousal SD ~0.2, i.e. ~9 bpm) is far above these levels.",
+     "key_numbers": "argmin(eps=1e-10)=0.16 (tau=0); within 50% of g* needs eps~1e-23; HR band 1e-4 bpm -> argmin 0.18-0.20; g* beats g=1 only after 158 s at 0.003 bpm"
+    },
+    {
+     "id": "M3",
+     "claim": "Verifiers' general form: the rho-defining mode is invisible at a finite threshold. rho and finite-threshold recovery speed move in opposite directions over [0.08,3]. None of the recovery behaviour involves g*=0.08.",
+     "verdict": "REFUTED",
+     "evidence": "This depends on the observable. It holds for infant-only observables after a heel stick and fails as soon as the observable includes mom's arousal or the perturbation reaches mom. The heel stick loads the slow mode with only 3-5% of the infant deviation, but its y-amplitude is 0.29-0.38. (1) Dyad norm ||(Ai,Am)|| after the artifact's own alarm() event, which adds +0.30 to infant and +0.35 to mom. Deterministic argmin: 0.14 at eps=0.2232 and 0.11 at eps=0.1 (tau=0); 0.15 and 0.11 on the tau=1.5 nonlinear map. Spearman(T,1/rho) is +0.94 to +0.99. (2) Worst case over arousal perturbations (unit kick to Ai and/or Am, measured on ||(x,y)||). Argmin 0.07-0.085 for every eps from 0.5 down to 1e-8 at tau=0, and 0.07-0.10 at tau=1.5. Spearman(T,1/rho) is +0.996 to +0.999. For example, at eps=0.5 and tau=0, T is 21.0 at g=0, 15.25 at g*, 15.75 at 0.25, 19.75 at 1 and 31.0 at 2, roughly 0.7-0.8 times 1/rho. Other norm weightings give argmins of 0.085-0.375, converging toward g* as eps shrinks. (3) A causal check: the dyad-after-alarm argmin follows g*(steadiness) as steadiness moves. g* goes 0, 0.021, 0.080, 0.182, 0.257, 0.301 and the dyad argmin goes 0.00-0.01, 0.06-0.09, 0.11-0.15, 0.19-0.24, 0.25-0.43, 0.31-0.47 (with two outliers at eps=0.1, high steadiness). So rho, not coincidence, sets this optimum. (4) After a mom-only kick, any coupling slows mom's return (argmin g=0 at every eps). That is a direct finite-threshold consequence of rho<1/20.",
+     "key_numbers": "alarm dyad argmin 0.11-0.15, Spearman +0.94..+0.99; worst-case argmin 0.07-0.10, Spearman +0.996..+0.999; dyad argmin follows g*(st) from 0 to 0.30"
+    },
+    {
+     "id": "M4",
+     "claim": "Steelman for measurability: in the noisy artifact, the optimum near 0.08 is what one would actually measure.",
+     "verdict": "PARTLY",
+     "evidence": "These runs use the artifact's own JS (Model extracted verbatim from the HTML) in the Test 4 configuration, with alarm() at t=80, 100 seeds and tau=1.5. Replaying the same noise with and without the event, the dyad arousal norm's median last-exit argmin is K=0.125 at eps=0.2232, 0.125 at 0.1, 0.10 at 0.03 and 0.08 at 0.01 (tau=0.02 gives 0.15/0.125/0.10/0.08). Ensemble means of 100 event runs vs 100 controls, at eps=0.2232: argmin in 0.08-0.2, and 141 of 200 bootstrap resamples put it at 0.08 or 0.125. At eps=0.1 the bootstrap spreads over 0-0.5. At eps=0.05 the result is noise-dominated. But a realistic single-run measurement, using the artifact's hold rule on both arousals (band 0.2232), gives argmin 0.5-0.75; on both HRs (10 and 5 bpm) it gives 0.35-0.5. The optimum is also shallow. Paired median at eps=0.2232 is 16.4 s at K=0, 15.5 at 0.08, 15.25 at 0.125-0.25, 19.0 at 1 and 38 at 2: flat within 0.5 s over K=0.06-0.25. For the heel stick, the paired dyad argmin is 0.2-0.75 (R=14).",
+     "key_numbers": "paired dyad argmin 0.08-0.15 (R=100); ensemble bootstrap 141/200 at 0.08-0.125; single-run hold rule argmin 0.35-0.75"
+    },
+    {
+     "id": "M5",
+     "claim": "Bound: rho(g)<1/20 (=b) for every g>0, so mom's own relaxation floors the asymptotic time constant at >20 s. Consequence: rho can improve on rho(0) by at most b/a=1.5 (actual 1.448), which cannot account for Test 4's ~4x speed-up.",
+     "verdict": "PARTLY",
+     "evidence": "The bound is exactly true and holds for every delay. P(-b,g) = -g^2/1250 and D(-b,g,tau) = -g^2 e^{tau/10}/1250 < 0. With steadiness st, P(-st/20,g) = g^2(st-5)/5000 < 0 across the whole slider (st<=2.5), so rho < st/20. Also rho<a for g > 75/52 at tau=0 and g > (75/52)e^{-tau/30} with delay (1.3720 at tau=1.5); both checked in sympy. rho*/rho(0) = 1.448128 < 1.5. The '1.5x' consequence holds only at steadiness 1, though. In general the factor is b/min(a,b) = max(1, 1.5*st). At steadiness 2.5, the slider maximum, the bound is 3.75x and the actual maximum is 3.63x (rho_max 0.1208 at g*=0.301). Test 4's 37.75/9.125 = 4.14x still exceeds that, so the inference survives, narrowly. For st<=2/3 the optimum is g=0. The 'floor' applies to the asymptotic rate only. Finite-threshold times can be far shorter (Test 4's median is 9.1 s < 20 s) because the slow mode's infant amplitude (<=0.049) is below the band. For mom-loaded observables, the bound does show up as an argmin at g=0 after a mom kick.",
+     "key_numbers": "P(-b)=-g^2/1250; D(-b)=-g^2 e^{tau/10}/1250; rho*/rho(0)=1.448; bound factor max(1,1.5 st)=3.75 at st=2.5 (actual 3.63) vs Test 4 4.14x"
+    },
+    {
+     "id": "M6",
+     "claim": "Meaning verifier's modal numbers: slow-mode x-amplitude for the heel stick is 0.033-0.049 on g in [0.2,3.8] and 0.106 at g*. It is below A_+10=0.2232 for g>0.0585. For g>=~0.04 the slow eigenvector has |x|:|y| of ~0.11-0.13.",
+     "verdict": "PARTLY",
+     "evidence": "Mostly confirmed. HR0 = 145.405 bpm and dHR/dA = 44.09 (A>0) / 26.36 (A<0). A_+10 = 0.223186 and A_-10 = -0.379420. The slow-mode x-amplitude on [0.2,3.8] is 0.0332-0.0491, and 0.1054 at g*. It stays below A_+10 for g>0.0586. The |x|:|y| figure is imprecise, though. The ratio is 0.92 at g=0.04, 0.33 at 0.0585, 0.215 at g*, 0.18 at 0.1 and 0.146 at 0.15. It reaches 0.11-0.13 only for g>=~0.2.",
+     "key_numbers": "amp 0.0332-0.0491; 0.1054 at g*; |x|/|y| 0.92 (g=0.04), 0.215 (g*), 0.11-0.13 for g>=0.2"
+    },
+    {
+     "id": "M7",
+     "claim": "For Test 4's statistic, rho and recovery move in opposite directions over [0.08,3].",
+     "verdict": "PARTLY",
+     "evidence": "Deterministic, tau=0: Spearman(T,1/rho) for g>=g* is -0.998, so they do move in opposite directions. At the artifact's default tau=1.5 (deterministic nonlinear map) it is +0.06, i.e. unrelated: past K~1.8 recovery jumps up, which is the same direction as 1/rho. For the stored stochastic medians at tau=1.5 it is -1.000 on K in [0.25,2], but the K=2.5-3 upturn runs with 1/rho (+0.18 over all K). At tau=3, the stored curve correlates +0.81 with -rho from the delayed spectrum, because the delay Hopf (~1.61) drives the upturn. That fits the verifiers' Hopf explanation and is unrelated to g*.",
+     "key_numbers": "Spearman -0.998 (tau=0), +0.06 (tau=1.5 NL det), DEF tau=1.5 -1.000 on [0.25,2], DEF tau=3 vs -rho +0.81"
+    },
+    {
+     "id": "M8",
+     "claim": "Consequence for ChatGPT's C7 headline ('a finite amount of coupling can maximize recovery speed; stronger coupling slows recovery and destabilizes'): the verifiers rated it OVERSTATED because rho is not recovery speed.",
+     "verdict": "PARTLY",
+     "evidence": "The verdict should stay OVERSTATED, but the reason needs changing. Read as a statement about pair-level or worst-case recovery in the artifact's deterministic model, the headline is substantively true: a finite optimum at g~0.07-0.15 near g*, monotone slowing beyond it, and loss of stability at g_c (or earlier with delay). ChatGPT did not prove that, though. It proved facts about rho only and gave no link to any finite-threshold time. For the recovery statistic the artifact actually reports (Test 4), the headline is false (M1, M2). 'rho is not recovery speed' is too strong as stated. The accurate version is 'rho is not the recovery speed of the infant-only heel-stick statistic'.",
+     "key_numbers": "pair/worst-case argmin 0.07-0.15 vs Test 4 argmin ~1.8-2.6"
+    }
+   ],
+   "new_findings": [
+    "The verifiers' 'g* is irrelevant' conclusion depends on the observable. For infant-only recovery after a heel stick (Test 4) it holds at every physically meaningful threshold. For pair-level recovery it fails: rho governs the dyad arousal norm after the artifact's own alarm() event, and the worst case over arousal perturbations. There, finite-threshold recovery tracks 1/rho (Spearman +0.94 to +0.999) and is minimized at g~0.07-0.15, even with a coarse band (0.5 or 0.2232). The reason is that mom-loaded perturbations put O(1) amplitude into the slow mode, whereas the heel stick puts only 3-5% into the infant.",
+    "A causal check that rho, not coincidence, sets the pair-level optimum: when steadiness moves g* from 0 to 0.30, the dyad-after-alarm argmin moves with it (0.00-0.01, 0.06-0.09, 0.11-0.15, 0.19-0.24, 0.25-0.43, 0.31-0.47). Test 4's argmin stays in 0.43-3.0 regardless.",
+    "For the heel stick, the argmin approaches g* only logarithmically. It comes within 50% of g* only for a threshold of ~1e-23 arousal units, and within 10% only at ~1e-123. Tightening the band cannot rescue ChatGPT's optimum for Test 4.",
+    "This is measurable in the noisy artifact only with noise replay or big ensembles. Paired runs (same seed with and without the alarm, 100 seeds) put the dyad optimum at K=0.08-0.15. Ensemble means of 100 vs 100 runs at eps=0.2232 give 0.08-0.2, with 141 of 200 bootstrap resamples at 0.08-0.125. A realistic single-run hold rule gives 0.35-0.75. The optimum is flat (within 0.5 s over K=0.06-0.25), and the K slider's 0.05 step cannot set 0.08 exactly.",
+    "The 'at most 1.5x' consequence of rho<b depends on steadiness: the factor is max(1, 1.5*steadiness), which is 3.75x at slider max 2.5 (actual 3.63x). That still falls short of Test 4's 4.14x.",
+    "At the default tau=1.5, Test 4's deterministic recovery is unrelated to rho (Spearman +0.06), not opposite to it. 'Opposite directions' holds at tau~0 (-0.998) and for the stored stochastic medians on K in [0.25,2] (-1.000). At tau=3 the stored curve tracks -rho of the delayed spectrum (+0.81) through the Hopf, which has nothing to do with g*.",
+    "I reproduced the artifact's stored Test 4 defaults exactly with its own expSweep, both curves and the censoring counts: <session scratchpad>/refute-meaning/r4_check.js"
+   ],
+   "summary": "The verifiers' conclusion holds for Test 4 and is too broad as a general claim.\n\n**Test 4: not refuted.** g*≈0.08 tells you nothing about Test 4's statistic (infant heart rate back within 10 bpm after a heel stick, minimum near K≈2). Every steelman I tried for that statistic failed:\n- **Tighter band.** The best gain approaches g* only logarithmically. It gets within 50% of g* only at a threshold of about 1e-23 arousal units, and within 10% at about 1e-123. At a 1e-4 bpm band the best gain is still 0.18–0.20.\n- **Long-time tail.** g* beats g=1 only after 158 s, when the infant is 0.003 bpm from baseline.\n- **Other slider settings.** Across steadiness, infant vagal tone and delay, Test 4's best gain stays at 0.43–3.0 and never follows g*(steadiness).\n- **Mom's recovery.** After a kick to mom alone, the best gain is g=0.\n- **Rank agreement with 1/rho.** −0.92 at no delay and about 0 at the default delay of 1.5 s. Against the artifact's stored medians it is −1.000 over K in [0.25, 2].\n\n**General form: refuted.** The meaning verifier also said the slow mode that sets rho is \"invisible at a finite threshold\" and that recovery \"never involves g*\". That is wrong once the measure includes mom's arousal or the disturbance reaches mom. The heel stick puts only 3–5% of the infant's deviation into the slow mode, but mom-loaded disturbances put in a large share.\n- **Pair norm after the artifact's own alarm event** (+0.30 infant, +0.35 mom): best gain 0.11–0.15, and recovery time tracks 1/rho with rank agreement +0.94 to +0.99.\n- **Worst case over disturbances to either arousal:** best gain 0.07–0.10 at every threshold from 0.5 down to 1e-8, with rank agreement +0.996 to +0.999.\n- **It is rho, not coincidence.** When steadiness moves g* from 0 to 0.30, the pair optimum moves with it.\n\n**Measurable in the noisy simulator only with idealized designs:**\n- Replaying the same noise with and without the alarm (100 seeds), the pair optimum is K=0.08–0.15.\n- Averaging 100 alarm runs against 100 controls at a 0.22 threshold gives 0.08–0.2.\n- A realistic single run with the artifact's hold rule gives 0.35–0.75.\n- The optimum is flat: recovery varies by under 0.5 s across K=0.06–0.25.\n\n**The rho < 1/20 bound: confirmed exactly, for every delay and across the whole steadiness slider.** Its \"at most 1.5x improvement\" consequence holds only at steadiness 1. In general the cap is max(1, 1.5×steadiness): 3.75x at the slider maximum, where the actual best is 3.63x. That is still below Test 4's 4.14x, so the inference survives, narrowly. The bound limits only the long-run decay rate; finite-threshold recovery can be much faster.\n\n**Smaller corrections:**\n- The meaning verifier's |x|:|y| range of 0.11–0.13 holds only for g≳0.2, not from about 0.04.\n- At the default delay, Test 4 recovery is unrelated to rho rather than opposite to it.\n- The OVERSTATED verdict on ChatGPT's headline (C7) should stand, with a different reason. ChatGPT proved facts about rho only and never connected them to any recovery time. The headline is roughly true for pair-level or worst-case recovery and false for Test 4.\n\nI extracted the artifact's model code verbatim and reproduced its stored Test 4 defaults exactly with it. Scripts and outputs are in <session scratchpad>/refute-meaning/."
+  },
+  {
+   "key": "refute-ablation",
+   "summary": "I re-ran the ablation verifier's decisive conditions. The code I used was my own unpatched extraction of artifact lines 468-1037 (sha256 9dbcd5da…), run with node. Ablations change only exported constants: C.capA=Infinity makes cap exactly 1, C.cMir=0 removes mirroring, the sig/sigU values are set to 0 for noise-off, and C.k3=0 removes the cubic term.\n\n**What I confirmed.**\n- **Protocol and data match.** Their protocol and metric match Test 4 exactly, and their numbers reproduce exactly on their seeds (5000+i). This covers DEF.sweep, their 40-run tables (i), (ii), (iii), (iv) and (viii), and their claim that every Test 4 run censored at K=3 ends stuck in the high-arousal state.\n- **Equilibria.** I independently confirmed the cap-induced saddle-node at g_SN=2.06888. At g=3 the high state is Ai=1.914, Am=2.791, cap=0.076. With cap==1 there are no nontrivial equilibria before 3.858.\n- **Delayed loop alone.** cap==1 with cMir=0 at tau=1.5 is enough by itself to produce the U and censoring with oscillation.\n\n**Main result: their seed block is an outlier.** On my seeds (6000+i, 40 runs) and on a 400-seed pool (100000+i), censoring at high K is about half what they saw.\n- At tau=0.02, K=3, censoring is 25/40 on seeds 5000+i, 11/40 on seeds 6000+i (Fisher p=0.003), and 161/400 = 40.3% [35.6, 45.1] on the pool.\n- Under the pooled rate, their 25/40 has p=0.0037, and the stored artifact seeds' 11/14 at tau=0.02 has p=0.0041.\n\n**Population medians (the plotted statistic):**\n\n| Condition | K=1 | K=2 | K=2.5 | K=3 |\n|---|---|---|---|---|\n| tau=0.02, default | — | 8 | 7.5 | 7.5 (40% censored) |\n| tau=1.5, default | 10.4 | 22.25 | 25.25 | 50.25 |\n| tau=1.5, cap==1 | 10.25 | 23.6 | 35.75 | 47.75 |\n\n- **tau=0.02:** the median falls monotonically and is flat at about 7.5 s from K=2.5 to 3. It never reaches 50% censored up to K=4.25: 47% at K=4 and 4.25, where 25-28% of runs are already in the high state before the stick and score a 3-s floor.\n- **tau=1.5:** default and cap==1 are nearly identical, and with cap==1 no saddle-node exists.\n\n**What this means for their conclusion.** In the model, the interior minimum and rise of the plotted median inside the sweep come from the delay: the rise survives removing the cap and vanishes when the delay is removed. Cap, mirroring and noise (the saddle-node trap) produce the censored upper tail instead. At K=3, 43.5% of default runs are censored against 3.0% with cap==1, and 171 of the 174 censored default runs are stuck in the high state.\n\nThe stored 140.25 at K=3 needs at least 8 of 14 runs censored. Under the pooled rate that happens with probability 0.22, and the stored 10/14 has P=0.033.\n\nSo their headline \"delay is not what produces the curve the artifact shows\" is refuted as a property of the model; it is an artifact of the seed block. Their criticism of the artifact's sentence \"a delayed feedback loop alone\" is largely overturned. Their claim that \"without noise, recovery keeps falling out to K=8\" is also refuted: at tau=0.02 with all arousal noise off, 40/40 runs are censored from K=4.5 on.",
+   "claims": [
+    {
+     "id": "A1",
+     "claim": "Their recovery metric, seeds and protocol match the artifact's Test 4 code. Their copy reproduces DEF.sweep exactly, and their 40-run tables are accurate.",
+     "verdict": "CONFIRMED",
+     "evidence": "Artifact lines 936-959 (expSweep) and 845-860 (recoveryTime) set the protocol: seeds 5000+i, R=14, dur=220, stick at t=80, alarms:false, roommate:false, cells {nSA:16,nR:8}, band 10 bpm held 15 s, search from stick+3 s, censored if rt>=124 (value 140.25), taus=[tau, 2*tau]. My unpatched extraction (lines 468-1037, evaluated straight from the HTML) runs expSweep(DEFAULTS) and matches DEF.sweep (line 1043) in every field for both curves. My own runner matches every stored median and censored count. With seeds 5000+i and N=40 I reproduce their tables (i) default tau=1.5, (ii) tau=0.02, (iii) cap==1 tau=1.5, (iv) cMir=0 tau=1.5 and (viii) cap==1 tau=0.02 digit for digit. So their line-732 patch is equivalent to setting C.capA=Infinity.",
+     "key_numbers": "e.g. s5000 tau=0.02 cens [0,0,0,0,0,0,0,0,2,8,14,21,25,28,29,29]; s5000 cap1 tau=1.5 med [...,43.875,64,84.625,108.125], cens [...,1,4,8,19]; both identical to theirs"
+    },
+    {
+     "id": "A2",
+     "claim": "Main result: delay is not what produces the curve the artifact shows. With the delay removed (tau=0.02), the 14-run curve is nearly identical to the stored tau=1.5 curve, and the 40-run tau=0.02 sweep keeps the U (minimum 8.25 s, 25/40 censored at K=3).",
+     "verdict": "REFUTED",
+     "evidence": "This is a property of seed block 5000+i, not of the model. Censoring counts at tau=0.02 differ sharply between seed blocks: at K=3, 25/40 (5000+i) vs 11/40 (6000+i), Fisher p=0.0032; at K=3.25, 28 vs 14, p=0.0034. On 400 fresh seeds the censored fraction at K=3 is 40.3% [35.6, 45.1]. Under that rate their 25/40 has P=0.0037, and the artifact seeds' 11/14 has P=0.0041. The population median at tau=0.02 falls monotonically and stays flat inside and beyond the sweep: 8.5 (K=1.5), 8 (2), 7.5 (2.5), 7.5 (2.75), 7.5 (3; boot 95% 7.25-8.25), 7.375 (3.25), 7.75 (3.5), 10.875 (3.75, i.e. 1.47x the minimum), 8.625 (4), 7.25 (4.25). Censoring never reaches 50%, so the median never jumps. At tau=1.5 the population median rises 10.4 -> 22.25 (K=2) -> 50.25 (K=3). At K=2 that is 2.8x the tau=0.02 value; at K=2.5 it is 3.4x. Even on their own seeds the K=2.5 points differ 2.1x (20.875 vs 9.75).",
+     "key_numbers": "6000+i, tau=0.02 med [38.25,17.125,12,10.625,9.5,8.625,8,7.625,7.5,7.25,7.125,7,6.75,6.75,7,6.75], cens [2,0,0,0,0,0,0,1,4,7,7,10,11,14,17,18]; pool (n=400) cens at K=2.5/2.75/3/3.25/3.5/3.75 = 27.8/34.7/40.3/43.2/46.8/48.2%"
+    },
+    {
+     "id": "A3",
+     "claim": "In the default tau=1.5 configuration the plotted rise comes from route (b) (cap+cMir+noise saddle-node trapping), and delay alone adds only a mild deterministic step (8.5 -> 22.5 s).",
+     "verdict": "REFUTED",
+     "evidence": "Population medians at tau=1.5, default vs cap==1 (cap==1 means no high-arousal equilibrium exists below 3.858): K=1 10.375 vs 10.25; K=2 22.25 vs 23.625; K=2.5 25.25 vs 35.75; K=2.75 36 vs 36.5; K=3 50.25 vs 47.75. The 40-run curves on seeds 6000+i also overlap: default [..,10,14,24,23.9,23.75,25.6,32.1,45.1] vs cap1 [..,13.25,24.5,24,23.5,23.75,26.75,34.5,47]. Removing the delay flattens the median at 7.5 s. So the delay is necessary for the median rise, and the cap is not. Route (b) supplies the censored upper tail: 43.5% censored at K=3 in the default vs 3.0% with cap==1, and 171 of the 174 censored default runs are stuck high. The 8.5 -> 22.5 s step they call 'delay alone' is delay plus cap with noise off. With noise off and cap removed, the delay gives 9 -> 48 s by K=3 (5.3x), so the cap damps the delayed rise.",
+     "key_numbers": "Noise-off tau=1.5: cap on min 8.5 -> 21.5 at K=3; cap==1 min 9 -> 48 at K=3, 121.5 at K=3.75"
+    },
+    {
+     "id": "A4",
+     "claim": "Without delay the rising arm needs all three of cap, cMir and arousal noise. Remove any one and recovery time keeps falling out to K=8.",
+     "verdict": "PARTLY",
+     "evidence": "The cap and cMir parts are confirmed on seeds 6000+i. At tau=0.02, cap==1 declines 38.25 -> 5.875-6.125 at K=7-8 (1 censored at K=8). cMir=0 declines to 5.0 at K=8 with 0 censored. cap==1 plus cMir=0 declines to 4.0. The noise part is refuted: with arousal noise off at tau=0.02 the median declines to 7.25 at K=4, then 40/40 runs are censored (stuck high) at every K from 4.5 to 8. Their noise-off table stopped at K=3.75. The premise is also weak: at the population level, tau=0.02 with all three ingredients present has no median rise within [0,4.25]. It shows only rising censoring and q75.",
+     "key_numbers": "t002_noise0 cens at K=[4,4.5,5,6,7,8] = [0,40,40,40,40,40]; late Am>1.5 in 40/40 runs already from K=3.5, so runs score as recovered and then relapse"
+    },
+    {
+     "id": "A5",
+     "claim": "Mechanism: with cap on, a saddle-node at g~2.07 creates a stable high-arousal state. At g=3 it sits at Ai~1.9, Am~2.8, cap~0.08. With cap off, nothing appears before g_c.",
+     "verdict": "CONFIRMED",
+     "evidence": "Independent root scan plus bisection, with stability from the tau=0 Jacobian: g_SN=2.06888. At g=3 the stable high state is Ai=1.914, Am=2.791, cap=0.076, maxRe=-0.150, and the saddle is at Ai=0.104, Am=0.555. The saddle reaches the origin near 3.858. With cap==1 the only nontrivial equilibria appear past 3.858 (Ai=0.040, Am=0.307 at g=4).",
+     "key_numbers": "g_SN=2.06888"
+    },
+    {
+     "id": "A6",
+     "claim": "At tau=1.5 the censored runs at K=2.5-3 are stuck in the high state, not oscillating. With cap==1 (and cMir=0), censored runs oscillate.",
+     "verdict": "CONFIRMED",
+     "evidence": "400-seed pool, tau=1.5 default: 171 of 174 censored runs at K=3 have late Am>1.5, and so do 101 of 111 at K=2.5. Seeds 6000+i, K=3: 12/12 stuck high. With cap==1 none of the censored runs are stuck high (pool K=3.5: 85/87 oscillating). With cap==1 plus cMir=0 at tau=1.5 (6000+i), all censored runs oscillate (38/38 at K=2.75, 40/40 at K=3). With cMir=0 alone, every censored run oscillates and the rise gets steeper: pool censoring 53% at K=2.75 and 78% at K=3."
+    },
+    {
+     "id": "A7",
+     "claim": "A delayed negative loop alone (cap==1, cMir=0, even with noise off) produces an interior minimum and a rise to full censoring at tau=1.5.",
+     "verdict": "CONFIRMED",
+     "evidence": "Seeds 6000+i at tau=1.5, cap==1, cMir=0: minimum 10.5 at K=0.75; censored 21/40 at K=2.5, 38/40 at K=2.75, 40/40 at K=3. With noise off as well: minimum 9.5 at K=1 and 40/40 censored from K=2.5. This holds on independent seeds and counts against A2/A3: the delay is sufficient."
+    },
+    {
+     "id": "A8",
+     "claim": "Necessary/sufficient: within K in [0,3] the sufficient sets are (a) delay >= ~0.5 s with the soothing loop, or (b) no delay with cap AND cMir AND noise. Delay is not individually necessary.",
+     "verdict": "PARTLY",
+     "evidence": "(a) is confirmed at tau=1.5 (A7). I did not re-test tau=0.25-1.25. (b) is refuted for the plotted median at the population level: at tau=0.02 the median is flat at 7.5 s for K=2.5-3, peaks at 1.47x at K=3.75, and censoring stays at or below 48% up to K=4.25. (b) is sufficient only for rising censoring and q75 (q75=140.25 from K=2.5). For the plotted median, delay was necessary in every configuration I tested."
+    },
+    {
+     "id": "A9",
+     "claim": "Placebo (no heel stick, scored the same way) is still censored at high K (10/40 at K=3, tau=1.5), so much of the high-K censoring is not about recovering from the stick.",
+     "verdict": "CONFIRMED",
+     "evidence": "Seeds 6000+i: placebo censored 6/40 at K=3 (tau=1.5) vs 12/40 with the stick, and 6/40 vs 11/40 at tau=0.02. Placebo censored runs are stuck high (6/6). With cap==1 the placebo is censored in 0/40 at K=3."
+    },
+    {
+     "id": "A10",
+     "claim": "Robustness: the stored argmin K=2 is 14-run noise. With 40 runs the argmin is K~1, and the floor is flat (~10-12 s) from K=0.75 to 2.",
+     "verdict": "PARTLY",
+     "evidence": "The argmin is confirmed: seeds 6000+i give K=1.25 (10.0 s), and the pool gives K=1 (10.375) and K=1.25 (10.25). A flat floor out to K=2 is refuted: the pool median at K=2 is 22.25 (boot 95% 19.6-23), about 2.2x the minimum, and seeds 6000+i give 23.875. Their 11.75 at K=2 is again specific to seeds 5000+i. The artifact's f4 text 'fastest at responsiveness 2' is wrong at the population level."
+    },
+    {
+     "id": "A11",
+     "claim": "Their verdict on the artifact's Test 4 sentence: true that a delayed loop is sufficient, but misleading as an explanation of the plotted curve, because removing the delay leaves the curve unchanged.",
+     "verdict": "REFUTED",
+     "evidence": "At the population level the plotted median's minimum and rise in [0,3] survive removing the cap (no saddle-node) and vanish when the delay is removed (A2, A3). So the artifact's sentence ('produces the same shape from a delayed feedback loop alone') describes the median curve better than the verifier allowed. What it leaves out: the censored upper tail and the 140.25 point come from saddle-node trapping. That point appears at the stored K=3 only through seed luck (P(>=10/14 censored)=0.033; P(14-run median=140.25)=0.22). The finding text 'mom's arousal climbs, and her capacity to soothe drops' describes those censored runs correctly. 'The response overshoots' fits the delayed rebound behind the median step."
+    },
+    {
+     "id": "A12",
+     "claim": "Their C6 verdict: 'delay not required' holds for the artifact's effect, by a nonlinear mechanism.",
+     "verdict": "OVERSTATED",
+     "evidence": "For the effect the artifact plots (the median U within K<=3), delay is required in the model at the population level. Only the rise in censoring and upper quartile is delay-independent (tau=0.02: 40% censored at K=3). The rest of their C6 assessment (that ChatGPT's linear rho argument does not explain Test 4) still stands, and I did not re-check the g>g_c instability part."
+    },
+    {
+     "id": "A13",
+     "claim": "tau=3 curve: the rise is a genuine delay (Hopf) effect near g~1.6.",
+     "verdict": "CONFIRMED",
+     "evidence": "Seeds 6000+i, tau=3: censored 4/40 at K=1.5, then 20/40 at K=1.75. Most censored runs oscillate at K=1.75-2.5 (19/20, 27/30, 28/35). Stuck-high runs dominate from K=3 (21/34)."
+    },
+    {
+     "id": "A14",
+     "claim": "Metric oddities: recoveryTime takes the first 15-s hold (misses relapse), and a pair already in the high state before the stick 'recovers' at the 3-s floor.",
+     "verdict": "CONFIRMED",
+     "evidence": "Noise-off tau=0.02, K=3.5-4: all 40 runs end with Am>1.5, yet 0 are censored, so they relapse after a scored recovery. Noise-off tau=1.5, K=3.5-3.75: the same, 40/40. Pool tau=0.02: 25% (K=4) and 28.5% (K=4.25) of runs are in the high state before the stick, which pulls the median down to 7.25 despite 47% censoring. The censoring cut (rt>=124) vs a maximum real recovery of 125 s follows from lines 854-859."
+    }
+   ],
+   "new_findings": [
+    "SEED-BLOCK OUTLIER: the artifact's stored Test 4 seeds (5000..5013), and the 5000..5039 block the ablation verifier used, have about twice the high-K censoring of other seeds. tau=0.02, K=3: 25/40 (5000+i), 11/40 (6000+i), 161/400 = 40.3% on seeds 100000+i. tau=1.5, K=3: 24/40, 12/40, 174/400 = 43.5%. Fisher p (5000 vs 6000 block) = 0.0032 at tau=0.02, K=3 and 0.013 at tau=1.5, K=3. Under the pooled rate, P(stored 10/14 at tau=1.5, K=3) = 0.033 and P(11/14 at tau=0.02, K=3) = 0.0041.",
+    "POPULATION MEDIANS (n=400, seeds 100000+i). tau=1.5 default: K=1 10.375, 1.25 10.25, 2 22.25, 2.5 25.25, 2.75 36, 3 50.25 (boot 42.6-70.9), 3.25 94.75, 3.5 140.25 (55% censored). tau=1.5 cap==1: 10.25, 15.875, 23.625, 35.75, 36.5, 47.75, 60.25, 78.1, 121.1 (K up to 3.75). tau=0.02 default: K=1.5 8.5, 2 8, 2.5-3 7.5, 3.25 7.375, 3.5 7.75, 3.75 10.875, 4 8.625, 4.25 7.25. tau=1.5 cMir=0: 10.75, 26, 68.25, 140.25 (53%), 140.25 (78%) at K=1, 2, 2.5, 2.75, 3. In the model the stored K=3 point at 140.25 is not the expected median (about 50 s). The true median reaches 140.25 only near K=3.5.",
+    "DECOMPOSITION (population level, tau=1.5 default): the plotted median's interior minimum and rise inside the sweep come from the delay. The rise is unchanged with cap==1 and absent at tau=0.02. Cap+cMir+noise (saddle-node trapping) produces the censored upper tail and IQR blow-up: 43.5% vs 3.0% censored at K=3, and 98% of censored runs are stuck high. Removing mirroring makes the rise steeper (delay Hopf), so mirroring partly protects against it.",
+    "NOISE IS NOT NEEDED FOR TRAPPING AT LARGER K: with all arousal noise off at tau=0.02, the heel stick alone drives all 40 runs into the high state. The metric scores a 7-s 'recovery' then a relapse for K=3.5-4.25, and full censoring (40/40) for K>=4.5. This contradicts the ablation verifier's 'remove noise and recovery keeps falling out to K=8'.",
+    "THE CAP DAMPS THE DELAYED RISE deterministically. With noise off at tau=1.5, cap on gives 8.5 -> about 21.5 s, flat from K=2 to 3.75. cap==1 gives 9 -> 48 s at K=3 and 121.5 s at K=3.75 (18/40 censored, all oscillating).",
+    "ABLATION EQUIVALENCE: setting the exported constants (C.capA=Infinity, C.cMir=0, sig=0) reproduces the verifier's patched-code tables exactly, so no source edit is needed to ablate cap or mirroring.",
+    "Independent equilibrium check: saddle-node g_SN = 2.06888; high state at g=3 (Ai, Am, cap) = (1.914, 2.791, 0.076). With cap==1, the first nontrivial equilibrium appears past g = 3.858."
+   ]
+  },
+  {
+   "key": "critic",
+   "claims": [
+    {
+     "id": "K1",
+     "claim": "Provenance: C6's phrase 'Delay is not required for this effect', C7's headline, C8's aggregation-error identity, C13 and C14 are not in ChatGPT's zip.",
+     "verdict": "UNVERIFIABLE",
+     "evidence": "I grepped proof_notes.md, verify_shared_air.py, README.txt and audit_results.json for 'let us prove', 'not required', 'Hartnoll', 'StatPearls', 'n_I/n_E', 'kappa' and 'Delta': none of them occur. The checker only says 'Previous response's weighted reciprocal identity' (verify_shared_air.py line 101) and tests it at one point (n_i=1). These claims must come from ChatGPT's chat replies, which no verifier saw. They were checked against the task's paraphrase, not ChatGPT's own wording. The closest zip text to C6 is proof_notes §1.6, last paragraph: 'one cannot attribute a nonmonotonic gain response to delay alone'.",
+     "key_numbers": "0 hits for each phrase; checker line 101"
+    },
+    {
+     "id": "K2",
+     "claim": "ChatGPT's scope statements: the artifact did not load; the equations are at Markdown lines 196-205; 'phase oscillators, not ion channels' is at line 221; 'not fitted to patients' is at lines 216-218.",
+     "verdict": "PARTLY",
+     "evidence": "The line numbers cannot be checked because the Markdown is not available. The substance matches the HTML. Limits list, line 455: 'not fitted to patients'. Line 457: 'The cells are phase oscillators. They capture synchronization, not ion channels'. Code comment, lines 493-494. Because ChatGPT worked from the Markdown, it never saw the code and so missed max(Am,0) in cap, the voice terms, BATCH_CELLS and the pliMax implementation. Its own §4 says this openly ('an implementation question to check').",
+     "key_numbers": "HTML lines 455, 457, 493-494"
+    },
+    {
+     "id": "K3",
+     "claim": "Numbers in audit_results.json that no verifier recomputed: rho(0.02)=0.0403218, rho(0.1)=0.0482058, rho(g_c)~1e-18, the positive real root at g=4, tau=10 (0.0013782112), the water reciprocal gap 1/3, and energy derivative -10/9.",
+     "verdict": "CONFIRMED",
+     "evidence": "numpy roots of the exact cubic give rho(0.02)=0.04032183342487671 and rho(0.1)=0.048205804026978626. At g_c, P(0,g_c) is about -1.7e-18 in float, so the table's 1.4e-18 is rounding. brentq on D(s,4,tau) gives 0.0022500363159859 (tau=0), 0.0020536565591277 (tau=1.5) and 0.0013782112153223 (tau=10). In exact Fractions for config B: sum w_i/r_i - 1/rbar = 1/3, F' = -10/9, V_I' = 2/3.",
+     "key_numbers": "0.0403218334, 0.0482058040, 0.00137821121532, 1/3, -10/9"
+    },
+    {
+     "id": "K4",
+     "claim": "proof_notes §2: 'Repeating each four-cell configuration six times gives 24 cells, matching the source's pacemaker population size.'",
+     "verdict": "PARTLY",
+     "evidence": "The figure 24 matches the artifact's text (line 432, 'The sinoatrial node is 24 pacemaker cells ... 12 respiratory rhythm cells') and KINDS (line 509, nSA:24, nR:12). But all six tests run with BATCH_CELLS = {nSA:16, nR:8} (line 832, used at lines 877, 917, 948, 965 and 994), so 24 holds only in the live view. The counterexample works for any multiple of 4 (16 = 4x4), so C10's math is unaffected. No verifier noticed the gap between the text and the tests.",
+     "key_numbers": "24/12 in text vs 16/8 in every test"
+    },
+    {
+     "id": "K5",
+     "claim": "proof_notes §1.6: 'This also shows why one cannot attribute a nonmonotonic gain response to delay alone in the full source system: it contains a g^2 positive-feedback path, saturation, and cubic terms as well.'",
+     "verdict": "PARTLY",
+     "evidence": "As a deduction this does not follow: the IVT result (D(0)=P(0) for every tau) says nothing about where Test 4's U-shape comes from. Still, the ingredients it names come closer than the meaning verifier allowed ('irrelevant'). The ablation verifier found that, without delay, the rising arm needs the g^2 mirroring/contagion loop (cMir), the saturation cap(Am), and arousal noise. The cubic k3 is not needed (k3=0 at tau=0.02 still gives a U). So ChatGPT named two of the three necessary ingredients, added one unnecessary one, and left out noise. For rho itself the theorem does prove that delay is not required, since rho(g) is non-monotone at tau=0.",
+     "key_numbers": "named: g^2 loop (necessary), saturation (necessary), cubic (not necessary); omitted: noise (necessary)"
+    },
+    {
+     "id": "K6",
+     "claim": "Independent recheck of the single-verifier result that the exact 2:1 threshold is about 4.0, not 3.31, for the artifact's rates.",
+     "verdict": "CONFIRMED",
+     "evidence": "My own code (k2_lock.py): stroboscopic lifted map of theta' = w - eps P(Omega t) sin theta with exact PMEAN = e^-2 I0(2), hrI=149.59, hrM=76.27 (DEF.pulse), RK4 with 4000 and 12000 steps per period, and a 720-point theta grid. It is locked when lift(theta) - theta - 4pi changes sign. Onset is eps=3.99977. The first-order value is 3.31324 (+20.7%). The tongue closes again at eps=19.7096. With the detuning mirrored (+0.309) the onset is 2.94820. All of this matches the water_phase_stats verifier (4.0002, 19.709, 2.948); their 4.0002 used w rounded to 15.665.",
+     "key_numbers": "3.99977 vs 3.31324; closes 19.7096; mirror 2.9482"
+    },
+    {
+     "id": "K7",
+     "claim": "NEW, artifact Test 5 text (line 1673; eps10 at lines 1633/1668): 'A pair 10 bpm from the nearest ratio needs [11]'. This comes from the first-order formula behind C11.",
+     "verdict": "REFUTED",
+     "evidence": "Same exact single-phase lifted-map method (k5_lock10.py), delta = +/- 2pi*10/60 = +/- 1.0472 rad/s, eps scanned from 0.5 to 40 in steps of 0.5. An infant 10 bpm faster than 2:1 locks for eps in about [8.3, 33.5] (unlocked at 8.0, locked at 8.5). Second-order averaging predicts 8.30. An infant 10 bpm slower never locks 2:1 at any eps up to 40: the maximum margin stays at or below -0.63 rad. The artifact's formula gives 11.23 either way. So at this detuning the first-order error is not small, and the sign of the detuning decides whether locking can happen at all. The 'push of about 49%' figure inherits the error.",
+     "key_numbers": "first-order 11.23; exact +10 bpm: 8.3-33.5; exact -10 bpm: never (eps<=40)"
+    },
+    {
+     "id": "K8",
+     "claim": "Smaller statements in proof_notes no verifier explicitly checked: Z1' includes i*omega*Z1; heterogeneous frequencies add another moment; F -> +inf at the boundary with a compact sublevel set; §3.3 closure criterion; 'a2 rounded to 0.19 is consistent'; the theorem's conditions are sufficient, not necessary.",
+     "verdict": "CONFIRMED",
+     "evidence": "Derived by hand. (1/m) sum i(omega + K Im(Z1 e^{-i th})) e^{i th} = i omega Z1 + (K/2)(Z1 - conj(Z1) Z2). The forcing term -eps P sin th contributes -i eps P (Z2-1)/(2i) = (eps P/2)(1-Z2). For F: -n log v -> +inf as v -> 0, and F is bounded below on the bounded domain, so sublevel sets are compact. §3.3 is the standard necessary condition: Dh F must be constant on fibres of h. 0.18648 rounds to 0.19. Sufficient-not-necessary is shown by algebra's E2 (steadiness 2.5 violates d>=3b-2a yet the conclusion holds).",
+     "key_numbers": "a2 = 0.186478 -> 0.19"
+    },
+    {
+     "id": "K9",
+     "claim": "Independent recheck of the bistability that all three simulation verifiers report, and the nonlinear type of the boundary at g_c, which ChatGPT says linear analysis cannot classify.",
+     "verdict": "CONFIRMED",
+     "evidence": "k3_equil.py reduces the noise-free, U=0 equilibria to a scalar equation in Am and scans it. The saddle-node is at g_sn = 2.068885. At g=3: high state (1.9142, 2.7908, C=0.1308) and saddle (0.104, 0.555). Near g_c the branch through the origin is a piecewise pitchfork, because cap is only C^1. Expanding the residual: linear coefficient (0.04g^2 - 0.15g - 1/60)/g; cubic coefficient about +0.17 for Am>0 (from cap) and about -0.06 for Am<0. So there is a subcritical saddle at Am>0 for g<g_c (Am=0.044 at 3.85) and a supercritical stable branch at Am<0 for g>g_c ((-0.0116, -0.0894) at 3.87; (-0.040, -0.3075) at 4). This agrees with algebra and ablation.",
+     "key_numbers": "g_sn=2.068885; g=3 high state Ai=1.914, Am=2.791"
+    },
+    {
+     "id": "K10",
+     "claim": "Reconcile the verifiers' Hopf values: algebra/meaning give g_H(tau=3)=1.6117 and tau_c=1.574; ablation gives 1.5995 and 1.56.",
+     "verdict": "CONFIRMED",
+     "evidence": "Both are right, each in its own frame. The code reads AiD = buf[bufPos-lag], which is A(t - lag*dt) exactly (lines 724-726, 750-751), so the code adds no extra delay step. fsolve on D(i w)=0 gives 1.611707 (w=0.303109) at tau=3, 2.652023 at tau=2 and 4.227272 at tau=1.5, with tau_c=1.57408 (w=0.48825) at g_c. The artifact's explicit-Euler map, det(lam^L((lam-1)I - dt A0) - dt A1)=0 on |lam|=1, gives 1.599543 at dt=0.02. Halving dt gives 1.605603, 1.608649, 1.610177 and 1.610941, converging linearly; Richardson extrapolation gives 1.611696. So the 0.012 gap is the O(dt) error of the Euler step. Quote continuous values for the equations and Euler values for the simulator. At tau=1.5 the Euler map's first instability is 3.8580007 (real), the same as g_c.",
+     "key_numbers": "1.611707 (DDE) vs 1.599543 (Euler, dt 0.02) -> 1.6117 as dt->0; tau_c=1.57408"
+    },
+    {
+     "id": "K11",
+     "claim": "Verifier flag: water_phase_stats graded C11 PARTLY.",
+     "verdict": "OVERSTATED",
+     "evidence": "Every part of C11 is true as ChatGPT stated it. a2 = 0.1864780666 is correct. ChatGPT explicitly says the inequality is first-order averaging and 'not an exact criterion'. It is mathematically true that a first-moment index vanishes for 2:1, and ChatGPT flagged this as 'an implementation question to check, not a proven defect'. Not measuring the error is a gap, not a mistake. The grade should be CONFIRMED, with the verifier's +21% added as an important amplification.",
+     "key_numbers": "exact 3.99977 vs first-order 3.313"
+    },
+    {
+     "id": "K12",
+     "claim": "Verifier disagreement on C15: meaning says CONFIRMED, ablation says PARTLY.",
+     "verdict": "CONFIRMED",
+     "evidence": "ChatGPT's actual §1.5 text gives the fuller reason: 'They do not prove the shape of its nonlinear, delayed, noisy Test 4 output. In particular, the source sweeps responsiveness from 0 to 3; the static instability threshold above lies beyond that sweep.' The sweep stopping below g_c is offered as one illustration, not the only reason. Ablation's points (the delay Hopf at 1.60-1.61 inside the sweep for tau=3; the saddle-node at 2.07 for tau=1.5) amplify it and do not contradict it. CONFIRMED with amplification is the fair grade.",
+     "key_numbers": "K_max=3 < g_c=3.858; g_H(3)=1.6117; g_sn=2.0689"
+    },
+    {
+     "id": "K13",
+     "claim": "Verifier flag (meaning): 'For g>=~0.04 the rho-defining mode is mom's own relaxation.'",
+     "verdict": "OVERSTATED",
+     "evidence": "Eigen-decomposition at tau=0 with heel-stick initial condition (1,0,0). At g=0.04 the dominant mode has |x|/|y| = 0.92 and carries x-amplitude 0.714, so it is still mostly the infant's mode. At g*=0.0804 the values are 0.215 and 0.105. From g=0.2 to 3.8 the ratio is 0.114-0.133 and the amplitude 0.034-0.049, which reproduces the verifier's numbers. So the mode is mom-dominated from about g=0.1-0.2, not 0.04. The conclusion over the Test 4 sweep (K>=0.25) stands.",
+     "key_numbers": "g=0.04: x/y 0.92, x-amp 0.714; g=0.2-3.8: x/y 0.114-0.133, x-amp 0.034-0.049"
+    },
+    {
+     "id": "K14",
+     "claim": "Verifier flag (algebra): with delay, rho(g)<rho(0) exactly when g > (75/52)e^{-a tau} (1.372 at tau=1.5).",
+     "verdict": "PARTLY",
+     "evidence": "75/52 is exact at tau=0: (3/40)(1/60)/((1/250)(13/60)), and rho - a changes sign at 75/52 +/- 1e-6. The equivalence there relies on the theorem's convexity of P on (-b,inf). With delay, D(-a,g,tau) = hg(b-a)e^{a tau} - cg^2(d-a)e^{2a tau} < 0 gives a real root > -a via the IVT, so g > (75/52)e^{-a tau} is sufficient for rho<a. The converse ('exactly when') is not proven for tau>0; only the numerical grids support it.",
+     "key_numbers": "75/52=1.44231; 1.37198 at tau=1.5 (sufficient)"
+    },
+    {
+     "id": "K15",
+     "claim": "Verifier flag (meaning; also ablation's noise-off tables): 'deterministic finite-threshold recovery at tau~0 decreases monotonically over g=0..3.8 in the full nonlinear model'; noise-off tau=1.5 shows '0 censored' up to K=3.75.",
+     "verdict": "OVERSTATED",
+     "evidence": "Meaning's own finding contradicts this: noise-free runs at g>=3.3 (tau=0.02) and g>=3.4 (tau=1.5) 'recover' in about 7 s or 21 s and then relapse into the high-arousal state 40-254 s later. recoveryTime (lines 846-865) stops at the first 15-s in-band window. On [3.3,3.8] the apparent monotone decrease and the zero censoring come from that metric. The claims hold for g<3.3, which still covers the artifact's [0,3] sweep, so the main conclusions survive.",
+     "key_numbers": "relapse threshold g>=3.3 (tau=0.02), g>=3.4 (tau=1.5)"
+    },
+    {
+     "id": "K16",
+     "claim": "Verifier flag (water_phase_stats on C12): 'Inside the model the concern does not bite.'",
+     "verdict": "PARTLY",
+     "evidence": "That holds only under the test protocol (awake, presence 1, voice off). I ran the artifact's own Model in node (k7_room_mismatch.js): alike world, which has no causal path at all, 60 sessions, Test-1 statistic peakSync(I,M) - peakSync(I,R). Results: awake -0.037 +/- 0.034 (z=-1.1); mom asleep (half alarm kick, set point -0.3; line 694 and A0m on line 736) -0.123 +/- 0.037 (z=-3.3); mom away (presence 0, misses alarms) -0.206 +/- 0.042 (z=-4.9). This is a direct in-model case of ChatGPT's 'different common-input filters'. The live note at line 279 ('the difference is the part the room can't explain') is therefore biased whenever mom and the other parent are not matched, for example with mom asleep, the artifact's own suggested experiment (line 421).",
+     "key_numbers": "alike: asleep -0.123+/-0.037; away -0.206+/-0.042; matched -0.037+/-0.034"
+    },
+    {
+     "id": "K17",
+     "claim": "Spot-check of algebra's counterexample E3 (two global maximizers when d<3b-2a).",
+     "verdict": "CONFIRMED",
+     "evidence": "a=0.012, b=0.057, d=0.089, h=0.14, c=0.063, with d < 3b-2a = 0.147. rho(130/981 - sqrt(1740492845)/343350 = 0.0110115) = 0.0526666666667 and rho(0.2540242) = 0.0526666666667, both equal to 79/1500. These are cusp maxima: rho drops by about 1.5e-6 within 1e-7 of g1, which is why a float grid shows only 0.052645 there.",
+     "key_numbers": "g1=0.0110115, g2=0.2540242, rho=79/1500"
+    },
+    {
+     "id": "K18",
+     "claim": "Verifier flag (literature R13): the artifact's Jaffe & Beebe clause 'the highest coordination predicted insecure attachment' graded CONFIRMED.",
+     "verdict": "PARTLY",
+     "evidence": "The primary abstract quoted by the verifier supports only 'midrange ... optimal for attachment'. The 'highest predicted insecure/disorganized' part comes from a secondary source (Scheidt et al. 2021). The grade should be marked as secondary-source support, or PARTLY, until the monograph's text is seen.",
+     "key_numbers": ""
+    },
+    {
+     "id": "K19",
+     "claim": "Artifact correction implied by C11 / proof_notes §4: line 443, 'locking    2:1 holds when |ω_infant − 2·ω_mom| < ε·a₂/2,   a₂ = 0.19'.",
+     "verdict": "CONFIRMED",
+     "evidence": "It should be labelled a first-order (weak-forcing averaging) approximation, not a condition that 'holds'. For the artifact's own rates the exact single-phase onset is 4.00, not 3.31, and the 2:1 tongue is asymmetric (2.95 for the mirrored detuning) and closes again near eps=19.7.",
+     "key_numbers": "3.31 -> 4.00 (+20.7%)"
+    },
+    {
+     "id": "K20",
+     "claim": "Artifact correction implied by C11: line 1673, 'so locking needs only [3.3] ... A pair 10 bpm from the nearest ratio needs [11]'; the chart markers at lines 1633-1634 ('locks at these rates', '10 bpm off a ratio'); and Limits line 456, 'Test 5 says what strength full locking would need'.",
+     "verdict": "CONFIRMED",
+     "evidence": "All of these come from the first-order formula (epsLock line 978; eps10 lines 1633/1668). The exact values are 4.0 (not 3.3); 8.3 or never (not 11), depending on the sign of the detuning (K7). The artifact's own stored sweep (DEF.pulse) reaches only PLI 0.426 at eps=16, nearly 5x its stated threshold (water verifier). Suggested wording: 'a first-order estimate; the full model needs more'.",
+     "key_numbers": "DEF.pulse PLI at eps=16: 0.426"
+    },
+    {
+     "id": "K21",
+     "claim": "Artifact correction implied by C12 / proof_notes §5: line 279 ('The other parent shares the room but not the bond, so the difference is the part the room can't explain'), line 380 ('What remains is the part of the timing the room can't explain'), line 384 ('after the room is subtracted'), line 389 ('bond-specific rate synchrony (mom minus other parent)'), line 1495 ('Once the room is subtracted').",
+     "verdict": "CONFIRMED",
+     "evidence": "The statistic is exactly a difference of peak-lag Pearson correlations (peakSync, line 838; bond, line 896), so ChatGPT's counterexample applies to it directly. In the model the contrast is unbiased only because the other parent is built identical to mom and treated identically under the protocol. That is an assumption, and K16 shows it breaks in the live view. Line 279 and the bedside box at line 375 should say that the control adult must match mom in noise level and room exposure, or that covariance or model-based estimates are needed.",
+     "key_numbers": "C12: 1/2 - 1/sqrt(20) = 0.2764 with no coupling"
+    },
+    {
+     "id": "K22",
+     "claim": "Artifact correction implied by §1.6 (and C6): line 402, 'This model produces the same shape from a delayed feedback loop alone, which shows the mechanism is possible, not that it is the one at work.'",
+     "verdict": "CONFIRMED",
+     "evidence": "ChatGPT's §1.6 warns against attributing the non-monotone response to delay alone. Three verifiers reproduced DEF.sweep exactly and re-ran it at tau=0.02 with the same seeds. The medians [37.75, 18.75, 12.875, 10.625, 9.625, 8.625, 8.5, 9.75, 140.25] (censored [0,0,0,0,0,0,1,5,11]) are nearly identical to the stored tau=1.5 curve. At the default delay the shape comes from the cap-induced high-arousal state plus mirroring plus noise. Delay drives it only on the tau=3 curve (Hopf at 1.61). The finding text at line 1607 ('mom's arousal climbs, and her capacity to soothe drops') names the right mechanism; line 402 names the wrong one.",
+     "key_numbers": "tau=0.02 vs tau=1.5 medians nearly equal; g_sn=2.069"
+    },
+    {
+     "id": "K23",
+     "claim": "Artifact issues found by verifiers, not implied by ChatGPT: line 1605 'Recovery is fastest at responsiveness [2]'; line 1607 'The response overshoots ...'; line 1609 'The same eagerness, mistimed, overshoots'; lines 1600-1609 (writeF4).",
+     "verdict": "CONFIRMED",
+     "evidence": "The argmin at line 1600 is taken over 14-run medians. Ablation's 40-run medians put it at K=1 (10.125 s), with a flat 10-12 s floor from K=0.75 to 2. The mechanism sentences are hard-coded strings. 'Overshoots' is wrong at tau=1.5, where 24/24 censored runs at K=3 are stuck high and none oscillate. It fits tau=3, where 15/17 censored runs at K=2 oscillate.",
+     "key_numbers": "14-run argmin K=2 (9.125 s) vs 40-run argmin K=1 (10.125 s)"
+    },
+    {
+     "id": "K24",
+     "claim": "Artifact equation-block mismatches found by verifiers: line 438 'cap = 1/(1 + (Aₘ/0.8)²)'; line 435 'V = V₀·(1 − 0.8·A)·(1 − RSA·insp)'; lines 436-437 omit voice terms.",
+     "verdict": "CONFIRMED",
+     "evidence": "The code uses AmPos = max(M.A,0) in cap (lines 731-732). It clamps vagScale to [0,1.5] and multiplies V by 1.12 when voice is on (lines 608-609). It adds voiceI = -0.006 and voiceM = -0.004 (lines 734-735). None of this changes the linearization at the origin with voice off.",
+     "key_numbers": "code lines 608-609, 731-735"
+    },
+    {
+     "id": "K25",
+     "claim": "Artifact text correction (new): line 432, 'The sinoatrial node is 24 pacemaker cells ... Breathing comes from 12 respiratory rhythm cells'.",
+     "verdict": "CONFIRMED",
+     "evidence": "Every reported test result (DEF, and Tests 1-6) is computed with BATCH_CELLS {nSA:16, nR:8} (line 832). Only the live view uses 24/12. Since cell phase noise is per-step and not scaled with dt (lines 587, 626), and synchrony depends on N, the text should say that the tests use 16 and 8 cells.",
+     "key_numbers": "24/12 (text, live) vs 16/8 (tests)"
+    }
+   ],
+   "new_findings": [
+    "Artifact's eps10 claim is wrong in both directions (line 1673; formula at 1633/1668). It says 'A pair 10 bpm from the nearest ratio needs 11'. In the exact single-phase model, an infant 10 bpm faster than 2:1 locks from eps of about 8.3 up to 33.5, and an infant 10 bpm slower never locks 2:1 for any eps up to 40. Second-order averaging, with the frequency pull of -0.003962 eps^2, explains both (8.30 predicted; no real solution for the slower case).",
+    "The exact 2:1 onset at the artifact's Test-5 rates, checked independently, is 3.99977 (first-order 3.31324). The tongue closes at 19.7096, and with the detuning mirrored the onset is 2.9482.",
+    "In-model counterexample to the artifact's room-subtraction wording (line 279). In the alike world, where there is no causal path, the mom-minus-other-parent peak-correlation contrast is -0.123+/-0.037 with mom asleep and -0.206+/-0.042 with mom away (60 sessions each), against -0.037+/-0.034 when mom and the other parent are matched. The contrast is unbiased only when the control adult is exchangeable with mom.",
+    "Every test uses 16 SA and 8 respiratory cells (BATCH_CELLS, line 832), while the text (line 432) and ChatGPT's '24 cells' refer to 24 and 12.",
+    "The verifiers' Hopf values do not actually disagree. Continuous DDE: g_H(tau=3)=1.611707 and tau_c=1.57408. The artifact's Euler map gives 1.599543 at dt=0.02 and converges linearly to 1.6117 as dt->0. The code's delay indexing is exact (A(t - lag*dt)), so the gap is pure Euler O(dt) error.",
+    "The nonlinear bifurcation at g_c is an asymmetric piecewise pitchfork, because cap is only C^1: a subcritical saddle on Am>0 for g<g_c and a supercritical small stable branch on Am<0 for g>g_c. The saddle-node creating the high-arousal state is confirmed at g_sn=2.068885.",
+    "ChatGPT's §1.6 list of delay-free ingredients ('g^2 positive-feedback path, saturation, and cubic terms') matches two of ablation's three necessary ingredients (the mirroring loop and cap), includes one unnecessary one (cubic), and omits noise. It is better than 'irrelevant', but the step 'This also shows' is still a non sequitur.",
+    "Several graded claims (C6 phrase, C7 headline, C8 aggregation identity, C13, C14) are not in ChatGPT's zip. They were checked against a paraphrase of chat text that no verifier saw."
+   ],
+   "summary": "I read proof_notes.md in full and checked everything the verifiers left unchecked or checked thinly. ChatGPT's mathematics holds. Its weak points are interpretation and provenance:\n- Several graded claims are not in the zip at all: the 'delay not required' phrase, the C7 headline, the C8 aggregation identity, C13 and C14.\n- The '24 cells' match only the live view; every test uses 16 SA and 8 respiratory cells.\n- The step in §1.6 that begins 'This also shows' is a non sequitur. Even so, the ingredients it names (the g^2 loop and saturation) are two of the three that actually produce the delay-free U. Noise is the one it misses.\n\nThe audit_results numbers no verifier recomputed all reproduce: rho(0.02), rho(0.1), the tau=10 root, and the water values 1/3 and -10/9.\n\nIndependent rechecks of single-verifier results:\n- The exact 2:1 onset is 3.99977, against the artifact's first-order 3.313. The tongue closes again at 19.71.\n- The saddle-node is at g_sn = 2.068885.\n- The Hopf values only look inconsistent: 1.6117 is the continuous model and 1.5995 is the artifact's Euler step, which converges to 1.6117 as dt shrinks.\n- Algebra's E3 counterexample (two global maximizers) is real.\n\nNew result: the artifact's 'a pair 10 bpm from the nearest ratio needs 11' is wrong both ways. An infant 10 bpm faster than 2:1 locks from about 8.3. One 10 bpm slower never locks 2:1 for any eps up to 40.\n\nVerifier grades I would change or qualify:\n- C11 should be CONFIRMED, not PARTLY: every part is true and hedged.\n- On C15, CONFIRMED is the fairer grade, because §1.5 already names nonlinearity, delay and noise as reasons.\n- 'mom-dominated mode for g>=0.04' should read g of about 0.1-0.2 or more.\n- The delayed 75/52 e^{-a tau} threshold is only sufficient.\n- 'Monotone deterministic recovery up to 3.8' is a product of the first-hold metric once g is 3.3 or more.\n- The claim that 'inside the model C12 does not bite' holds only under the test protocol. In the alike world, which has no causal path, the contrast is -0.12 with mom asleep and -0.21 with mom away.\n- The Jaffe & Beebe 'highest coordination predicted insecure' clause rests on a secondary source.\n\nArtifact text that ChatGPT's audit implies should change:\n- Line 443: the locking condition is a first-order approximation, not a condition that 'holds'.\n- Line 1673, plus lines 1633-1634 and 456: 'locking needs only 3.3' and 'needs 11'.\n- Lines 279, 380, 384, 389 and 1495: the room-subtraction wording. It is valid only if the other adult is exchangeable with mom.\n- Line 402: 'from a delayed feedback loop alone'. At the default delay, removing the delay leaves the curve essentially unchanged.\n\nVerifier-found extras to fix:\n- Lines 1605-1609: the hard-coded 'overshoots' text, and 'fastest at responsiveness 2', which rests on 14 runs.\n- Line 438: the displayed cap omits max(Am,0).\n- Lines 435-437: the clamp and voice terms are missing from the displayed equations.\n- Line 432: the 24/12 cell counts versus 16/8 in the tests."
+  }
+ ]
+}

@@ -1,5 +1,17 @@
 # Startup and collaboration handoff — 2026-10-18
 
+## Selective flow research import
+
+Owner: Codex; branch `codex/import-flow-research`. Fixed base
+`ab448aaa429bf3bc3c4c5bc2a41b5be6778e1f28`; target
+`codex/integrate-research-workspace`. User authorized selective import,
+focused checks, commit/push and a draft PR, with no merge/manual deployment.
+Full scope, source SHA, provenance map, validation and deferred-runtime estimate:
+[import record](../math/navier-stokes-jet/IMPORT.md). No global guidance or app
+changes. Exact-commit independent review is pending and will be recorded in the
+PR; human integration remains required.
+
+
 
 ## Next.js security migration (current follow-up)
 

@@ -1,0 +1,7 @@
+mom awake, skin-to-skin (Test 1 protocol)  N 100 mean -0.020 +/- 0.021 SEM (z -0.9) 7.8 s
+mom asleep, skin-to-skin                   N 100 mean -0.116 +/- 0.024 SEM (z -4.8) 7.2 s
+mom out of the room                        N 100 mean -0.225 +/- 0.031 SEM (z -7.3) 6.9 s
+
+real	0m22.061s
+user	0m22.009s
+sys	0m0.058s

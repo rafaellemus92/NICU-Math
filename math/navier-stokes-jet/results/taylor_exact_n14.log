@@ -1,0 +1,21 @@
+# python3 taylor_exact.py 14 --out <scratchpad>/nsjet_regen14.json   (run from this folder, 18 Oct 2026)
+order 1: modes=28 entries=36 time=0.0s total=0.0s
+order 2: modes=68 entries=126 time=0.0s total=0.0s
+order 3: modes=190 entries=464 time=0.0s total=0.0s
+order 4: modes=472 entries=1250 time=0.0s total=0.0s
+order 5: modes=974 entries=2642 time=0.0s total=0.1s
+order 6: modes=1814 entries=4984 time=0.2s total=0.2s
+order 7: modes=3098 entries=8598 time=0.4s total=0.7s
+order 8: modes=4938 entries=13788 time=1.3s total=2.0s
+order 9: modes=7496 entries=21040 time=3.6s total=5.6s
+order 10: modes=10934 entries=30830 time=10.0s total=15.6s
+order 11: modes=15404 entries=43596 time=26.2s total=41.8s
+order 12: modes=21124 entries=59974 time=65.4s total=107.3s
+order 13: modes=28296 entries=80578 time=156.6s total=263.9s
+order 14: modes=37128 entries=106000 time=360.3s total=624.2s
+wrote <scratchpad>/nsjet_regen14.json
+
+real	10m24.625s
+user	10m17.804s
+sys	0m0.789s
+# compared with results/series.json: fields that differ: ['seconds_per_order'] (timings only)
