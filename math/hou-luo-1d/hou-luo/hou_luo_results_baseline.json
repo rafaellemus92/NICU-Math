@@ -1,0 +1,57 @@
+{
+  "inviscid": {
+    "N": 8192,
+    "status": "stopped: grid can no longer resolve the solution",
+    "t_final": 0.7611687630915849,
+    "wmax_final": 9.433320466194484,
+    "fit": {
+      "T": 0.9039509826129611,
+      "p": 1.0162314938894002,
+      "c": 4.3178170285412465,
+      "fit_window": [
+        0.6268161674653753,
+        0.7611687630915849
+      ],
+      "omega_range": [
+        4.716834215476789,
+        9.433320466194484
+      ]
+    }
+  },
+  "viscous": [
+    {
+      "nu": 0.003,
+      "status": "reached t_end",
+      "peak_wmax": 4.954288657806112,
+      "t_peak": 0.8354659459034556
+    },
+    {
+      "nu": 0.001,
+      "status": "reached t_end",
+      "peak_wmax": 6.282862087283366,
+      "t_peak": 0.839477528913885
+    },
+    {
+      "nu": 0.0003,
+      "status": "reached t_end",
+      "peak_wmax": 7.880217468005357,
+      "t_peak": 0.8462212156695608
+    },
+    {
+      "nu": 0.0001,
+      "status": "reached t_end",
+      "peak_wmax": 9.616352817849108,
+      "t_peak": 0.8514862407357412
+    },
+    {
+      "nu": 3e-05,
+      "status": "reached t_end",
+      "peak_wmax": 11.989755113074713,
+      "t_peak": 0.8552965788360805
+    }
+  ],
+  "peak_scaling": {
+    "peak_vs_nu_exponent": -0.1904491189939489
+  },
+  "grid_check": []
+}
