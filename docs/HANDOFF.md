@@ -20,11 +20,15 @@ the propagator) and one improvement are documented in the note. Labels: mathemat
 with symbolic→evaluated constants (not formalized); numerical evidence only for the
 consistency checks.
 
-Validation: `constants.py` (under 1 s), `check_bounds.py` (N = 24, dt = 0.005, T = 1, three
-b values, about 15 s; every bound exceeds its measurement; the Section 5 identity holds to
-6×10⁻¹⁶), certified lattice sum for the Agmon constant. Not run: Lean, any DNS beyond N = 24
-and T = 1, the all-time package's own pilots (unchanged). Independent review: one targeted
-reviewer (recorded in the folder README when complete).
+Validation: `constants.py` (under 1 s; double precision with a stated rounding slack, not
+interval arithmetic), `check_bounds.py` (N = 24, dt = 0.005, T = 1, b = 10⁻³, 10⁻², 0.05,
+about 15 s; every bound is consistent with, i.e. exceeds, its measurement; the six-term
+Section 5 identity holds to 6×10⁻¹⁶; note that b = 10⁻² lies outside every certified radius,
+so this is a check of the b → 0 limits, not of a certified case), certified lattice sum for
+the Agmon constant (`lattice_sums.py`, about 6 s). Not run: Lean, any DNS beyond N = 24 and
+T = 1, the all-time package's own pilots (unchanged). Independent review: one targeted
+reviewer re-derived every step and confirmed the theorem with the constants as evaluated;
+its eight minor/nit findings are applied in the branch's second commit (folder README).
 
 ## PR19 independent-review corrections (historical, Codex)
 

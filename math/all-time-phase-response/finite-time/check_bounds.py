@@ -5,8 +5,11 @@ For b in {1e-3, 1e-2, 0.05}: full nonlinear solves u_b with the repository solve
 (../../ns-phase-audit/audit_v2/dns/ns.py, N=24, K=7, RK4 dt=0.005) and the b-Taylor hierarchy
 Y=[U, q1, q2] (../response.py; q2 = b^2 coefficient), both with the same RK4 map.
 Measured: ||grad v||/|b|, ||grad vbar||/b^2, ||grad rtil||/b^2, ||grad e2til||/|b|^3, ||e2bar||/b^4,
-R_Z/b^4, int ||Lap v||^2 / b^2, the exact identity of NOTE.md section 5, and the base-flow
-derivative sups (from a fine 1-D spectral solve with certified maxima) against the section 2 bounds.
+R_Z/b^4, int ||Lap v||^2 / b^2, the exact six-term identity of NOTE.md section 5 (including the
+vanishing cross term 2 b^3 <grad q1, grad q2tilde>), and the base-flow derivative sups against the
+section 2 bounds; the sups come from a fine 1-D spectral solve (|n| <= 40 modes, RK4 dt = 1e-3, a
+truncated solve, not a certified one) whose maxima over y are certified maxima of the resulting
+trigonometric polynomials (Taylor + Bernstein bound).
 Then the bounds of constants.py at T = 0.25, 0.5, 1 are printed next to the measurements
 (bound/measured = the loss of that estimate), and the conditional scenario of NOTE.md section 7
 (G1, D1 replaced by their measured values) is evaluated and labelled as not certified.
@@ -15,7 +18,7 @@ These are consistency checks (every bound must exceed its measurement), not cert
 b = 1e-2 and 0.05 lie outside every certified radius, and b^4-scaled quantities at b = 1e-3 sit
 at double-precision roundoff. No archived file is modified; results go to results/.
 
-Run from this folder:  python3 -B check_bounds.py > results/check_bounds.log   (about half a minute)
+Run from this folder:  python3 -B check_bounds.py > results/check_bounds.log   (about 15 s)
 """
 import sys
 sys.dont_write_bytecode = True
@@ -107,7 +110,8 @@ hier['int_lap_q1_sq'] = np.concatenate([[0.0], np.cumsum(0.5 * (lapq1[1:] + lapq
 per_b = {}
 for b in BS:
     us = advance(ns, ns.init_family(PHI, A, b, C, D), NSTEPS, DT, PER_OUT)
-    s = {k: [] for k in ['norm_v', 'grad_v', 'lap_v', 'grad_vbar', 'grad_rtil', 'grad_e2til', 'norm_e2bar', 'R_Z', 'decomp_residual']}
+    s = {k: [] for k in ['norm_v', 'grad_v', 'lap_v', 'grad_vbar', 'grad_rtil', 'grad_e2til', 'norm_e2bar', 'R_Z',
+                         'decomp_residual', 'six_term_residual', 'cross_term']}
     for j in range(NOUT + 1):
         U, q1, q2 = Ys[j]; ub = us[j]
         v = ub - U; vbar = mean_part(v); vtil = v - vbar
@@ -119,6 +123,11 @@ for b in BS:
         s['grad_e2til'].append(nrm(e2til, 1)); s['norm_e2bar'].append(nrm(e2bar))
         s['R_Z'].append(RZ)
         s['decomp_residual'].append(RZ - (ip(U, e2bar, 1) + 0.5 * (nrm(v, 1) ** 2 - b * b * nrm(q1, 1) ** 2)))
+        # the six-term expansion of NOTE.md section 5 (cross term 2 b^3 <grad q1, grad q2til> omitted, must vanish)
+        six = (ip(U, e2bar, 1) + 0.5 * nrm(vbar, 1) ** 2 + 0.5 * b ** 4 * nrm(q2til, 1) ** 2
+               + b * b * ip(q2til, e2til, 1) + b * ip(q1, e2til, 1) + 0.5 * nrm(e2til, 1) ** 2)
+        s['six_term_residual'].append(RZ - six)
+        s['cross_term'].append(2 * b ** 3 * ip(q1, q2til, 1))
     lap2 = np.array(s['lap_v']) ** 2
     s['int_lap_v_sq'] = np.concatenate([[0.0], np.cumsum(0.5 * (lap2[1:] + lap2[:-1]) * np.diff(TIMES))]).tolist()
     s['b'] = b
@@ -173,7 +182,11 @@ P = L.append
 P('check_bounds.py -- ' + time.strftime('%Y-%m-%d %H:%M:%S') + f'; python {platform.python_version()}, numpy {np.__version__}')
 P(f'N={N} K={g.K} nu={NU:.6f} phi={PHI} a=c=d=1 dt={DT} T={T}; b in {BS}; C_A = {CA:.6f} ({CA_src}); wall {wall:.0f} s')
 P(f'consistency: max|q1| on k_z=0 plane {max(hier["q1_kz0_max"]):.1e}; max|q2| off k_z in {{0,2}} {max(hier["q2_offplane_max"]):.1e}; '
-  + '; '.join(f'b={k}: max|identity residual| {max(abs(x) for x in s["decomp_residual"]):.1e}' for k, s in per_b.items()))
+  + '; '.join(f'b={k}: max|identity residual| {max(abs(x) for x in s["decomp_residual"]):.1e}, '
+              f'six-term {max(abs(x) for x in s["six_term_residual"]):.1e}, cross term {max(abs(x) for x in s["cross_term"]):.1e}'
+              for k, s in per_b.items()))
+P('note: b = 1e-2 and 0.05 lie outside every certified radius beta1(T) and the absorption hypothesis C_A||grad v|| <= nu/2 fails along those'
+  ' solves; Table B compares the bounds with the b -> 0 limits of the b^k-scaled quantities (smooth in b), not with certified cases.')
 P('')
 P('Table A: section 2 base-flow bounds against certified sups of the fine 1-D solve (bound / measured >= 1 required)')
 P(f'{"t":>5} {"m1 bound":>10} {"sup|gradU|":>11} {"ratio":>7} {"m2 bound":>10} {"sup|hessU|":>11} {"ratio":>7} {"mDelta":>10} {"||LapU||":>10} {"ratio":>7}')

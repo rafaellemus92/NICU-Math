@@ -4,7 +4,11 @@ Every quantity is computed as an UPPER bound of its definition: time integrals a
 Riemann sums on a uniform grid where, on each cell, the decreasing factor alpha(t) = |a|e^{-nu t}
 is frozen at the left endpoint and every nondecreasing factor at the right endpoint; the
 exponent integrals that enter with a negative sign (Phi1 - Psi) use the matching LOWER sums.
-A relative slack of 1e-9 is applied to the final constants to cover floating-point rounding.
+A relative slack of 1e-9 is applied to the final constants to cover floating-point rounding
+(double precision, not interval arithmetic). Error budget: each cumulative sum has at most
+n = 2e4 positive terms (relative rounding <= n * 2^-52 < 5e-12), the exponents are at most 14
+(relative error of exp below 1e-11), and each constant is a product/sum of fewer than twenty
+such factors, so the accumulated relative rounding is below 1e-10 and the slack covers it.
 
 Agmon constant: C_A^2 = Lambda_4 = sum over nonzero k in Z^3 of |k|^-4. If results/lattice_sums.log
 (certified by a separate script) is present its certified bound is used; otherwise a built-in
@@ -71,7 +75,7 @@ def chain(a, c, d, nu, CA, T, n, G1_override=None, D1_override=None):
     m1_hi = np.sqrt(al_hi**2 + g**2 + g1_hi**2)
     m1_lo = np.sqrt(al_lo**2 + g**2 + g1_lo**2)
     m2_hi = np.sqrt(al_hi**2 + g**2 + 2 * g1_hi**2 + g2_hi**2)
-    mD_hi = np.sqrt(al_hi**2 + (g + g2_hi)**2)
+    mD_hi = np.sqrt(a**2 + (g + g2_hi)**2)      # alpha replaced by |a|: nondecreasing (NOTE.md section 2)
     # exponents at right endpoints (upper sums); L_lo is a lower sum of int (m1 + nu/2)
     Phi1 = np.cumsum((m1_hi - nu) * dt)
     Psi = np.cumsum((2 * m1_hi - nu / 2) * dt)

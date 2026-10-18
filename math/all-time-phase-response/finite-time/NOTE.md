@@ -45,8 +45,9 @@ PROOF.md §2 certifies all-time smoothness and ‖u_b − U‖_s ≤ 2|b|F_s e^{
 with s ≥ 4, F_s = 2^{(s−1)/2}, K_s the H^s energy constant. Three facts fix the scale:
 K₄ ≥ 0.3977 from a single test pair ([../review/radius_ceiling.py](../review/radius_ceiling.py));
 the shear part alone gives ∫M₄ ≥ 2²|a|/ν = 112 at a = 1, ν = 1/28, hence the ceiling
-β₄ ≤ 7.2×10⁻²² whatever the other constants are; and the actual base integral is
-∫₀^∞ M₄ ≈ 2.66×10³ (review of 18 Oct), giving β₄ ≤ 10^{−460}.
+β₄ ≤ 7.2×10⁻²² whatever the other constants are; and a numerically computed base integral
+∫₀^∞ M₄ ≈ 2.7×10³ (one-dimensional solve of W; not certified and not in this repository —
+the ceiling itself uses only the shear part) would give β₄ ≤ 10^{−460}.
 
 Where the loss comes from, in decreasing order:
 1. **The Sobolev level.** The H^s energy method needs ‖U‖_{s+1} with s ≥ 4, i.e. five
@@ -82,17 +83,20 @@ Hence, with Frobenius norms pointwise in x,
 
     |∇U| ≤ m₁(t) := (α² + γ² + γ₁²)^{1/2},
     |∇²U| ≤ m₂(t) := (α² + γ² + 2γ₁² + γ₂²)^{1/2},
-    ‖ΔU‖ ≤ m_Δ(t) := (α² + (γ + γ₂)²)^{1/2}.
+    ‖ΔU‖ ≤ m_Δ(t) := (a² + (γ + γ₂)²)^{1/2}.
 
-(ΔU = (σ_yy, 0, w_xx + w_yy).) These are the only properties of U used below.
+(ΔU = (σ_yy, 0, w_xx + w_yy); in m_Δ the decreasing factor α is replaced by |a| so that m_Δ,
+like m₁ and m₂ in the sense used below, is nondecreasing in t, which Section 5 relies on when it
+states a uniform bound on [0, T].) These are the only properties of U used below.
 
 Five inequalities, for smooth divergence-free mean-zero X, Y, Z (sums over repeated indices):
 
 - (I1) ⟨(U·∇)X, X⟩ = 0 and ⟨(X·∇)Y, Y⟩ = 0.
 - (I2) |⟨(X·∇)U, X⟩| ≤ m₁ ‖X‖².
 - (I3) |⟨(U·∇)X, ΔX⟩| ≤ m₁ ‖∇X‖². Proof: integrate by parts once;
-  ⟨(U·∇)∂_jX, ∂_jX⟩ = 0 by (I1), and the remaining term is Σ_j (∂_jX)·(∇U)(∂_jX)
-  pointwise... precisely Σ_{i,j,k} (∂_jU_k)(∂_kX_i)(∂_jX_i) = Σ_i (∇X_i)ᵀ(∇U)(∇X_i) ≤ |∇U|·|∇X|².
+  ⟨(U·∇)∂_jX, ∂_jX⟩ = 0 by (I1), and the remaining term is
+  −Σ_{i,j,k} ⟨(∂_jU_k)(∂_kX_i)(∂_jX_i)⟩ = −Σ_i ⟨(∇X_i)ᵀ(∇U)(∇X_i)⟩, bounded pointwise by |∇U|·|∇X|²
+  (operator norm ≤ Frobenius norm).
 - (I4) |⟨(X·∇)U, ΔX⟩| ≤ m₁‖∇X‖² + m₂‖X‖‖∇X‖. Proof: integrate by parts; the two terms are
   Σ_{i,j,k}(∂_jX_k)(∂_kU_i)(∂_jX_i) ≤ |∇U||∇X|² and Σ X_k (∂_j∂_kU_i)(∂_jX_i) ≤ |X||∇²U||∇X|.
 - (I5) ‖(X·∇)Y‖ ≤ ‖X‖_∞‖∇Y‖ ≤ C_A‖ΔX‖‖∇Y‖, and |⟨(X·∇)Y, ΔZ⟩| ≤ C_A‖ΔX‖‖∇Y‖‖ΔZ‖.
@@ -126,11 +130,13 @@ and, integrating the inequality with (ν/2)‖Δv‖² kept,
     β₁(T) := ν / ( 2 C_A G₁(T) ).
 
 If |b| < β₁(T), the solution u_b is smooth on [0, T] and Lemmas 1–2 hold on [0, T].
-Proof. C_A‖∇v(0)‖ = C_A|b|F₁ < ν/2. Let t* be the supremum of times ≤ T up to which
+Proof. Let [0, T_max) be the maximal interval of the smooth solution and T′ := min(T, T_max).
+C_A‖∇v(0)‖ = C_A|b|F₁ < ν/2. Let t* be the supremum of times < T′ up to which
 C_A‖∇v‖ ≤ ν/2; on [0, t*] Lemma 2 gives C_A‖∇v‖ ≤ C_A|b|G₁(T) < ν/2, so by continuity
-t* = T. Bounded ‖∇u_b‖ on [0, T] rules out blow-up (the enstrophy continuation criterion for
-3D Navier–Stokes, e.g. Temam, *Navier–Stokes Equations*, Ch. III, Thm 3.10 and Rem. 3.7, or
-Constantin–Foias, *Navier–Stokes Equations*, Ch. 10), so the smooth solution exists on [0, T]. ∎
+t* = T′ and ‖∇v‖ ≤ |b|G₁(T) on [0, T′). If T_max ≤ T this bounds ‖∇u_b‖ up to T_max, which
+the enstrophy continuation criterion for 3D Navier–Stokes forbids (Temam, *Navier–Stokes
+Equations*, Ch. III, Thm 3.10 and Rem. 3.7; Constantin–Foias, *Navier–Stokes Equations*,
+Ch. 10); hence T_max > T and the bounds hold on [0, T]. ∎
 
 β₁ is a certified admissible radius for the finite interval, not a ceiling on a sufficient
 condition: every |b| below it is covered.
@@ -212,7 +218,8 @@ b²Z2 = ⟨−ΔU, b²q̄₂⟩ + ½b²‖∇q₁‖². Writing ‖∇v‖² = �
 
     R_Z = ⟨−ΔU, ē₂⟩ + ½‖∇v̄‖² + ½b⁴‖∇q̃₂‖² + 2b²·½⟨∇q̃₂,∇ẽ₂⟩ + b⟨∇q₁,∇ẽ₂⟩ + ½‖∇ẽ₂‖².
 
-This identity is exact (checked numerically to rounding in check_bounds.py). With Lemmas 3–7,
+This identity is exact (the six-term form is checked numerically to rounding in
+check_bounds.py, including the vanishing of the cross term). With Lemmas 3–7,
 for |b| < β₁(T) and 0 ≤ t ≤ T:
 
 **Theorem.** |R_Z(t)| ≤ C_Z(t) b⁴, with
@@ -239,17 +246,24 @@ C_A is the certified value from results/lattice_sums.log (C_A ≈ 4.07, threshol
 |---|---|---|---|---|---|---|
 | 0.1 | 2.5 | 1.5 | 3.0×10⁻³ | 4.8×10⁸ | — | — |
 | 0.25 | 2.7 | 4.0 | 1.1×10⁻³ | 2.6×10¹² | 0.75 | 6.4×10⁻⁵ |
-| 0.5 | 3.0 | 21 | 2.1×10⁻⁴ | 5.2×10¹⁹ | 0.88 | 1.0×10⁻³ |
+| 0.5 | 3.0 | 21 | 2.1×10⁻⁴ | 5.1×10¹⁹ | 0.88 | 1.0×10⁻³ |
 | 1 | 3.7 | 690 | 6.3×10⁻⁶ | 6.0×10³⁸ | 1.40 | 1.0×10⁻² |
 
 The measured columns are from [check_bounds.py](check_bounds.py) (full nonlinear solves at
-b = 10⁻², N = 24, dt = 0.005, φ = 0.37; [results/check_bounds.log](results/check_bounds.log)),
-which also verifies that every bound of Sections 2–5 exceeds its measurement (Table A: the
-Section 2 derivative bounds against certified sups of a fine one-dimensional solve, ratios
-1.02–3.4; Table B: the chain), that the identity of Section 5 holds to 6×10⁻¹⁶, and that the
-bootstrap hypothesis C_A‖∇v‖ ≤ ν/2 holds along the b = 10⁻³ solve (5.7×10⁻³ ≤ 1.8×10⁻²).
+b = 10⁻², N = 24, dt = 0.005, φ = 0.37; [results/check_bounds.log](results/check_bounds.log)).
+Every bound of Sections 2–5 is consistent with its measurement, i.e. exceeds it (Table A: the
+Section 2 derivative bounds against certified maxima of the trigonometric polynomials of a fine
+one-dimensional solve, ratios 1.02–3.4; Table B: the chain); the six-term identity of
+Section 5 holds to 6×10⁻¹⁶; and the bootstrap hypothesis C_A‖∇v‖ ≤ ν/2 holds along the
+b = 10⁻³ solve (5.7×10⁻³ ≤ 1.8×10⁻²). Two caveats. The theorem makes no claim at b = 10⁻²:
+that b lies outside every certified radius and the absorption hypothesis fails along that
+solve (C_A‖∇v‖ ≈ 3×10⁻²); Table B compares the bounds with the b → 0 limits of the
+b^k-scaled quantities, which are smooth in b, and b = 10⁻³ cannot be used for the b⁴-scaled
+columns (roundoff). And a check that passes by factors of 10⁵–10⁴⁰ has no power to detect a
+moderate error in a late constant; only the base-flow bounds and G₁ are tested tightly.
 Where the chain loses, at T = 0.25 (bound/measured): G₁ 5.4, D₁ 3×10³, Q₂ 3×10⁵,
-V̄ 8×10⁵, R₁ 2×10⁶, Ẽ 9×10¹⁰, Ē 1×10¹⁶, C_Z 4×10¹⁶.
+V̄ 8×10⁵, R₁ 2×10⁶, Ẽ 9×10¹⁰, Ē 1×10¹⁶, C_Z 4×10¹⁶; incrementally, D₁/G₁ ≈ 6×10²,
+Q₂/D₁ ≈ 80, V̄/D₁ ≈ 2×10², R₁/V̄ ≈ 3, Ẽ/R₁ ≈ 4×10⁴, Ē/Ẽ ≈ 10⁵.
 
 ## 7. What is certified, and the obstruction
 
@@ -270,17 +284,26 @@ V̄ 8×10⁵, R₁ 2×10⁶, Ẽ 9×10¹⁰, Ē 1×10¹⁶, C_Z 4×10¹⁶.
   2. *The constant* is dominated not by the propagator but by the source estimates
      ‖(X·∇)Y‖ ≤ C_A‖ΔX‖‖∇Y‖ followed by Cauchy–Schwarz in time against the dissipation
      integrals D₁, D̄, D_r, D_e, each of which trades a pointwise-small transport velocity
-     for ν⁻¹ times a time-integrated H² norm. Each such level costs 10⁵–10⁶ at T = 0.25,
-     and the chain uses five of them. Even with the measured G₁, D₁ inserted, C_Z stays
-     10¹¹ above the measurement (Table C). This is the precise obstructing estimate.
-- **One improvement.** Run the chain one derivative higher: H² energy estimates for v, v̄, r̃,
-  ẽ₂ (which need sup|∇³U|, obtainable from the maximum principle exactly as in Section 2)
-  give pointwise-in-time control of ‖ΔX‖, so every source can be bounded by
-  ‖X‖_∞‖∇Y‖ ≤ C_A (sup_t‖ΔX‖)‖∇Y‖ without the ν⁻¹·dissipation exchange. The cubic term is
-  absorbed at the H² level by the same bootstrap. This attacks the factor that Table B shows
-  dominates; it does not remove the Grönwall factor, which only a validated computation of
-  the linearized propagator (a-posteriori error control in the sense of
-  Chernyshenko–Constantin–Robinson–Titi 2007) can replace. Measured growth rates are not
-  continuum certificates; both are proposals, not results.
+     for ν⁻¹ times a time-integrated H² norm. The incremental losses in Section 6 (6×10² at
+     the first dissipation integral, then 80, 2×10², 3, 4×10⁴ and 10⁵ through the chain)
+     are all of this kind. Even with the measured G₁, D₁ inserted, C_Z stays 10¹¹ above the
+     measurement (Table C). This is the precise obstructing estimate.
+- **One improvement.** Certify the linear layer numerically instead of bounding it: compute,
+  with validated error control along [0, T] (interval arithmetic or a-posteriori control in
+  the sense of Chernyshenko–Constantin–Robinson–Titi 2007), the H¹ propagator norm of the
+  linearized flow around U and the pointwise norms ‖∇q₁‖, ‖Δq₁‖, ‖q₁‖_∞, ‖∇q₂‖, ‖Δq₂‖,
+  ‖q̃₂‖_∞, and feed them into Lemmas 2–7 in place of G₁, D₁, Q₂, D₂ and of C_A‖Δq‖. What this
+  provably buys: the radius becomes ν/(2C_A·sup‖∇q₁‖) ≈ 3–6×10⁻³ (Table C, conditional), which
+  is also this method's hard ceiling ν/(2C_A F₁) ≈ 6.2×10⁻³ up to the measured growth; and the
+  source bounds that involve only linear objects (s₂, and the q₁, q̃₂ factors in S̄_e) lose
+  their ν⁻¹·dissipation exchange. What it does not buy: the sources built from the nonlinear
+  pieces v̄, r̃, ẽ₂ keep the Agmon exchange, so Table C's residual 10¹¹ is a lower bound on what
+  remains for C_Z. Moving the whole chain one derivative up does not escape this either: the
+  H² estimate pairs a source S with Δ²X and needs ∇S, i.e. ‖∇X‖_∞ of the transporting field
+  (one more derivative everywhere), and the ν⁻¹ exchange then multiplies ∫‖∇S‖²; whether that
+  is numerically smaller is unknown. A free, small gain not applied here: for the z-independent
+  fields v̄, q̄₂, ē₂ the two-dimensional lattice sum of results/lattice_sums.log allows
+  C_A = 2.455 instead of 4.067 in Lemmas 4 and 7. Measured growth rates are not continuum
+  certificates; everything in this bullet is a proposal, not a result.
 
 Nothing here concerns b = 1, the all-time statement, or regularity in general.
