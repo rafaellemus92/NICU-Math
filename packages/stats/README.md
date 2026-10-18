@@ -39,12 +39,12 @@ The first ports (from `sgrounds/lib/piano/*.ts`):
 
 | Module | Purpose | Status |
 |---|---|---|
-| `fft` | radix-2 Cooley–Tukey FFT, in-place | TS done; Py pending (PR #6) |
-| `hilbert` | FFT-based analytic signal, instantaneous phase, envelope | TS done; Py pending (PR #6) |
-| `onset_density` | Gaussian-smoothed spike-train density | TS done; Py pending (PR #6) |
-| `kuramoto` | Order parameter r(t), mean phase, live-window helper | TS done; Py pending (PR #6) |
-| `welch` | Welch's PSD + log-log slope fit (for IOI power-law work) | TS done; Py pending (PR #6) |
-| `stationary_phase` | ∫ B cos Ψ dt integration-by-parts helper for fluid-triad bounds | Py in PR #5 |
+| `fft` | radix-2 Cooley–Tukey FFT, in-place | **TS done, Py done** (shared vectors + 31 passing pytest cases) |
+| `hilbert` | FFT-based analytic signal, instantaneous phase, envelope | **TS done, Py done** |
+| `onset_density` | Gaussian-smoothed spike-train density (in `stats.hilbert`) | **TS done, Py done** |
+| `kuramoto` | Order parameter r(t), mean phase, live-window helper | **TS done, Py done** |
+| `welch` | Welch's PSD + log-log slope fit (for IOI power-law work) | TS done; Py pending (follow-up PR) |
+| `stationary_phase` | ∫ B cos Ψ dt integration-by-parts helper for fluid-triad bounds | Py in `fluids/stationary_phase.py` (migration candidate) |
 
 ## Why both languages
 

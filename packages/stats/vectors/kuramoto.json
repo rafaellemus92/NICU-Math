@@ -1,0 +1,54 @@
+{
+  "$comment": "Shared Kuramoto order-parameter test vectors. The order parameter is r = |(1/N) Σ exp(iθⱼ)| ∈ [0, 1]. Each case has a closed-form expected value. Mean-phase assertions only apply when r > 0; at r = 0 the mean phase is undefined and both implementations may return any value (we don't test it).",
+  "schema_version": 1,
+  "module": "kuramoto",
+  "function": "order_parameter",
+  "tolerance": 1e-10,
+  "cases": [
+    {
+      "name": "identical_phases_r_is_1_mean_is_the_phase",
+      "input": {"phases": [0.5, 0.5, 0.5]},
+      "expected": {"r": 1.0, "mean_phase": 0.5, "mean_phase_matters": true}
+    },
+    {
+      "name": "antipodal_phases_r_is_0",
+      "input": {"phases": [0.0, 3.141592653589793]},
+      "expected": {"r": 0.0, "mean_phase": 0.0, "mean_phase_matters": false}
+    },
+    {
+      "name": "three_phases_uniform_on_circle_r_is_0",
+      "input": {"phases": [0.0, 2.0943951023931953, 4.188790204786391]},
+      "expected": {"r": 0.0, "mean_phase": 0.0, "mean_phase_matters": false}
+    },
+    {
+      "name": "twelve_phases_uniform_on_circle_r_is_0",
+      "input": {"phases": [0.0, 0.5235987755982988, 1.0471975511965976, 1.5707963267948966, 2.0943951023931953, 2.6179938779914944, 3.141592653589793, 3.665191429188092, 4.188790204786391, 4.71238898038469, 5.235987755982989, 5.759586531581287]},
+      "expected": {"r": 0.0, "mean_phase": 0.0, "mean_phase_matters": false}
+    },
+    {
+      "name": "N2_delta_half_pi_r_is_cos_quarter_pi",
+      "input": {"phases": [0.0, 1.5707963267948966]},
+      "expected": {"r": 0.7071067811865476, "mean_phase": 0.7853981633974483, "mean_phase_matters": true}
+    },
+    {
+      "name": "N2_identity_r_equals_abs_cos_half_delta_delta_1",
+      "input": {"phases": [0.0, 1.0]},
+      "expected": {"r": 0.8775825618903728, "mean_phase": 0.5, "mean_phase_matters": true}
+    },
+    {
+      "name": "N2_identity_r_equals_abs_cos_half_delta_delta_2",
+      "input": {"phases": [0.0, 2.0]},
+      "expected": {"r": 0.5403023058681398, "mean_phase": 1.0, "mean_phase_matters": true}
+    },
+    {
+      "name": "nan_phase_is_skipped",
+      "input": {"phases": [0.0, "NaN", 0.0]},
+      "expected": {"r": 1.0, "mean_phase": 0.0, "mean_phase_matters": true}
+    },
+    {
+      "name": "empty_input_returns_zero_zero",
+      "input": {"phases": []},
+      "expected": {"r": 0.0, "mean_phase": 0.0, "mean_phase_matters": false}
+    }
+  ]
+}

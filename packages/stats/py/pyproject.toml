@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nicu-stats"
+version = "0.1.0"
+description = "Shared numeric helpers used across the fluids and physiology tracks (and twinned with the TypeScript modules in sgrounds/lib/piano)."
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+authors = [{name = "NICU-Math contributors"}]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["stats*"]
