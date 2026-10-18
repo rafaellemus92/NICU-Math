@@ -1,0 +1,34 @@
+{
+  "$comment": "Shared FFT test vectors. Both the Python port in packages/stats/py and the TypeScript twin in sgrounds/lib/piano must pass every case to the stated tolerance. Inputs are small real-valued arrays with hand-verifiable DFT output.",
+  "schema_version": 1,
+  "module": "fft",
+  "function": "fft_in_place",
+  "tolerance": 1e-10,
+  "cases": [
+    {
+      "name": "unit_impulse_N4_dft_is_all_ones",
+      "input": {"re": [1.0, 0.0, 0.0, 0.0], "im": [0.0, 0.0, 0.0, 0.0]},
+      "expected": {"re": [1.0, 1.0, 1.0, 1.0], "im": [0.0, 0.0, 0.0, 0.0]}
+    },
+    {
+      "name": "dc_signal_N4_dft_concentrates_at_k0",
+      "input": {"re": [1.0, 1.0, 1.0, 1.0], "im": [0.0, 0.0, 0.0, 0.0]},
+      "expected": {"re": [4.0, 0.0, 0.0, 0.0], "im": [0.0, 0.0, 0.0, 0.0]}
+    },
+    {
+      "name": "nyquist_alternating_N4_dft_concentrates_at_k2",
+      "input": {"re": [1.0, -1.0, 1.0, -1.0], "im": [0.0, 0.0, 0.0, 0.0]},
+      "expected": {"re": [0.0, 0.0, 4.0, 0.0], "im": [0.0, 0.0, 0.0, 0.0]}
+    },
+    {
+      "name": "k1_cosine_N4_real_is_2_at_k_and_minus_k",
+      "input": {"re": [1.0, 0.0, -1.0, 0.0], "im": [0.0, 0.0, 0.0, 0.0]},
+      "expected": {"re": [0.0, 2.0, 0.0, 2.0], "im": [0.0, 0.0, 0.0, 0.0]}
+    },
+    {
+      "name": "k1_sine_N4_imag_is_minus2_at_k_plus2_at_minus_k",
+      "input": {"re": [0.0, 1.0, 0.0, -1.0], "im": [0.0, 0.0, 0.0, 0.0]},
+      "expected": {"re": [0.0, 0.0, 0.0, 0.0], "im": [0.0, -2.0, 0.0, 2.0]}
+    }
+  ]
+}

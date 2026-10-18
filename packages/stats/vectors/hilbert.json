@@ -1,0 +1,61 @@
+{
+  "$comment": "Shared Hilbert/analytic-signal test vectors. For a pure cosine x[n] = A·cos(2π k n / N) with k ∉ {0, N/2}, the analytic signal is A·exp(i · 2π k n / N) exactly on the grid: real = A·cos, imag = A·sin, amplitude = A, phase = (2π k n / N) wrapped to (−π, π]. Both language implementations must agree to the stated tolerance.",
+  "schema_version": 1,
+  "module": "hilbert",
+  "tolerance": 1e-10,
+  "cases": [
+    {
+      "name": "pure_cosine_k1_N16_A1_analytic_signal_matches_closed_form",
+      "function": "analytic_signal",
+      "input": {"signal_formula": "cosine", "N": 16, "k": 1, "A": 1.0},
+      "expected": {
+        "real_formula": "A * cos(2*pi*k*n/N)",
+        "imag_formula": "A * sin(2*pi*k*n/N)",
+        "trim_edges": 2
+      }
+    },
+    {
+      "name": "pure_cosine_k3_N32_A1_analytic_signal_matches_closed_form",
+      "function": "analytic_signal",
+      "input": {"signal_formula": "cosine", "N": 32, "k": 3, "A": 1.0},
+      "expected": {
+        "real_formula": "A * cos(2*pi*k*n/N)",
+        "imag_formula": "A * sin(2*pi*k*n/N)",
+        "trim_edges": 4
+      }
+    },
+    {
+      "name": "pure_cosine_k2_N64_A2_amplitude_is_A",
+      "function": "instantaneous_amplitude",
+      "input": {"signal_formula": "cosine", "N": 64, "k": 2, "A": 2.0},
+      "expected": {"amplitude_mean": 2.0, "trim_edges": 8, "tolerance": 0.01}
+    },
+    {
+      "name": "zero_signal_has_zero_envelope",
+      "function": "instantaneous_amplitude",
+      "input": {"signal_formula": "zeros", "N": 16},
+      "expected": {"amplitude_mean": 0.0, "trim_edges": 0, "tolerance": 1e-12}
+    },
+    {
+      "name": "unwrap_sawtooth_restores_linear_phase",
+      "function": "unwrap_phase",
+      "input": {"wrapped_phase": [0.0, 1.5707963267948966, 3.141592653589793, -1.5707963267948966, 0.0, 1.5707963267948966, 3.141592653589793, -1.5707963267948966]},
+      "expected": {
+        "$comment": "Each 2π jump down (π → −π/2) adds 2π to the running offset. π/2, π are given to machine precision so the tolerance can stay tight.",
+        "unwrapped": [0.0, 1.5707963267948966, 3.141592653589793, 4.71238898038469, 6.283185307179586, 7.853981633974483, 9.42477796076938, 10.995574287564276],
+        "tolerance": 1e-12
+      }
+    },
+    {
+      "name": "onset_density_single_onset_centered_peak",
+      "function": "onset_density",
+      "input": {"onsets": [0.5], "t_max": 1.0, "dt": 0.01, "sigma": 0.05},
+      "expected": {
+        "peak_index_min": 49,
+        "peak_index_max": 51,
+        "mean_abs_tol": 1e-12,
+        "$comment": "Peak sits near index 50 (= 0.5 / dt); the mean of the density is subtracted so ⟨density⟩ ≈ 0."
+      }
+    }
+  ]
+}
