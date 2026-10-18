@@ -1,0 +1,22 @@
+== unittest
+test_leading_cos2_general_amplitudes (test_response.ExactJetTests.test_leading_cos2_general_amplitudes) ... ok
+test_all_reported_phase_components_checked (test_response.VariationTests.test_all_reported_phase_components_checked) ... ok
+test_bad_inputs (test_response.VariationTests.test_bad_inputs) ... ok
+test_base_reduction (test_response.VariationTests.test_base_reduction) ... ok
+test_initial_and_factorial_convention (test_response.VariationTests.test_initial_and_factorial_convention) ... ok
+test_phase_aliasing (test_response.VariationTests.test_phase_aliasing) ... ok
+test_recheck_does_not_overwrite_input (test_response.VariationTests.test_recheck_does_not_overwrite_input) ... ok
+test_stretching_slots (test_response.VariationTests.test_stretching_slots) ... ok
+test_support_divergence_parity (test_response.VariationTests.test_support_divergence_parity) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.847s
+
+OK
+== check_observable_remainder
+{"status": "pass", "ratios": [[15.99915703094759, 15.998931268118913, 15.998635548129354], [15.999336513832935, 15.998929184072157, 15.998635427332726], [15.998965777876395, 15.99893450588666, 15.99863546510214]], "wall_seconds": 20.425898980000056}
+exit 0
+== pilot refined
+{"status": "pass", "checks": {"time": true, "space": true, "phase": true, "second_difference_ratio": true, "field_remainder_ratio": true, "parity": true}, "errors": {"time": 2.972281865076809e-10, "space": 9.715599698090216e-07, "phase": 4.541310530174704e-12}, "second_difference_ratio": 3.999658887030755, "field_remainder_ratio": 7.999362229333525}
+wall seconds: 113.27501111800007
+exit 0

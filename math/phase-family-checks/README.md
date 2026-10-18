@@ -38,7 +38,10 @@ T = 1, N = 32, dt = 0.01, 8 phases (strict 2/3 cutoff K = (N−1)/3):
 | 0.40 | −2.38164e-3 | −1.22889e-2 |
 
 The leading Taylor term `−(6487/1555200) a²b²c²d² t⁶` gives −4.17e-3 at t = 1,
-70 percent above the finite-time value.
+70 percent above the finite-time value. The b → 0 limit of `c₂(Z)/b²` at T = 1 by
+Richardson extrapolation from b = 0.05 and 0.1 is −2.4153e-3, which agrees with
+the variational coefficient of the Codex package (−2.41531e-3 at N = 30) to 1e-5;
+the b = 0.05 value quoted earlier in the session was not yet the limit.
 
 Long time, N = 24, dt = 0.02, 16 phases:
 
@@ -108,6 +111,79 @@ estimated from the high-frequency content of the flow. It is not identifiable
 from the least-squares residual. Low-pass filtering the flow regressor alone
 adds a structural bias; any filter must be applied identically to P, V and Q.
 
+## Independent review of the all-time response package
+
+Three referee agents in this session read `PROOF.md`, `README.md`, the code, the
+results and the reused audit solver of
+[`../all-time-phase-response/`](../all-time-phase-response/), tried to refute
+them, and ran their own computations. Their scripts and outputs are in
+[`review/`](review/); the scripts' paths were made relative to this folder after
+the fact and the outputs are as produced. Verdict of all three: **sound with
+corrections, no blocking error.**
+
+Verified:
+
+- The β = 0 base flow solves Navier–Stokes exactly; the H^j estimate and both
+  e^{−νt} factors; the norm bookkeeping (F_s = 2^{(s−1)/2}, the (2+n²)^m weight);
+  the three energy inequalities for integer s ≥ 4 (the cubic one needs
+  ‖D²h‖_∞ ≤ C‖h‖₄, which is the reason for s ≥ 4); Poincaré with constant 1;
+  the Riccati comparison, which is exact.
+- The equations for q₁, q₂, q₃, the bounds with one derivative lost per level, the
+  remainder equation, the estimate for e, the observable expansion with six
+  stretching slots, and the translation parity. The b⁴ term is genuine:
+  ⟨q₁,q₃⟩ = −2.76e-3 at T = 0.5.
+- First numerical confirmation of the quartic field claim, which the note had
+  left analytic: after subtracting b³q₃ the field remainder scales with ratio
+  16.0, after b⁴q₄ with 32.0 (N = 18, T = 0.5, φ = 0.37).
+- `response.py`'s convolution and `second()` agree with exact polynomial
+  coefficients of the full right-hand side to 1e-14; the b² response agrees with
+  the exact rational jet through t⁸; the T = 0.5 cos 2φ coefficients are
+  reproduced by an independent small-b extrapolation to 5e-8 for Z and S.
+- The spatial convergence chain N = 12 → 36 is clean spectral convergence
+  (3.2e-4, 9.7e-7, 1.9e-9, 2.7e-12). Checksums, patch blobs and the quoted
+  run times verify.
+
+Corrections and caveats:
+
+- **The certified radius.** With the note's own explicit majorant and a proved
+  lower bound on the energy constant (K ≥ 0.1564 at s = 4, K ≥ 0.0762 at R = 8),
+  condition (1) certifies at most |b| ≤ 10^(−1.4·10⁷⁰) for the all-time theorem
+  and 10^(−1.3·10²⁷⁷) for the observable theorem. With the exact base-flow
+  integral in place of the majorant, which overestimates it by 10⁶⁸ (m = 5) and
+  10²⁷² (m = 9), the bounds are 10^(−160.6) and 10^(−63796). The order b⁴ is
+  testable; the certified radius is not. No value such as 10⁻⁸⁰ is within reach
+  of (1) under any reading.
+- **What the factor-16 checks test.** The stacked RK4 system is the exact
+  b-Taylor expansion of the discrete map, so the ratios 4, 8 and 16 are
+  identities of any discrete map that depends smoothly and evenly on b. They
+  test implementation consistency at T = 0.5, not the theorem, and their
+  insensitivity to dt says nothing about continuum accuracy.
+- **The short-time regime does not persist.** At φ = 0.37, N = 24 and 30, the raw
+  remainder ratios for (E, Z, S) are (15.7, 16.8, 15.9) at T = 2, (17.6, 18.2,
+  13.7) at T = 4 and (8.4, 15.3, 6.0) at T = 8; at T = 8, b = 0.1 the quartic
+  remainder is 81 percent of the b² term for E. Z₂ grows from 0.32 at T = 0.5 to
+  10.2 at T = 8 while Z(U) decays to 0.31, and E₂ turns negative. Nothing in the
+  note is contradicted, since its evidence stops at T = 0.5 and its decay is
+  asymptotic, but no decay is visible for t ≤ 8, and "exponential time decay"
+  must not be read as observed.
+- Of the nine tests, four are substantive (factorial convention, six stretching
+  slots, z-support and parity, base reduction); the parity check is a tautology
+  of the grid symmetry; the exact-jet test exercises the reused `nsseries.py`,
+  not `response.py`.
+- Provenance: three versions of `pilot.py` exist. The shipped one reproduces
+  every stored number except the phase error (4.5e-12 with all harmonics against
+  the stored 4.7e-15 from the earlier cos 2φ-only check); `observable_remainder.json`
+  records an intermediate commit; `refined.json` lacks the full-solve parameters.
+  The package README discloses most of this.
+- Minor: the note's "Sobolev embedding controls first derivatives" should say
+  second derivatives or cite Kato–Ponce; the shift-norm L and the majorant L_j
+  share a letter; the (1+n²) weight fails the shift bound at n = 1 and the
+  appendix's (2+n²) weight is the right one; "independent of the Galerkin
+  cutoff" is true but unargued.
+- On this folder's own numbers: the K = N//3 boundary aliasing of the first
+  solver changes E, Z and the cos 2φ coefficient by at most 6.5e-5 relative at
+  T = 1 and is sub-dominant to resolution at T = 8; the earlier numbers stand.
+
 ## Files
 
 - `check_p1.py`: the three β = 0 checks.
@@ -116,6 +192,9 @@ adds a structural bias; any filter must be applied identically to P, V and Q.
 - `v2/check_T05.py`, `v2/check_T05.json`: comparison with Codex's variational response.
 - `compliance/ls_repro.py`: the compliance-table reproduction; run from the
   repository root as `python3 math/phase-family-checks/compliance/ls_repro.py .`
+- `review/`: the referee scripts and their outputs (`out/`); `run_pkg.sh` re-runs
+  the package's own tests and pilots. Heavy scripts (`K_effect_full.py`,
+  `late_time.py`, `true_base_norm.py`) take minutes.
 
 Run times on four cores: `check_p1.py` about 20 s, `rerun_all.py` about 8 min,
 `check_T05.py` about 1 min, `ls_repro.py` about 1 min.

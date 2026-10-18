@@ -480,8 +480,11 @@ fixed ν > 0 one sufficiently small b works for all time: the perturbed flows ar
 smooth, the second-order coefficients E₂, Z₂, S₂ solve explicit linear equations, and the
 observable remainders after subtracting them are O(b⁴) with exponential decay. **Analytic
 argument with symbolic constants, plus numerical evidence, kept separate.** No numerical
-radius is certified: the sufficient condition has the form |b| ≤ ν e^{−A}/(2KF) and, for the
-norms the closure needs, e^{−A} is below 10^{−3800K} at ν = 1/28. Its §1 writes out the
+radius is certified: the sufficient condition has the form |b| ≤ ν e^{−A}/(2KF); with the
+note's own explicit constants it admits no b above 10^(−10⁷⁰) at ν = 1/28, and with the exact
+base-flow integral in place of the note's majorant no b above 10^(−160) (review in
+[`phase-family-checks/`](phase-family-checks/)). The order b⁴ is testable; the certified radius
+is not, and the numerical evidence stops at T = 0.5. Its §1 writes out the
 β = 0 reduction that [`ns-phase-audit/`](ns-phase-audit/) §7.5 had left as "not written out".
 
 [`phase-family-checks/`](phase-family-checks/) (owner: Claude) checks the β = 0 reduction three

@@ -1,0 +1,10 @@
+series time 11.512486457824707
+t^0: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^1: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^2: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^3: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^4: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^5: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0, 0.0, 0.0, 0.0]  exact at b=1: 0  at b=1/2: 0
+t^6: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [-0.004171167695473251, 0.0, 0.0, 0.0]  exact at b=1: -6487/1555200  at b=1/2: -6487/6220800
+t^7: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0010199603568279163, 3.740626902886219e-18, -1.9761053960424244e-17, 1.597004994106216e-17]  exact at b=1: 207269/203212800  at b=1/2: 207269/812851200
+t^8: cos2phi coefficient by b-power [b^2,b^4,b^6,b^8] = [0.0015459029165207272, 0.0004751930032987135, 1.838493247057939e-18, -2.0765920237239327e-18]  exact at b=1: 23726951921639/11739646638720000  at b=1/2: 78172013854799/187834346219520000

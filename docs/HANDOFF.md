@@ -24,6 +24,10 @@ Scope:
 - `math/phase-family-checks/`: this session's numerical checks (β = 0 reduction,
   b² response, independent reproduction of the Codex response, compliance table).
 - `math/ns-phase-audit/audit_v2/AUDIT.md` §7.5 pointers; research index rows.
+- Independent review of the imported package by three referee agents in this
+  session (`math/phase-family-checks/review/`, scripts with paths made relative,
+  outputs as produced): sound with corrections, no blocking error. Findings are
+  recorded in `math/phase-family-checks/README.md`.
 
 Validation at this commit, in the session container (Python 3.13.x, Node 22.22,
 NumPy 2.0.2, SciPy 1.18.1, Next.js 16.4.2):
