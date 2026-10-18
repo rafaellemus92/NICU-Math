@@ -32,7 +32,7 @@ point numbers with PREC significant digits (module `decimal`, part of the standa
   - input constants: 2^{-1/2} is an enclosure; nu, a, c, d, T are read as exact decimals or
     exact fractions ('1/28' is enclosed, not rounded); the Agmon constant C_A = Lambda4^{1/2}
     is the certified upper bound of results/lattice_sums.log (a 50-digit nearest-rounded sum of
-    2.1e5 positive terms, error below 1e-44, plus a closed-form tail bound and a 1e-30 margin,
+    2.1e5 positive terms, error below 1e-43 and covered by its 1e-30 margin, plus a closed-form tail bound,
     printed rounded up), cross-checked here against an independent built-in bound computed with
     an exact integer histogram at R = 60 and directed rounding; the smaller of the two valid
     upper bounds is used.
@@ -60,7 +60,7 @@ import numpy as np
 
 PREC = 40            # working digits of every endpoint
 SIG = 5              # printed significant digits (directed)
-EXP_N = 22           # Taylor degree in exp (remainder 2 (1/16)^23 / 23! < 1e-50)
+EXP_N = 22           # Taylor degree in exp (remainder 2 (1/16)^23 / 23! < 2e-50)
 LO = Context(prec=PREC, rounding=ROUND_FLOOR)
 HI = Context(prec=PREC, rounding=ROUND_CEILING)
 EXACT = Context(prec=2 * PREC + 2, rounding=ROUND_HALF_EVEN)   # exact for products of two endpoints
@@ -204,7 +204,10 @@ def float_down(d):
 
 
 def fmt(d):
-    return f'{d:.{SIG - 1}E}'
+    """Format a Decimal that already has at most SIG significant digits; never re-rounds."""
+    s = f'{d:.{SIG - 1}E}'
+    assert Decimal(s) == d, 'fmt would re-round: pass a directed-rounded value'
+    return s
 
 
 # ----------------------------------------------------------------------------- Agmon constant
@@ -251,7 +254,7 @@ def agmon_constant(here, override=None):
     with localcontext(TRAP):
         ca_builtin = Iv(lam_builtin).sqrt().hi
     ca_log = read_certified_CA(here / 'results' / 'lattice_sums.log')
-    desc = f'built-in R = 60: partial {fmt(round_up(partial, 8))} + tail {fmt(round_up(tail, 8))} -> C_A <= {fmt(round_up(ca_builtin, 8))}'
+    desc = f'built-in R = 60: partial {fmt(round_up(partial))} + tail {fmt(round_up(tail))} -> C_A <= {fmt(round_up(ca_builtin))}'
     if ca_log is not None and ca_log <= ca_builtin:
         return Iv(ca_log), f'results/lattice_sums.log (R = 250): C_A <= {ca_log}; {desc} (consistent)'
     return Iv(ca_builtin), desc + ('' if ca_log is None else f'; log value {ca_log} larger, not used')

@@ -273,9 +273,10 @@ consistent with its measurement, i.e. exceeds it (Table A: the Section 2 derivat
 against certified maxima of the trigonometric polynomials of a fine one-dimensional solve,
 ratios 1.02–3.4; Table B: the chain), and the six-term identity of Section 5 holds to 6×10⁻¹⁶.
 Three caveats. (i) Which b the theorem covers: b = 10⁻² and 0.05 lie outside every certified
-radius (and the absorption hypothesis fails along the b = 10⁻² solve, C_A‖∇v‖ ≈ 3×10⁻²);
-b = 10⁻³ lies inside the radius only for T ≤ 0.25 (β₁(0.25) = 1.08×10⁻³) and outside it at
-T = 0.5 (β₁ = 2.11×10⁻⁴) and T = 1 (6.33×10⁻⁶). Table B therefore compares the bounds with the
+radius (and the absorption hypothesis fails along the b = 10⁻² solve: C_A‖∇v‖ ≈ 3×10⁻² already
+by t = 0.25 and 5.7×10⁻² by t = 1); of the computed horizons, b = 10⁻³ lies inside the radius at
+T = 0.25 (β₁(0.25) = 1.08×10⁻³, hence for every T ≤ 0.25) and outside it at T = 0.5
+(β₁ = 2.11×10⁻⁴) and T = 1 (6.33×10⁻⁶). Table B therefore compares the bounds with the
 b → 0 limits of the b^k-scaled quantities, which are smooth in b, and b = 10⁻³ cannot be used
 for the b⁴-scaled columns (roundoff). (ii) Measurements certify nothing: the solves are N = 24
 truncations without error control, and the absorption hypothesis C_A‖∇v‖ ≤ ν/2 observed along
@@ -312,8 +313,9 @@ Q₂/D₁ ≈ 80, V̄/D₁ ≈ 2×10², R₁/V̄ ≈ 3, Ẽ/R₁ ≈ 4×10⁴, �
      for ν⁻¹ times a time-integrated H² norm. The incremental losses in Section 6 (6×10² at
      the first dissipation integral, then 80, 2×10², 3, 4×10⁴ and 10⁵ through the chain)
      are all of this kind. With the measured G₁, D₁ inserted into this same majorant, C_Z
-     still exceeds the measurement by 10¹¹ (Table C); that figure is a property of this
-     majorant with those inputs, not a lower bound on what a different estimate could achieve.
+     still exceeds the measurement by 4×10¹¹ at T = 0.25 (10¹⁵ and 10²⁹ at T = 0.5, 1; Table C);
+     those figures are a property of this majorant with those inputs, not a lower bound on what
+     a different estimate could achieve.
      The source estimate is the precise obstructing estimate.
 - **One improvement, and the estimate it still needs.** Certify the linear layer numerically
   instead of bounding it: compute, with validated error control along [0, T] (interval
@@ -340,7 +342,7 @@ Q₂/D₁ ≈ 80, V̄/D₁ ≈ 2×10², R₁/V̄ ≈ 3, Ẽ/R₁ ≈ 4×10⁴, �
   (one more derivative everywhere), and the ν⁻¹ exchange then multiplies ∫‖∇S‖²; whether that
   is numerically smaller is unknown. A free, small gain not applied here: for the z-independent
   fields v̄, q̄₂, ē₂ the two-dimensional lattice sum of results/lattice_sums.log allows
-  C_A = 2.455 instead of 4.067 in Lemmas 4 and 7. Measured growth rates are not continuum
+  C_A = 2.455 instead of 4.068 in Lemmas 4 and 7. Measured growth rates are not continuum
   certificates; everything in this bullet is a proposal, not a result.
 
 Nothing here concerns b = 1, the all-time statement, or regularity in general.

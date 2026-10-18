@@ -30,7 +30,8 @@ is changed, and no archived result is modified.
   against a fine one-dimensional solve. [results/check_bounds.log](results/check_bounds.log).
   These are consistency checks (every bound exceeds its measurement), not certificates: the
   solves carry no validated error and are sampled every 0.05 in time; b = 10⁻² and 0.05 lie
-  outside every certified radius and b = 10⁻³ inside it only for T ≤ 0.25, so the comparison
+  outside every certified radius and b = 10⁻³ inside it at T = 0.25 (hence for every T ≤ 0.25) but
+  not at T = 0.5, 1, so the comparison
   is with the b → 0 limits of the scaled quantities; and a check passed by factors of
   10⁵–10⁴⁰ cannot detect a moderate error in a late constant. Table C (G₁, D₁ replaced by
   measured linear quantities) is a what-if for this particular majorant, not a radius and not
@@ -63,7 +64,8 @@ that b = 10⁻³ is outside the computed radius at T = 0.5 and 1 and that saved 
 nothing between times. The third commit applies all of it; the validated budget was chosen
 over the weaker label (interval arithmetic in constants.py), no solve was re-run
 (check_bounds.py re-renders from the saved measurements), and one targeted reviewer checked
-the correction (outcome recorded in the following commit and in HANDOFF.md).
+the correction (verdict: all five items met, nothing blocking; its two cosmetic directed-rounding
+findings on printed cross-check values and eight nits are applied in the fourth commit).
 
 Run from this folder (Python 3 and NumPy; the check needs the repository solver two levels up):
 

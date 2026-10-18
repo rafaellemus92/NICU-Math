@@ -1365,9 +1365,10 @@
  },
  "bounds_provenance": {
   "mode": "from-json",
-  "constants_py": "ac3348e4817be96d7f336fb44189596e9d5ed8d30f31f0cea9bfbd879e57fadb",
+  "constants_py": "996f39f171601a73bdbd87c61e82482f7a91508ab19d78584215da1475479014",
   "grid_cells": 20000,
   "C_A": "4.06707921080",
-  "date": "2026-10-18"
+  "date": "2026-10-18",
+  "note": "parameters.sources describes the solve run; the bounds come from the constants_py named here"
  }
 }

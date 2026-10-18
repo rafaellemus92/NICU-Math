@@ -18,8 +18,11 @@ and labelled as not certified.
 These are consistency checks (every bound must exceed its measurement), not certificates: the
 solves carry no validated error, the saved samples are every 0.05 in time and certify nothing in
 between, b = 1e-2 and 0.05 lie outside every certified radius, b = 1e-3 lies inside the certified
-radius only for T <= 0.25, and b^4-scaled quantities at b = 1e-3 sit at double-precision roundoff.
-No archived file is modified; results go to results/.
+radius at the computed horizon T = 0.25 (hence for every T <= 0.25) and outside it at T = 0.5 and 1,
+and b^4-scaled quantities at b = 1e-3 sit at double-precision roundoff. No archived file is
+modified; results go to results/. In results/measurements.json the 'parameters' block (including
+parameters.sources and parameters.C_A) describes the solve run that produced the measurements, and
+'bounds_provenance' names the constants.py that produced 'bounds'.
 
 Run from this folder:
   python3 -B check_bounds.py > results/check_bounds.log                (about 15 s of solves, then the bounds)
@@ -213,14 +216,15 @@ def main():
     L = []
     P = L.append
     P('check_bounds.py -- ' + time.strftime('%Y-%m-%d %H:%M:%S') + f'; python {platform.python_version()}, numpy {np.__version__}; {provenance}')
-    P(f'N={N} K={info["K"]} nu={NU:.6f} phi={PHI} a=c=d=1 dt={DT} T={T}; b in {BS}; C_A <= {CA:.6f} ({CA_src.split(";")[0]})')
+    P(f'N={N} K={info["K"]} nu={NU:.6f} phi={PHI} a=c=d=1 dt={DT} T={T}; b in {BS}; C_A <= {CA_iv.hi} ({CA_src.split(":")[0]})')
     P(f'consistency: max|q1| on k_z=0 plane {max(hier["q1_kz0_max"]):.1e}; max|q2| off k_z in {{0,2}} {max(hier["q2_offplane_max"]):.1e}; '
       + '; '.join(f'b={k}: max|identity residual| {max(abs(x) for x in s["decomp_residual"]):.1e}, '
                   f'six-term {max(abs(x) for x in s["six_term_residual"]):.1e}, cross term {max(abs(x) for x in s["cross_term"]):.1e}'
                   for k, s in per_b.items()))
     P('status of the tested b against the certified radii (strict inequality |b| < beta1(T); beta1 rounded down): '
       + ', '.join(f'beta1({t}) = {DOWN(beta[t])}' for t in CHECK_T) + '.')
-    P('   b = 1e-2 and 0.05 lie outside every radius; b = 1e-3 lies inside the radius for T <= 0.25 only and outside it at T = 0.5 and T = 1.')
+    P('   b = 1e-2 and 0.05 lie outside every radius; of the computed horizons, b = 1e-3 lies inside the radius at T = 0.25 (hence for every')
+    P('   T <= 0.25) and outside it at T = 0.5 and T = 1.')
     P('   Table B therefore compares the bounds with measurements of the b -> 0 limits of the b^k-scaled quantities (smooth in b), not with')
     P('   certified cases, and nothing measured here is a certificate: N = 24 truncations without error control, sampled every 0.05 in time.')
     P('')
@@ -257,7 +261,8 @@ def main():
     P(f'absorption hypothesis C_A ||grad v|| <= nu/2 = {NU / 2:.4e} at the {NOUT + 1} saved sample times (every {OUT_EVERY}) of the b = 1e-3 solve: '
       f'max C_A||grad v|| = {mx:.4e} ({"holds" if mx <= NU / 2 else "FAILS"} at those times).')
     P('   This is a consistency observation at the sampled times of an uncontrolled N = 24 solve; it certifies nothing between samples and is')
-    P('   not part of the proof. The theorem covers b = 1e-3 only for T <= 0.25, where Proposition 1 certifies the hypothesis on all of [0, T].')
+    P('   not part of the proof. Of the computed horizons the theorem covers b = 1e-3 at T = 0.25 (hence every T <= 0.25), where Proposition 1')
+    P('   certifies the hypothesis on all of [0, T].')
     P(f'all bounds dominate their measurements: {ok}')
     P('')
     P('Table C (NOT certified; a what-if for this particular majorant): the chain of Lemmas 3-7 with G1 and D1 replaced by the measured')
@@ -275,7 +280,8 @@ def main():
         P(f'{t:5.2f} {G1m:10.4f} {D1m:10.4f} {NU / (2 * CA * G1m):17.3e} {r["Vbar"]:13.3e} {r["Etilde"]:15.3e} {r["Ebar"]:13.3e} {r["C_Z"]:13.3e} {abs(s2["R_Z"][j]) / b2 ** 4:15.3e}')
     bounds = {str(t): {k: v for k, v in rows[t].items() if k != 'series'} for t in CHECK_T}
     prov = dict(mode='from-json' if args.from_json else 'solve', constants_py=sha(CONST_PATH), grid_cells=GRID,
-                C_A=str(CA_iv.hi), date=time.strftime('%Y-%m-%d'))
+                C_A=str(CA_iv.hi), date=time.strftime('%Y-%m-%d'),
+                note='parameters.sources describes the solve run; the bounds come from the constants_py named here')
     out_path = HERE / 'results' / 'measurements.json'
     if args.from_json:
         saved['bounds'] = bounds

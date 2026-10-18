@@ -29,7 +29,8 @@ rounding budget printed as the maximal enclosure width 3×10⁻³¹, parameter r
 the solves were run once, about 15 s, and the third commit re-rendered its tables from the
 saved measurements without re-running any solve; every bound is consistent with, i.e.
 exceeds, its measurement; the six-term Section 5 identity holds to 6×10⁻¹⁶; b = 10⁻² and
-0.05 lie outside every certified radius and b = 10⁻³ inside it only for T ≤ 0.25, so this is
+0.05 lie outside every certified radius and b = 10⁻³ inside it at T = 0.25 (hence for every
+T ≤ 0.25) but not at T = 0.5, 1, so this is
 a check of the b → 0 limits, not of a certified case, and the saved samples every 0.05
 certify nothing in between), certified lattice sum for the Agmon constant (`lattice_sums.py`,
 about 6 s). Not run: Lean, any DNS beyond N = 24 and T = 1, the all-time package's own pilots
@@ -38,8 +39,14 @@ the theorem with the constants as evaluated; its eight minor/nit findings are ap
 branch's second commit (folder README). A read-only audit of the second commit (bfbe2b0)
 asked for directed rounding, a validated error budget or a weaker label, the removal of the
 claim that validated q₁ norms alone give a larger radius, a narrower description of Table C,
-and the b = 10⁻³ status at T = 0.5, 1; the third commit applies all of it; one targeted reviewer
-checked it, and its outcome is recorded in the following commit.
+and the b = 10⁻³ status at T = 0.5, 1; the third commit applies all of it. One targeted reviewer verified
+that commit independently (random tests of the interval arithmetic against exact rationals,
+the exponential and square-root bounds against 80-digit references, the trap against bare
+decimal operations, the range enforcement, agreement of the interval chain with the audited
+float chain to 10⁻⁹, the re-render without solves, and every number of the note against the
+logs); verdict: all five audit items met, nothing blocking. Its two cosmetic findings (two
+printed cross-check values rounded to nearest instead of up) and eight nits are applied in
+the fourth commit.
 
 ## PR19 independent-review corrections (historical, Codex)
 
