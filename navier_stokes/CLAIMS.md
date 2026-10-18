@@ -52,3 +52,29 @@ not spatial enstrophy units. There is no patient-specific validation.
 No claim is made here about the current status of any general Navier–Stokes
 problem. No patient database work, new speech model, or recalibration of Shared
 Air placeholders is part of this correction.
+
+## Synthetic pipeline repair plan (before implementation)
+
+Base: `14fe98a43ca49784540de8fcb03a9f931754975e`. Software consistency work,
+not a new research theorem. First reproduce 50 prescribed breaths yielding
+48 clean segments or 468 default-noise segments (seed 42).
+
+Acceptance checks: recover prescribed counts and onsets within one sampling
+interval on synthetic pressure cycles at noise fractions 0, 0.01, 0.05; seeds
+7, 42, 2026; sample rates 100, 200, 1000 Hz. Confirm separate held-out seeds
+and rates without tuning to them. Explicitly discard unverified partial edge
+cycles; known synthetic complete edges may be declared as such. Do not use
+interior ground-truth boundaries as detector input.
+
+For a constant-parameter periodic RC fixture, check noiseless per-cycle net
+volume change near floating roundoff, retain the stated RC time constant
+without an undocumented floor, and check sampling convergence of the volume
+excursion/pressure-range descriptor against its finite-cycle analytical value.
+Target absolute descriptor error <= 0.015 at 100 Hz and decreasing errors with
+refinement, not exact recovery of prescribed compliance at arbitrary rates.
+Report noisy descriptor bias instead of tuning it away. The pressure/flow
+noise remains synthetic measurement noise, not a physiologically calibrated model.
+
+Replace fabricated decay horizons with explicit fit statuses; no clinical
+forecast or PDE interpretation. Preserve failed checks and explain any necessary
+change to this plan. Precision/runtime documentation corrections add no theorem.
