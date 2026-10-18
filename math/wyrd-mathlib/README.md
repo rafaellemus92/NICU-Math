@@ -101,16 +101,21 @@ packages; audit in [`../ns-phase-audit`](../ns-phase-audit)):
 | `zero_growth_at_pi_div_three`, `neg_v_translate` | `φ = π/3` has zero initial growth at `ν = 1/28`, and `−v` is `u_π` shifted by `(π, π, π)` |
 | `rotShift_vphi`, `mirror_fixes_vphi`, `quantities_even` | A rotation by `π` about `z` plus a shift maps `u_φ` to `u_{−φ}`, and a mirror fixes `u_φ` |
 | `quantities_vScaled`, `no_power_law_bound`, `fitted_law_fails` | Rescaling every spatial argument by an integer `k` keeps `E = 1` but gives `Z = 5k²/4`, `D = 7k⁴/2`, `S = k³/4`. So no bound `S ≤ C Z^a D^b` with `2a + 4b < 3` is universal; the fitted `Z^0.75 D^0.2` law fails like `k^0.7` (test suggested by ChatGPT) |
-| `not_before`, `at_first_order`, `order_seven_m_two` | The counting core of the harmonic selection rules: given the 2D-3C fact, a `cos mφ` term (`\|m\| ≥ 2`) in the enstrophy Taylor series cannot appear before `t^{3\|m\|}`. There it is `ν`-free; at `t⁷` the `cos 2φ` term is `∝ ν` |
+| `not_before`, `at_first_order`, `order_seven_m_two` | The counting core of the harmonic selection rules: given the 2D-3C fact, a `cos mφ` term (`\|m\| ≥ 2`) in the enstrophy Taylor series cannot appear before `t^{3\|m\|}`. There it is `ν`-free; at `t⁷` the `cos 2φ` term is `∝ ν`. The exact series in [`../ns-phase-audit/enstrophy-jet`](../ns-phase-audit/enstrophy-jet) obeys the full rules, sharply, through `t¹⁴` (a computation, not a Lean proof) |
 
 **Not formalised:** the enstrophy balance `dZ/dt = S − νD` and local existence of
 smooth solutions (both standard; Mathlib has no Navier–Stokes theory). Turning
 `no_closure` into a statement about solutions needs them. The uniform stretching
 estimate that would make the Grönwall route prove regularity is the open problem
-itself and is not claimed. Context: OpenAI's September 2026 manuscript claims
-blow-up *with a smooth external force* (Clay's alternatives C/D); Clay's
-11 September 2026 statement says the problem has "apparently been settled" and
-that review is ongoing.
+itself and is not claimed; this work does not touch the Millennium problem.
+Context (re-checked 18 October 2026): OpenAI's 8 September 2026 paper, with a
+Lean formalisation, claims blow-up *with a smooth external force*: Clay's
+alternative C, and D as its Corollary 10.6. Clay's 11 September 2026 statement
+says the problem has "apparently been settled" and that its process "is
+deliberately unhurried"; its problem page still lists the problem as "Active".
+The unforced alternatives A and B, which include the periodic setting here,
+remain open. Sources:
+[`../ns-phase-audit/enstrophy-jet/RESULTS.md`](../ns-phase-audit/enstrophy-jet/RESULTS.md) §8.
 
 ## Shared Air (`WyrdMathlib/SharedAir/`)
 
@@ -122,13 +127,13 @@ model's coefficients `a = 1/30`, `b = 1/20`, `d = 1/4`, `r q = 1/250`, `h = 3/40
 | Theorem | Statement |
 |---|---|
 | `hasFDerivAt_field`, `linField_eq_sysMatrix` | That linear system really is the Fréchet derivative of the model's nonlinear field (cap and cubic terms included) at rest |
-| `optimal_coupling`, `optimum_bounds` | At zero delay there is exactly one best coupling `g* ∈ (0.08035, 0.08036)`, with decay rate `−s*`, `s* ∈ (−0.048271, −0.048270)` |
+| `optimal_coupling`, `optimum_bounds` | At zero delay there is exactly one coupling `g* ∈ (0.08035, 0.08036)` that maximises the slowest-mode decay rate `ρ = −s*`, `s* ∈ (−0.048271, −0.048270)`. This is not the heel-stick recovery time of Test 4 ([`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §3) |
 | `stable_iff`, `gc_bounds` | At zero delay the rest state is stable exactly when `g < g_c = 15/8 + √2265/24 ≈ 3.858` |
 | `delay_unstable`, `unstable_every_delay` | Above `g_c` it is unstable for **every** delay |
-| `same_synchrony_different_future_24`, `synchrony_rates` | Two 24-cell populations with the same synchrony `‖Z₁‖ = 1/2` whose synchrony changes at different rates (`K/4` and `0`): one number cannot predict its own future |
+| `same_synchrony_different_future_24`, `synchrony_rates` | Two 24-cell populations with the same synchrony `‖Z₁‖ = 1/2` whose synchrony changes at different rates (`K/4` and `0`): for arbitrary phase configurations, one number cannot predict its own future. On the Ott–Antonsen manifold (`Z₂ = Z₁²`) it can: there `R′ = (K/2)R(1 − R²)` (a paper step from `Z1dot_eq`; [`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §2, C10) |
 | `hasDerivAt_freeEnergy`, `equilibrium_eq`, `equilibrium_exists` | Osmotic water flow is a gradient flow: free energy never increases, and equilibrium means equal osmolality everywhere |
 | `aggregate_counterexample` | Equal total cell volume can carry different net water flux |
-| `contrast_pos_without_coupling` | A noisier control adult makes `corr(infant, mom) − corr(infant, control)` positive with **no** bond at all |
+| `contrast_pos_without_coupling` | A noisier control adult makes `corr(infant, mom) − corr(infant, control)` positive with **no** bond at all. In the page's tests the control is matched (alike-world contrast `−0.022 ± 0.055`); off protocol, with mom asleep or away, the contrast is biased negative, about `−0.12` to `−0.23` over 300-s sessions (numerical; [`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §6) |
 | `averaged_stable_equilibrium_iff`, `two_to_one_moments` | First-order averaged 2:1 locking holds iff `\|Δ\| < k`. A perfect 2:1 lock has first moment 0 and second moment 1 |
 
 **Delay caveat (numerical, not Lean):** below `g_c` delay can still destabilise.
@@ -145,12 +150,12 @@ something exact to say.
 |---|---|---|
 | Ratios other than n:1 | `lockIndex_eq_one`, `lockIndex_eq_zero`, `three_two_looks_like_three_one`, `five_three_hidden`, `resonant_average_vanishes`, `model_forcing_misses_n_m` | Under a perfect `n:m` lock the `k`-th harmonic index is 1 if `n ∣ k`, else 0. It counts bands, not ratios: 3:2 reads exactly like 3:1, and 5:3 and 4:3 are invisible to the 2nd and 3rd harmonics. For every periodic pulse shape, forcing through `sin θ` has zero first-order average along any `n:m` orbit with `m > 1` |
 | Direction of influence | `calming_reverses_lag`, `mirroring_keeps_lag`, `room_leaks_when_unmatched`, `room_cancels_iff` | Same leader, opposite assumed sign of response: the correlation peak moves from "mom first" to "infant first". A control whose exposure is timed differently produces a lag signal with no bond |
-| Which world is real | `alike_explains_any_one_condition`, `two_conditions_never_enough`, `additive_identified`, `three_conditions_miss_interaction`, `four_conditions_identify_interaction` | One or two bedside conditions never identify the mixture. Bedside-awake, skin-awake and skin-asleep do (the sleeping mother separates the paths). With interaction, the full 2 × 2 design is needed |
+| Which world is real | `alike_explains_any_one_condition`, `two_conditions_never_enough`, `additive_identified`, `three_conditions_miss_interaction`, `four_conditions_identify_interaction` | One or two bedside conditions never identify the mixture. Bedside-awake, skin-awake and skin-asleep do (the sleeping mother separates the paths). With interaction, the full 2 × 2 design is needed. All of this assumes the alike part is the same in every condition, which in the page's model holds for responses of the infant alone. It fails for infant–mom synchrony when mom sleeps: with no bond, awake minus asleep is `+0.086 ± 0.013` (60 sessions; [`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §6) |
 | How many sessions | `sessions_chebyshev`, `sessions_enough` | A distribution-free Chebyshev bound: error `≤ δ` once `n ≥ 4σ²/(δΔ²)` |
 | Arousal is one number | `no_coactivation`, `vagal_determined_by_symp` | Sympathetic drive above rest forces vagal tone below rest; co-activation is unrepresentable |
 | Clinical values | `q10_per_degree`, `chest_warmth_bpm`, `warming_after_twelve_minutes`, `resting_rate_not_identifiable` | The stated numbers agree: 8.2% per °C, about 3.9 bpm at 140 bpm, 83.5% warmed after 12 min. Resting rate cannot separate the cells' own rate from vagal tone |
-| Whose good | `mom_untouched_iff`, `infant_best_moves_mom` | Mom stays at rest exactly when `g = 0`, while the system's best recovery needs `g* > 0`. No coupling serves both; the objective is a choice |
-| Test 4's second state | `only_rest_without_cap`, `only_rest_upto_two`, `coarousal_exists_above_two`, `coarousal_stable_at_three`, `cubic_hurwitz` | Without the capacity limit, rest is the only equilibrium on the whole sweep `0 ≤ g ≤ 3`. With it, rest is still the only one up to `g = 2`; a co-arousal equilibrium appears by `g = 2.1`, and at `g = 3` it is linearly stable, so the pair is bistable |
+| Whose good | `mom_untouched_iff`, `infant_best_moves_mom` | Mom stays at rest exactly when `g = 0`, while the coupling `g*` that maximises the slowest-mode decay rate is positive. No coupling serves both; the objective is a choice. (After a heel stick, recovery within 10 bpm is fastest at much larger `g`: in the noise-free model at `g = 2.98`, the edge of the swept range, at τ = 0.02 and at `1.73` at τ = 1.5; the page's noisy Test 4 median at responsiveness `K = 1`; numerical, [`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §3) |
+| Test 4's second state | `only_rest_without_cap`, `only_rest_upto_two`, `coarousal_exists_above_two`, `coarousal_stable_at_three`, `cubic_hurwitz` | Without the capacity limit, rest is the only equilibrium on the whole sweep `0 ≤ g ≤ 3`. With it, rest is still the only one up to `g = 2`; a co-arousal equilibrium appears by `g = 2.1`, and at `g = 3` it is linearly stable, so the pair is bistable. Noise-free and zero-delay only. Numerically, on 200 fresh seeds, this state explains Test 4's runs that never recover, but the rise of the median needs the delay, and the `+1` heel stick alone does not flip the noise-free pair for `g ≤ 3`; noise does ([`../shared-air/AUDIT.md`](../shared-air/AUDIT.md) §4) |
 
 Not mathematics, and not claimed: which world is real (only recordings decide),
 life before birth and the placenta, and any number as a clinical value.

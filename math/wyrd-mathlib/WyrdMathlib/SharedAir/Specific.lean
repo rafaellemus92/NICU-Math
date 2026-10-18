@@ -8,8 +8,9 @@ import WyrdMathlib.SharedAir.Delay
 (so `c = 1/250`), `h = 3/40`. Then
 
 * `P(s, g) = (s + 1/30)(s + 1/20)(s + 1/4) + 3g/40 (s + 1/20) − g²/250 (s + 1/4)`;
-* at zero delay, the optimal coupling is `g* ∈ (0.08035, 0.08036)` (numerically
-  `0.0803559`), with dominant eigenvalue `s* ∈ (−0.048271, −0.04827)`;
+* at zero delay, the coupling that maximises the slowest-mode decay rate `ρ` is
+  `g* ∈ (0.08035, 0.08036)` (numerically `0.0803559`), with dominant eigenvalue
+  `s* ∈ (−0.048271, −0.04827)`;
 * at zero delay, the equilibrium is stable exactly for `g < 15/8 + √2265/24 ≈ 3.858`.
   Above that it is unstable **for every delay**. Below it, delay can destabilise:
   numerically, `g = 3` loses stability at `τ ≈ 1.84 s` (the source's default delay is

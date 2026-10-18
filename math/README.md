@@ -16,6 +16,8 @@ it is, how certain it is, and where to find it.
 | **Checked numerically** | A script recomputes the result. This is evidence, not proof. |
 | **Audit** | A review of claims made elsewhere (ChatGPT's packages, the Shared Air model, the user's own ideas), with a verdict for each claim. |
 | **Open** | Not proved and not claimed. |
+| **Correspondence** | Letters and notes written with AI help ([`letters/`](letters/)). Not results; each claim carries its own source, and physics verdicts defer to [`reports/`](reports/). |
+| **Source material** | The user's uploads, kept as uploaded ([`inputs/`](inputs/)): inputs to the proofs and audits, not results. |
 
 ## Map
 
@@ -25,8 +27,11 @@ it is, how certain it is, and where to find it.
 | [`wyrd/`](wyrd/) | Core Lean proofs: the pangram, Euclid, √2 | Proved in Lean |
 | [`wyrd-mathlib/`](wyrd-mathlib/) | Lean + Mathlib: the bridge to Mathlib, √2, the rainbow, body water, Shared Air, its limits, periodic Navier–Stokes | Proved in Lean |
 | [`ns-phase-audit/`](ns-phase-audit/) | Independent audit of ChatGPT's periodic Navier–Stokes lab v2 | Audit |
+| [`ns-phase-audit/enstrophy-jet/`](ns-phase-audit/enstrophy-jet/) | A second, code-independent exact enstrophy jet for the same lab, through t¹⁴, from a separate session | Checked numerically (exact arithmetic) |
+| [`shared-air/`](shared-air/) | Audit of the Shared Air page and its simulator, with node checks. The page itself is [`../web/public/shared-air/`](../web/public/shared-air/), live at https://nicu-math.vercel.app/shared-air | Audit |
 | [`numerics/`](numerics/) | 19 scripts that recompute numbers used in the theorems and audits | Checked numerically |
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
+| [`letters/`](letters/) | A draft email to Steven Strogatz and its plain-language companion, `words.md`, whose physics verdicts defer to `reports/` | Correspondence, not an audit (draft, not sent); its few derived numbers are checked numerically |
 | [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
 | [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
@@ -187,22 +192,30 @@ dosing; each file says what its model leaves out.
 
 An audit of the *equations* of the Shared Air mother–infant model (see
 [`inputs/`](inputs/)), not of its biology. Mostly about its linearisation at
-rest with zero delay.
+rest with zero delay. The audit of the page and its simulator is section 6.
 
 - `hasFDerivAt_field`: that linear system really is the derivative of the
   model's nonlinear field at rest.
-- `optimal_coupling`, `optimum_bounds`: at zero delay there is exactly one best
-  coupling, g* ∈ (0.08035, 0.08036).
+- `optimal_coupling`, `optimum_bounds`: at zero delay there is exactly one
+  coupling, g* ∈ (0.08035, 0.08036), that maximises the slowest-mode decay rate
+  ρ, not the heel-stick recovery time
+  ([`shared-air/AUDIT.md`](shared-air/AUDIT.md) §3).
 - `stable_iff`, `gc_bounds`: at zero delay, rest is stable exactly when
   g < g_c = 15/8 + √2265/24 ≈ 3.858. `unstable_every_delay`: above g_c it is
   unstable for every delay.
 - `same_synchrony_different_future_24`: two populations with the same
-  synchrony number can change at different rates, so one number cannot predict
-  its own future.
+  synchrony number can change at different rates, so, for arbitrary phase
+  configurations, one number cannot predict its own future. On the
+  Ott–Antonsen manifold (Z₂ = Z₁²) it can: there R′ = (K/2)R(1 − R²), a
+  one-line step from `Z1dot_eq` ([`shared-air/AUDIT.md`](shared-air/AUDIT.md)
+  §2, C10).
 - `hasDerivAt_freeEnergy`, `equilibrium_eq`: osmotic water flow between cells
   never increases free energy, and its equilibrium is equal osmolality.
 - `contrast_pos_without_coupling`: a noisier control adult produces a positive
-  "bond" contrast with no bond at all.
+  "bond" contrast with no bond at all. In the page's tests the control is
+  matched (alike-world contrast −0.022 ± 0.055). Off protocol, with mom asleep
+  or away, the contrast is biased negative, about −0.12 to −0.23 over 300-s
+  sessions (checked numerically; [`shared-air/AUDIT.md`](shared-air/AUDIT.md) §6).
 - `averaged_stable_equilibrium_iff`, `two_to_one_moments`: first-order 2:1
   locking.
 
@@ -227,6 +240,10 @@ The model's own list of what it cannot tell you, turned into theorems.
   skin-awake and skin-asleep do when the effects add (`additive_identified`);
   with an interaction, the full 2 × 2 design is needed
   (`three_conditions_miss_interaction`, `four_conditions_identify_interaction`).
+  These assume the alike part is the same in every condition. In the page's
+  model that holds for responses of the infant alone, not for infant–mom
+  synchrony when mom sleeps: with no bond, synchrony is +0.086 ± 0.013 higher
+  with her awake than asleep (60 sessions; [`shared-air/AUDIT.md`](shared-air/AUDIT.md) §6).
 - **Sessions** (`Sessions.lean`): a distribution-free bound on how many
   sessions are enough (`sessions_chebyshev`, `sessions_enough`).
 - **Arousal is one number** (`Arousal.lean`): co-activation of sympathetic and
@@ -236,13 +253,26 @@ The model's own list of what it cannot tell you, turned into theorems.
   the resting rate cannot separate the cells' own rate from vagal tone
   (`resting_rate_not_identifiable`).
 - **Whose good** (`Objective.lean`): no coupling leaves mom at rest and also
-  gives the best recovery (`mom_untouched_iff`, `infant_best_moves_mom`).
+  gives the best asymptotic (spectral) decay rate: mom stays at rest only at
+  g = 0, while g*, the coupling that maximises the slowest-mode decay rate, is
+  positive (`mom_untouched_iff`, `infant_best_moves_mom`). Recovery within
+  10 bpm after a heel stick is fastest at much larger g. In the noise-free
+  model, timed by the last exit from the band, the best g is 2.98 (the edge of
+  the swept range 0–3) at τ = 0.02 s and 1.73 at τ = 1.5 s. The page's noisy
+  Test 4 median is fastest at responsiveness K = 1 (checked numerically;
+  [`shared-air/AUDIT.md`](shared-air/AUDIT.md) §3).
 - **Test 4's second state** (`Bistability.lean`): without the capacity limit,
   rest is the only equilibrium for 0 ≤ g ≤ 3. With it, rest is still the only
   one up to g = 2, a co-arousal equilibrium exists at g = 2.1, and at g = 3 it
   is linearly stable, so the pair is bistable (`only_rest_without_cap`,
   `only_rest_upto_two`, `coarousal_exists_above_two`,
-  `coarousal_stable_at_three`).
+  `coarousal_stable_at_three`). These are noise-free, zero-delay equilibria.
+  Numerically, on 200 fresh seeds per point, the second state explains the runs
+  that never recover, but the rise of Test 4's median at high responsiveness
+  needs the delay. The +1 heel stick alone does not flip the noise-free pair
+  for g ≤ 3 (at g = 3 the smallest infant kick that does is about 1.33 at
+  τ = 0.02 s and 1.41 at τ = 1.5 s); noise carries runs into the second state
+  ([`shared-air/AUDIT.md`](shared-air/AUDIT.md) §4).
 
 ### 2.6 Periodic Navier–Stokes (`PeriodicNS/`)
 
@@ -260,7 +290,7 @@ averages.
 | **Blowup scalings** | Arithmetic about assumed blowup exponents: the swirl Reynolds number blows up, vorticity ~ 1/(t_b − t) is not integrable (the Beale–Kato–Majda divergence), and a shrinking core can have vanishing energy while its speed blows up (`swirl_reynolds_blowup`, `vorticity_not_integrable`, `energy_vanishes_speed_blows`). No solution with these scalings is constructed. | `Blowup.lean`, `CoreScaling.lean` |
 | **Clay statements** | The quantifier logic of Clay's alternatives B and D (`not_B_implies_D`, `D_and_B_consistent`) | `Quantifiers.lean` |
 | **Phase family** | u_φ = (sin y, sin z, cos x − cos(x + y + φ)) has the same E, Z, D for every φ but S = cos φ/4. So S − νD, the initial enstrophy growth rate in the standard balance, is zero at φ = π/3 when ν = 1/28; and −v is a shifted copy of u_π (`quantities_vphi`, `growth_iff`, `zero_growth_at_pi_div_three`, `neg_v_translate`) | `PhaseFamily.lean` |
-| **Selection rules** | The counting core of the audit's argument (section 3): a cos mφ term with \|m\| ≥ 2 cannot appear in Z before t^(3\|m\|), is ν-free there, and at t⁷ the cos 2φ term is proportional to ν (`not_before`, `at_first_order`, `order_seven_m_two`). Two inputs are proved on paper only, in [AUDIT.md §4.2](ns-phase-audit/audit_v2/AUDIT.md#42-structural-explanation) | `SelectionRules.lean` |
+| **Selection rules** | The counting core of the audit's argument (section 3): a cos mφ term with \|m\| ≥ 2 cannot appear in Z before t^(3\|m\|), is ν-free there, and at t⁷ the cos 2φ term is proportional to ν (`not_before`, `at_first_order`, `order_seven_m_two`). Two inputs are proved on paper only, in [AUDIT.md §4.2](ns-phase-audit/audit_v2/AUDIT.md#42-structural-explanation). The full rules hold, and are sharp, through t¹⁴ in the exact series of [`ns-phase-audit/enstrophy-jet/`](ns-phase-audit/enstrophy-jet/RESULTS.md) (computation, not Lean), where the cos 4φ term at t¹³ is ∝ ν | `SelectionRules.lean` |
 | **Phase symmetry** | A rotation by π plus a shift maps u_φ to u_−φ, and a mirror fixes u_φ (`rotShift_vphi`, `mirror_fixes_vphi`, `quantities_even`) | `PhaseSymmetry.lean` |
 | **Scaling counterexample** | Rescaling by an integer k keeps E = 1 but gives Z = 5k²/4, D = 7k⁴/2, S = k³/4. So no bound S ≤ C Z^a D^b with 2a + 4b < 3 holds for all fields, and the fitted Z^0.75 D^0.2 law fails like k^0.7 (`quantities_vScaled`, `no_power_law_bound`, `fitted_law_fails`) | `Scaling.lean` |
 
@@ -273,15 +303,16 @@ averages.
   may appear (some theorems use fewer). `sorryAx` would mean an unfinished
   proof; `Lean.ofReduceBool` would mean `native_decide`.
 - On 18 October 2026 the axioms of all 136 + 14 theorems were printed from an
-  existing local build of the identical source (sgrounds commit `e29a9fe`, see
-  [Provenance](#provenance)). Every one uses only those three axioms.
+  existing local build of sgrounds commit `e29a9fe` (see
+  [Provenance](#provenance)). Every one uses only those three axioms. Since
+  then six `.lean` files (`Limits/Bistability`, `Mixture`, `Objective`,
+  `Ratios`, `SharedAir/Locking`, `SharedAir/Specific`) have had comment and
+  docstring edits only; no statement or proof changed, and CI rebuilds them on push.
 - CI ([`../.github/workflows/lean.yml`](../.github/workflows/lean.yml)) builds
   both Lean projects and runs both audits, and fails if `sorryAx` or
   `ofReduceBool` appears. It runs on every push or pull request that changes
   `math/wyrd/`, `math/wyrd-mathlib/` or the workflow file, and can be started
   by hand from the Actions tab. Its result for this repository is shown there.
-- [`ns-phase-audit/README.md`](ns-phase-audit/README.md) gives the count as
-  130; it was written before the six theorems of `Scaling.lean` were added.
 
 ---
 
@@ -301,6 +332,8 @@ folder guide is [`ns-phase-audit/README.md`](ns-phase-audit/README.md).
 - **Headline.** No mathematical error and no false numerical claim. The
   package's central identity is confirmed exactly with ν kept symbolic: the
   cos 2φ coefficient of the order-6 term of Z is **−6487/1555200 for every ν**.
+  Coefficients here are in cosine form unless labelled Laurent. AUDIT.md's
+  z_{n,m} is the Laurent (e^{imφ}) coefficient, half the cos mφ coefficient.
 - **Why it appears at order 6, and why it is ν-free.** Without the `sin z`
   mode the flow stays independent of z (all three velocity components kept,
   "2D-3C"), and then Z has only `1` and `cos φ` terms at every order (P1).
@@ -309,8 +342,9 @@ folder guide is [`ns-phase-audit/README.md`](ns-phase-audit/README.md).
   before order 3|m|, and has no ν there (P2).
 - **Predictions from that argument, all confirmed exactly.** At order 7 the
   cos 2φ coefficient is (207269/7257600) ν, so zero for Euler; cos 3φ first
-  appears at order 9, ν-free (`z_{9,3} = −21381938959/211843247616000`); cos 4φ
-  first appears at order 12.
+  appears at order 9, ν-free, with coefficient −21381938959/105921623808000
+  ≈ −2.02 × 10⁻⁴ (Laurent `z_{9,3} = −21381938959/211843247616000`); cos 4φ
+  first appears at order 12 (≈ −1.87 × 10⁻⁶).
 - **Smaller findings.** The numbers reproduce to about 8 decimals; some printed
   9th decimals depend on the integrator. Reproducibility bugs: bare
   `pytest -q` fails to collect, `--dt` is ignored in `optimize`, and some counts
@@ -323,6 +357,21 @@ folder guide is [`ns-phase-audit/README.md`](ns-phase-audit/README.md).
   (creates `periodic_ns_lab_v2/`). Full commands: AUDIT.md §8.
 - [`ns-phase-audit/checks_v1/nslab_check.py`](ns-phase-audit/checks_v1/nslab_check.py):
   the earlier FFT re-derivation of the v1 lab's exact identities.
+- **A second exact line: [`ns-phase-audit/enstrophy-jet/`](ns-phase-audit/enstrophy-jet/)**
+  (separate session, 16–18 October; **checked numerically**, in exact arithmetic).
+  Start with its [`RESULTS.md`](ns-phase-audit/enstrophy-jet/RESULTS.md).
+  - Its own code, with ν symbolic (python-flint), takes the jet to t¹⁴. It
+    agrees with line (a) entry for entry through t¹² (61 Z and 53 E harmonic
+    polynomials, `Fraction` equality; `compare_audit_v2.py`).
+  - Both selection rules hold, and are sharp, through t¹⁴. It gives a second
+    paper proof of the parity rule, by time reversal, that does not use the
+    grading; only its φ = 0 step (`neg_v_translate`) is in Lean.
+  - It splits the t⁶ cos 2φ term by Fourier leaves (one allowed leaf
+    multiset; RESULTS.md §5).
+  - It measures the jet's reach against the package's 64³ run: error about
+    3 × 10⁻⁵ at t = 1 and about 5 × 10⁻² at t = 1.5, no information at t ≥ 2.
+    Numerically the series looks divergent for ν > 0 (RESULTS.md §6; evidence,
+    not a proof).
 
 ---
 
@@ -362,6 +411,24 @@ script, and an adversarial verifier rechecked them. Each of the 21 ideas gets a
 verdict: true, partly true, a metaphor that maps onto real structure, false as
 stated, unsupported, or outside physics. Scripts, outputs and data are in
 [`reports/physics-biology/`](reports/physics-biology/) and re-run offline.
+See also [`letters/words.md`](letters/words.md#2-ideas-and-their-status), its
+plain-language companion.
+
+### [`letters/`](letters/)
+
+From a separate session (18 October). Correspondence, not an audit, and not a
+result. Folder guide: [`letters/README.md`](letters/README.md).
+
+- [`strogatz-email.md`](letters/strogatz-email.md): a draft email to Steven
+  Strogatz (not sent), with placeholders, a send checklist and sources for each
+  claim.
+- [`words.md`](letters/words.md): its plain-language companion. A table of
+  shared words (bedside, mathematics, old texts), each marked as an analogy
+  where it is one; a status table for a set of physics ideas; short essays.
+  Its physics verdicts defer to the fact-check above, which stays the
+  authority where the wording differs.
+- `check_numbers.py` computes the few numbers worked out there (output in
+  `check_numbers.txt`; standard library only).
 
 ---
 
@@ -395,13 +462,45 @@ the lab brief [`hou-luo-1d/hou-luo/CLAUDE.md`](hou-luo-1d/hou-luo/CLAUDE.md).
 
 ---
 
-## 6. Source materials: [`inputs/`](inputs/)
+## 6. The Shared Air page and its simulator audit (separate session, 18 October)
+
+**Audit**, with node checks (**checked numerically**). The corrected interactive
+page is [`../web/public/shared-air/index.html`](../web/public/shared-air/index.html),
+live at https://nicu-math.vercel.app/shared-air; that file is the only copy.
+[`shared-air/`](shared-air/) holds its audit and the scripts that check it
+(not to be confused with [`numerics/shared-air/`](numerics/shared-air/), the
+Python delay checks). Start with [`shared-air/AUDIT.md`](shared-air/AUDIT.md).
+
+- **What was audited.** ChatGPT's proof audit of the model
+  ([`inputs/shared_air_proof_audit.zip`](inputs/shared_air_proof_audit.zip)),
+  claim by claim against the page's code, and the page's own findings.
+- **Findings.** g* maximises ρ, not Test 4's recovery (§3). In Test 4, on 200
+  fresh seeds per point, the delay makes the median rise and the capacity limit
+  makes the never-recover tail (§4). Exact 2:1 locking starts at pulse strength
+  4.00, not the first-order 3.31 (§5). The room subtraction is unbiased only
+  while mom is awake and present (§6).
+- **The page was corrected:** text, stored results (200 runs per point), the
+  exact locking numbers and one code fix, with the full diff (§7). §10
+  compares it with the v2 revision of the model text in [`inputs/`](inputs/).
+- **Lean.** §11 maps each claim to the theorems of sections 2.4 and 2.5 and
+  lists what has no Lean counterpart.
+- **Running it.** Node 18 or later, no dependencies:
+  `cd math/shared-air && node tools/quick_check.js`. The full list is in
+  [`shared-air/README.md`](shared-air/README.md).
+
+---
+
+## 7. Source materials: [`inputs/`](inputs/)
 
 The files the user uploaded during the work: two versions of the Shared Air
 model, ChatGPT's two audit ZIPs, ChatGPT's Navier–Stokes lab packages v1 and
 v2, and the original pangram script.
 [`inputs/README.md`](inputs/README.md) describes each file in one line. Four
-screenshots from the conversation are not included.
+screenshots from the conversation are not included. Its line for the v2 model
+text repeats v2's own claims. [`shared-air/AUDIT.md`](shared-air/AUDIT.md)
+§10 checks each one against the corrected page. One does not hold as stated:
+on 200 fresh seeds per point, the rise of Test 4's median needs the delay
+(§4 there).
 
 ---
 
@@ -437,6 +536,8 @@ in this repository the folder is `math/`.
 Python 3 and numpy are enough for every script, with these exceptions:
 
 - `ns-phase-audit/audit_v2/code_audit/symmetry_sympy.py` needs sympy;
+- `ns-phase-audit/enstrophy-jet/` needs python-flint (and pytest for its
+  tests; see its `requirements.txt`);
 - the Hou–Luo plots need matplotlib;
 - the C programs in `checks/` and `prime-pangram/` need a C compiler such as gcc;
 - `reports/physics-biology/tools/epmc*.py` need network access (they are not
@@ -444,6 +545,12 @@ Python 3 and numpy are enough for every script, with these exceptions:
 
 The saved outputs in `numerics/` were produced with Python 3.13.16 and numpy
 2.5.3. Run any script that reads an uploaded package with `python3 -I`.
+
+### Node
+
+The checks in `shared-air/tools/` need only Node.js 18 or later (no packages);
+`tools/render.js` optionally uses Playwright. Commands and expected output:
+[`shared-air/README.md`](shared-air/README.md).
 
 ---
 
@@ -464,14 +571,31 @@ The saved outputs in `numerics/` were produced with Python 3.13.16 and numpy
 - `inputs/` holds the user's uploads.
 - `numerics/` and `reports/` were curated on 18 October from scratch files of
   the same work. Their READMEs list what was kept, what was dropped and why.
+- `shared-air/`, `ns-phase-audit/enstrophy-jet/` and `letters/` come from a
+  separate session (16–18 October), where they were the top-level folders
+  `shared-air/`, `navier-stokes-jet/` and `letters/`. They were moved here and
+  reconciled with the work above. Their copy of the Shared Air page was
+  dropped; the one copy is `web/public/shared-air/index.html`.
 
 ---
 
 ## What remains open
 
-**Navier–Stokes.** The Millennium problem is untouched. Everything in
-`PeriodicNS/` is about given fields at one instant, or arithmetic about
-assumed blowup exponents; the evolution, local existence and the enstrophy
+**Navier–Stokes.** This work does not touch the Millennium problem. Its
+status, re-checked 18 October 2026: on 8 September OpenAI posted a paper,
+with a Lean formalisation, claiming finite-time blowup with a smooth external
+force. The paper says this establishes Clay's alternative (C) and, as its
+Corollary 10.6, the periodic alternative (D). Clay's 11 September statement
+speaks of the problem having "apparently been settled" and calls its process
+"deliberately unhurried"; its problem page still lists it as "Active". The
+unforced questions (A) and (B), which include the periodic setting of
+`PeriodicNS/` and both lab audits, remain open, and nothing here bears on
+them. Sources: [`ns-phase-audit/enstrophy-jet/RESULTS.md`](ns-phase-audit/enstrophy-jet/RESULTS.md)
+§8 and [`reports/physics-biology-factcheck.md`](reports/physics-biology-factcheck.md#21-the-higgs-boson-and-the-navier-stokes-centre-line)
+§2.1.
+
+Everything in `PeriodicNS/` is about given fields at one instant, or arithmetic
+about assumed blowup exponents; the evolution, local existence and the enstrophy
 balance dZ/dt = S − νD are not formalised. Specifically missing
 ([AUDIT.md §7](ns-phase-audit/audit_v2/AUDIT.md#7-what-remains-unproven)):
 
@@ -480,11 +604,16 @@ balance dZ/dt = S − νD are not formalised. Specifically missing
    rankings are not theorems.
 2. **A remainder bound for the Taylor jets.** The order 6, 7, 9 and 12 results
    are exact statements about derivatives at t = 0. Nothing bounds the error of
-   the series at t = 2 or t = 4.
+   the series at t = 2 or t = 4. Numerically the series looks divergent for
+   ν > 0; stopped at its smallest term it is good to about 3 × 10⁻⁵ at t = 1,
+   but not at t ≥ 1.5 ([`enstrophy-jet/RESULTS.md`](ns-phase-audit/enstrophy-jet/RESULTS.md)
+   §6; evidence, not a proof).
 3. **Global optimality in φ.** The optimiser certifies only a local maximum
    (φ* ≈ 0.970364 at T = 2).
 4. **Nonvanishing of the leading |m| ≥ 5 coefficient.** The first cos mφ
-   coefficient is computed to be nonzero only for |m| = 2, 3, 4.
+   coefficient is computed to be nonzero only for |m| = 2, 3, 4. The exact
+   series in `enstrophy-jet/` stops at t¹⁴; the first |m| = 5 coefficient would
+   be at t¹⁵ and has not been computed.
 
 Also not done: P1 at finite time is verified numerically but not written out
 as a proof, and P1 is not in Lean.
@@ -498,7 +627,12 @@ as a proof, and P1 is not in Lean.
 - Shared Air: results for the delayed model (τ > 0) are numerical only, and the
   zero-delay theorems must not be read as statements about the delayed, noisy
   or nonlinear model. Which of the model's three worlds is real is not a
-  mathematical question; only recordings can decide.
+  mathematical question; only recordings can decide. Page-level items
+  ([`shared-air/AUDIT.md`](shared-air/AUDIT.md) §9): Test 4 scores the first
+  hold in band, so later relapses are missed; some high-K runs get stuck with
+  no heel stick at all; the code's delay is at least one 0.02-s step, so the
+  zero-delay theorems describe a setting it cannot run; cell phase noise is not
+  scaled with the time step.
 - Rainbow band widths to 0.1°, and body water over time (postnatal diuresis):
   [`wyrd/ROADMAP.md`](wyrd/ROADMAP.md).
 - Hou–Luo: Steps 2–4 (section 5).

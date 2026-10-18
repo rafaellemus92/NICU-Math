@@ -1,0 +1,11 @@
+tau 0.02 : heel stick 1, g = 0, 0.25, ..., 3: stuck at none
+tau 1.5 : heel stick 1, g = 0, 0.25, ..., 3: stuck at none
+g 2.5 tau 0.02 : smallest infant kick that sticks: 2.156 (in the Test 4 window), 2.140 (long run)
+g 2.5 tau 1.5 : smallest infant kick that sticks: 2.487 (in the Test 4 window), 2.452 (long run)
+g 3 tau 0.02 : smallest infant kick that sticks: 1.370 (in the Test 4 window), 1.334 (long run)
+g 3 tau 1.5 : smallest infant kick that sticks: 1.471 (in the Test 4 window), 1.407 (long run)
+time 8.5 s
+
+real	0m8.560s
+user	0m8.625s
+sys	0m0.080s

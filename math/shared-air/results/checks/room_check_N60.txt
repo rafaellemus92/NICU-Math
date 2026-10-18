@@ -1,0 +1,7 @@
+mom awake, skin-to-skin (Test 1 protocol)  N 60 mean -0.037 +/- 0.034 SEM (z -1.1) 4.8 s
+mom asleep, skin-to-skin                   N 60 mean -0.123 +/- 0.037 SEM (z -3.3) 4.2 s
+mom out of the room                        N 60 mean -0.206 +/- 0.042 SEM (z -4.9) 4.4 s
+
+real	0m13.449s
+user	0m13.254s
+sys	0m0.267s

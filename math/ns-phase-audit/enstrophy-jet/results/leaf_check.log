@@ -1,0 +1,18 @@
+labelled jet to order 9: 34066 terms in U_9, 17.7s
+[2] U_n terms with no b leaf are the single a leaf or linear in (c,d): PASS
+    n= 0: harmonics [0]  sum of labelled terms == series.json: True
+    n= 1: harmonics [-1, 0, 1]  sum of labelled terms == series.json: True
+    n= 2: harmonics [-1, 0, 1]  sum of labelled terms == series.json: True
+    n= 3: harmonics [-1, 0, 1]  sum of labelled terms == series.json: True
+    n= 4: harmonics [-1, 0, 1]  sum of labelled terms == series.json: True
+    n= 5: harmonics [-1, 0, 1]  sum of labelled terms == series.json: True
+    n= 6: harmonics [-2, -1, 0, 1, 2]  sum of labelled terms == series.json: True
+    n= 7: harmonics [-2, -1, 0, 1, 2]  sum of labelled terms == series.json: True
+    n= 8: harmonics [-2, -1, 0, 1, 2]  sum of labelled terms == series.json: True
+    n= 9: harmonics [-3, -2, -1, 0, 1, 2, 3]  sum of labelled terms == series.json: True
+[1] labelled jet reproduces series.json for n <= 9: PASS
+[3] every |M|>=2 term has >=2 b leaves and >=|M| of each of a, c, d: PASS
+[4] every term has L = M mod 2: PASS
+[5] reduced flow (no b leaf): harmonics present for n <= 9: [-1, 0, 1]  (|M| <= 1: PASS)
+[5] passive phase (d never advects): harmonics present for n <= 9: [-2, -1, 0, 1, 2]  (|M| <= 2: PASS)
+ALL PASS (22.2s)
