@@ -445,3 +445,17 @@ solutions use exactly two non-English onsets, and the same run returns 0 for
   clusters, 1–2 vowels) has 2.09 × 10¹³ solutions and needs 2 foreign
   clusters; F(2,2) (exactly one vowel, no English clusters of length 3+)
   has 1.13 × 10¹³, the number asked for in task (d).
+
+## Independent cross-check and extensions (`independent/`)
+
+A second implementation written without sight of this code (Node/Python,
+sieve and Miller–Rabin primality, memoised subset DP) reproduces every shared
+number exactly on these lists: 289,404 / 16,243 words, 0 pangrams, the
+17-consonant packing bound, N₀ = 353,750,976,000, and the free-regime count
+11,261,264,735,669.  It adds the natural-language case (147 number words from
+~60 languages: no perfect pangram, best 22/26, a counting bound of 19 < 20
+consonants), real English words (Webster's 2nd: best 22/26), and the two
+alphabets with native letter-numerals, where the value is a sum and the
+obstruction becomes a parity rule — Koine Greek isopsephy admits 65,300
+five-word perfect pangrams, Hebrew gematria none with roots of ≤ 4 letters.
+See `independent/README.md`.
