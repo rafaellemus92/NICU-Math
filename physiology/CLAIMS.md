@@ -17,11 +17,29 @@ Every claim in `physiology/` lives in exactly one tier below. See
 
 - **A two-compartment linear respiratory model with aggregate
   compliance C = C₁ + C₂ and matched branch resistances yields
-  different passive-emptying residuals depending on how C is
-  distributed.** Specifically, with R₁ = R₂ = 2R and C_total = C,
-  comparing (C₁, C₂) = (C/2, C/2) vs (0.9C, 0.1C) over passive
-  emptying for time RC gives distinct retained-volume fractions.
-  Script: `two_compartment.py` *(pending PR #7)*.
+  different retained excess-volume fractions depending on how C is
+  distributed.** With R₁ = R₂ = 2R, compare A: (C/2, C/2) and
+  B: (0.9C, 0.1C). Both equilibrate at the same initial driving
+  pressure P₀ > 0, hence both start with total excess volume CP₀.
+  After release to zero driving pressure, at t = RC:
+  A = exp(−1) = **0.36787944117144233**;
+  B = 0.9 exp(−1/1.8) + 0.1 exp(−5) = **0.51705187336359804**.
+  **Verified at machine precision** (formerly pending PR #7):
+  analytically derived closed forms, floating evaluation discrepancy
+  0.000e+00 in both unit-scale cases; not a formal proof certificate.
+  See [physiology/two_compartment.py](two_compartment.py) and
+  [derivation and limits](two_compartment.md). Tests:
+  [`tests/physiology/test_two_compartment.py`](../tests/physiology/test_two_compartment.py),
+  **41 passed**; headline errors < 1e−10 and at float64 roundoff scale;
+  independent solve_ivp maximum absolute volume errors **7.981e−11**
+  (symmetric) and **2.604e−11** (heterogeneous), both < 1e−6.
+  Verified implementation commit: `aa73b1350b14f18608a1a1564906cd3fc7fa2645`.
+  This is a summary-statistic obstruction for independent passive linear
+  compartments, with no shared dynamic chest-wall coupling. Volumes are
+  relative to the zero-driving-pressure equilibrium baseline, not resting
+  end-expiratory absolute volume or clinical residual volume. Teaching
+  instrument only: no specific-patient inference, nonlinear compliance,
+  recruitment, or validated predictive clinical tool is claimed.
 
 ## Numerical evidence
 
