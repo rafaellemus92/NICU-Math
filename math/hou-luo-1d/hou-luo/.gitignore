@@ -1,4 +1,0 @@
-# variation runs: numbers are in their .json; raw series not kept in git
-step1_N4096_*.npz
-step1_N2048.npz
-__pycache__/
