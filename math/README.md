@@ -27,7 +27,8 @@ it is, how certain it is, and where to find it.
 | [`ns-phase-audit/`](ns-phase-audit/) | Independent audit of ChatGPT's periodic Navier–Stokes lab v2 | Audit |
 | [`numerics/`](numerics/) | 19 scripts that recompute numbers used in the theorems and audits | Checked numerically |
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
-| [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session | Checked numerically (1D toy model) |
+| [`pangram-prime-words/`](pangram-prime-words/) | Perfect pangrams of pronounceable prime words, from a separate session (PR #2) | Checked numerically |
+| [`hou-luo-1d/`](hou-luo-1d/) | A 1D blowup lab from a separate session (PR #1) | Checked numerically (1D toy model) |
 | [`inputs/`](inputs/) | The user's uploaded source materials | Source material |
 
 ---
@@ -105,6 +106,25 @@ still unfinished.
 - [`numerics/pangram/smallest_sum_search_cost.py`](numerics/pangram/smallest_sum_search_cost.py):
   **checked numerically.** A Python copy of the Lean kernel search. It finds no
   pangram below 4296.
+
+### A related search: prime-word perfect pangrams ([`pangram-prime-words/`](pangram-prime-words/))
+
+From a separate session (merged as PR #2, moved here from the repository root).
+A different question: can the 26 letters be split into pronounceable words that
+are each prime under bijective base 26 (A = 1 … Z = 26)? **Checked
+numerically**, with every number printed by a named script:
+
+- Under English onset and coda lists there are 16,243 prime words and **no**
+  perfect pangram. The reason is structural: a word's value is congruent to its
+  last letter mod 26, so every coda must end in a letter coprime to 26, and the
+  odd codas can hold at most 17 of the 20 consonants (`structure.py`).
+- Under a free consonant–vowel–consonant rule there are exactly 11,261,264,735,669
+  perfect pangrams, confirmed by two independent counters.
+- The alphabetical digit assignment is what blocks the English case: it puts all
+  six vowels on odd digits. 125 of 200 random assignments admit solutions.
+
+Read [`pangram-prime-words/README.md`](pangram-prime-words/README.md) for the
+definitions, the scripts and the full tables.
 
 ---
 
@@ -436,7 +456,11 @@ The saved outputs in `numerics/` were produced with Python 3.13.16 and numpy
   `experiments/`, at source commit
   `e29a9fe90b660aa11bb0b4ae114d65297448bf10`. In this repository's history the
   matching subtree commit is `f1752bf`.
-- `hou-luo-1d/` comes from `rafaellemus92/NICU-Module` (section 5).
+- `hou-luo-1d/hou-luo/` is the branch `claude/peaceful-wozniak-oaprql` (PR #1),
+  merged with its history and moved here; `NOTE_FOR_CHATGPT.md` was added.
+- `pangram-prime-words/` is the former root `pangram/` folder (PR #2), moved
+  here with `git mv` so its history follows it.
+- This repository was previously named `NICU-Module`.
 - `inputs/` holds the user's uploads.
 - `numerics/` and `reports/` were curated on 18 October from scratch files of
   the same work. Their READMEs list what was kept, what was dropped and why.
