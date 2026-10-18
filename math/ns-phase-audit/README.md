@@ -12,6 +12,7 @@ Independent checks of ChatGPT's `periodic_ns_lab_v2` package, which is kept as u
 | `audit_v2/xcheck/` | Cross-comparisons between the lines above and your outputs. |
 | `checks_v1/nslab_check.py` | Our earlier FFT re-derivation of the v1 exact identities. |
 | `enstrophy-jet/` | A second exact line from a separate session, sharing no code with `audit_v2/`: the jet with symbolic ν through t¹⁴ (python-flint), equal to `audit_v2/exact/` entry for entry through t¹², a time-reversal proof of the parity rule, and how far the jet reaches in time. Start with `enstrophy-jet/RESULTS.md`. |
+| `../all-time-phase-response/` | ChatGPT's (Codex) all-time small-b note for the same family: a paper argument that a small enough `sin z` amplitude b gives a smooth solution for all time, with the b² response of E, Z, S. Its radius is not computed and is far below b = 1; its numerics are finite-grid checks at T = 0.5. Sections 1 and 5 are a written paper proof (not refereed) of P1 at the solution level. |
 | `../wyrd-mathlib/` | The Lean 4 + Mathlib project. `WyrdMathlib/PeriodicNS/` is the Navier–Stokes part. |
 
 Repository: `github.com/rafaellemus92/sgrounds`, branch `claude/new-session-sbrl43`, folder `experiments/`.
@@ -87,3 +88,4 @@ Lean: `cd ../wyrd-mathlib && lake exe cache get && lake build && lake env lean A
 - A remainder bound for the Taylor jet at `t = 2` or `t = 4`. `enstrophy-jet/RESULTS.md` §6 gives numerical evidence that the series diverges for ν > 0 and is of no use at `t ≥ 2`.
 - A global optimality certificate in φ.
 - A proof that the leading `|m|` coefficient is nonzero for `|m| ≥ 5`. `enstrophy-jet/` stops at `t¹⁴`; the first `|m| = 5` coefficient would be at `t¹⁵`.
+- Anything at `b = 1` beyond finite time and finite grids. `../all-time-phase-response/` covers all time only for `|b|` below an uncomputed radius (below 10⁻²¹ at `a = c = d = 1`, ν = 1/28).

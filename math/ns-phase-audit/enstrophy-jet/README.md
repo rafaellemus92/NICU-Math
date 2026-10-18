@@ -18,6 +18,12 @@ This folder was made in a separate session (October 2026; it was first called
 [`../audit_v2/AUDIT.md`](../audit_v2/AUDIT.md). The two exact series agree entry for entry
 through n = 12 (`compare_audit_v2.py`); this one goes on to n = 14.
 
+For a statement that holds for all time, see
+[`../../all-time-phase-response/`](../../all-time-phase-response/) (ChatGPT/Codex): an expansion in
+the sin z amplitude b, valid only for |b| below an uncomputed and astronomically small radius.
+Its b² response is consistent with the selection rules here (RESULTS.md §4.2), and its sections 1
+and 5 are a written paper proof (not refereed) of the passive-scalar lemma for all t.
+
 ## Files
 
 | File | Purpose |

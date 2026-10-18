@@ -1,0 +1,26 @@
+radius_ceiling.py: ceiling on the radius certified by PROOF.md condition (1)
+python 3.13.16, numpy 2.5.3
+parameters: a = c = d = 1, nu = 1/28; (h.grad)f is divergence-free, so P leaves it unchanged: max |P(h.grad f) - h.grad f| = 0.0e+00
+
+ s   kappa_s (FFT)  kappa_s (formula)  F_s (FFT)  F_s (formula)  I_s lower = 2^(s/2)/nu   log10 ceiling of r_s
+ 4   0.3977475644   0.3977475644         2.8284     2.8284              112.0               -21.146
+ 5   0.3444594951   0.3444594951         4.0000     4.0000              158.4               -25.582
+ 6   0.2983106733   0.2983106733         5.6569     5.6569              224.0               -30.996
+ 7   0.2583446213   0.2583446213         8.0000     8.0000              316.8               -37.606
+ 8   0.2237330050   0.2237330050        11.3137    11.3137              448.0               -45.682
+ 9   0.1937584660   0.1937584660        16.0000    16.0000              633.6               -55.553
+10   0.1677997537   0.1677997537        22.6274    22.6274              896.0               -67.623
+11   0.1453188495   0.1453188495        32.0000    32.0000             1267.1               -82.386
+12   0.1258498153   0.1258498153        45.2548    45.2548             1792.0              -100.447
+
+Largest ceiling (s = 4): radius certified by (1) <= 7.142e-22   (log10 = -21.146)
+The ceiling decreases strictly in s for 4 <= s < 200 (checked; analytically, kappa_s I_s and
+kappa_s F_s are both (3/2)^(s/2) times constants), so it holds for every admissible s.
+tested b = 0.05: b / ceiling = 7.00e+19
+tested b = 0.1: b / ceiling = 1.40e+20
+s = 3 (allowed by the remark in PROOF.md section 2): ceiling 3.11e-18
+
+Section 4 radius beta (R >= 8, K >= kappa_4 because K dominates the level-4 constants):
+  R =  8: beta <= 10^(-79.79), below the s = 4 ceiling
+  R =  9: beta <= 10^(-111.99), below the s = 4 ceiling
+  R = 10: beta <= 10^(-157.48), below the s = 4 ceiling

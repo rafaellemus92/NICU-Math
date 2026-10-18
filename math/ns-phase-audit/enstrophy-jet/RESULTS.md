@@ -290,7 +290,8 @@ and the float computation arrived at this rule independently.
   amplitude of sin z).
 - *Both hypotheses have only paper proofs, not refereed and not in Lean.* The passive-scalar lemma
   above is P1 of [AUDIT.md](../audit_v2/AUDIT.md) §4.2, which proves it on paper by the same
-  argument.
+  argument. A third written version, for E, Z and S and for all t, is in sections 1 and 5 of
+  [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) (ChatGPT/Codex).
 - *Both are backed by exact computation.* With β = 0, AUDIT.md finds max |m| = 1 at every order
   through n = 16 ([`../audit_v2/exact/p1_highorder.py`](../audit_v2/exact/p1_highorder.py)) and
   checks P1 at finite time in a DNS
@@ -334,7 +335,10 @@ All values in this section are Laurent coefficients (the cos 2φ coefficient is 
 
 **No remainder bound.** The jet gives exact derivatives at t = 0. Nobody has a bound on the error
 of a truncated series at a finite time. So no statement about Z at t > 0 follows rigorously from it.
-[AUDIT.md](../audit_v2/AUDIT.md) §7.2 says the same.
+[AUDIT.md](../audit_v2/AUDIT.md) §7.2 says the same. A statement of a different kind, an expansion
+in the sin z amplitude b that holds for all t but only for |b| below an uncomputed and
+astronomically small radius, is in [`../../all-time-phase-response/`](../../all-time-phase-response/).
+It does not use this series and does not reach b = 1, so this gap stays open.
 
 **Comparison with the package's simulation.** At ν = 1/28 and φ = 0.9710730, the package's 64³
 simulation gives Z(1) = 1.68959, Z(1.5) = 2.02514, Z(2) = 2.25528 and Z(4) = 1.95481 (column
@@ -460,7 +464,10 @@ on blow-up or global smoothness.** The jet is a statement at t = 0, and the simu
 finite-dimensional models. Whether unforced flows like these stay smooth forever is **open**. For
 a blow-up computation elsewhere in this repository, see [`../../hou-luo-1d/`](../../hou-luo-1d/):
 a 1D toy model, not 3D Navier–Stokes. The PeriodicNS context paragraph of
-[`../../wyrd-mathlib/README.md`](../../wyrd-mathlib/README.md) covers the same status.
+[`../../wyrd-mathlib/README.md`](../../wyrd-mathlib/README.md) covers the same status. The all-time
+small-b note in [`../../all-time-phase-response/`](../../all-time-phase-response/) argues on paper for
+smoothness only for an astronomically small sin z amplitude, near a 2D-3C flow whose global
+smoothness is classical, so it does not bear on (B) either.
 
 Sources (re-checked 18 October 2026):
 - C. L. Fefferman, *Existence and Smoothness of the Navier–Stokes Equation*, Clay Mathematics
@@ -507,3 +514,6 @@ Sources (re-checked 18 October 2026):
   computed; AUDIT.md §7.5 lists the same gap for |m| ≥ 5.
 - Proofs of the grading and of the passive-scalar lemma (P1) in Lean (Section 4.2).
 - Whether the first coefficients c[3m, m] (cos 2φ at t⁶, cos 3φ at t⁹, ...) follow a pattern.
+- A useful radius for the all-time small-b statement in
+  [`../../all-time-phase-response/`](../../all-time-phase-response/). Its own formula gives below
+  10⁻²¹ at ν = 1/28; reaching b = 1 needs a non-perturbative method (AUDIT.md §7.1).

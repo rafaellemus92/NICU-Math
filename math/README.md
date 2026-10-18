@@ -28,6 +28,7 @@ it is, how certain it is, and where to find it.
 | [`wyrd-mathlib/`](wyrd-mathlib/) | Lean + Mathlib: the bridge to Mathlib, √2, the rainbow, body water, Shared Air, its limits, periodic Navier–Stokes | Proved in Lean |
 | [`ns-phase-audit/`](ns-phase-audit/) | Independent audit of ChatGPT's periodic Navier–Stokes lab v2 | Audit |
 | [`ns-phase-audit/enstrophy-jet/`](ns-phase-audit/enstrophy-jet/) | A second, code-independent exact enstrophy jet for the same lab, through t¹⁴, from a separate session | Checked numerically (exact arithmetic) |
+| [`all-time-phase-response/`](all-time-phase-response/) | ChatGPT (Codex): a paper argument that the same family with a small `sin z` amplitude b stays smooth for all time, with the b² response of E, Z, S and an O(b⁴) remainder. The radius is not computed; the proof's own formula puts it below 10⁻²¹ at the tested parameters, so it says nothing about b = 1. Finite-grid checks at T = 0.5 | Checked numerically (finite grids, T = 0.5); the theorem is a paper argument, not in Lean |
 | [`shared-air/`](shared-air/) | Audit of the Shared Air page and its simulator, with node checks. The page itself is [`../web/public/shared-air/`](../web/public/shared-air/), live at https://nicu-math.vercel.app/shared-air | Audit |
 | [`numerics/`](numerics/) | 19 scripts that recompute numbers used in the theorems and audits | Checked numerically |
 | [`reports/`](reports/) | Physics and biology fact-check | Audit |
@@ -372,6 +373,23 @@ folder guide is [`ns-phase-audit/README.md`](ns-phase-audit/README.md).
     3 × 10⁻⁵ at t = 1 and about 5 × 10⁻² at t = 1.5, no information at t ≥ 2.
     Numerically the series looks divergent for ν > 0 (RESULTS.md §6; evidence,
     not a proof).
+- **An all-time small-b line: [`all-time-phase-response/`](all-time-phase-response/)**
+  (ChatGPT/Codex, 18 October; reviewed here; **checked numerically** on finite
+  grids at T = 0.5, the theorem itself a paper argument). Start with its
+  [`README.md`](all-time-phase-response/README.md).
+  - A paper argument that for |b| below an uncomputed radius b0(a, c, d, ν) the
+    flow stays smooth for all time, and that E, Z, S differ from their b = 0
+    values by b² E2, b² Z2, b² S2 plus an error of order b⁴ that decays in
+    time. This is an instance of classical stability results for 2D-3C flows
+    (Ponce–Racke–Sideris–Titi 1994; Gallagher 1997); the new part is the
+    explicit b² response.
+  - Its sections 1 and 5 are a written paper proof (not refereed) of P1 at the
+    solution level, for all time and for E, Z and S.
+  - The radius is tiny: at a = c = d = 1, ν = 1/28 the proof's own condition
+    certifies no |b| above 7.2 × 10⁻²², whatever its uncomputed constants are
+    ([`review/radius_ceiling.py`](all-time-phase-response/review/radius_ceiling.py)).
+    Its numerics (finite grids, T = 0.5, b = 0.05 and 0.1) confirm the b²
+    formulas, not the theorem's bounds, and nothing here reaches b = 1.
 
 ---
 
@@ -494,7 +512,8 @@ Python delay checks). Start with [`shared-air/AUDIT.md`](shared-air/AUDIT.md).
 
 The files the user uploaded during the work: two versions of the Shared Air
 model, ChatGPT's two audit ZIPs, ChatGPT's Navier–Stokes lab packages v1 and
-v2, and the original pangram script.
+v2, ChatGPT's all-time phase response package, and the original pangram
+script.
 [`inputs/README.md`](inputs/README.md) describes each file in one line. Four
 screenshots from the conversation are not included. Its line for the v2 model
 text repeats v2's own claims. [`shared-air/AUDIT.md`](shared-air/AUDIT.md)
@@ -576,6 +595,12 @@ The checks in `shared-air/tools/` need only Node.js 18 or later (no packages);
   `shared-air/`, `navier-stokes-jet/` and `letters/`. They were moved here and
   reconciled with the work above. Their copy of the Shared Air page was
   dropped; the one copy is `web/public/shared-air/index.html`.
+- `all-time-phase-response/` is ChatGPT's (Codex) delivery of 18 October,
+  applied from its patch on `efff6a5` (Codex's local commit `ddbca048`; a
+  verbatim copy pushed by another session is on branch
+  `codex/all-time-phase-response`, 12ea61f, which this folder supersedes), with
+  the changes its README lists and a `review/` folder of check scripts. The ZIP
+  as uploaded is `inputs/all-time-phase-response.zip`.
 
 ---
 
@@ -615,8 +640,14 @@ balance dZ/dt = S − νD are not formalised. Specifically missing
    series in `enstrophy-jet/` stops at t¹⁴; the first |m| = 5 coefficient would
    be at t¹⁵ and has not been computed.
 
-Also not done: P1 at finite time is verified numerically but not written out
-as a proof, and P1 is not in Lean.
+P1 at the solution level now has written paper proofs for all time:
+[`enstrophy-jet/RESULTS.md`](ns-phase-audit/enstrophy-jet/RESULTS.md) §4.2 (for Z)
+and [`all-time-phase-response/PROOF.md`](all-time-phase-response/PROOF.md)
+sections 1 and 5 (for E, Z and S). Neither is refereed, and P1 is not in Lean.
+
+The all-time argument in `all-time-phase-response/` closes none of the items
+above: it covers only |b| below an uncomputed radius (below 10⁻²¹ at the
+tested parameters), not b = 1.
 
 **Smaller open items.**
 

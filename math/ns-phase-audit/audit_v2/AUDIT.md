@@ -251,7 +251,7 @@ For reference, the next even order is [t⁸] cos 2φ = 7035947189629/33541847539
 | Statement | Status |
 |---|---|
 | P1 at the level of the Taylor recurrence, for all (α, γ, δ, ν) | **Proved** (analytic induction re-derived by the cross-check) |
-| P1 at the solution level (finite T) | **Verified numerically** through T = 4: with β = 0 the \|m\| = 2–4 harmonics stay at or below 4.4e-15 absolute (1.2e-15 at ν = 1/28; `xcheck/p1_finite_time.log`), which is rounding level. A proof would follow the same lines, since the k_z = 0 subspace is invariant and the u₃ equation is linear, but we have not written it out. |
+| P1 at the solution level (all T) | **Paper proof**, not refereed and not in Lean: [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) sections 1 and 5 (ChatGPT/Codex; for E, Z and S, every T and every (α, γ, δ) with ν > 0), and the same argument for Z in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md) §4.2. **Verified numerically** through T = 4: with β = 0 the \|m\| = 2–4 harmonics stay at or below 4.4e-15 absolute (1.2e-15 at ν = 1/28; `xcheck/p1_finite_time.log`), which is rounding level. |
 | P2: grading, selection rules, "no \|m\| harmonic before n = 3\|m\|", e = 0 and the forced monomial at n = 3\|m\| | **Proved**, given P1. The parity rule e ≡ n − m (mod 2) also has a second proof that does not use the grading, by time reversal (Rule A in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md#41-rule-a-time-reversal-parity) §4.1). That folder also checks this parity and P2's bound deg_ν z_{n,m} ≤ n − 3\|m\| for \|m\| ≥ 2 (its Rule B) on every coefficient through n = 14, and every power of ν they allow occurs. |
 | [t⁷] m = 2 coefficient is ∝ ν and zero for Euler | Form **proved**. Constant **computed exactly**: 207269/14515200. |
 | Leading coefficient at n = 3\|m\| is nonzero | **Computed** for \|m\| = 2, 3, 4. **Unproven** for \|m\| ≥ 5. |
@@ -495,6 +495,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
 * **What exists so far.**
   * The Lean repository has a Galerkin cutoff bound and a variable-coefficient Gronwall lemma. These are the kind of ingredients step (b) needs, but they are not connected to an NS evolution, which is not formalised.
   * The a-priori alternative is a bound on sup_{t ≤ T} Z_K(t) uniform in K. For this data on [0, 4] that is essentially the regularity question itself, and it is not available.
+  * [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) argues on paper for a continuum, all-time statement for this family, but only for |β| below an uncomputed radius; its own formula gives below 10⁻²¹ at α = γ = δ = 1, ν = 1/28. It does not apply to the β = 1 data audited here.
 
 ### 7.2 No remainder bound for the Taylor jet at t = 2 or t = 4
 
@@ -523,7 +524,7 @@ To turn a statement such as "Z(2) at φ = 0.971 exceeds Z(2) at φ = 0" into a t
 ### 7.5 Smaller open points
 
 * **Leading coefficients for \|m\| ≥ 5.** The coefficient at n = 3\|m\| is computed nonzero only for \|m\| = 2, 3, 4.
-* **P1 at the solution level.** Verified numerically through T = 4; the proof has not been written out.
+* **P1 at the solution level.** Verified numerically through T = 4. A paper proof for all T is written out in [`../../all-time-phase-response/PROOF.md`](../../all-time-phase-response/PROOF.md) sections 1 and 5 (for E, Z and S) and, for Z, in [`../enstrophy-jet/RESULTS.md`](../enstrophy-jet/RESULTS.md) §4.2. Neither is refereed or in Lean.
 * **Phase lemma check.** The exact line's phase lemma was cross-checked against the generic complex implementation for three parameter sets only, though the lemma itself is proved.
 * **Lean coverage.** No time-dependent statement is formalised in Lean.
 
