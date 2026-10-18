@@ -1,0 +1,35 @@
+## Glucose, quark by quark
+glucose protons: 96
+glucose neutrons: 84
+glucose up quarks: 276
+glucose down quarks: 264
+glucose mass (MeV): 167728
+quark rest mass, sum (MeV): 1837
+quark rest mass share of glucose mass (%): 1.1
+electron share of glucose mass (%): 0.029
+energy released by burning one molecule (eV): 29.1
+nuclear binding energy of one molecule (MeV): 1318.7
+nuclear binding / combustion energy: 4.54e+07
+
+## Gravity and time
+gravitational rate shift per metre of height: 1.09e-16
+time gained per metre over 80 years (microseconds): 0.28
+cross-check: 33 cm over 79 years (nanoseconds): 90
+
+## Potassium-40
+potassium-40 atoms in the body: 2.47e+20
+K-40 decays per second (half-life 1.248e+09 y): 4340
+K-40 decays per second (half-life 1.277e+09 y): 4250
+
+## Solar neutrinos in a body (rough estimate)
+electrons in a 70 kg body: 2.32e+28
+solar-neutrino electron collisions per year (pp+7Be+pep): 47
+same over 80 years: 3800
+K-40 decays per year / neutrino collisions per year: 2.9e+09
+
+## Chromosomes
+chr13: length (Mb), genes, genes per Mb: 114.4, 354, 3.1
+chr18: length (Mb), genes, genes per Mb: 80.4, 277, 3.4
+chr19: length (Mb), genes, genes per Mb: 58.6, 1459, 24.9
+chr21: length (Mb), genes, genes per Mb: 46.7, 254, 5.4
+chr22: length (Mb), genes, genes per Mb: 50.8, 478, 9.4

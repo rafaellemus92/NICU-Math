@@ -1,0 +1,1840 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Shared Air Model</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one column like a bedside flowsheet. Live data runs on ECG-paper strips;
+   the six tests read as a lab notebook below it. */
+:root {
+  --paper: #fbf8f6;
+  --paper-2: #f3eeeb;
+  --grid-minor: #f2dfdb;
+  --grid-major: #e3bdb7;
+  --ink: #1c2330;
+  --ink-2: #545b6b;
+  --rule: #e4dad6;
+  --infant: #0b6f73;
+  --mom: #a3394a;
+  --room: #7f8696;
+  --s1: #2c46a0;
+  --s2: #a8691a;
+  --accent: #2c46a0;
+  --accent-ink: #ffffff;
+  --focus: #2c46a0;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", system-ui, sans-serif;
+  --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #13161d; --paper-2: #1a1e27; --grid-minor: #261f26; --grid-major: #452e37;
+    --ink: #ebe6e3; --ink-2: #a8adb9; --rule: #2d313c;
+    --infant: #4cc3c0; --mom: #ee8090; --room: #8f95a4; --s1: #93a6f2; --s2: #e2aa52;
+    --accent: #93a6f2; --accent-ink: #10131a; --focus: #93a6f2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #13161d; --paper-2: #1a1e27; --grid-minor: #261f26; --grid-major: #452e37;
+  --ink: #ebe6e3; --ink-2: #a8adb9; --rule: #2d313c;
+  --infant: #4cc3c0; --mom: #ee8090; --room: #8f95a4; --s1: #93a6f2; --s2: #e2aa52;
+  --accent: #93a6f2; --accent-ink: #10131a; --focus: #93a6f2;
+  color-scheme: dark;
+}
+
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+.wrap {
+  max-width: 780px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: flex; flex-direction: column; gap: 44px;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; letter-spacing: -0.005em; }
+h1 { font-size: clamp(2.6rem, 9vw, 4.2rem); font-stretch: 72%; line-height: 0.95; font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 4.6vw, 1.95rem); font-stretch: 80%; line-height: 1.1; }
+h3 { font-size: 1.32rem; font-stretch: 85%; line-height: 1.15; }
+h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--ink-2); }
+p { margin: 0; max-width: 65ch; }
+.eyebrow, .label {
+  font-family: var(--font-display); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--ink-2); font-stretch: 100%;
+}
+.mono, .num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+.small { font-size: 0.88rem; line-height: 1.5; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Intro ---------- */
+.intro { display: flex; flex-direction: column; gap: 14px; }
+.intro .lede { font-size: 1.12rem; }
+.worlds { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 6px; }
+.world { border-top: 3px solid var(--ink); padding-top: 8px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.world.w-perceived { border-top-color: var(--s1); }
+.world.w-physical { border-top-color: var(--s2); }
+.world.w-alike { border-top-color: var(--room); }
+.world b { font-family: var(--font-display); font-stretch: 85%; font-size: 1.05rem; }
+.world p { font-size: 0.92rem; line-height: 1.45; }
+
+/* ---------- Bench ---------- */
+.bench { display: flex; flex-direction: column; gap: 14px; }
+.bench-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.bench-head .title { display: flex; flex-direction: column; gap: 4px; }
+.transport { display: flex; gap: 6px; align-items: center; }
+.clock { font-family: var(--font-data); font-size: 0.85rem; color: var(--ink-2); min-width: 5.2em; text-align: right; }
+
+button {
+  font: 600 0.9rem/1 var(--font-display); font-stretch: 90%; letter-spacing: 0.01em;
+  border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  padding: 9px 14px; cursor: pointer; min-height: 38px;
+}
+button:hover { border-color: var(--ink-2); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.primary:hover { filter: brightness(1.08); }
+button:disabled { opacity: 0.5; cursor: default; }
+button.icon { padding: 9px 12px; min-width: 42px; }
+
+.rings { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ring-card { margin: 0; display: flex; flex-direction: column; gap: 6px; align-items: stretch; min-width: 0; }
+.ring-card canvas { width: 100%; max-width: 230px; aspect-ratio: 1; align-self: center; display: block; }
+.ring-meta { display: flex; flex-direction: column; gap: 2px; align-items: center; text-align: center; }
+.ring-meta .who { font-family: var(--font-display); font-weight: 700; font-size: 1rem; font-stretch: 85%; }
+.ring-meta .who.infant { color: var(--infant); }
+.ring-meta .who.mom { color: var(--mom); }
+.ring-meta .vals { font-family: var(--font-data); font-size: 0.78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.meter { width: 70%; max-width: 140px; height: 5px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+.meter > i { display: block; height: 100%; width: 30%; background: var(--ink-2); border-radius: 3px; }
+
+.strip { display: flex; flex-direction: column; gap: 6px; }
+.strip-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.strip canvas { width: 100%; display: block; border-radius: 6px; }
+.key { display: flex; gap: 12px; flex-wrap: wrap; font-family: var(--font-display); font-size: 0.8rem; color: var(--ink-2); }
+.key span { display: inline-flex; align-items: center; gap: 6px; }
+.key i { display: inline-block; width: 16px; height: 0; border-top: 2px solid currentColor; }
+.key .k-infant { color: var(--infant); } .key .k-mom { color: var(--mom); }
+.key .k-room { color: var(--room); } .key .k-room i { border-top-style: dashed; }
+.key em { font-style: normal; color: var(--ink-2); }
+
+.sync-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.sync-cell { border-top: 2px solid var(--rule); padding-top: 6px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sync-cell .num { font-size: 1.35rem; font-weight: 500; }
+.sync-cell.bond { border-top-color: var(--ink); }
+.sync-note { font-size: 0.85rem; color: var(--ink-2); }
+
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 18px; }
+fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+legend { padding: 0; margin-bottom: 6px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span {
+  display: inline-block; font: 600 0.86rem/1 var(--font-display); font-stretch: 90%;
+  padding: 9px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+}
+.seg input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font: 600 0.9rem/1.2 var(--font-display); font-stretch: 90%; }
+.switch input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
+
+details.factors { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 4px; }
+details.factors summary {
+  cursor: pointer; padding: 10px 0; font-family: var(--font-display); font-weight: 700; font-stretch: 85%; font-size: 1.05rem;
+  display: flex; justify-content: space-between; gap: 10px; align-items: baseline; list-style: none;
+}
+details.factors summary::-webkit-details-marker { display: none; }
+details.factors summary::after { content: "+"; font-family: var(--font-data); color: var(--ink-2); }
+details.factors[open] summary::after { content: "–"; }
+.sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px 22px; padding: 6px 0 16px; }
+.slider { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.slider .row { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.slider .row label { font-family: var(--font-display); font-weight: 600; font-size: 0.92rem; font-stretch: 92%; }
+.slider .row output { font-family: var(--font-data); font-size: 0.85rem; color: var(--ink); }
+.slider input[type=range] { width: 100%; accent-color: var(--accent); margin: 2px 0; }
+.slider .help { font-size: 0.82rem; color: var(--ink-2); line-height: 1.45; }
+.factor-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 12px; }
+
+/* ---------- Tests ---------- */
+.tests { display: flex; flex-direction: column; gap: 22px; }
+.tests > header { display: flex; flex-direction: column; gap: 10px; }
+.test {
+  display: flex; flex-direction: column; gap: 12px;
+  border-top: 2px solid var(--ink); padding-top: 14px;
+}
+.test header { display: flex; flex-direction: column; gap: 4px; }
+.chart { width: 100%; display: block; }
+.finding { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; background: var(--paper-2); border-radius: 8px; }
+.finding p { font-size: 0.95rem; }
+.finding .num { font-size: 0.92em; }
+.run-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.run-row .status { font-size: 0.82rem; color: var(--ink-2); font-family: var(--font-display); }
+progress { width: 120px; height: 6px; accent-color: var(--accent); }
+.bedside { display: flex; flex-direction: column; gap: 4px; border-left: 2px solid var(--rule); padding-left: 12px; }
+.bedside p { font-size: 0.95rem; }
+.subhead { font-family: var(--font-display); font-weight: 700; font-stretch: 85%; font-size: 1rem; }
+
+/* ---------- Build ---------- */
+.build { display: flex; flex-direction: column; gap: 16px; }
+.ladder { display: flex; flex-direction: column; gap: 0; }
+.rung { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-top: 1px solid var(--rule); }
+.rung:last-child { border-bottom: 1px solid var(--rule); }
+.rung .lvl { font-family: var(--font-display); font-weight: 800; font-stretch: 75%; font-size: 1.05rem; line-height: 1.1; }
+.rung .lvl small { display: block; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); font-stretch: 100%; margin-top: 2px; }
+.rung p { font-size: 0.95rem; }
+.eq { overflow-x: auto; background: var(--paper-2); border-radius: 8px; padding: 12px 14px; }
+.eq pre { margin: 0; font-family: var(--font-data); font-size: 0.8rem; line-height: 1.7; color: var(--ink); white-space: pre; }
+.aside { border-left: 3px solid var(--s2); padding-left: 14px; display: flex; flex-direction: column; gap: 6px; }
+.aside p { font-size: 0.95rem; }
+.limits ul { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 8px; max-width: 65ch; }
+.limits li { font-size: 0.97rem; }
+.closing { font-size: 1.05rem; font-style: italic; }
+
+@media (max-width: 420px) {
+  body { font-size: 16px; }
+  .rung { grid-template-columns: 1fr; gap: 4px; }
+  .sync-cell .num { font-size: 1.15rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<main class="wrap">
+  <header class="intro">
+    <p class="eyebrow">A cells-to-pair model of attunement</p>
+    <h1>Shared Air</h1>
+    <p class="lede">When a mother holds her baby and their heart rates rise and fall together, what carries it? This model builds three answers from the same pacemaker and breathing cells, then asks which bedside measurements could tell them apart.</p>
+    <div class="worlds">
+      <div class="world w-perceived"><b>Perceived</b><p>Mom perceives the infant's state and responds. The bond runs through two nervous systems, with a delay.</p></div>
+      <div class="world w-physical"><b>Physical</b><p>Contact acts on the infant's cells directly. Warmth changes pacemaker kinetics; mom's heartbeat pushes on the infant's pacemaker. Nobody has to notice anything.</p></div>
+      <div class="world w-alike"><b>Alike</b><p>Nothing passes between them. Two bodies built alike share a room, its alarms and its rhythms.</p></div>
+    </div>
+    <p class="small muted">Each world is kept pure so its fingerprint is clean. Real life may mix them; the tests are built so a mixture could be taken apart.</p>
+  </header>
+
+  <section class="bench" aria-labelledby="bench-h">
+    <div class="bench-head">
+      <div class="title">
+        <p class="eyebrow">Live</p>
+        <h2 id="bench-h">The bedside, simulated</h2>
+      </div>
+      <div class="transport">
+        <span class="clock" id="clock">0:00</span>
+        <button class="icon" id="playBtn" aria-label="Pause">Pause</button>
+        <button class="icon" id="speedBtn" aria-label="Speed">1×</button>
+      </div>
+    </div>
+
+    <div class="rings">
+      <figure class="ring-card">
+        <canvas id="ringI" role="img" aria-label="Infant pacemaker and breathing cells"></canvas>
+        <figcaption class="ring-meta">
+          <span class="who infant">Infant</span>
+          <span class="vals" id="valsI">RR — · node sync —</span>
+          <span class="meter" title="Arousal (hidden state)"><i id="meterI"></i></span>
+        </figcaption>
+      </figure>
+      <figure class="ring-card">
+        <canvas id="ringM" role="img" aria-label="Mother pacemaker and breathing cells"></canvas>
+        <figcaption class="ring-meta">
+          <span class="who mom">Mom</span>
+          <span class="vals" id="valsM">RR — · node sync —</span>
+          <span class="meter" title="Arousal (hidden state)"><i id="meterM"></i></span>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="small muted">Outer ring: sinoatrial pacemaker cells. Inner ring: respiratory rhythm cells. A cell lights when it fires. A heartbeat is the moment the ring fires together. The bar under each ring is arousal, the hidden state the cells respond to.</p>
+
+    <div class="strip">
+      <div class="strip-head">
+        <span class="label">Heart rate, last 90 seconds</span>
+        <span class="key"><span class="k-infant"><i></i>Infant</span><span class="k-mom"><i></i>Mom</span><span class="k-room"><i></i>Another parent in the pod</span></span>
+      </div>
+      <canvas id="hrStrip" role="img" aria-label="Heart rate traces for infant, mom, and another parent"></canvas>
+    </div>
+
+    <div class="strip">
+      <div class="strip-head">
+        <span class="label">Breathing, last 20 seconds</span>
+        <span class="key"><em id="breathNote">Inspiration rises, expiration falls</em></span>
+      </div>
+      <canvas id="brStrip" role="img" aria-label="Breathing waveforms for infant and mom"></canvas>
+    </div>
+
+    <div class="strip">
+      <div class="strip-head">
+        <span class="label">Where mom's heart is at each infant beat</span>
+        <span class="key"><em id="phaseNote">locking — · other parent —</em></span>
+      </div>
+      <canvas id="phStrip" role="img" aria-label="Synchrogram: mom's cardiac phase at each infant heartbeat"></canvas>
+      <p class="small muted">A synchrogram. Each dot is one infant beat, placed by how far mom is through her own cardiac cycle. Scattered dots mean the hearts are timing independently. Horizontal bands mean the infant's beats fall at preferred moments of mom's cycle. The locking index is 0 for random, 1 for locked; the other parent gives the chance level. It looks for 1:1, 2:1 and 3:1 and reports the strongest. A 3:2 rhythm also puts three bands on mom’s cycle, so it shows up as 3:1; ratios such as 4:3 or 5:3 would need a different index.</p>
+    </div>
+
+    <div class="sync-row" aria-live="polite">
+      <div class="sync-cell"><span class="label">Infant · mom</span><span class="num" id="syncM">—</span></div>
+      <div class="sync-cell"><span class="label">Infant · other parent</span><span class="num" id="syncR">—</span></div>
+      <div class="sync-cell bond"><span class="label">Difference</span><span class="num" id="syncB">—</span></div>
+    </div>
+    <p class="sync-note">Rate synchrony is the peak correlation of 5-second heart rate within ±10 seconds of lag, over the last 90 seconds. The other parent shares the room but not the bond, so the difference is the part the room can't explain, as long as both adults take in the room alike. They are built alike here, but a mom who is asleep reacts less to the alarms and one out of the room misses them, and then the difference averages below zero even in the alike world, where there is no bond, though any single window can still read above zero. One window is noisy. The tests below average many sessions.</p>
+
+    <div class="controls">
+      <fieldset>
+        <legend class="label">Which world</legend>
+        <div class="seg">
+          <label><input type="radio" name="world" value="perceived" id="worldP" checked><span>Perceived</span></label>
+          <label><input type="radio" name="world" value="physical" id="worldH"><span>Physical</span></label>
+          <label><input type="radio" name="world" value="alike" id="worldA"><span>Alike</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="label">Mom</legend>
+        <div class="seg" role="radiogroup">
+          <label><input type="radio" name="presence" value="0" id="pres0"><span>Out of the room</span></label>
+          <label><input type="radio" name="presence" value="0.35" id="pres1"><span>At the bedside</span></label>
+          <label><input type="radio" name="presence" value="1" id="pres2" checked><span>Skin-to-skin</span></label>
+          <label><input type="radio" name="presence" value="asleep" id="pres3"><span>Skin-to-skin, asleep</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="label">Infant breathing</legend>
+        <div class="seg">
+          <label><input type="radio" name="vent" value="0" id="ventN" checked><span>Own (CPAP)</span></label>
+          <label><input type="radio" name="vent" value="1" id="ventY"><span>Ventilator</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="label">Events</legend>
+        <div class="actions">
+          <button class="primary" id="heelBtn">Heel stick</button>
+          <button id="alarmBtn">Monitor alarm</button>
+          <label class="switch"><input type="checkbox" id="voiceChk">Singing or prayer</label>
+        </div>
+      </fieldset>
+    </div>
+
+    <details class="factors" id="factors">
+      <summary>Small factors <span class="small muted" id="factorSummary"></span></summary>
+      <div class="sliders">
+        <div class="slider">
+          <div class="row"><label for="sK">Responsiveness</label><output id="oK" for="sK">1.00</output></div>
+          <input type="range" id="sK" min="0" max="3" step="0.05" value="1">
+          <p class="help">Perceived world. How strongly mom is moved by the infant's distress and acts on it. Zero means she notices nothing.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sTau">Response delay</label><output id="oTau" for="sTau">1.5 s</output></div>
+          <input type="range" id="sTau" min="0.5" max="3.5" step="0.1" value="1.5">
+          <p class="help">Perceived world. Time between the infant's change and mom's response. Timing decides whether a response settles or overshoots.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sSelf">Mom's steadiness</label><output id="oSelf" for="sSelf">1.00×</output></div>
+          <input type="range" id="sSelf" min="0.5" max="2.5" step="0.05" value="1">
+          <p class="help">How fast mom settles her own arousal. Slow to anger, in James's terms.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sWarm">Mom's chest warmth</label><output id="oWarm" for="sWarm">0.35 °C</output></div>
+          <input type="range" id="sWarm" min="0" max="0.8" step="0.05" value="0.35">
+          <p class="help">Physical world. Degrees above the warmer's set point. Skin-to-skin, the infant's temperature drifts toward it over about seven minutes, and the pacemaker runs about 8% faster per degree.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sPulse">Pulse entrainment</label><output id="oPulse" for="sPulse">6.0</output></div>
+          <input type="range" id="sPulse" min="0" max="16" step="0.5" value="6">
+          <p class="help">Physical world. How hard each maternal heartbeat pushes on the infant's pacemaker cells, in rad/s at the peak of the pulse. The infant's cells run at about 16 rad/s on their own. Test 5 shows what each value means.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sGap">Infant pacemaker gap junctions</label><output id="oGap" for="sGap">1.00×</output></div>
+          <input type="range" id="sGap" min="0.05" max="1.5" step="0.05" value="1">
+          <p class="help">Coupling between sinoatrial cells. Below about 0.3× the cells stop firing together and the rhythm turns irregular.</p>
+        </div>
+        <div class="slider">
+          <div class="row"><label for="sVag">Infant vagal tone</label><output id="oVag" for="sVag">0.50</output></div>
+          <input type="range" id="sVag" min="0" max="1" step="0.05" value="0.5">
+          <p class="help">Resting parasympathetic brake on the pacemaker. Higher tone, slower heart, more room to respond.</p>
+        </div>
+      </div>
+      <div class="factor-foot">
+        <span class="small muted">The live bench uses these at once. The tests use them when you press Run.</span>
+        <button id="resetBtn">Reset to defaults</button>
+      </div>
+    </details>
+  </section>
+
+  <section class="tests" aria-labelledby="tests-h">
+    <header>
+      <p class="eyebrow">Six tests</p>
+      <h2 id="tests-h">What could tell the worlds apart</h2>
+      <p>Each test runs many simulated sessions in all three worlds. A test is useful only if the worlds give different answers. Results below use the default settings until you run them with yours.</p>
+    </header>
+
+    <article class="test" id="t1">
+      <header><p class="eyebrow">Test 1</p><h3>Shared room or shared bond?</h3></header>
+      <p>Thirty five-minute sessions per world, skin-to-skin, with alarms and unit noise reaching everyone in the pod. Each dot is one session's peak rate synchrony. The infant's heart rate is compared with three people: mom, another parent in the same pod at the same time, and a mom from a different session (the usual surrogate).</p>
+      <canvas class="chart" id="c1" role="img" aria-label="Rate synchrony with mom, room-mate and random surrogate in three worlds"></canvas>
+      <div class="finding" id="f1"></div>
+      <div class="run-row"><button class="run" data-exp="room">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="room">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>Record a second adult in the same pod at the same time: another parent, or a nurse sitting nearby. Pseudo-pairs built from other days remove the room along with the bond, so beating them proves only that the room is shared. Match that adult to mom as closely as you can. Someone calmer, noisier or out of earshot of the alarms correlates differently with the infant even when no bond exists, so subtracting correlations can manufacture a difference or hide one.</p></div>
+    </article>
+
+    <article class="test" id="t2">
+      <header><p class="eyebrow">Test 2</p><h3>Who moves first?</h3></header>
+      <p>The same sessions, now asking about direction. For every lag from −15 to +15 seconds, the infant–other-parent correlation is subtracted from the infant–mom correlation. What remains is the part of the timing the room can't explain, provided both adults take in the room alike (in these sessions they do). Positive lag means the infant changed first.</p>
+      <canvas class="chart" id="c2" role="img" aria-label="Bond-specific cross-correlation by lag in three worlds"></canvas>
+      <div class="finding" id="f2"></div>
+      <div class="run-row"><button class="run" data-exp="room">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="room">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>The direction here is an assumption built into the perceived world: the infant's distress reaches mom faster than mom's calm reaches the infant. Real recordings could show the opposite. The test is whether any consistent lag survives after the room is subtracted.</p></div>
+    </article>
+
+    <article class="test" id="t3">
+      <header><p class="eyebrow">Test 3</p><h3>The ventilator as a control</h3></header>
+      <p>On controlled ventilation, the machine sets the infant's breathing. If the bond runs through arousal, it should disappear from breathing and persist in heart rate. Bars show the bond-specific rate synchrony (mom minus other parent) in each channel, with standard error.</p>
+      <canvas class="chart" id="c3" role="img" aria-label="Bond-specific synchrony in heart and breathing, CPAP versus ventilator, three worlds"></canvas>
+      <div class="finding" id="f3"></div>
+      <div class="run-row"><button class="run" data-exp="vent">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="vent">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>On the ventilator, breathing synchrony is zero by construction. The informative result is heart-rate synchrony that survives. Ventilation also travels with sedation and severity, so the cleanest comparison is the same infant held before and after extubation, at the same time of day.</p></div>
+    </article>
+
+    <article class="test" id="t4">
+      <header><p class="eyebrow">Test 4</p><h3>Is more coupling better?</h3></header>
+      <p>Perceived world. Responsiveness is swept from 0 to 3. A heel stick lands at 80 seconds. Recovery is the first time the infant's heart rate is back within 10 bpm of baseline and stays there 15 seconds; a later relapse doesn't count. The lower panel shows rate synchrony at each setting. The stored curves use 200 runs per point and a run with your settings uses 30; the band is the middle half of runs. In the physical world this sweep does nothing: responsiveness isn't in its equations.</p>
+      <canvas class="chart" id="c4" role="img" aria-label="Recovery time and synchrony versus responsiveness"></canvas>
+      <div class="finding" id="f4"></div>
+      <div class="run-row"><button class="run" data-exp="sweep">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="sweep">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>Measure recovery, not harmony. After a heel stick or suctioning, time how long heart rate and saturation take to return to baseline when the infant is held by mom versus lying in the bed. Code mom's response latency from video. Jaffe, Beebe and colleagues found that a mid-range degree of mother–infant vocal coordination at 4 months was optimal for attachment at 12 months; tighter or looser coordination went with less secure attachment. The model gets a similar shape from two mechanisms of its own: a delayed response that overshoots, and a capacity to soothe that gives out as mom’s own arousal climbs. That shows the shape can arise this way, not that it does. A different measure, how fast the last of the arousal fades from the pair as a whole, is best at a much lower responsiveness (below 0.1 at the default settings). Above that, what fades last is mom’s own arousal: soothing the infant can’t speed it up, and her arousal leaking back to the infant slows it a little. That measure describes the pair’s return after something that stirs mom directly, such as an alarm, not the infant’s heart rate after a heel stick.</p></div>
+    </article>
+
+    <article class="test" id="t5">
+      <header><p class="eyebrow">Test 5</p><h3>Beats, not rates</h3></header>
+      <p>If mom's heartbeat pushes on the infant's pacemaker through contact, the signature isn't in rates. It's in timing: infant beats fall at preferred moments of mom's cycle, near a 2:1 ratio. The phase-locking index measures that from two sets of beat times. Dots: one session each, from the Test 1 sessions, against mom and against the other parent. Then the index against the strength of the push, in the physical world.</p>
+      <canvas class="chart" id="c5a" role="img" aria-label="Phase-locking index with mom and with the other parent, three worlds"></canvas>
+      <canvas class="chart" id="c5b" role="img" aria-label="Phase-locking index against pulse strength"></canvas>
+      <div class="finding" id="f5"></div>
+      <div class="run-row"><button class="run" data-exp="room">Run dots with my settings</button><button class="run" data-exp="pulse">Run curve with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="pulse">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>This needs beat times from both ECGs, not monitor heart rates. Plot the synchrogram and compare against twin surrogates. Van Leeuwen and colleagues did exactly this with maternal and fetal magnetocardiography during paced maternal breathing. They found brief epochs of 3:2, 5:3 and 4:3 locking, and at fast breathing rates more of them than in surrogate data; an earlier, larger study of theirs found about as many epochs in surrogates as in real pairs. The authors conclude the coupling is present but weak; how it travels is not established. That is what weak forcing near a ratio produces: intermittent locking, not a locked rhythm. After birth, the medium changes from amniotic fluid and tissue to air and skin.</p></div>
+    </article>
+
+    <article class="test" id="t6">
+      <header><p class="eyebrow">Test 6</p><h3>The first fifteen minutes</h3></header>
+      <p>Three minutes at the bedside, then skin-to-skin for twelve. Top: infant heart rate relative to the pre-contact baseline, averaged over fourteen runs, with mom awake (solid) and asleep (dashed). Middle: how much that heart rate wanders from run to run. Bottom: infant temperature. No alarms.</p>
+      <canvas class="chart" id="c6" role="img" aria-label="Heart rate, spread and temperature after contact begins, three worlds, awake and asleep"></canvas>
+      <div class="finding" id="f6"></div>
+      <div class="run-row"><button class="run" data-exp="contact">Run with my settings</button><progress hidden max="1" value="0"></progress><span class="status" data-status="contact">Default settings</span></div>
+      <div class="bedside"><h4>At the bedside</h4><p>The cheapest discriminating experiment is a sleeping mother. Kangaroo-care sessions where mom falls asleep happen anyway. If the infant's response to contact survives her sleep, it isn't running through her responsiveness. Log a skin temperature probe alongside heart rate, because the heat channel is small and slow and a few beats per minute will hide in noise without it. The kangaroo-care literature also reports the mother's chest temperature adjusting to the infant's; this model doesn't include that, and it would be worth measuring.</p></div>
+    </article>
+  </section>
+
+  <section class="build" aria-labelledby="build-h">
+    <p class="eyebrow">How it's built</p>
+    <h2 id="build-h">Three levels, each built from the one below</h2>
+    <div class="ladder">
+      <div class="rung"><div class="lvl">Cells<small>Level 1</small></div><p>The sinoatrial node is 24 pacemaker cells (16 in the batch tests, to keep them fast). Each is a phase oscillator with its own natural rate (about ±7% scatter), joined to the others by gap junctions. A heartbeat is the moment the population completes a cycle together. Breathing comes from 12 respiratory rhythm cells (8 in the tests) built the same way. Vagal tone slows the pacemakers and sympathetic drive speeds them. Each inspiration briefly withdraws vagal tone, which produces respiratory sinus arrhythmia without being programmed in. Temperature scales every pacemaker's rate at Q10 = 2.2.</p></div>
+      <div class="rung"><div class="lvl">Person<small>Level 2</small></div><p>One hidden variable, arousal, drives vagal withdrawal, sympathetic drive and breathing rate. It relaxes toward baseline (about 30 s for the infant, 20 s for an adult) and carries its own noise. A heel stick raises the infant's arousal. An alarm raises everyone's. Asleep, mom's arousal settles lower and she perceives nothing.</p></div>
+      <div class="rung"><div class="lvl">Pair, perceived<small>Level 3</small></div><p>Mom perceives the infant's distress after a delay. It raises her own arousal (contagion) and drives a soothing action that lowers the infant's arousal over about four seconds. Her capacity to soothe falls as her own arousal climbs. Her arousal also leaks back to the infant (mirroring). All worlds share a slow unit noise (light, sound, activity) and the alarms. Singing or prayer adds a small calming input and raises the infant's vagal tone by 12%, a placeholder for the channel a music therapy study would measure.</p></div>
+      <div class="rung"><div class="lvl">Pair, physical<small>Level 3</small></div><p>Two channels, both needing skin-to-skin contact and neither needing anyone to notice. Heat: the infant's temperature drifts toward mom's chest with a time constant of about seven minutes, and the pacemaker cells run faster as they warm. Pulse: each maternal heartbeat is a brief push on every infant pacemaker cell, shaped like a pressure pulse. In this world the perceived paths are cut; in the perceived world these are.</p></div>
+    </div>
+    <div class="eq" role="region" aria-label="Model equations" tabindex="0"><pre>cell k     dθₖ/dt = ωₖ·(1 + 0.25·S)(1 − 0.4·V)·Q10^(T/10) + K_gap·r·sin(ψ − θₖ) − ε·P(ψ_mom)·sin θₖ
+           V = V₀·clamp(1 − 0.8·A, 0, 1.5)·(1 − RSA·insp),   S = 0.1 + 0.5·A⁺,   A⁺ = max(A, 0),   P(ψ) = e^{2(cos ψ − 1)} − mean
+infant     dAᵢ/dt = (−Aᵢ + 0.8·U)/30 − C + g·0.04·Aₘ(t−τ) − 0.02·Aᵢ³ + noise
+mom        dAₘ/dt = (−(Aₘ − A₀) + 0.8·U)/(20/steadiness) + g·0.10·Aᵢ(t−τ) − 0.02·Aₘ³ + noise
+soothing   dC/dt  = (g·0.30·Aᵢ(t−τ)·cap(Aₘ) − C)/4,   cap = 1/(1 + (Aₘ⁺/0.8)²)
+voice      with mom present, adds −0.006 to dAᵢ/dt and −0.004 to dAₘ/dt, and multiplies the infant’s V₀ by 1.12
+heat       dT/dt  = contact·(T_chest − T)/400 + (1 − contact)·(0 − T)/400
+perceived  g = responsiveness × presence × awake,   ε = 0,   heat off
+physical   g = 0,   ε = pulse × contact,   heat on
+alike      g = 0,   ε = 0,   heat off
+locking    2:1, to first order, when |ω_infant − 2·ω_mom| &lt; ε·a₂/2,   a₂ = 0.19 (second harmonic of P)
+           the exact range is solved numerically for one forced phase (Test 5)</pre></div>
+    <div class="aside">
+      <p class="subhead">A note on scale</p>
+      <p>A cell is mostly water, and it is tempting to reach for Navier–Stokes. But at a cell's size the Reynolds number is about 10⁻⁵. The inertial term that makes those equations hard vanishes, and what remains is Stokes flow: linear, time-reversible, no turbulence. At the cell, water matters as the solvent for the ion gradients that set the pacemaker's rate, and the right equations are Hodgkin–Huxley, not Navier–Stokes. Navier–Stokes is the physics of the infant's aorta, where the Reynolds number runs into the thousands and the flow is pulsatile. It describes each body from the inside. After birth no fluid connects the two bodies; what they share is heat, pressure, sound, light and air.</p>
+    </div>
+  </section>
+
+  <section class="limits build" aria-labelledby="limits-h">
+    <p class="eyebrow">Limits</p>
+    <h2 id="limits-h">What this model can't tell you</h2>
+    <ul>
+      <li>Which world is real. All three are built to be equally plausible. The model shows which measurements could separate them and roughly how many sessions it might take. Only recordings can decide.</li>
+      <li>Any number here as a clinical value. Every parameter was chosen to give realistic resting heart and breathing rates, not fitted to patients. The temperature coefficient and the chest warmth are assumptions to check.</li>
+      <li>How strong the pulse channel is. The slider's default is set so the live synchrogram shows something; Test 5 says what strength full locking would need and why that is far more than a pressure wave through two chest walls could deliver.</li>
+      <li>The direction of influence. Test 2's lag follows from assumptions about contagion and soothing.</li>
+      <li>Much of the physiology. Arousal is one number. Real infants carry pain, sedation, cortisol and illness. An infant with trisomy 18 and a cardiac lesion would change nearly every parameter.</li>
+      <li>Cellular detail. The cells are phase oscillators. They capture synchronization, not ion channels, action potential shape or conduction.</li>
+      <li>The one stage where two bodies are truly fluid-coupled: the placenta and the amniotic fluid, where Van Leeuwen's prenatal locking was recorded. That is before this model begins.</li>
+      <li>Whose good the response serves. The equations describe how two bodies move each other. Nothing in them distinguishes care from skilled manipulation.</li>
+    </ul>
+    <p class="closing">If one of these worlds is the real one, the math can describe the breath. It still won't be the life the breath carries.</p>
+  </section>
+</main>
+
+<script>
+// Shared Air model core: cells -> person -> pair, in three worlds.
+// Runs in the browser (global `Model`) and in Node (module.exports) for verification.
+const Model = (() => {
+  const TAU = Math.PI * 2;
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function gaussFrom(rng) {
+    let spare = null;
+    return function () {
+      if (spare !== null) { const s = spare; spare = null; return s; }
+      let u = 0; while (u === 0) u = rng();
+      const v = rng(), m = Math.sqrt(-2 * Math.log(u));
+      spare = m * Math.sin(TAU * v);
+      return m * Math.cos(TAU * v);
+    };
+  }
+
+  // ---------- Parameters ----------
+  // Every number here is illustrative, chosen to give realistic resting values,
+  // not fitted to patient data.
+  const DEFAULTS = {
+    gapInfant: 1.0,     // SA-node gap-junction coupling, multiple of default
+    vagalInfant: 0.5,   // resting vagal tone (0-1)
+    K: 1.0,             // responsiveness: how strongly mom is moved by and acts on the infant
+    tau: 1.5,           // response delay, seconds
+    selfReg: 1.0,       // adult self-regulation ("slow to anger"), multiple of default
+    warmth: 0.35,       // mom's chest, degrees C above the warmer's set point
+    pulse: 6.0,         // pulse entrainment: peak push of mom's heartbeat on each infant pacemaker cell, rad/s
+    world: 'perceived', // 'perceived' (bond runs through perception), 'physical' (contact acts on cells), 'alike' (no causal path)
+    presence: 1.0,      // 0 away, 0.35 at bedside, 1 skin-to-skin
+    awake: true,        // mom awake (perceives) or asleep
+    vent: false,        // infant on controlled ventilation
+    voice: false,       // mom singing or praying aloud
+  };
+
+  const KINDS = {
+    // fHR = intrinsic SA-node rate (Hz, denervated); fR = resting breathing (Hz)
+    infant: { fHR: 2.9, fR: 0.72, nSA: 24, nR: 12, rsa: 0.30, T: 30, sig: 0.20, kSA: 6.0, kR: 2.5, het: 0.07, hetR: 0.08, ti: 0.40, vagal: 0.5 },
+    adult:  { fHR: 1.55, fR: 0.235, nSA: 24, nR: 12, rsa: 0.50, T: 20, sig: 0.12, kSA: 4.0, kR: 1.0, het: 0.07, hetR: 0.08, ti: 0.40, vagal: 0.6 },
+  };
+
+  const C = {
+    cCare: 0.30,  // care action on infant arousal, per s per unit perceived distress (at K=1, skin-to-skin)
+    Tc: 4.0,      // care takes this long to act (s)
+    cCont: 0.10,  // contagion: infant distress raises mom's arousal
+    cMir: 0.04,   // mirroring: mom's arousal raises infant's
+    capA: 0.8,    // mom's arousal at which her capacity to soothe halves
+    k3: 0.02,     // soft saturation of arousal
+    Tu: 60, sigU: 0.20, wU: 0.8, // shared unit noise (slow)
+    alarmEvery: 80, kickAlarmAdult: 0.35, kickAlarmInfant: 0.30,
+    kickHeel: 1.0,
+    fVent: 0.667,
+    asleepA: -0.3,   // mom's arousal set point when asleep
+    // physical channels
+    Q10: 2.2,        // pacemaker rate temperature coefficient (about 8% per degree C)
+    tempRR: 0.08,    // breathing rate per degree C
+    tauContact: 400, // infant thermal time constant on mom's chest (s)
+    tauBed: 400,     // and back toward the warmer's set point (s)
+    sigT: 0.03, tauTn: 120,   // small temperature jitter
+    skinSig: 0.15, skinTau: 300, // slow wander of mom's chest skin temperature
+    kappa: 2,        // sharpness of the heartbeat pulse
+  };
+  // zero-mean heartbeat pulse shape: exp(kappa(cos psi - 1)) minus its mean
+  const PMEAN = (() => { let s = 0; for (let i = 0; i < 720; i++) s += Math.exp(C.kappa * (Math.cos(i / 720 * TAU) - 1)); return s / 720; })();
+  function pulseShape(psi) { return Math.exp(C.kappa * (Math.cos(psi) - 1)) - PMEAN; }
+  // amplitude of the pulse's n-th harmonic (for the locking threshold)
+  function pulseHarmonic(n) { let s = 0; for (let i = 0; i < 720; i++) { const p = i / 720 * TAU; s += pulseShape(p) * Math.cos(n * p); } return 2 * s / 720; }
+  // Exact 2:1 locking for one forced phase, dth/dt = omega - eps*P(Omega t)*sin(th): the node reduced to a single
+  // phase, no noise. Locked when some starting phase advances exactly two turns per maternal cycle (RK4 period map).
+  function locked21(omega, Omega, eps) {
+    const n = 128, G = 32, h = TAU / Omega / n, P = new Float64Array(2 * n + 1);
+    for (let k = 0; k <= 2 * n; k++) P[k] = pulseShape(Omega * k * h / 2);
+    let lo = Infinity, hi = -Infinity;
+    for (let g = 0; g < G; g++) {
+      const th0 = g / G * TAU; let x = th0;
+      for (let k = 0; k < n; k++) {
+        const p0 = P[2 * k], p1 = P[2 * k + 1], p2 = P[2 * k + 2];
+        const k1 = omega - eps * p0 * Math.sin(x);
+        const k2 = omega - eps * p1 * Math.sin(x + h / 2 * k1);
+        const k3 = omega - eps * p1 * Math.sin(x + h / 2 * k2);
+        const k4 = omega - eps * p2 * Math.sin(x + h * k3);
+        x += h / 6 * (k1 + 2 * k2 + 2 * k3 + k4);
+      }
+      const d = x - th0 - 2 * TAU;
+      if (d < lo) lo = d; if (d > hi) hi = d;
+    }
+    return lo <= 0 && hi >= 0;
+  }
+  // Range of eps (up to epsMax) over which that phase locks 2:1: { on, off }, null where it never starts or never ends.
+  function lockRange21(omega, Omega, epsMax) {
+    epsMax = epsMax || 40; const step = 0.25;
+    const edge = (a, b, want) => { for (let i = 0; i < 30; i++) { const m = (a + b) / 2; if (locked21(omega, Omega, m) === want) b = m; else a = m; } return (a + b) / 2; };
+    let on = locked21(omega, Omega, 0) ? 0 : null, off = null;
+    for (let e = step; e <= epsMax + 1e-9; e += step) {
+      const L = locked21(omega, Omega, e);
+      if (L && on === null) on = edge(e - step, e, true);
+      if (!L && on !== null) { off = edge(e - step, e, false); break; }
+    }
+    return { on, off };
+  }
+
+  // ---------- Level 1 and 2: a person built from cells ----------
+  function Person(kind, rng, gauss, opt) {
+    const k = KINDS[kind];
+    this.kind = kind; this.k = k; this.rng = rng;
+    this.nSA = (opt && opt.nSA) || k.nSA;
+    this.nR = (opt && opt.nR) || k.nR;
+    this.gap = 1; this.vagal = k.vagal; this.voice = false; this.temp = 0;
+    this.th = new Float64Array(this.nSA); this.wf = new Float64Array(this.nSA);
+    this.fire = new Float64Array(this.nSA); // seconds since each cell fired (for display)
+    for (let i = 0; i < this.nSA; i++) { this.th[i] = rng() * TAU; this.wf[i] = 1 + k.het * gauss(); this.fire[i] = 9; }
+    this.ph = new Float64Array(this.nR); this.wr = new Float64Array(this.nR);
+    for (let i = 0; i < this.nR; i++) { this.ph[i] = rng() * TAU; this.wr[i] = 1 + k.hetR * gauss(); }
+    this.fireR = new Float64Array(this.nR).fill(9);
+    this.A = 0;
+    this.r = 0; this.rR = 0;
+    this.psiPrev = null; this.psiU = 0; this.beatN = 0; this.lastBeat = -1; this.ibi = 60 / (k.fHR * 50);
+    this.brPrev = null; this.brU = 0; this.brN = 0; this.lastBreath = -1; this.bInt = 1 / k.fR;
+    this.chest = 0; this.insp = 0; this.newBeat = false; this.newBreath = false;
+    this.hr = 60 / this.ibi; this.rr = 60 * k.fR;
+  }
+
+  function unwrapStep(prev, cur) {
+    let d = cur - prev;
+    if (d > Math.PI) d -= TAU; else if (d < -Math.PI) d += TAU;
+    return d;
+  }
+
+  // drive: null, or { eps, phase } = periodic push on every pacemaker cell from another heart
+  Person.prototype.stepCells = function (t, dt, ventPhase, drive) {
+    const k = this.k, rng = this.rng;
+    const A = this.A, Ap = A > 0 ? A : 0;
+    this.newBeat = false; this.newBreath = false;
+
+    // Respiratory rhythm generator (preBotzinger-like population)
+    const fR = k.fR * (1 + 0.35 * Ap) * (1 + C.tempRR * this.temp);
+    let cs = 0, sn = 0;
+    for (let i = 0; i < this.nR; i++) { cs += Math.cos(this.ph[i]); sn += Math.sin(this.ph[i]); }
+    cs /= this.nR; sn /= this.nR;
+    this.rR = Math.sqrt(cs * cs + sn * sn);
+    const psiR = Math.atan2(sn, cs);
+    const kR = k.kR;
+    for (let i = 0; i < this.nR; i++) {
+      const s = Math.sin(this.ph[i]), c = Math.cos(this.ph[i]);
+      const old = this.ph[i];
+      this.ph[i] += (TAU * fR * this.wr[i] + kR * (sn * c - cs * s)) * dt + (rng() - 0.5) * 0.04;
+      if (Math.floor(this.ph[i] / TAU) > Math.floor(old / TAU)) this.fireR[i] = 0; else this.fireR[i] += dt;
+    }
+    // breathing phase: the population's, or the ventilator's
+    const bPhase = ventPhase != null ? ventPhase : psiR;
+    if (this.brPrev === null) { this.brPrev = bPhase; this.brU = bPhase; this.brN = Math.floor(bPhase / TAU); }
+    const db = unwrapStep(this.brPrev, bPhase);
+    const prevBU = this.brU; this.brU += db; this.brPrev = bPhase;
+    const nb = Math.floor(this.brU / TAU);
+    if (nb > this.brN) {
+      const frac = db > 0 ? (nb * TAU - prevBU) / db : 1;
+      const tb = t - dt + dt * Math.min(1, Math.max(0, frac));
+      if (this.lastBreath >= 0) { this.bInt = tb - this.lastBreath; this.rr = 60 / this.bInt; }
+      this.lastBreath = tb; this.brN = nb; this.newBreath = true;
+    }
+    let phi = this.brU % TAU; if (phi < 0) phi += TAU;
+    const ti = k.ti;
+    if (phi < TAU * ti) { const x = phi / (TAU * ti); this.insp = Math.sin(Math.PI * x); this.chest = (1 - Math.cos(Math.PI * x)) / 2; }
+    else { const x = (phi - TAU * ti) / (TAU * (1 - ti)); this.insp = 0; this.chest = (1 + Math.cos(Math.PI * x)) / 2; }
+
+    // Autonomic input to the pacemaker cells
+    const vagScale = Math.min(1.5, Math.max(0, 1 - 0.8 * A));
+    const V = this.vagal * vagScale * (1 - k.rsa * this.insp) * (this.voice ? 1.12 : 1);
+    const S = 0.1 + 0.5 * Ap;
+    // temperature acts on the cells' own kinetics, with no nervous system in the loop
+    const f = k.fHR * (1 + 0.25 * S) * (1 - 0.4 * V) * Math.pow(C.Q10, this.temp / 10);
+
+    // Sinoatrial node: coupled pacemaker cells
+    cs = 0; sn = 0;
+    for (let i = 0; i < this.nSA; i++) { cs += Math.cos(this.th[i]); sn += Math.sin(this.th[i]); }
+    cs /= this.nSA; sn /= this.nSA;
+    this.r = Math.sqrt(cs * cs + sn * sn);
+    const psi = Math.atan2(sn, cs);
+    const kSA = k.kSA * this.gap;
+    const w = TAU * f;
+    const F = drive ? drive.eps * pulseShape(drive.phase) : 0;
+    for (let i = 0; i < this.nSA; i++) {
+      const s = Math.sin(this.th[i]), c = Math.cos(this.th[i]);
+      const old = this.th[i];
+      this.th[i] += (w * this.wf[i] + kSA * (sn * c - cs * s) - F * s) * dt + (rng() - 0.5) * 0.06;
+      if (Math.floor(this.th[i] / TAU) > Math.floor(old / TAU)) this.fire[i] = 0; else this.fire[i] += dt;
+    }
+    // A beat is when the node's collective phase completes a cycle
+    if (this.psiPrev === null) { this.psiPrev = psi; this.psiU = psi; this.beatN = Math.floor(psi / TAU); }
+    const d = unwrapStep(this.psiPrev, psi);
+    const prevU = this.psiU; this.psiU += d; this.psiPrev = psi;
+    const n = Math.floor(this.psiU / TAU);
+    if (n > this.beatN) {
+      const frac = d > 0 ? (n * TAU - prevU) / d : 1;
+      const tbeat = t - dt + dt * Math.min(1, Math.max(0, frac));
+      if (this.lastBeat >= 0) {
+        const ibi = tbeat - this.lastBeat;
+        if (ibi > 0.15) { this.ibi = ibi; this.hr = 60 / ibi; }
+      }
+      this.lastBeat = tbeat; this.beatN = n; this.newBeat = true;
+    }
+  };
+  Person.prototype.cyclePhase = function () { let p = this.psiU % TAU; if (p < 0) p += TAU; return p / TAU; };
+
+  // ---------- Level 3: the pair (plus an unbonded adult in the same room) ----------
+  function Session(params, seed, opt) {
+    opt = opt || {};
+    this.p = Object.assign({}, DEFAULTS, params);
+    const rng = mulberry32(seed >>> 0);
+    this.rng = rng; this.gauss = gaussFrom(rng);
+    const cellOpt = opt.cells || null;
+    this.infant = new Person('infant', rng, this.gauss, cellOpt);
+    this.mom = new Person('adult', rng, this.gauss, cellOpt);
+    this.room = opt.roommate === false ? null : new Person('adult', rng, this.gauss, cellOpt);
+    this.dt = opt.dt || 0.02;
+    this.t = 0; this.U = 0; this.Cf = 0;
+    this.Ti = 0; this.Tmn = 0; // infant temperature, mom's skin wander (deg C from set point)
+    this.duration = opt.duration || 300;
+    // shared alarms (Poisson)
+    this.alarms = [];
+    if (opt.alarms !== false) {
+      let ta = -Math.log(1 - rng()) * C.alarmEvery;
+      while (ta < this.duration) { this.alarms.push(ta); ta += -Math.log(1 - rng()) * C.alarmEvery; }
+    }
+    this.alarmIdx = 0;
+    this.autoAlarms = !!opt.autoAlarms;
+    this.heel = (opt.heel || []).slice().sort((a, b) => a - b); this.heelIdx = 0;
+    this.schedule = (opt.schedule || []).slice().sort((a, b) => a.t - b.t); this.schedIdx = 0;
+    // delay line
+    this.bufN = Math.ceil(8 / this.dt) + 2;
+    this.bufI = new Float64Array(this.bufN); this.bufM = new Float64Array(this.bufN); this.bufPos = 0;
+    // recording at 4 Hz
+    this.record = opt.record !== false;
+    this.recEvery = 0.25; this.nextRec = 0;
+    this.rec = { t: [], hrI: [], hrM: [], hrR: [], rrI: [], rrM: [], rrR: [], aI: [], aM: [], aR: [], tI: [] };
+    // beat phases: at each infant beat, where mom (and the other parent) are in their cardiac cycle
+    this.phT = []; this.phM = []; this.phR = [];
+    this.events = [];
+    this.applyParams();
+  }
+
+  Session.prototype.applyParams = function () {
+    const p = this.p;
+    this.infant.gap = p.gapInfant;
+    this.infant.vagal = p.vagalInfant;
+    this.infant.voice = !!p.voice && p.presence > 0;
+  };
+
+  // A monitor alarm reaches everyone in the room.
+  Session.prototype.alarm = function () {
+    this.infant.A += C.kickAlarmInfant;
+    if (this.p.presence > 0) this.mom.A += C.kickAlarmAdult * (this.p.awake ? 1 : 0.5); // out of the room, mom misses it
+    if (this.room) this.room.A += C.kickAlarmAdult;
+    this.events.push({ t: this.t, type: 'alarm' });
+  };
+  // A heel stick reaches only the infant. Anything mom feels comes through the bond.
+  Session.prototype.heelStick = function () {
+    this.infant.A += C.kickHeel;
+    this.events.push({ t: this.t, type: 'heel' });
+  };
+
+  Session.prototype.step = function () {
+    const p = this.p, dt = this.dt, g0 = this.gauss;
+    const I = this.infant, M = this.mom, R = this.room;
+    const t = this.t;
+
+    while (this.schedIdx < this.schedule.length && this.schedule[this.schedIdx].t <= t) {
+      Object.assign(this.p, this.schedule[this.schedIdx].set); this.applyParams(); this.schedIdx++;
+    }
+    // events
+    while (this.alarmIdx < this.alarms.length && this.alarms[this.alarmIdx] <= t) {
+      this.alarm(); this.alarmIdx++;
+    }
+    if (this.autoAlarms && this.rng() < dt / C.alarmEvery) this.alarm();
+    while (this.heelIdx < this.heel.length && this.heel[this.heelIdx] <= t) {
+      this.heelStick(); this.heelIdx++;
+    }
+
+    // shared, slow unit noise (activity, light, sound)
+    this.U += (-this.U / C.Tu) * dt + C.sigU * Math.sqrt(2 / C.Tu) * Math.sqrt(dt) * g0();
+
+    // delayed perception
+    const lag = Math.min(this.bufN - 1, Math.max(1, Math.round(p.tau / dt)));
+    const j = (this.bufPos - lag + this.bufN) % this.bufN;
+    const AiD = this.bufI[j], AmD = this.bufM[j];
+
+    const phys = p.world === 'physical';
+    const contact = p.presence >= 1 ? 1 : 0;
+    const g = p.K * p.presence * (p.world === 'perceived' ? 1 : 0) * (p.awake ? 1 : 0);
+    const AmPos = M.A > 0 ? M.A : 0;
+    const cap = 1 / (1 + (AmPos / C.capA) * (AmPos / C.capA));
+
+    const Ti = I.k.T, Ta = M.k.T / p.selfReg;
+    const voiceI = p.voice && p.presence > 0 ? -0.006 : 0;
+    const voiceM = p.voice && p.presence > 0 ? -0.004 : 0;
+    const A0m = p.awake ? 0 : C.asleepA;
+
+    const dAi = (-I.A + C.wU * this.U) / Ti - this.Cf + g * C.cMir * AmD - C.k3 * I.A * I.A * I.A + voiceI;
+    const dAm = (-(M.A - A0m) + C.wU * this.U) / Ta + g * C.cCont * AiD - C.k3 * M.A * M.A * M.A + voiceM;
+    I.A += dAi * dt + I.k.sig * Math.sqrt(2 / Ti) * Math.sqrt(dt) * g0();
+    M.A += dAm * dt + M.k.sig * Math.sqrt(2 / Ta) * Math.sqrt(dt) * g0();
+    if (R) {
+      const dAr = (-R.A + C.wU * this.U) / Ta - C.k3 * R.A * R.A * R.A;
+      R.A += dAr * dt + R.k.sig * Math.sqrt(2 / Ta) * Math.sqrt(dt) * g0();
+    }
+    this.Cf += ((g * C.cCare * AiD * cap) - this.Cf) / C.Tc * dt;
+
+    this.bufPos = (this.bufPos + 1) % this.bufN;
+    this.bufI[this.bufPos] = I.A; this.bufM[this.bufPos] = M.A;
+
+    // heat: on mom's chest the infant drifts toward her skin temperature; in the bed, toward the warmer's set point
+    this.Tmn += (-this.Tmn / C.skinTau) * dt + C.skinSig * Math.sqrt(2 / C.skinTau) * Math.sqrt(dt) * g0();
+    const heatOn = phys ? contact : 0;
+    const Tm = p.warmth + this.Tmn;
+    this.Ti += (heatOn * (Tm - this.Ti) / C.tauContact + (1 - heatOn) * (0 - this.Ti) / C.tauBed) * dt + C.sigT * Math.sqrt(2 / C.tauTn) * Math.sqrt(dt) * g0();
+    I.temp = this.Ti;
+
+    // cells (mom first: her heartbeat is the pulse the infant's cells may feel)
+    M.stepCells(t, dt, null, null);
+    if (R) R.stepCells(t, dt, null, null);
+    const vent = p.vent ? TAU * C.fVent * t : null;
+    const drive = (phys && contact && p.pulse > 0) ? { eps: p.pulse, phase: M.psiPrev == null ? 0 : M.psiPrev } : null;
+    I.stepCells(t, dt, vent, drive);
+    if (I.newBeat) { this.phT.push(t); this.phM.push(M.cyclePhase()); this.phR.push(R ? R.cyclePhase() : 0); }
+
+    this.t = t + dt;
+    if (this.record && this.t >= this.nextRec) {
+      const r = this.rec;
+      r.t.push(this.t); r.hrI.push(I.hr); r.hrM.push(M.hr); r.rrI.push(p.vent ? 60 * C.fVent : I.rr); r.rrM.push(M.rr);
+      r.aI.push(I.A); r.aM.push(M.A); r.tI.push(this.Ti);
+      if (R) { r.hrR.push(R.hr); r.rrR.push(R.rr); r.aR.push(R.A); }
+      this.nextRec += this.recEvery;
+    }
+  };
+
+  Session.prototype.run = function (until) {
+    const end = until == null ? this.duration : until;
+    while (this.t < end) this.step();
+    return this;
+  };
+  Session.prototype.trimPhases = function (keep) {
+    const cut = this.t - keep; let k = 0;
+    while (k < this.phT.length && this.phT[k] < cut) k++;
+    if (k > 0) { this.phT.splice(0, k); this.phM.splice(0, k); this.phR.splice(0, k); }
+  };
+
+  // ---------- Analysis ----------
+  function smoothDecimate(x, win, every) {
+    const out = [];
+    let s = 0;
+    for (let i = 0; i < x.length; i++) {
+      s += x[i]; if (i >= win) s -= x[i - win];
+      if (i >= win - 1 && (i % every) === 0) out.push(s / win);
+    }
+    return out;
+  }
+  function pearson(a, b) {
+    const n = Math.min(a.length, b.length);
+    if (n < 3) return 0;
+    let ma = 0, mb = 0; for (let i = 0; i < n; i++) { ma += a[i]; mb += b[i]; } ma /= n; mb /= n;
+    let sab = 0, saa = 0, sbb = 0;
+    for (let i = 0; i < n; i++) { const da = a[i] - ma, db = b[i] - mb; sab += da * db; saa += da * da; sbb += db * db; }
+    if (saa < 1e-9 || sbb < 1e-9) return 0;
+    return sab / Math.sqrt(saa * sbb);
+  }
+  function ccf(a, b, maxLag) {
+    // positive lag L: correlation of a(t) with b(t+L)  -> a leads b
+    const out = [];
+    for (let L = -maxLag; L <= maxLag; L++) {
+      const x = [], y = [];
+      for (let i = 0; i < a.length; i++) { const j = i + L; if (j >= 0 && j < b.length) { x.push(a[i]); y.push(b[j]); } }
+      out.push(pearson(x, y));
+    }
+    return out;
+  }
+  // 1 Hz series, 5-s moving average, warmup removed
+  function series(sess, key, warm) {
+    const x = sess.rec[key];
+    const w = Math.round((warm || 30) / sess.recEvery);
+    return smoothDecimate(x.slice(w), 20, 4);
+  }
+  function mean(a) { let s = 0; for (const v of a) s += v; return a.length ? s / a.length : 0; }
+  function sem(a) { const m = mean(a); let s = 0; for (const v of a) s += (v - m) * (v - m); return a.length > 1 ? Math.sqrt(s / (a.length - 1) / a.length) : 0; }
+  function median(a) { const b = a.slice().sort((x, y) => x - y); const n = b.length; return n ? (n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2) : 0; }
+  function quantile(a, q) {
+    const b = a.slice().sort((x, y) => x - y); if (!b.length) return 0;
+    const pos = (b.length - 1) * q, lo = Math.floor(pos), hi = Math.ceil(pos);
+    return b[lo] + (b[hi] - b[lo]) * (pos - lo);
+  }
+  const peakSync = (a, b) => Math.max.apply(null, ccf(a, b, 10));
+  const BATCH_CELLS = { nSA: 16, nR: 8 };
+
+  // Phase-locking index: |mean exp(i n 2pi phi)|, 0 = random, 1 = locked n:1.
+  function pli(ph, n, from) {
+    let c = 0, s = 0, N = 0;
+    for (let i = from || 0; i < ph.length; i++) { c += Math.cos(TAU * n * ph[i]); s += Math.sin(TAU * n * ph[i]); N++; }
+    return N ? Math.sqrt(c * c + s * s) / N : 0;
+  }
+  function pliMax(ph, from) { let m = 0, best = 1; for (const n of [1, 2, 3]) { const v = pli(ph, n, from); if (v > m) { m = v; best = n; } } return { v: m, n: best }; }
+  function phaseStart(sess, warm) { let k = 0; while (k < sess.phT.length && sess.phT[k] < (warm || 30)) k++; return k; }
+
+  // Recovery: seconds after the heel stick until infant HR (5-s average)
+  // returns within `band` bpm of its pre-stick baseline and stays there `hold` s.
+  function recoveryTime(sess, tStick, band, hold) {
+    band = band || 10; hold = hold || 15;
+    const r = sess.rec, dtR = sess.recEvery;
+    const sm = []; let s = 0; const W = 20;
+    for (let i = 0; i < r.hrI.length; i++) { s += r.hrI[i]; if (i >= W) s -= r.hrI[i - W]; sm.push(i >= W - 1 ? s / W : r.hrI[i]); }
+    const i0 = Math.round(tStick / dtR);
+    let base = 0, nb = 0; for (let i = Math.max(0, i0 - Math.round(30 / dtR)); i < i0; i++) { base += sm[i]; nb++; } base /= nb;
+    const H = Math.round(hold / dtR);
+    const start = i0 + Math.round(3 / dtR);
+    for (let i = start; i < sm.length - H; i++) {
+      let ok = true;
+      for (let k = i; k < i + H; k++) { if (Math.abs(sm[k] - base) > band) { ok = false; break; } }
+      if (ok) return (i - i0) * dtR;
+    }
+    return (sm.length - i0) * dtR; // censored: never recovered in the window
+  }
+
+  const WORLDS = ['perceived', 'physical', 'alike'];
+
+  // ---------- Experiments (generators yield progress 0..1, return results) ----------
+
+  // Tests 1, 2 and 5: real pair vs unbonded room-mate vs random surrogate, in all worlds;
+  // rate synchrony and beat-phase locking from the same sessions.
+  function* expRoom(params, opt) {
+    opt = opt || {};
+    const N = opt.N || 30, L = 15, dur = 300;
+    const out = { N, lags: [], worlds: {} };
+    for (let l = -L; l <= L; l++) out.lags.push(l);
+    let done = 0;
+    for (const world of WORLDS) {
+      const ser = [], plReal = [], plRoom = [], plN = [], beats = [];
+      for (let i = 0; i < N; i++) {
+        const s = new Session(Object.assign({}, params, { world, presence: 1, awake: true, vent: false, voice: false }), 1000 + i, { duration: dur, cells: BATCH_CELLS }).run();
+        ser.push({ i: series(s, 'hrI'), m: series(s, 'hrM'), r: series(s, 'hrR') });
+        const k0 = phaseStart(s, 30);
+        const a = pliMax(s.phM, k0), b = pliMax(s.phR, k0);
+        plReal.push(a.v); plRoom.push(b.v); plN.push(a.n); beats.push(s.phM.length - k0);
+        done++; yield done / (N * WORLDS.length);
+      }
+      const real = [], room = [], sur = [], diffCcf = [];
+      for (let i = 0; i < N; i++) {
+        real.push(peakSync(ser[i].i, ser[i].m));
+        room.push(peakSync(ser[i].i, ser[i].r));
+        let sv = 0; const K = Math.min(5, N - 1);
+        for (let k = 1; k <= K; k++) sv += peakSync(ser[i].i, ser[(i + k) % N].m);
+        sur.push(sv / K);
+        const a = ccf(ser[i].i, ser[i].m, L), b = ccf(ser[i].i, ser[i].r, L);
+        diffCcf.push(a.map((v, k) => v - b[k]));
+      }
+      const ccfMean = out.lags.map((_, k) => mean(diffCcf.map(d => d[k])));
+      const ccfSem = out.lags.map((_, k) => sem(diffCcf.map(d => d[k])));
+      let best = 0; for (let k = 0; k < ccfMean.length; k++) if (ccfMean[k] > ccfMean[best]) best = k;
+      const bond = real.map((v, k) => v - room[k]);
+      const plDiff = plReal.map((v, k) => v - plRoom[k]);
+      const ratioCount = {}; plN.forEach(n => { ratioCount[n] = (ratioCount[n] || 0) + 1; });
+      out.worlds[world] = {
+        real, room, sur, bondMean: mean(bond), bondSem: sem(bond),
+        ccfMean, ccfSem, peakLag: out.lags[best], peakVal: ccfMean[best],
+        plReal, plRoom, plMean: mean(plDiff), plSem: sem(plDiff), plRealMean: mean(plReal), plRoomMean: mean(plRoom),
+        ratioCount, beats: mean(beats),
+      };
+    }
+    return out;
+  }
+
+  // Test 3: the ventilator as a natural experiment.
+  function* expVent(params, opt) {
+    opt = opt || {};
+    const N = opt.N || 20, dur = 300;
+    const out = { N, worlds: {} };
+    let done = 0; const total = N * 2 * WORLDS.length;
+    for (const world of WORLDS) {
+      out.worlds[world] = {};
+      for (const vent of [false, true]) {
+        const heart = [], breath = [];
+        for (let i = 0; i < N; i++) {
+          const s = new Session(Object.assign({}, params, { world, vent, presence: 1, awake: true, voice: false }), 3000 + i, { duration: dur, cells: BATCH_CELLS }).run();
+          const hI = series(s, 'hrI'), rI = series(s, 'rrI');
+          heart.push(peakSync(hI, series(s, 'hrM')) - peakSync(hI, series(s, 'hrR')));
+          breath.push(peakSync(rI, series(s, 'rrM')) - peakSync(rI, series(s, 'rrR')));
+          done++; yield done / total;
+        }
+        out.worlds[world][vent ? 'vent' : 'cpap'] = {
+          heart: mean(heart), heartSem: sem(heart), breath: mean(breath), breathSem: sem(breath),
+        };
+      }
+    }
+    return out;
+  }
+
+  // Test 4: sweep responsiveness (perceived world); measure recovery after a heel stick and synchrony.
+  function* expSweep(params, opt) {
+    opt = opt || {};
+    const Ks = opt.Ks || [0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3];
+    const R = opt.R || 30, dur = 220, tStick = 80;
+    const taus = [params.tau, params.tau * 2];
+    const out = { Ks, R, window: dur - tStick, curves: [] };
+    let done = 0; const total = Ks.length * R * taus.length;
+    for (const tau of taus) {
+      const curve = { tau, rec: [], recLo: [], recHi: [], sync: [], syncSem: [], censored: [] };
+      for (const K of Ks) {
+        const rec = [], sync = []; let cens = 0;
+        for (let i = 0; i < R; i++) {
+          const s = new Session(Object.assign({}, params, { K, tau, world: 'perceived', presence: 1, awake: true, vent: false, voice: false }), 5000 + i, { duration: dur, heel: [tStick], alarms: false, roommate: false, cells: BATCH_CELLS }).run();
+          const rt = recoveryTime(s, tStick); rec.push(rt); if (rt >= dur - tStick - 16) cens++;
+          sync.push(peakSync(series(s, 'hrI'), series(s, 'hrM')));
+          done++; yield done / total;
+        }
+        curve.rec.push(median(rec)); curve.recLo.push(quantile(rec, 0.25)); curve.recHi.push(quantile(rec, 0.75));
+        curve.sync.push(mean(sync)); curve.syncSem.push(sem(sync)); curve.censored.push(cens);
+      }
+      out.curves.push(curve);
+    }
+    return out;
+  }
+
+  // Test 5b: how strong would the pulse have to be? Phase locking against pulse strength (physical world).
+  function* expPulse(params, opt) {
+    opt = opt || {};
+    const eps = opt.eps || [0, 1, 2, 4, 6, 8, 12, 16, 24, 32];
+    const R = opt.R || 6, dur = 300;
+    const out = { eps, R, real: [], realSem: [], room: [], hrI: [], hrM: [] };
+    let done = 0; const total = eps.length * R;
+    for (const e of eps) {
+      const re = [], ro = [], hi = [], hm = [];
+      for (let i = 0; i < R; i++) {
+        const s = new Session(Object.assign({}, params, { pulse: e, world: 'physical', presence: 1, awake: true, vent: false, voice: false }), 7000 + i, { duration: dur, cells: BATCH_CELLS }).run();
+        const k0 = phaseStart(s, 30);
+        re.push(pliMax(s.phM, k0).v); ro.push(pliMax(s.phR, k0).v);
+        hi.push(mean(s.rec.hrI.slice(120))); hm.push(mean(s.rec.hrM.slice(120)));
+        done++; yield done / total;
+      }
+      out.real.push(mean(re)); out.realSem.push(sem(re)); out.room.push(mean(ro)); out.hrI.push(mean(hi)); out.hrM.push(mean(hm));
+    }
+    // locking threshold for 2:1 from the detuning and the pulse's second harmonic
+    const a2 = pulseHarmonic(2);
+    const wI = TAU * out.hrI[0] / 60, wM = TAU * out.hrM[0] / 60;
+    out.detune = Math.abs(wI - 2 * wM); out.a2 = a2; out.epsLock = out.detune / (a2 / 2); out.omegaI = wI;
+    // exact range for one forced phase at these rates, and for an infant 10 bpm above or below twice mom's rate
+    out.detuneSigned = wI - 2 * wM;
+    const lr = lockRange21(wI, wM, 40), d10 = TAU * 10 / 60;
+    out.epsLockExact = lr.on; out.epsLockOff = lr.off; yield 1;
+    out.eps10Above = lockRange21(2 * wM + d10, wM, 40).on; yield 1;
+    out.eps10Below = lockRange21(2 * wM - d10, wM, 40).on;
+    return out;
+  }
+
+  // Test 6: contact onset. Three minutes at the bedside, then skin-to-skin.
+  // Per 30-s bin: mean HR relative to the pre-contact baseline (and its spread across runs), infant temperature.
+  function* expContact(params, opt) {
+    opt = opt || {};
+    const R = opt.R || 14, dur = 900, tOn = 180, bin = 30, sub = 5;
+    const out = { R, tOn, dur, bin, t: [], worlds: {} };
+    const nb = Math.floor(dur / bin), per = bin / sub;
+    for (let i = 0; i < nb; i++) out.t.push((i + 0.5) * bin);
+    let done = 0; const total = R * 2 * WORLDS.length;
+    const sdOf = a => { const m = mean(a); let v = 0; for (const x of a) v += (x - m) * (x - m); return a.length > 1 ? Math.sqrt(v / (a.length - 1)) : 0; };
+    for (const world of WORLDS) {
+      out.worlds[world] = {};
+      for (const awake of [true, false]) {
+        const runs = [], tAcc = new Array(nb).fill(0);
+        const dLate = [], wB = [], wA = [];
+        for (let i = 0; i < R; i++) {
+          const s = new Session(Object.assign({}, params, { world, presence: 0.35, awake, vent: false, voice: false }), 9000 + i,
+            { duration: dur, alarms: false, cells: BATCH_CELLS, schedule: [{ t: tOn, set: { presence: 1 } }] }).run();
+          const hr5 = smoothDecimate(s.rec.hrI, 20, 20); // 5-s averages
+          const tp5 = smoothDecimate(s.rec.tI, 20, 20);
+          const bIdx = []; for (let k = 0; k < hr5.length; k++) { const tt = (k + 1) * sub; if (tt > 60 && tt <= tOn) bIdx.push(k); }
+          const base = mean(bIdx.map(k => hr5[k]));
+          const m30 = [];
+          for (let b = 0; b < nb; b++) {
+            const seg = hr5.slice(b * per, (b + 1) * per); if (seg.length < per) break;
+            m30.push(mean(seg) - base);
+            tAcc[b] += mean(tp5.slice(b * per, (b + 1) * per)) / R;
+          }
+          runs.push(m30);
+          const before = [], after = [];
+          m30.forEach((v, b) => { const tt = (b + 0.5) * bin; if (tt > 60 && tt < tOn) before.push(v); if (tt > tOn + 120) after.push(v); });
+          wB.push(sdOf(before)); wA.push(sdOf(after));
+          const late = []; for (let k = 0; k < hr5.length; k++) { const tt = (k + 1) * sub; if (tt > tOn + 540 && tt <= tOn + 720) late.push(hr5[k] - base); }
+          dLate.push(mean(late));
+          done++; yield done / total;
+        }
+        const hr = [], spread = [];
+        for (let b = 0; b < nb; b++) { const col = runs.map(r => r[b]).filter(v => v != null); hr.push(mean(col)); spread.push(sdOf(col)); }
+        out.worlds[world][awake ? 'awake' : 'asleep'] = {
+          hr, spread, temp: tAcc,
+          dLate: mean(dLate), dLateSem: sem(dLate), wanderBefore: mean(wB), wanderAfter: mean(wA), wanderAfterSem: sem(wA),
+        };
+      }
+    }
+    return out;
+  }
+
+  function runToEnd(gen) { let r = gen.next(); while (!r.done) r = gen.next(); return r.value; }
+
+  return { DEFAULTS, KINDS, C, WORLDS, Session, Person, mulberry32, pearson, ccf, series, smoothDecimate, mean, sem, median, quantile, recoveryTime, peakSync, pli, pliMax, phaseStart, pulseShape, pulseHarmonic, locked21, lockRange21, expRoom, expVent, expSweep, expPulse, expContact, runToEnd, TAU };
+})();
+if (typeof module !== 'undefined') module.exports = Model;
+
+</script>
+<script>
+(function () {
+  "use strict";
+  const DEF = {"room":{"N":30,"lags":[-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"worlds":{"perceived":{"real":[0.388,0.612,0.434,0.505,0.576,0.595,0.662,0.559,0.577,0.811,0.771,0.512,0.488,0.641,0.6,0.575,0.552,0.698,0.515,0.801,0.409,0.778,0.654,0.603,0.571,0.576,0.569,0.581,0.45,0.544],"room":[0.211,0.6,0.103,0.441,0.358,0.614,0.498,0.439,0.282,0.607,0.379,0.378,0.395,0.407,0.51,0.278,0.495,0.396,0.359,0.477,0.492,0.442,0.495,0.39,0.225,0.456,0.173,0.131,0.11,0.213],"sur":[0.133,0.007,0.233,0.052,0.086,0.049,0.157,-0.008,0.082,-0.121,0.211,0.199,0.027,0.079,0.107,0.15,0.126,-0.079,0.211,-0.165,0.21,0.268,0.057,0.085,0.12,0.064,0.103,0.195,0.131,0.031],"bondMean":0.208,"bondSem":0.025,"ccfMean":[0.103,0.099,0.092,0.083,0.073,0.062,0.051,0.04,0.03,0.021,0.016,0.016,0.023,0.038,0.061,0.092,0.131,0.174,0.215,0.251,0.281,0.299,0.306,0.302,0.289,0.269,0.243,0.214,0.183,0.153,0.126],"ccfSem":[0.022,0.023,0.024,0.025,0.025,0.026,0.025,0.024,0.024,0.023,0.022,0.022,0.022,0.022,0.022,0.021,0.022,0.023,0.023,0.023,0.024,0.024,0.025,0.025,0.026,0.026,0.027,0.028,0.029,0.03,0.031],"peakLag":7,"peakVal":0.306,"plReal":[0.074,0.046,0.048,0.029,0.062,0.147,0.051,0.088,0.024,0.083,0.062,0.076,0.028,0.013,0.079,0.041,0.017,0.102,0.03,0.047,0.062,0.041,0.071,0.037,0.056,0.04,0.081,0.097,0.123,0.043],"plRoom":[0.095,0.058,0.058,0.081,0.127,0.092,0.032,0.01,0.054,0.026,0.047,0.046,0.094,0.016,0.171,0.056,0.054,0.038,0.091,0.104,0.05,0.182,0.06,0.108,0.076,0.022,0.13,0.064,0.066,0.103],"plMean":-0.014,"plSem":0.009,"plRealMean":0.06,"plRoomMean":0.074,"ratioCount":{"2":29,"3":1},"beats":665.433},"physical":{"real":[0.29,0.753,-0.558,0.496,0.544,0.231,0.738,0.049,0.215,0.779,0.726,0.388,0.507,0.552,0.304,0.594,0.49,0.553,0.564,0.891,0.284,0.732,0.702,0.487,0.191,0.719,0.466,0.726,-0.048,0.715],"room":[0.192,0.776,0.418,0.449,0.467,0.477,0.689,0.287,0.392,0.805,0.263,0.558,0.387,0.5,0.434,0.62,0.64,0.532,0.587,0.45,0.275,0.404,0.725,0.405,0.593,0.789,0.178,0.251,0.308,0.366],"sur":[0.13,-0.121,0.223,0.104,0.052,0.153,0.186,0.069,-0.094,-0.142,0.397,0.335,-0.024,0.131,-0.004,0.226,0.223,-0.089,0.177,-0.188,0.062,0.194,0.054,-0.023,0.303,-0.218,0.02,0.317,-0.049,-0.005],"bondMean":-0.004,"bondSem":0.053,"ccfMean":[0.001,0,0.002,0.002,0.001,0.002,0.005,0.006,0.006,0.006,0.01,0.012,0.012,0.013,0.015,0.017,0.013,0.01,0.009,0.009,0.004,-0.002,-0.004,-0.006,-0.012,-0.019,-0.023,-0.026,-0.033,-0.042,-0.047],"ccfSem":[0.059,0.059,0.059,0.059,0.058,0.057,0.057,0.056,0.055,0.054,0.054,0.053,0.052,0.051,0.051,0.051,0.051,0.051,0.052,0.052,0.052,0.052,0.052,0.051,0.051,0.05,0.05,0.05,0.049,0.049,0.049],"peakLag":0,"peakVal":0.017,"plReal":[0.233,0.319,0.206,0.392,0.266,0.167,0.434,0.199,0.204,0.234,0.313,0.115,0.254,0.384,0.195,0.358,0.25,0.187,0.398,0.197,0.358,0.306,0.321,0.252,0.339,0.404,0.305,0.322,0.187,0.509],"plRoom":[0.031,0.184,0.043,0.117,0.105,0.12,0.028,0.027,0.015,0.047,0.034,0.083,0.036,0.044,0.131,0.118,0.056,0.047,0.063,0.1,0.036,0.069,0.099,0.016,0.094,0.087,0.033,0.063,0.017,0.027],"plMean":0.221,"plSem":0.018,"plRealMean":0.287,"plRoomMean":0.066,"ratioCount":{"2":30},"beats":675.833},"alike":{"real":[0.364,0.743,-0.586,0.516,0.554,0.199,0.728,-0.028,0.003,0.809,0.718,0.364,0.329,0.416,0.185,0.527,0.422,0.558,0.624,0.9,0.264,0.72,0.75,0.593,0.265,0.668,0.39,0.667,-0.049,0.602],"room":[0.233,0.806,0.397,0.46,0.502,0.512,0.662,0.279,0.396,0.836,0.218,0.554,0.255,0.381,0.368,0.647,0.542,0.536,0.62,0.475,0.292,0.423,0.75,0.492,0.557,0.801,0.091,0.164,0.312,0.302],"sur":[0.167,-0.124,0.24,0.095,0.055,0.169,0.181,0.096,-0.097,-0.155,0.353,0.325,-0.044,0.109,0.026,0.249,0.156,-0.101,0.21,-0.195,0.063,0.195,0.046,-0.043,0.32,-0.217,-0.008,0.356,-0.033,0.03],"bondMean":-0.022,"bondSem":0.055,"ccfMean":[-0.001,-0.001,-0.002,-0.003,-0.003,-0.003,-0.004,-0.004,-0.004,-0.005,-0.006,-0.007,-0.006,-0.006,-0.006,-0.006,-0.007,-0.007,-0.008,-0.01,-0.011,-0.013,-0.015,-0.019,-0.023,-0.027,-0.032,-0.038,-0.043,-0.048,-0.052],"ccfSem":[0.062,0.062,0.062,0.062,0.061,0.061,0.059,0.058,0.057,0.056,0.055,0.053,0.053,0.052,0.052,0.051,0.051,0.051,0.051,0.051,0.051,0.051,0.051,0.051,0.051,0.051,0.05,0.05,0.05,0.05,0.05],"peakLag":-15,"peakVal":-0.001,"plReal":[0.067,0.059,0.071,0.108,0.037,0.064,0.102,0.04,0.077,0.038,0.089,0.034,0.069,0.173,0.112,0.113,0.083,0.066,0.087,0.013,0.072,0.107,0.056,0.139,0.033,0.101,0.044,0.066,0.152,0.121],"plRoom":[0.054,0.062,0.052,0.068,0.074,0.066,0.039,0.055,0.099,0.039,0.064,0.032,0.008,0.041,0.054,0.039,0.094,0.091,0.057,0.091,0.026,0.027,0.023,0.094,0.103,0.151,0.091,0.053,0.081,0.073],"plMean":0.016,"plSem":0.009,"plRealMean":0.08,"plRoomMean":0.063,"ratioCount":{"2":29,"3":1},"beats":673.567}}},"vent":{"N":20,"worlds":{"perceived":{"cpap":{"heart":0.185,"heartSem":0.037,"breath":0.143,"breathSem":0.035},"vent":{"heart":0.188,"heartSem":0.038,"breath":0,"breathSem":0}},"physical":{"cpap":{"heart":0.018,"heartSem":0.061,"breath":0.041,"breathSem":0.055},"vent":{"heart":0.017,"heartSem":0.061,"breath":0,"breathSem":0}},"alike":{"cpap":{"heart":0.013,"heartSem":0.059,"breath":0.037,"breathSem":0.055},"vent":{"heart":0.012,"heartSem":0.058,"breath":0,"breathSem":0}}}},"sweep":{"Ks":[0,0.25,0.5,0.75,1,1.5,2,2.5,3],"R":200,"window":140,"curves":[{"tau":1.5,"rec":[39.25,17,12.75,10.875,10.25,12.125,22.5,23.5,50.125],"recLo":[27.438,14.75,11.75,10.25,9.5,9,9.188,20.188,22],"recHi":[65.063,22.563,14.75,12.313,12.813,22.563,26.75,66.813,140.25],"sync":[0.237,0.405,0.477,0.52,0.553,0.609,0.667,0.749,0.831],"syncSem":[0.022,0.016,0.013,0.01,0.009,0.008,0.009,0.011,0.011],"censored":[21,2,0,0,0,0,11,46,82]},{"tau":3,"rec":[39.25,17.625,13.75,13.75,23.5,56.5,140.25,140.25,140.25],"recLo":[27.438,15.25,12.5,11.75,12,29.438,48.375,118.813,140.25],"recHi":[65.063,24.063,19.375,23.813,34,97.875,140.25,140.25,140.25],"sync":[0.237,0.402,0.493,0.56,0.613,0.723,0.825,0.888,0.933],"syncSem":[0.022,0.016,0.012,0.009,0.008,0.006,0.007,0.006,0.003],"censored":[21,3,0,0,0,31,120,148,154]}]},"pulse":{"eps":[0,1,2,4,6,8,12,16],"R":6,"real":[0.074,0.103,0.151,0.236,0.312,0.358,0.42,0.426],"realSem":[0.017,0.038,0.03,0.023,0.03,0.041,0.051,0.048],"room":[0.08,0.091,0.098,0.093,0.103,0.071,0.066,0.075],"hrI":[149.59,149.506,149.533,149.572,149.558,149.772,150.021,150.476],"hrM":[76.27,76.27,76.27,76.27,76.27,76.27,76.27,76.27],"detune":0.309,"a2":0.186,"epsLock":3.314,"omegaI":15.665,"detuneSigned":-0.309,"epsLockExact":4,"epsLockOff":19.709,"eps10Above":8.376,"eps10Below":null},"contact":{"R":14,"tOn":180,"dur":900,"bin":30,"t":[15,45,75,105,135,165,195,225,255,285,315,345,375,405,435,465,495,525,555,585,615,645,675,705,735,765,795,825,855,885],"worlds":{"perceived":{"awake":{"hr":[0.014,-0.988,-1.213,0.818,0.575,-0.18,0.014,-0.101,-0.459,-0.517,-1.62,-0.895,-0.662,-0.571,-0.274,-0.129,-0.422,0.167,-0.16,0.573,0.919,0.574,0.417,0.473,0.215,0.022,-0.739,-0.171,-0.843,0.246],"spread":[3.797,3.304,2.421,2.448,2.701,3.428,2.664,3.022,3.115,2.516,2.796,2.694,2.626,2.537,3.002,1.959,3.049,2.749,2.863,3.529,2.545,4.492,3.617,3.912,4.257,4.199,3.174,3.688,2.303,3.19],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,-0.006,-0.009,-0.012,-0.008,-0.005,-0.006,-0.007,-0.002,0.005,0.003,0.005,0.014,0.018,0.021,0.013,0.012,0.012,0.015,0.016,0.013,0.015,0.001,0.006,0.001],"dLate":-0.212,"dLateSem":0.766,"wanderBefore":3.017,"wanderAfter":2.182,"wanderAfterSem":0.151},"asleep":{"hr":[0.239,-0.942,-1.929,-0.238,1.43,0.737,2.41,2.202,-0.084,-0.982,-1.717,-4.198,-1.331,-1.224,1.022,-0.945,1.21,2.384,2.424,2.171,2.79,2.982,2.117,3.426,0.811,1.2,-0.414,-1.059,-2.396,0.183],"spread":[8.477,6.136,4.633,4.308,3.792,6.546,10.307,8.143,10.247,7.964,7.66,6.78,6.931,6.56,7.614,7.972,10.032,8.255,8.6,12.225,10.485,12.285,10.643,11.582,11.385,10.102,9.494,9.099,6.977,10.288],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,-0.006,-0.009,-0.012,-0.008,-0.005,-0.006,-0.007,-0.002,0.005,0.003,0.005,0.014,0.018,0.021,0.013,0.012,0.012,0.015,0.016,0.013,0.015,0.001,0.006,0.001],"dLate":-0.279,"dLateSem":1.979,"wanderBefore":5.149,"wanderAfter":7.062,"wanderAfterSem":0.386}},"physical":{"awake":{"hr":[0.239,-0.942,-1.929,-0.238,1.43,0.737,2.789,3.105,0.261,0.316,-0.349,-2.678,0.118,0.439,3.081,1.427,3.376,4.711,4.713,4.116,5.548,6.233,5.256,6.93,4.148,4.465,2.875,2.078,1.063,3.637],"spread":[8.477,6.136,4.633,4.308,3.792,6.546,10.163,8.122,10.131,7.642,7.972,6.814,7.168,7.134,7.124,7.737,9.746,8.508,8.403,11.719,10.229,12.663,10.851,11.269,11.471,9.519,9.187,9.441,7.236,9.779],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,0.007,0.028,0.048,0.072,0.096,0.113,0.13,0.151,0.172,0.184,0.197,0.218,0.234,0.248,0.249,0.259,0.269,0.283,0.292,0.295,0.304,0.295,0.303,0.298],"dLate":3.044,"dLateSem":2.009,"wanderBefore":5.149,"wanderAfter":6.89,"wanderAfterSem":0.4},"asleep":{"hr":[0.239,-0.942,-1.929,-0.238,1.43,0.737,1.527,1.292,0.129,-0.538,-1.867,-3.649,-0.607,0.034,1.736,0.23,3.152,3.392,3.711,4.038,4.489,4.626,3.619,5.227,2.898,3.689,1.948,1.778,-0.025,2.266],"spread":[8.477,6.136,4.633,4.308,3.792,6.546,10.159,8.03,9.296,8.035,7.628,6.357,6.435,6.375,7.875,7.949,9.804,8.724,8.848,12.629,10.731,12.046,11.091,12.387,12.146,9.938,9.574,9.251,6.252,9.599],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,0.007,0.028,0.048,0.072,0.096,0.113,0.13,0.151,0.172,0.184,0.197,0.218,0.234,0.248,0.249,0.259,0.269,0.283,0.292,0.295,0.304,0.295,0.303,0.298],"dLate":2.092,"dLateSem":1.941,"wanderBefore":5.149,"wanderAfter":7.06,"wanderAfterSem":0.419}},"alike":{"awake":{"hr":[0.239,-0.942,-1.929,-0.238,1.43,0.737,2.41,2.202,-0.084,-0.982,-1.717,-4.198,-1.331,-1.224,1.022,-0.945,1.21,2.384,2.424,2.171,2.79,2.982,2.117,3.426,0.811,1.2,-0.414,-1.059,-2.396,0.183],"spread":[8.477,6.136,4.633,4.308,3.792,6.546,10.307,8.143,10.247,7.964,7.66,6.78,6.931,6.56,7.614,7.972,10.032,8.255,8.6,12.225,10.485,12.285,10.643,11.582,11.385,10.102,9.494,9.099,6.977,10.288],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,-0.006,-0.009,-0.012,-0.008,-0.005,-0.006,-0.007,-0.002,0.005,0.003,0.005,0.014,0.018,0.021,0.013,0.012,0.012,0.015,0.016,0.013,0.015,0.001,0.006,0.001],"dLate":-0.279,"dLateSem":1.979,"wanderBefore":5.149,"wanderAfter":7.062,"wanderAfterSem":0.386},"asleep":{"hr":[0.239,-0.942,-1.929,-0.238,1.43,0.737,2.41,2.202,-0.084,-0.982,-1.717,-4.198,-1.331,-1.224,1.022,-0.945,1.21,2.384,2.424,2.171,2.79,2.982,2.117,3.426,0.811,1.2,-0.414,-1.059,-2.396,0.183],"spread":[8.477,6.136,4.633,4.308,3.792,6.546,10.307,8.143,10.247,7.964,7.66,6.78,6.931,6.56,7.614,7.972,10.032,8.255,8.6,12.225,10.485,12.285,10.643,11.582,11.385,10.102,9.494,9.099,6.977,10.288],"temp":[0.001,0.001,-0.003,-0.001,0.002,-0.001,-0.006,-0.009,-0.012,-0.008,-0.005,-0.006,-0.007,-0.002,0.005,0.003,0.005,0.014,0.018,0.021,0.013,0.012,0.012,0.015,0.016,0.013,0.015,0.001,0.006,0.001],"dLate":-0.279,"dLateSem":1.979,"wanderBefore":5.149,"wanderAfter":7.062,"wanderAfterSem":0.386}}}}};
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const WORLDS = Model.WORLDS;
+  const WNAME = { perceived: 'Perceived world', physical: 'Physical world', alike: 'Alike world' };
+
+  // ---------- theme tokens ----------
+  const T = {};
+  function readTokens() {
+    const cs = getComputedStyle(document.documentElement);
+    ['paper', 'paper-2', 'grid-minor', 'grid-major', 'ink', 'ink-2', 'rule', 'infant', 'mom', 'room', 's1', 's2', 'accent'].forEach(k => { T[k] = cs.getPropertyValue('--' + k).trim(); });
+  }
+  readTokens();
+  const WC = () => ({ perceived: T.s1, physical: T.s2, alike: T.room });
+  function alpha(col, a) {
+    const m = /^#([0-9a-f]{6})$/i.exec(col);
+    if (!m) return col;
+    const n = parseInt(m[1], 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+  const FONT_DATA = '"IBM Plex Mono", ui-monospace, Menlo, monospace';
+  const FONT_UI = '"Archivo", "Arial Narrow", system-ui, sans-serif';
+
+  function sized(cv, cssH) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(10, cv.clientWidth);
+    const h = cssH != null ? cssH : Math.max(10, cv.clientHeight);
+    if (cssH != null) cv.style.height = cssH + 'px';
+    const W = Math.round(w * dpr), H = Math.round(h * dpr);
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+
+  // ---------- settings ----------
+  const D = Model.DEFAULTS;
+  const SKEYS = ['K', 'tau', 'selfReg', 'warmth', 'pulse', 'gapInfant', 'vagalInfant'];
+  const settings = {}; SKEYS.forEach(k => { settings[k] = D[k]; });
+  const liveOpts = { presence: 1, awake: true, voice: false, vent: false, world: 'perceived' };
+  const fmt = (v, d) => (v >= 0 ? '' : '−') + Math.abs(v).toFixed(d == null ? 2 : d);
+  const fmtS = (v, d) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(d == null ? 2 : d);
+
+  // ---------- live session ----------
+  let live, buf, nextSample, nextSync;
+  const SAMPLE = 0.05, SPAN = 90;
+  function newLive(seed) {
+    live = new Model.Session(Object.assign({}, settings, liveOpts), seed, { record: false, alarms: false, autoAlarms: true, duration: 1e9 });
+    buf = { t: [], hrI: [], hrM: [], hrR: [], chI: [], chM: [], aI: [], aM: [] };
+    nextSample = 0; nextSync = 40;
+  }
+  function applyLive() {
+    Object.assign(live.p, settings, liveOpts);
+    live.applyParams();
+  }
+  function sample() {
+    const b = buf;
+    b.t.push(live.t); b.hrI.push(live.infant.hr); b.hrM.push(live.mom.hr); b.hrR.push(live.room.hr);
+    b.chI.push(live.infant.chest); b.chM.push(live.mom.chest); b.aI.push(live.infant.A); b.aM.push(live.mom.A);
+    const max = Math.round(SPAN / SAMPLE) + 2;
+    if (b.t.length > max) { for (const k in b) b[k].splice(0, b.t.length - max); }
+    if (live.events.length > 40) live.events.splice(0, live.events.length - 40);
+    live.trimPhases(SPAN + 1);
+  }
+  function stepLive() {
+    live.step();
+    if (live.t >= nextSample) { sample(); nextSample += SAMPLE; }
+    if (live.t >= nextSync) { updateSync(); nextSync += 2; }
+  }
+  function updateSync() {
+    const n = buf.t.length;
+    if (n < 40 / SAMPLE) return;
+    const dec = x => Model.smoothDecimate(x, 100, 20);
+    const i = dec(buf.hrI), m = dec(buf.hrM), r = dec(buf.hrR);
+    const sm = Model.peakSync(i, m), sr = Model.peakSync(i, r);
+    $('#syncM').textContent = sm.toFixed(2);
+    $('#syncR').textContent = sr.toFixed(2);
+    $('#syncB').textContent = fmtS(sm - sr);
+    const a = Model.pliMax(live.phM, 0), b = Model.pliMax(live.phR, 0);
+    $('#phaseNote').textContent = 'locking ' + a.v.toFixed(2) + ' (' + a.n + ':1) · other parent ' + b.v.toFixed(2);
+  }
+
+  // ---------- live drawing ----------
+  const cvRI = $('#ringI'), cvRM = $('#ringM'), cvHR = $('#hrStrip'), cvBR = $('#brStrip'), cvPH = $('#phStrip');
+  function drawRing(cv, P, color) {
+    const w = cv.clientWidth;
+    const { ctx } = sized(cv, w);
+    const cx = w / 2, cy = w / 2, R = w * 0.42, r = w * 0.27;
+    ctx.lineWidth = 1; ctx.strokeStyle = T.rule;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Model.TAU); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Model.TAU); ctx.stroke();
+    const dotR = Math.max(3, w * 0.03), dotr = Math.max(2.5, w * 0.025);
+    for (let k = 0; k < P.nSA; k++) {
+      const a = -Math.PI / 2 + k / P.nSA * Model.TAU;
+      const glow = Math.exp(-P.fire[k] / (reduceMotion ? 0.25 : 0.09));
+      ctx.fillStyle = alpha(color, 0.16 + 0.84 * glow);
+      ctx.beginPath(); ctx.arc(cx + R * Math.cos(a), cy + R * Math.sin(a), dotR * (1 + 0.35 * glow), 0, Model.TAU); ctx.fill();
+    }
+    const breathCol = (P === live.infant && live.p.vent) ? T['ink-2'] : color;
+    for (let k = 0; k < P.nR; k++) {
+      const a = -Math.PI / 2 + k / P.nR * Model.TAU;
+      const glow = Math.exp(-P.fireR[k] / 0.35);
+      ctx.fillStyle = alpha(breathCol, 0.14 + 0.66 * glow);
+      ctx.beginPath(); ctx.arc(cx + r * Math.cos(a), cy + r * Math.sin(a), dotr, 0, Model.TAU); ctx.fill();
+    }
+    ctx.fillStyle = alpha(color, 0.10 + 0.12 * P.chest);
+    ctx.beginPath(); ctx.arc(cx, cy, r * (0.55 + 0.25 * P.chest), 0, Model.TAU); ctx.fill();
+    ctx.fillStyle = T.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '600 ' + Math.round(w * 0.15) + 'px ' + FONT_DATA;
+    ctx.fillText(Math.round(P.hr), cx, cy - w * 0.02);
+    ctx.font = '500 ' + Math.max(10, Math.round(w * 0.055)) + 'px ' + FONT_UI;
+    ctx.fillStyle = T['ink-2'];
+    ctx.fillText('bpm', cx, cy + w * 0.09);
+  }
+
+  function gridRect(ctx, x0, y0, x1, y1, xs, ys) {
+    ctx.lineWidth = 1;
+    for (const pass of [false, true]) {
+      ctx.strokeStyle = pass ? T['grid-major'] : T['grid-minor'];
+      ctx.beginPath();
+      for (const g of xs) if (g.major === pass) { const x = Math.round(g.v) + 0.5; ctx.moveTo(x, y0); ctx.lineTo(x, y1); }
+      for (const g of ys) if (g.major === pass) { const y = Math.round(g.v) + 0.5; ctx.moveTo(x0, y); ctx.lineTo(x1, y); }
+      ctx.stroke();
+    }
+  }
+
+  function drawHR() {
+    const { ctx, w, h } = sized(cvHR, 250);
+    const now = live.t, t0 = now - SPAN;
+    const x0 = 40, x1 = w - 4;
+    const X = t => x0 + (t - t0) / SPAN * (x1 - x0);
+    const lanes = [
+      { top: 8, bot: h / 2 - 8, lo: 110, hi: 210, step: 4, major: 20, series: [['hrI', T.infant, []]] },
+      { top: h / 2 + 8, bot: h - 22, lo: 50, hi: 130, step: 4, major: 20, series: [['hrR', T.room, [5, 4]], ['hrM', T.mom, []]] },
+    ];
+    const xs = [];
+    for (let s = Math.ceil(t0 / 2) * 2; s <= now; s += 2) xs.push({ v: X(s), major: Math.round(s) % 10 === 0 });
+    ctx.font = '500 10px ' + FONT_DATA; ctx.textBaseline = 'middle'; ctx.textAlign = 'right';
+    for (const L of lanes) {
+      const Y = v => L.bot - (v - L.lo) / (L.hi - L.lo) * (L.bot - L.top);
+      const ys = [];
+      for (let v = L.lo; v <= L.hi + 1e-9; v += L.step) ys.push({ v: Y(v), major: Math.round(v) % L.major === 0 });
+      gridRect(ctx, x0, L.top, x1, L.bot, xs, ys);
+      ctx.fillStyle = T['ink-2'];
+      for (let v = L.lo; v <= L.hi; v += L.major) ctx.fillText(String(v), x0 - 5, Y(v));
+      ctx.save(); ctx.beginPath(); ctx.rect(x0, L.top, x1 - x0, L.bot - L.top); ctx.clip();
+      for (const [key, col, dash] of L.series) {
+        const arr = buf[key];
+        ctx.strokeStyle = col; ctx.lineWidth = dash.length ? 1.5 : 2; ctx.setLineDash(dash); ctx.lineJoin = 'round';
+        ctx.beginPath();
+        let started = false;
+        for (let i = 0; i < arr.length; i++) {
+          const x = X(buf.t[i]); if (x < x0 - 2) continue;
+          const y = Y(arr[i]);
+          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+      ctx.setLineDash([]); ctx.restore();
+    }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.font = '600 10px ' + FONT_UI;
+    for (const e of live.events) {
+      if (e.t < t0) continue;
+      const x = Math.round(X(e.t)) + 0.5;
+      const col = e.type === 'heel' ? T.infant : T['ink-2'];
+      ctx.strokeStyle = col; ctx.setLineDash([2, 3]); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, 6); ctx.lineTo(x, h - 20); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = col;
+      const lbl = e.type === 'heel' ? 'heel stick' : 'alarm';
+      const tw = ctx.measureText(lbl).width;
+      ctx.fillText(lbl, Math.min(x1 - tw / 2, Math.max(x0 + tw / 2, x)), h - 6);
+    }
+    ctx.fillStyle = T['ink-2']; ctx.textAlign = 'left'; ctx.font = '500 10px ' + FONT_UI;
+    ctx.fillText('Infant', x0 + 4, 20); ctx.fillText('Adults', x0 + 4, h / 2 + 20);
+  }
+
+  function drawBreath() {
+    const { ctx, w, h } = sized(cvBR, 130);
+    const span = 20, now = live.t, t0 = now - span;
+    const x0 = 40, x1 = w - 4;
+    const X = t => x0 + (t - t0) / span * (x1 - x0);
+    const xs = [];
+    for (let s = Math.ceil(t0 * 2) / 2; s <= now; s += 0.5) xs.push({ v: X(s), major: Math.abs(s / 5 - Math.round(s / 5)) < 1e-6 });
+    const lanes = [{ top: 8, bot: h / 2 - 4, key: 'chI', col: live.p.vent ? T['ink-2'] : T.infant, name: 'Infant' },
+                   { top: h / 2 + 4, bot: h - 8, key: 'chM', col: T.mom, name: 'Mom' }];
+    ctx.font = '500 10px ' + FONT_UI; ctx.textBaseline = 'middle'; ctx.textAlign = 'right';
+    for (const L of lanes) {
+      const ys = []; const n = 5;
+      for (let k = 0; k <= n; k++) ys.push({ v: L.top + k / n * (L.bot - L.top), major: k === 0 || k === n });
+      gridRect(ctx, x0, L.top, x1, L.bot, xs, ys);
+      ctx.fillStyle = T['ink-2']; ctx.fillText(L.name, x0 - 5, (L.top + L.bot) / 2);
+      const Y = v => L.bot - 3 - v * (L.bot - L.top - 6);
+      ctx.save(); ctx.beginPath(); ctx.rect(x0, L.top, x1 - x0, L.bot - L.top); ctx.clip();
+      ctx.strokeStyle = L.col; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.beginPath();
+      let started = false; const arr = buf[L.key];
+      for (let i = 0; i < arr.length; i++) {
+        if (buf.t[i] < t0 - 0.1) continue;
+        const x = X(buf.t[i]), y = Y(arr[i]);
+        if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+      }
+      ctx.stroke(); ctx.restore();
+    }
+  }
+
+  function drawPhase() {
+    const { ctx, w, h } = sized(cvPH, 120);
+    const now = live.t, t0 = now - SPAN;
+    const x0 = 40, x1 = w - 4, top = 8, bot = h - 8;
+    const X = t => x0 + (t - t0) / SPAN * (x1 - x0);
+    const Y = p => bot - p * (bot - top);
+    const xs = [];
+    for (let s = Math.ceil(t0 / 2) * 2; s <= now; s += 2) xs.push({ v: X(s), major: Math.round(s) % 10 === 0 });
+    const ys = [0, 0.25, 0.5, 0.75, 1].map(v => ({ v: Y(v), major: v === 0 || v === 0.5 || v === 1 }));
+    gridRect(ctx, x0, top, x1, bot, xs, ys);
+    ctx.font = '500 10px ' + FONT_DATA; ctx.textBaseline = 'middle'; ctx.textAlign = 'right'; ctx.fillStyle = T['ink-2'];
+    ctx.fillText('0', x0 - 5, Y(0)); ctx.fillText('½', x0 - 5, Y(0.5)); ctx.fillText('1', x0 - 5, Y(1));
+    ctx.fillStyle = live.p.presence >= 1 ? T.infant : alpha(T.infant, 0.6);
+    for (let k = 0; k < live.phT.length; k++) {
+      const x = X(live.phT[k]); if (x < x0) continue;
+      ctx.beginPath(); ctx.arc(x, Y(live.phM[k]), 2.2, 0, Model.TAU); ctx.fill();
+    }
+    ctx.font = '500 10px ' + FONT_UI; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = T['ink-2'];
+    ctx.fillText("mom's cycle", x0 + 4, top + 12);
+  }
+
+  function updateMeta() {
+    const I = live.infant, M = live.mom;
+    const temp = live.p.world === 'physical' ? ' · ' + fmtS(I.temp, 2) + ' °C' : '';
+    $('#valsI').textContent = 'RR ' + Math.round(I.rr) + (live.p.vent ? ' (vent)' : '') + ' · node sync ' + Math.round(I.r * 100) + '%' + temp;
+    $('#valsM').textContent = 'RR ' + Math.round(M.rr) + ' · node sync ' + Math.round(M.r * 100) + '%' + (live.p.awake ? '' : ' · asleep');
+    const pct = a => Math.max(3, Math.min(100, (a + 0.5) / 2.5 * 100));
+    const mi = $('#meterI'), mm = $('#meterM');
+    mi.style.width = pct(I.A) + '%'; mi.style.background = T.infant;
+    mm.style.width = pct(M.A) + '%'; mm.style.background = T.mom;
+    const s = Math.floor(live.t), mnt = Math.floor(s / 60), sec = s % 60;
+    $('#clock').textContent = mnt + ':' + String(sec).padStart(2, '0');
+  }
+
+  function drawLive() {
+    drawRing(cvRI, live.infant, T.infant);
+    drawRing(cvRM, live.mom, live.p.presence > 0 ? T.mom : T['ink-2']);
+    drawHR(); drawBreath(); drawPhase(); updateMeta();
+  }
+
+  // ---------- loop ----------
+  let playing = !reduceMotion, speed = 1, lastTs = null, acc = 0, busy = false;
+  function frame(ts) {
+    if (lastTs == null) lastTs = ts;
+    const el = Math.min(0.1, (ts - lastTs) / 1000); lastTs = ts;
+    if (playing && !busy) {
+      acc += el * speed;
+      let guard = 0;
+      while (acc >= live.dt && guard < 2000) { stepLive(); acc -= live.dt; guard++; }
+      drawLive();
+    }
+    requestAnimationFrame(frame);
+  }
+  function setPlaying(p) {
+    playing = p; acc = 0;
+    $('#playBtn').textContent = p ? 'Pause' : 'Play';
+    $('#playBtn').setAttribute('aria-label', p ? 'Pause' : 'Play');
+  }
+  $('#playBtn').addEventListener('click', () => setPlaying(!playing));
+  $('#speedBtn').addEventListener('click', () => {
+    speed = speed === 1 ? 4 : 1;
+    $('#speedBtn').textContent = speed + '×';
+  });
+
+  // ---------- controls ----------
+  $$('input[name=presence]').forEach(el => el.addEventListener('change', () => {
+    if (el.value === 'asleep') { liveOpts.presence = 1; liveOpts.awake = false; }
+    else { liveOpts.presence = +el.value; liveOpts.awake = true; }
+    applyLive(); drawLive();
+  }));
+  $$('input[name=world]').forEach(el => el.addEventListener('change', () => { liveOpts.world = el.value; applyLive(); drawLive(); }));
+  $$('input[name=vent]').forEach(el => el.addEventListener('change', () => {
+    liveOpts.vent = el.value === '1'; applyLive();
+    $('#breathNote').textContent = liveOpts.vent ? 'The machine sets the infant’s breathing' : 'Inspiration rises, expiration falls';
+  }));
+  $('#voiceChk').addEventListener('change', e => { liveOpts.voice = e.target.checked; applyLive(); });
+  $('#heelBtn').addEventListener('click', () => { live.heelStick(); if (!playing) drawLive(); });
+  $('#alarmBtn').addEventListener('click', () => { live.alarm(); if (!playing) drawLive(); });
+
+  const SL = [
+    { id: 'sK', key: 'K', out: 'oK', f: v => v.toFixed(2) },
+    { id: 'sTau', key: 'tau', out: 'oTau', f: v => v.toFixed(1) + ' s' },
+    { id: 'sSelf', key: 'selfReg', out: 'oSelf', f: v => v.toFixed(2) + '×' },
+    { id: 'sWarm', key: 'warmth', out: 'oWarm', f: v => v.toFixed(2) + ' °C' },
+    { id: 'sPulse', key: 'pulse', out: 'oPulse', f: v => v.toFixed(1) },
+    { id: 'sGap', key: 'gapInfant', out: 'oGap', f: v => v.toFixed(2) + '×' },
+    { id: 'sVag', key: 'vagalInfant', out: 'oVag', f: v => v.toFixed(2) },
+  ];
+  function isDefault() { return SL.every(s => Math.abs(settings[s.key] - D[s.key]) < 1e-9); }
+  function settingsLine(st) {
+    return 'responsiveness ' + st.K.toFixed(2) + ', delay ' + st.tau.toFixed(1) + ' s, steadiness ' + st.selfReg.toFixed(2) + '×, warmth ' + st.warmth.toFixed(2) + ' °C, pulse ' + st.pulse.toFixed(1) + ', gap junctions ' + st.gapInfant.toFixed(2) + '×, vagal ' + st.vagalInfant.toFixed(2);
+  }
+  function syncSliders() {
+    for (const s of SL) { $('#' + s.id).value = settings[s.key]; $('#' + s.out).textContent = s.f(settings[s.key]); }
+    $('#factorSummary').textContent = isDefault() ? 'defaults' : 'changed';
+  }
+  for (const s of SL) {
+    $('#' + s.id).addEventListener('input', e => {
+      settings[s.key] = +e.target.value; $('#' + s.out).textContent = s.f(settings[s.key]);
+      $('#factorSummary').textContent = isDefault() ? 'defaults' : 'changed';
+      applyLive(); markStale(); drawC4(); drawC5b();
+    });
+  }
+  $('#resetBtn').addEventListener('click', () => { SKEYS.forEach(k => { settings[k] = D[k]; }); syncSliders(); applyLive(); markStale(); drawC4(); drawC5b(); });
+
+  // ---------- experiments ----------
+  const cur = { room: DEF.room, vent: DEF.vent, sweep: DEF.sweep, pulse: DEF.pulse, contact: DEF.contact };
+  const ranWith = { room: null, vent: null, sweep: null, pulse: null, contact: null };
+  function markStale() {
+    for (const k of Object.keys(cur)) {
+      $$('[data-status=' + k + ']').forEach(el => {
+        const st = ranWith[k];
+        const same = st ? SL.every(s => Math.abs(st[s.key] - settings[s.key]) < 1e-9) : isDefault();
+        el.textContent = (st ? 'Your settings' : 'Default settings') + (same ? '' : ' · sliders changed since');
+      });
+    }
+  }
+
+  function axisText(ctx, txt, x, y, align, base, col) {
+    ctx.fillStyle = col || T['ink-2']; ctx.textAlign = align || 'left'; ctx.textBaseline = base || 'alphabetic'; ctx.fillText(txt, x, y);
+  }
+  function hgrid(ctx, x0, x1, Y, vals, fmtF, labels) {
+    ctx.lineWidth = 1; ctx.font = '500 10px ' + FONT_DATA;
+    for (const v of vals) {
+      const y = Math.round(Y(v)) + 0.5;
+      ctx.strokeStyle = Math.abs(v) < 1e-9 ? T['ink-2'] : T.rule;
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+      if (labels !== false) axisText(ctx, fmtF(v), x0 - 5, y, 'right', 'middle');
+    }
+  }
+  // world panels: side by side on wide screens, stacked on phones
+  function panels(w, stackedH, rowH, labelsBelow) {
+    const stacked = w < 600, n = WORLDS.length;
+    const left = 36, right = 6, top = 26;
+    if (!stacked) {
+      const gap = 18, pw = (w - left - right - gap * (n - 1)) / n;
+      return { stacked, h: rowH, rects: WORLDS.map((k, i) => ({ key: k, x0: left + i * (pw + gap), x1: left + i * (pw + gap) + pw, y0: top, y1: rowH - labelsBelow })) };
+    }
+    const gap = 34, ph = (stackedH - top - labelsBelow * n - gap * (n - 1)) / n;
+    return { stacked, h: stackedH, rects: WORLDS.map((k, i) => { const y0 = top + i * (ph + labelsBelow + gap); return { key: k, x0: left, x1: w - right, y0, y1: y0 + ph }; }) };
+  }
+  function dotStrips(cv, getCols, yMin, yMax, ticks, fmtF, rowH, stackedH) {
+    const w = cv.clientWidth;
+    const P = panels(w, stackedH, rowH, 40);
+    const { ctx } = sized(cv, P.h);
+    P.rects.forEach((r, wi) => {
+      const Y = v => r.y1 - (v - yMin) / (yMax - yMin) * (r.y1 - r.y0);
+      hgrid(ctx, r.x0, r.x1, Y, ticks, fmtF, P.stacked || wi === 0);
+      ctx.font = '700 12px ' + FONT_UI; axisText(ctx, WNAME[r.key], r.x0, r.y0 - 10, 'left', 'alphabetic', T.ink);
+      const cols = getCols(r.key);
+      const cw = (r.x1 - r.x0) / cols.length;
+      cols.forEach((c, ci) => {
+        const cx = r.x0 + cw * (ci + 0.5);
+        c.arr.forEach((v, i) => {
+          const jit = ((i * 37) % 13 / 12 - 0.5) * cw * 0.5;
+          ctx.fillStyle = alpha(c.col, 0.55);
+          ctx.beginPath(); ctx.arc(cx + jit, Y(Math.max(yMin, Math.min(yMax, v))), 2.6, 0, Model.TAU); ctx.fill();
+        });
+        const m = Model.mean(c.arr);
+        ctx.strokeStyle = c.col; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx - cw * 0.34, Y(m)); ctx.lineTo(cx + cw * 0.34, Y(m)); ctx.stroke();
+        ctx.font = '600 10px ' + FONT_UI;
+        const wide = cw > 74;
+        const lines = wide ? [c.lab.join(' ').replace('- ', '')] : c.lab;
+        lines.forEach((ln, li) => axisText(ctx, ln, cx, r.y1 + 14 + li * 11, 'center', 'alphabetic', T['ink-2']));
+        ctx.font = '500 10px ' + FONT_DATA;
+        axisText(ctx, m.toFixed(2), cx, r.y1 + 16 + lines.length * 11, 'center', 'alphabetic', c.col);
+      });
+    });
+  }
+
+  // Test 1
+  function drawC1() {
+    const d = cur.room;
+    const all = WORLDS.flatMap(k => d.worlds[k].sur);
+    const yMin = Math.max(-0.5, Math.min(0, Math.floor(Math.min.apply(null, all) * 4) / 4));
+    const ticks = []; for (let v = yMin; v <= 1.0001; v += 0.25) ticks.push(Math.round(v * 100) / 100);
+    dotStrips($('#c1'), key => { const W = d.worlds[key]; return [
+      { lab: ['Mom'], arr: W.real, col: T.mom }, { lab: ['Other', 'parent'], arr: W.room, col: T.room }, { lab: ['Surro-', 'gate'], arr: W.sur, col: T['ink-2'] }]; },
+      yMin, 1, ticks, v => v === 0 ? '0' : fmt(v, 2), 300, 560);
+  }
+  function ci95(m, s) { return '(95% CI ' + fmt(m - 1.96 * s) + ' to ' + fmt(m + 1.96 * s) + ')'; }
+  function writeF1() {
+    const d = cur.room, c = d.worlds.perceived, h = d.worlds.physical, a = d.worlds.alike;
+    const sd = c.bondSem * Math.sqrt(d.N);
+    let power = '';
+    if (c.bondMean > 2 * c.bondSem && sd > 0) {
+      const n = Math.max(3, Math.ceil(Math.pow((1.96 + 0.84) * sd / c.bondMean, 2)) + 1);
+      power = '<p>With an effect this size and this much session-to-session scatter, about <span class="num">' + n + '</span> sessions would detect the perceived bond (80% power, two-sided 5%). That number rests entirely on the model’s assumed effect size.</p>';
+    } else {
+      power = '<p>At these settings the perceived bond leaves no reliable trace beyond the room.</p>';
+    }
+    $('#f1').innerHTML =
+      '<p>In every world mom beats the surrogate by a wide margin (<span class="num">' + fmtS(Model.mean(c.real) - Model.mean(c.sur)) + '</span> perceived, <span class="num">' + fmtS(Model.mean(h.real) - Model.mean(h.sur)) + '</span> physical, <span class="num">' + fmtS(Model.mean(a.real) - Model.mean(a.sur)) + '</span> alike). That is the trap: the usual surrogate removes the shared room along with the bond.</p>' +
+      '<p>Against the other parent, mom wins only in the perceived world: <span class="num">' + fmtS(c.bondMean) + '</span> ' + ci95(c.bondMean, c.bondSem) + '. Physical <span class="num">' + fmtS(h.bondMean) + '</span> ' + ci95(h.bondMean, h.bondSem) + ', alike <span class="num">' + fmtS(a.bondMean) + '</span> ' + ci95(a.bondMean, a.bondSem) + '. Rate synchrony is blind to the physical world: its channels change the infant’s rate too slowly (heat) or too subtly (pulse) to track mom’s.</p>' + power;
+  }
+
+  // Test 2
+  function drawC2() {
+    const cv = $('#c2'); const w = cv.clientWidth;
+    const { ctx, h } = sized(cv, 240);
+    const d = cur.room, lags = d.lags, wc = WC();
+    const x0 = 40, x1 = w - 10, top = 14, bot = h - 40;
+    const all = WORLDS.flatMap(k => d.worlds[k].ccfMean.map((v, i) => [v - d.worlds[k].ccfSem[i], v + d.worlds[k].ccfSem[i]])).flat();
+    const yMin = Math.min(-0.1, Math.floor(Math.min.apply(null, all) * 10) / 10), yMax = Math.max(0.3, Math.ceil(Math.max.apply(null, all) * 10) / 10);
+    const X = l => x0 + (l - lags[0]) / (lags[lags.length - 1] - lags[0]) * (x1 - x0);
+    const Y = v => bot - (v - yMin) / (yMax - yMin) * (bot - top);
+    const ticks = []; for (let v = yMin; v <= yMax + 1e-9; v += 0.1) ticks.push(Math.round(v * 10) / 10);
+    hgrid(ctx, x0, x1, Y, ticks, v => fmt(v, 1));
+    ctx.font = '500 10px ' + FONT_DATA;
+    for (let l = -15; l <= 15; l += 5) {
+      const x = Math.round(X(l)) + 0.5;
+      ctx.strokeStyle = l === 0 ? T['ink-2'] : T.rule; ctx.setLineDash(l === 0 ? [3, 3] : []);
+      ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bot); ctx.stroke(); ctx.setLineDash([]);
+      axisText(ctx, (l > 0 ? '+' : l < 0 ? '−' : '') + Math.abs(l), x, bot + 14, 'center');
+    }
+    ctx.font = '500 10px ' + FONT_UI;
+    axisText(ctx, '← mom changes first', x0, bot + 30, 'left');
+    axisText(ctx, 'infant changes first →', x1, bot + 30, 'right');
+    axisText(ctx, 'lag (s)', (x0 + x1) / 2, bot + 30, 'center');
+    for (const k of ['alike', 'physical', 'perceived']) {
+      const W = d.worlds[k], col = wc[k];
+      ctx.fillStyle = alpha(col, 0.14); ctx.beginPath();
+      lags.forEach((l, i) => { const x = X(l), y = Y(W.ccfMean[i] + W.ccfSem[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      for (let i = lags.length - 1; i >= 0; i--) ctx.lineTo(X(lags[i]), Y(W.ccfMean[i] - W.ccfSem[i]));
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(k === 'alike' ? [4, 3] : []); ctx.beginPath();
+      lags.forEach((l, i) => { const x = X(l), y = Y(W.ccfMean[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    const c = d.worlds.perceived, px = X(c.peakLag), py = Y(c.peakVal);
+    ctx.fillStyle = wc.perceived; ctx.beginPath(); ctx.arc(px, py, 4, 0, Model.TAU); ctx.fill();
+    ctx.font = '600 11px ' + FONT_UI;
+    const lbl = 'perceived, peak ' + (c.peakLag > 0 ? '+' : c.peakLag < 0 ? '−' : '') + Math.abs(c.peakLag) + ' s';
+    const tw = ctx.measureText(lbl).width;
+    axisText(ctx, lbl, Math.min(x1 - tw / 2, Math.max(x0 + tw / 2, px)), Math.max(top + 10, py - 10), 'center', 'alphabetic', wc.perceived);
+    const ai = Math.round((lags.length - 1) * 0.15);
+    axisText(ctx, 'physical', X(lags[ai]), Y(d.worlds.physical.ccfMean[ai]) - 8, 'center', 'alphabetic', wc.physical);
+    axisText(ctx, 'alike', X(lags[ai]), Y(d.worlds.alike.ccfMean[ai]) + 16, 'center', 'alphabetic', wc.alike);
+  }
+  function writeF2() {
+    const c = cur.room.worlds.perceived, h = cur.room.worlds.physical, a = cur.room.worlds.alike;
+    const lag = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + ' s';
+    const maxA = Math.max.apply(null, a.ccfMean.map(Math.abs)), maxH = Math.max.apply(null, h.ccfMean.map(Math.abs));
+    const dir = c.peakLag > 0 ? 'the infant changes first and mom follows' : c.peakLag < 0 ? 'mom changes first and the infant follows' : 'neither leads';
+    $('#f2').innerHTML =
+      '<p>Perceived world: the curve peaks at <span class="num">' + lag(c.peakLag) + '</span> (<span class="num">' + fmtS(c.peakVal) + '</span>), so ' + dir + '. The peak is broad because mom’s arousal settles over about 20 seconds.</p>' +
+      '<p>Physical world: within <span class="num">' + maxH.toFixed(2) + '</span> of zero at every lag. Alike world: within <span class="num">' + maxA.toFixed(2) + '</span>. Once the room is subtracted, neither has timing left to explain.</p>';
+  }
+
+  // Test 3
+  function drawC3() {
+    const cv = $('#c3'); const w = cv.clientWidth;
+    const d = cur.vent;
+    const P = panels(w, 520, 240, 46);
+    const { ctx, h } = sized(cv, P.h);
+    const vals = WORLDS.flatMap(k => ['cpap', 'vent'].flatMap(m => { const x = d.worlds[k][m]; return [x.heart + x.heartSem, x.breath + x.breathSem, x.heart - x.heartSem, x.breath - x.breathSem]; }));
+    const yMin = Math.min(-0.1, Math.floor(Math.min.apply(null, vals) * 10) / 10), yMax = Math.max(0.3, Math.ceil(Math.max.apply(null, vals) * 10) / 10);
+    const ticks = []; for (let v = yMin; v <= yMax + 1e-9; v += 0.1) ticks.push(Math.round(v * 10) / 10);
+    P.rects.forEach((r, wi) => {
+      const Y = v => r.y1 - (v - yMin) / (yMax - yMin) * (r.y1 - r.y0);
+      hgrid(ctx, r.x0, r.x1, Y, ticks, v => fmt(v, 1), P.stacked || wi === 0);
+      ctx.font = '700 12px ' + FONT_UI; axisText(ctx, WNAME[r.key], r.x0, r.y0 - 10, 'left', 'alphabetic', T.ink);
+      const gw = (r.x1 - r.x0) / 2;
+      [['cpap', 'CPAP'], ['vent', 'Ventilator']].forEach(([m, mName], gi) => {
+        const gx = r.x0 + gi * gw, bw = Math.min(26, gw * 0.3);
+        const x = d.worlds[r.key][m];
+        [[x.heart, x.heartSem, T.s1], [x.breath, x.breathSem, T.s2]].forEach(([v, s, col], bi) => {
+          const bx = gx + gw / 2 + (bi === 0 ? -bw - 2 : 2);
+          const y0 = Y(0), y1 = Y(v);
+          ctx.fillStyle = col; ctx.fillRect(bx, Math.min(y0, y1), bw, Math.max(1, Math.abs(y1 - y0)));
+          if (s > 0) {
+            ctx.strokeStyle = T.ink; ctx.lineWidth = 1; const cx = bx + bw / 2;
+            ctx.beginPath(); ctx.moveTo(cx, Y(v - s)); ctx.lineTo(cx, Y(v + s)); ctx.moveTo(cx - 4, Y(v - s)); ctx.lineTo(cx + 4, Y(v - s)); ctx.moveTo(cx - 4, Y(v + s)); ctx.lineTo(cx + 4, Y(v + s)); ctx.stroke();
+          }
+        });
+        ctx.font = '600 10px ' + FONT_UI; axisText(ctx, mName, gx + gw / 2, r.y1 + 14, 'center');
+      });
+    });
+    ctx.font = '600 10px ' + FONT_UI;
+    const ly = h - 10; let lx = 36;
+    [['Heart rate', T.s1], ['Breathing rate', T.s2]].forEach(([lab, col]) => {
+      ctx.fillStyle = col; ctx.fillRect(lx, ly - 8, 10, 10); axisText(ctx, lab, lx + 15, ly, 'left', 'alphabetic', T['ink-2']);
+      lx += ctx.measureText(lab).width + 34;
+    });
+  }
+  function writeF3() {
+    const c = cur.vent.worlds.perceived, h = cur.vent.worlds.physical, a = cur.vent.worlds.alike;
+    $('#f3').innerHTML =
+      '<p>Perceived world on CPAP: heart <span class="num">' + fmtS(c.cpap.heart) + '</span>, breathing <span class="num">' + fmtS(c.cpap.breath) + '</span>. On the ventilator: heart <span class="num">' + fmtS(c.vent.heart) + '</span>, breathing <span class="num">' + fmtS(c.vent.breath) + '</span>. The bond leaves breathing and stays in the heart, because it travels through arousal.</p>' +
+      '<p>Physical (heart <span class="num">' + fmtS(h.cpap.heart) + '</span> on CPAP, <span class="num">' + fmtS(h.vent.heart) + '</span> on the ventilator) and alike (<span class="num">' + fmtS(a.cpap.heart) + '</span>, <span class="num">' + fmtS(a.vent.heart) + '</span>) sit within about two standard errors of zero throughout. Rate-based measures cannot see the physical channels, with or without the ventilator.</p>';
+  }
+
+  // Test 4
+  function drawC4() {
+    const cv = $('#c4'); const w = cv.clientWidth;
+    const { ctx, h } = sized(cv, 380);
+    const d = cur.sweep, Ks = d.Ks, kMax = Ks[Ks.length - 1];
+    const x0 = 40, x1 = w - 12;
+    const X = k => x0 + k / kMax * (x1 - x0);
+    const t0 = 46, b0 = 214, win = d.window;
+    const Y = v => b0 - Math.min(v, win) / win * (b0 - t0);
+    const ticks = []; for (let v = 0; v <= win; v += 20) ticks.push(v);
+    hgrid(ctx, x0, x1, Y, ticks, v => String(v));
+    ctx.font = '700 12px ' + FONT_UI; axisText(ctx, 'Recovery after heel stick (s)', x0, 14, 'left', 'alphabetic', T.ink);
+    ctx.font = '500 10px ' + FONT_UI;
+    ctx.strokeStyle = T['ink-2']; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(x0, Math.round(Y(win - 16)) + 0.5); ctx.lineTo(x1, Math.round(Y(win - 16)) + 0.5); ctx.stroke(); ctx.setLineDash([]);
+    axisText(ctx, 'not recovered in window', x0 + 4, Y(win - 16) - 4, 'left');
+    const curves = [[d.curves[1], T.s2, 'delay ×2'], [d.curves[0], T.s1, 'your delay']];
+    for (const [c, col] of curves) {
+      ctx.fillStyle = alpha(col, 0.14); ctx.beginPath();
+      Ks.forEach((k, i) => { const x = X(k), y = Y(c.recHi[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      for (let i = Ks.length - 1; i >= 0; i--) ctx.lineTo(X(Ks[i]), Y(c.recLo[i]));
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath();
+      Ks.forEach((k, i) => { const x = X(k), y = Y(c.rec[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+      ctx.stroke();
+      ctx.fillStyle = col; Ks.forEach((k, i) => { ctx.beginPath(); ctx.arc(X(k), Y(c.rec[i]), 2.6, 0, Model.TAU); ctx.fill(); });
+    }
+    ctx.font = '600 10px ' + FONT_UI;
+    let lx = x0; const ly = 32;
+    for (const [c, col, lab] of curves.slice().reverse()) {
+      const txt = lab + ' (' + c.tau.toFixed(1) + ' s)';
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(lx, ly - 3); ctx.lineTo(lx + 14, ly - 3); ctx.stroke();
+      axisText(ctx, txt, lx + 18, ly, 'left', 'alphabetic', T['ink-2']);
+      lx += ctx.measureText(txt).width + 34;
+    }
+    const t1 = 252, b1 = h - 40;
+    const Y2 = v => b1 - Math.max(0, Math.min(1, v)) * (b1 - t1);
+    hgrid(ctx, x0, x1, Y2, [0, 0.5, 1], v => v === 0 ? '0' : v.toFixed(1));
+    ctx.font = '700 12px ' + FONT_UI; axisText(ctx, 'Rate synchrony with mom', x0, t1 - 10, 'left', 'alphabetic', T.ink);
+    const c0 = d.curves[0];
+    ctx.fillStyle = alpha(T.s1, 0.14); ctx.beginPath();
+    Ks.forEach((k, i) => { const x = X(k), y = Y2(c0.sync[i] + c0.syncSem[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    for (let i = Ks.length - 1; i >= 0; i--) ctx.lineTo(X(Ks[i]), Y2(c0.sync[i] - c0.syncSem[i]));
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = T.s1; ctx.lineWidth = 2; ctx.beginPath();
+    Ks.forEach((k, i) => { const x = X(k), y = Y2(c0.sync[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    ctx.stroke();
+    ctx.fillStyle = T.s1; Ks.forEach((k, i) => { ctx.beginPath(); ctx.arc(X(k), Y2(c0.sync[i]), 2.6, 0, Model.TAU); ctx.fill(); });
+    ctx.font = '500 10px ' + FONT_DATA;
+    for (let k = 0; k <= kMax + 1e-9; k += 0.5) axisText(ctx, k.toFixed(1), X(k), b1 + 14, 'center');
+    ctx.font = '500 10px ' + FONT_UI; axisText(ctx, 'responsiveness', (x0 + x1) / 2, b1 + 30, 'center');
+    const kx = Math.round(X(Math.min(kMax, settings.K))) + 0.5;
+    ctx.strokeStyle = T.ink; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(kx, t0); ctx.lineTo(kx, b0); ctx.moveTo(kx, t1); ctx.lineTo(kx, b1); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font = '600 10px ' + FONT_UI;
+    const right = kx > x1 - 50;
+    axisText(ctx, 'your slider', right ? kx - 4 : kx + 4, t0 + 26, right ? 'right' : 'left', 'alphabetic', T.ink);
+  }
+  function writeF4() {
+    const d = cur.sweep, Ks = d.Ks, c0 = d.curves[0], c1 = d.curves[1];
+    let bi = 0; c0.rec.forEach((v, i) => { if (v < c0.rec[bi]) bi = i; });
+    let bj = 0; c1.rec.forEach((v, i) => { if (v < c1.rec[bj]) bj = i; });
+    const last = Ks.length - 1;
+    const recTxt = (c, i) => c.rec[i] >= d.window - 16 ? 'not recovered' : Math.round(c.rec[i]) + ' s';
+    const st4 = ranWith.sweep, def = !st4 || SKEYS.every(k => k === 'K' || Math.abs(st4[k] - D[k]) < 1e-9); // K is swept, so its slider doesn't matter
+    $('#f4').innerHTML =
+      '<p>Recovery is fastest at responsiveness <span class="num">' + Ks[bi] + '</span> (<span class="num">' + Math.round(c0.rec[bi]) + ' s</span>). With no bond it takes <span class="num">' + recTxt(c0, 0) + '</span>. ' + (c0.censored[last] > d.R / 2
+        ? 'At <span class="num">' + Ks[last] + '</span>, <span class="num">' + c0.censored[last] + ' of ' + d.R + '</span> runs never settle within the window.'
+        : 'At <span class="num">' + Ks[last] + '</span> the median is <span class="num">' + recTxt(c0, last) + '</span>, and <span class="num">' + c0.censored[last] + ' of ' + d.R + '</span> runs never settle.') + ' Two things slow it at high responsiveness. The delayed soothing overshoots, and the rebound carries heart rate back out of the band, which lifts the median. And as mom’s arousal climbs, her capacity to soothe drops' + (def ? '; from a responsiveness of about 2 this creates a second, stuck state in which both stay aroused, and noise pushes some runs into it' : ', which can trap the pair in a state where both stay aroused') + '.' + (c0.censored[last] > 0 ? ' Those are the runs that never settle.' : '') + '</p>' +
+      '<p>Synchrony rises the whole way, from <span class="num">' + c0.sync[0].toFixed(2) + '</span> to <span class="num">' + c0.sync[last].toFixed(2) + '</span>. The most synchronized pairs are the least regulated. The baseline above zero is the shared room, and it is noisy: two slow signals in a three-minute window correlate by chance more often than intuition expects.</p>' +
+      '<p>Doubling the delay moves the best setting to <span class="num">' + Ks.filter((k, i) => c1.rec[i] - c1.rec[bj] < 0.5).join('–') + '</span> and narrows it. The same eagerness, mistimed, overshoots' + (def ? '; at 3 s the resting state itself starts to oscillate above a responsiveness of about 1.6' : '') + '.</p>';
+  }
+
+  // Test 5
+  function drawC5a() {
+    const d = cur.room;
+    const all = WORLDS.flatMap(k => d.worlds[k].plReal.concat(d.worlds[k].plRoom));
+    const yMax = Math.max(0.4, Math.ceil(Math.max.apply(null, all) * 10) / 10);
+    const ticks = []; for (let v = 0; v <= yMax + 1e-9; v += 0.1) ticks.push(Math.round(v * 10) / 10);
+    dotStrips($('#c5a'), key => { const W = d.worlds[key]; return [
+      { lab: ['Mom'], arr: W.plReal, col: T.mom }, { lab: ['Other', 'parent'], arr: W.plRoom, col: T.room }]; },
+      0, yMax, ticks, v => v === 0 ? '0' : v.toFixed(1), 260, 500);
+  }
+  function drawC5b() {
+    const cv = $('#c5b'); const w = cv.clientWidth;
+    const { ctx, h } = sized(cv, 250);
+    const d = cur.pulse, eps = d.eps, eMax = 16;
+    const x0 = 40, x1 = w - 12, top = 30, bot = h - 44;
+    const X = e => x0 + Math.min(e, eMax) / eMax * (x1 - x0);
+    const yMax = Math.max(0.6, Math.ceil(Math.max.apply(null, d.real.map((v, i) => v + d.realSem[i])) * 10) / 10);
+    const Y = v => bot - Math.max(0, Math.min(yMax, v)) / yMax * (bot - top);
+    const ticks = []; for (let v = 0; v <= yMax + 1e-9; v += 0.2) ticks.push(Math.round(v * 10) / 10);
+    hgrid(ctx, x0, x1, Y, ticks, v => v === 0 ? '0' : v.toFixed(1));
+    ctx.font = '700 12px ' + FONT_UI; axisText(ctx, 'Phase locking against pulse strength, physical world', x0, 14, 'left', 'alphabetic', T.ink);
+    const marks = [[d.epsLockExact, 'locks at these rates']];
+    if (d.eps10Above != null && !(marks[0][0] != null && Math.abs(X(d.eps10Above) - X(marks[0][0])) < 16)) marks.push([d.eps10Above, '10 bpm above 2:1']);
+    for (const [e, lab] of marks) {
+      if (e == null || e > eMax) continue;
+      const x = Math.round(X(e)) + 0.5;
+      ctx.strokeStyle = T['ink-2']; ctx.setLineDash([3, 3]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bot); ctx.stroke(); ctx.setLineDash([]);
+      ctx.font = '500 10px ' + FONT_UI;
+      ctx.save(); ctx.translate(x + 3, top + 4); ctx.rotate(Math.PI / 2); axisText(ctx, lab, 0, 0, 'left', 'alphabetic', T['ink-2']); ctx.restore();
+    }
+    ctx.strokeStyle = T.room; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]); ctx.beginPath();
+    eps.forEach((e, i) => { const x = X(e), y = Y(d.room[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = alpha(T.s2, 0.14); ctx.beginPath();
+    eps.forEach((e, i) => { const x = X(e), y = Y(d.real[i] + d.realSem[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    for (let i = eps.length - 1; i >= 0; i--) ctx.lineTo(X(eps[i]), Y(d.real[i] - d.realSem[i]));
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = T.s2; ctx.lineWidth = 2; ctx.beginPath();
+    eps.forEach((e, i) => { const x = X(e), y = Y(d.real[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+    ctx.stroke();
+    ctx.fillStyle = T.s2; eps.forEach((e, i) => { ctx.beginPath(); ctx.arc(X(e), Y(d.real[i]), 2.6, 0, Model.TAU); ctx.fill(); });
+    ctx.font = '600 10px ' + FONT_UI;
+    axisText(ctx, 'with mom', X(eps[eps.length - 1]) - 4, Y(d.real[eps.length - 1]) - 8, 'right', 'alphabetic', T.s2);
+    axisText(ctx, 'other parent (chance)', X(eps[eps.length - 1]) - 4, Y(d.room[eps.length - 1]) + 14, 'right', 'alphabetic', T.room);
+    ctx.font = '500 10px ' + FONT_DATA;
+    for (let e = 0; e <= eMax; e += 4) axisText(ctx, String(e), X(e), bot + 14, 'center');
+    ctx.font = '500 10px ' + FONT_UI; axisText(ctx, 'pulse strength (rad/s at the peak of each maternal beat)', (x0 + x1) / 2, bot + 30, 'center');
+    const kx = Math.round(X(Math.min(eMax, settings.pulse))) + 0.5;
+    ctx.strokeStyle = T.ink; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(kx, top); ctx.lineTo(kx, bot); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font = '600 10px ' + FONT_UI;
+    const right = kx > x1 - 50;
+    axisText(ctx, 'your slider', right ? kx - 4 : kx + 4, bot - 6, right ? 'right' : 'left', 'alphabetic', T.ink);
+  }
+  function writeF5() {
+    const r = cur.room, d = cur.pulse;
+    const h = r.worlds.physical, c = r.worlds.perceived, a = r.worlds.alike;
+    const wAbove = 2 * Model.TAU * d.hrM[0] / 60 + Model.TAU * 10 / 60; // the hypothetical infant's own rate
+    const pushPct = (e, w) => Math.round(e * 0.69 / (w || d.omegaI) * 100);
+    const sgn = d.detuneSigned != null ? d.detuneSigned : -d.detune, below = sgn < 0;
+    const exact = d.epsLockExact != null ? 'about <span class="num">' + d.epsLockExact.toFixed(1) + '</span>' : 'no locking at any strength up to 40';
+    const above10 = d.eps10Above != null ? 'needs about <span class="num">' + d.eps10Above.toFixed(0) + '</span>, a push of about <span class="num">' + pushPct(d.eps10Above, wAbove) + '%</span> of each cell’s own rate at the peak of every maternal beat' : 'never locks 2:1 at any strength up to 40';
+    const below10 = d.eps10Below != null ? 'needs about <span class="num">' + d.eps10Below.toFixed(0) + '</span>' : 'never locks 2:1 at any strength up to 40';
+    const lastI = d.eps.length - 1;
+    const ratio = Object.entries(h.ratioCount).sort((x, y) => y[1] - x[1])[0];
+    $('#f5').innerHTML =
+      '<p>At the slider’s strength, the physical world locks at <span class="num">' + h.plRealMean.toFixed(2) + '</span> against mom versus <span class="num">' + h.plRoomMean.toFixed(2) + '</span> against the other parent (difference <span class="num">' + fmtS(h.plMean) + '</span> ' + ci95(h.plMean, h.plSem) + ', mostly <span class="num">' + ratio[0] + ':1</span>). Perceived <span class="num">' + fmtS(c.plMean) + '</span>, alike <span class="num">' + fmtS(a.plMean) + '</span>: nothing. With Test 1 this is a double dissociation. Perception shows in rates and not in beats; contact shows in beats and not in rates.</p>' +
+      '<p>How strong is strong? At these rates the infant’s heart sits <span class="num">' + (Math.abs(sgn) * 60 / Model.TAU).toFixed(1) + ' bpm</span> ' + (below ? 'below' : 'above') + ' twice mom’s. The usual first-order formula says locking needs <span class="num">' + d.epsLock.toFixed(1) + '</span>. Solving the forced phase equation exactly gives ' + exact + (d.epsLockExact == null && !below ? '' : ', because besides pulling the infant’s cells toward the ratio, the pulse also slows them slightly on average, which here ' + (below ? 'works against' : 'adds to') + ' that pull') + '. Even at <span class="num">' + d.eps[lastI] + '</span> the simulated sessions reach a locking index of only <span class="num">' + d.real[lastI].toFixed(2) + '</span>: breathing swings, noise and session-to-session scatter keep knocking the pair out of lock.</p>' +
+      '<p>' + (Math.abs(sgn) * 60 / Model.TAU < 5 ? 'The closeness to 2:1 is an accident of the chosen rates. ' : 'How close a pair sits to 2:1 is set by its rates. ') + 'An infant 10 bpm above twice mom’s rate ' + above10 + '; one 10 bpm below ' + below10 + '. A pressure wave through two chest walls does nothing like that. What weak forcing near a ratio gives instead is intermittent locking, which is what the prenatal recordings show.</p>';
+  }
+
+  // Test 6
+  function drawC6() {
+    const cv = $('#c6'); const w = cv.clientWidth;
+    const { ctx, h } = sized(cv, 470);
+    const d = cur.contact, t = d.t, wc = WC();
+    const x0 = 40, x1 = w - 12;
+    const X = s => x0 + s / d.dur * (x1 - x0);
+    const sm3 = a => a.map((v, i) => { const lo = Math.max(0, i - 1), hi = Math.min(a.length - 1, i + 1); let s = 0; for (let k = lo; k <= hi; k++) s += a[k]; return s / (hi - lo + 1); });
+    const lines = [
+      ['alike', 'awake', wc.alike, []], ['physical', 'asleep', wc.physical, [5, 4]], ['physical', 'awake', wc.physical, []],
+      ['perceived', 'asleep', wc.perceived, [5, 4]], ['perceived', 'awake', wc.perceived, []],
+    ];
+    const pan = [
+      { key: 'hr', title: 'Heart rate, change from baseline (bpm)', top: 30, bot: 170, lo: -8, hi: 8, step: 4, fmtF: v => fmtS(v, 0) },
+      { key: 'spread', title: 'Spread across runs (bpm)', top: 206, bot: 316, lo: 0, hi: 12, step: 4, fmtF: v => String(v) },
+      { key: 'temp', title: 'Infant temperature (°C from set point)', top: 352, bot: h - 36, lo: -0.1, hi: 0.5, step: 0.1, fmtF: v => fmt(v, 1) },
+    ];
+    for (const P of pan) {
+      const Y = v => P.bot - (Math.max(P.lo, Math.min(P.hi, v)) - P.lo) / (P.hi - P.lo) * (P.bot - P.top);
+      const ticks = []; for (let v = P.lo; v <= P.hi + 1e-9; v += P.step) ticks.push(Math.round(v * 100) / 100);
+      hgrid(ctx, x0, x1, Y, ticks, P.fmtF);
+      ctx.font = '700 12px ' + FONT_UI; axisText(ctx, P.title, x0, P.top - 10, 'left', 'alphabetic', T.ink);
+      const cx = Math.round(X(d.tOn)) + 0.5;
+      ctx.strokeStyle = T.ink; ctx.setLineDash([2, 3]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx, P.top); ctx.lineTo(cx, P.bot); ctx.stroke(); ctx.setLineDash([]);
+      const use = P.key === 'temp' ? lines.filter(l => l[0] === 'physical' || l[0] === 'alike') : lines;
+      for (const [wk, aw, col, dash] of use) {
+        const arr = sm3(d.worlds[wk][aw][P.key]);
+        ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(dash); ctx.lineJoin = 'round'; ctx.beginPath();
+        arr.forEach((v, i) => { const x = X(t[i]), y = Y(v); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+    }
+    ctx.font = '600 10px ' + FONT_UI;
+    axisText(ctx, 'skin-to-skin begins', X(d.tOn) + 4, 42, 'left', 'alphabetic', T.ink);
+    ctx.font = '500 10px ' + FONT_DATA;
+    for (let m = 0; m <= 15; m += 3) axisText(ctx, m + ' min', X(m * 60), h - 22, m === 0 ? 'left' : m === 15 ? 'right' : 'center');
+    ctx.font = '600 10px ' + FONT_UI;
+    let lx = x0; const ly = h - 6;
+    for (const [lab, col, dash] of [['Perceived', wc.perceived, []], ['Physical', wc.physical, []], ['Alike', wc.alike, []], ['asleep', T['ink-2'], [5, 4]]]) {
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash(dash); ctx.beginPath(); ctx.moveTo(lx, ly - 3); ctx.lineTo(lx + 16, ly - 3); ctx.stroke(); ctx.setLineDash([]);
+      axisText(ctx, lab, lx + 20, ly, 'left', 'alphabetic', T['ink-2']);
+      lx += ctx.measureText(lab).width + 38;
+    }
+  }
+  function writeF6() {
+    const d = cur.contact, c = d.worlds.perceived, h = d.worlds.physical, a = d.worlds.alike;
+    const tEnd = h.awake.temp[h.awake.temp.length - 1];
+    $('#f6').innerHTML =
+      '<p>Perceived world, mom awake: heart rate settles. Its wander over the contact period falls to <span class="num">' + c.awake.wanderAfter.toFixed(1) + ' bpm</span>, against <span class="num">' + a.awake.wanderAfter.toFixed(1) + '</span> in the alike world. Mom asleep: <span class="num">' + c.asleep.wanderAfter.toFixed(1) + '</span>, identical to alike, because a sleeping mother perceives nothing and the perceived world has no other path. Soothing in this model is a restoring force, not an offset: the mean barely moves (<span class="num">' + fmtS(c.awake.dLate, 1) + ' bpm</span> by the tenth minute); the excursions shrink. The perceived world is already steadier before contact because being at the bedside carries a third of the coupling here.</p>' +
+      '<p>Physical world: heart rate climbs about <span class="num">' + fmtS(h.awake.dLate, 1) + ' bpm</span> by the tenth minute as the infant warms by <span class="num">' + fmtS(tEnd, 2) + ' °C</span>, awake or asleep alike (<span class="num">' + fmtS(h.asleep.dLate, 1) + '</span> asleep), with no change in wander (<span class="num">' + h.awake.wanderAfter.toFixed(1) + '</span>). At fourteen runs the climb is still inside the noise (standard error <span class="num">' + h.awake.dLateSem.toFixed(1) + '</span>), which is the point: the heat channel is real, slow and small, and a temperature probe finds it long before heart rate does.</p>';
+  }
+
+  function renderRoom() { drawC1(); writeF1(); drawC2(); writeF2(); drawC5a(); writeF5(); }
+  function renderVent() { drawC3(); writeF3(); }
+  function renderSweep() { drawC4(); writeF4(); }
+  function renderPulse() { drawC5b(); writeF5(); }
+  function renderContact() { drawC6(); writeF6(); }
+  function renderAll() { renderRoom(); renderVent(); renderSweep(); renderPulse(); renderContact(); }
+
+  // chunked runner
+  function runExp(kind) {
+    if (busy) return;
+    const P = Object.assign({}, settings);
+    const gen = kind === 'room' ? Model.expRoom(P, {}) : kind === 'vent' ? Model.expVent(P, {}) : kind === 'sweep' ? Model.expSweep(P, {})
+      : kind === 'pulse' ? Model.expPulse(P, { eps: [0, 1, 2, 4, 6, 8, 12, 16] }) : Model.expContact(P, {});
+    busy = true;
+    $$('button.run').forEach(b => { b.disabled = true; });
+    const rows = $$('.run-row').filter(r => $$('button.run', r).some(b => b.dataset.exp === kind));
+    rows.forEach(r => { const p = $('progress', r); p.hidden = false; p.value = 0; });
+    $$('[data-status=' + kind + ']').forEach(el => { el.textContent = 'Running…'; });
+    function tick() {
+      const t0 = performance.now(); let r;
+      do { r = gen.next(); } while (!r.done && performance.now() - t0 < 40);
+      if (!r.done) {
+        rows.forEach(row => { $('progress', row).value = r.value; });
+        setTimeout(tick, 0);
+        return;
+      }
+      cur[kind] = r.value; ranWith[kind] = Object.assign({}, settings);
+      busy = false; lastTs = null;
+      $$('button.run').forEach(b => { b.disabled = false; });
+      rows.forEach(row => { $('progress', row).hidden = true; });
+      markStale();
+      const st = settingsLine(ranWith[kind]);
+      $$('[data-status=' + kind + ']').forEach(el => { el.textContent = 'Your settings: ' + st; });
+      ({ room: renderRoom, vent: renderVent, sweep: renderSweep, pulse: renderPulse, contact: renderContact })[kind]();
+    }
+    setTimeout(tick, 30);
+  }
+  $$('button.run').forEach(b => b.addEventListener('click', () => runExp(b.dataset.exp)));
+
+  // ---------- start ----------
+  newLive(11);
+  let stuck = false;
+  while (live.t < 96) { if (!stuck && live.t >= 50) { live.heelStick(); stuck = true; } stepLive(); }
+  updateSync();
+  syncSliders();
+  setPlaying(playing);
+  drawLive();
+  renderAll();
+  requestAnimationFrame(frame);
+
+  let rz = null;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { drawLive(); renderAll(); }, 120); });
+  const onTheme = () => { readTokens(); drawLive(); renderAll(); };
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', onTheme);
+  }
+  new MutationObserver(onTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  document.addEventListener('visibilitychange', () => { lastTs = null; });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { drawLive(); renderAll(); });
+})();
+</script>
+
+</body></html>

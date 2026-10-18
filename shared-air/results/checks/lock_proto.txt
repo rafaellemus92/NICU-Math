@@ -1,0 +1,13 @@
+detune (rad/s) -0.3090  a2 0.186478  first-order onset 3.3135
+default rates         {"on":4.000234098290093,"off":19.709112580283545} 285 ms
+infant +10 bpm of 2:1 {"on":8.375570513890125,"off":33.73372107592877} 349 ms
+infant -10 bpm of 2:1 {"on":null,"off":null} 285 ms
+detuning reversed     {"on":2.9488580509787425,"off":27.426127923536114} 303 ms
+first-order onset for 10 bpm off 11.2313
+n 128 G 32 onset 4.00023
+n 256 G 64 onset 4.00023
+n 512 G 128 onset 4.00023
+
+real	0m1.681s
+user	0m1.642s
+sys	0m0.020s

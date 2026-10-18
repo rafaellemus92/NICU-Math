@@ -1,0 +1,18 @@
+===== desktop light | errors: [] | scrollWidth 1100 clientWidth 1100 
+Test 4 finding:
+Recovery is fastest at responsiveness 1 (10 s). With no bond it takes 39 s. At 3 the median is 50 s, and 82 of 200 runs never settle. Two things slow it at high responsiveness. The delayed soothing overshoots, and the rebound carries heart rate back out of the band, which lifts the median. And as mom’s arousal climbs, her capacity to soothe drops; from a responsiveness of about 2 this creates a second, stuck state in which both stay aroused, and noise pushes some runs into it. Those are the runs that never settle.
+
+Synchrony rises the whole way, from 0.24 to 0.83. The most synchronized pairs are the least regulated. The baseline above zero is the shared room, and it is noisy: two slow signals in a three-minute window correlate by chance more often than intuition expects.
+
+Doubling the delay moves the best setting to 0.5–0.75 and narrows it. The same eagerness, mistimed, overshoots; at 3 s the resting state itself starts to oscillate above a responsiveness of about 1.6.
+Test 5 finding:
+At the slider’s strength, the physical world locks at 0.29 against mom versus 0.07 against the other parent (difference +0.22 (95% CI 0.19 to 0.26), mostly 2:1). Perceived −0.01, alike +0.02: nothing. With Test 1 this is a double dissociation. Perception shows in rates and not in beats; contact shows in beats and not in rates.
+
+How strong is strong? At these rates the infant’s heart sits 3.0 bpm below twice mom’s. The usual first-order formula says locking needs 3.3. Solving the forced phase equation exactly gives about 4.0, because besides pulling the infant’s cells toward the ratio, the pulse also slows them slightly on average, which here works against that pull. Even at 16 the simulated sessions reach a locking index of only 0.43: breathing swings, noise and session-to-session scatter keep knocking the pair out of lock.
+
+The closeness to 2:1 is an accident of the chosen rates. An infant 10 bpm above twice mom’s rate needs about 8, a push of about 34% of each cell’s own rate at the peak of every maternal beat; one 10 bpm below never locks 2:1 at any strength up to 40. A pressure wave through two chest walls does nothing like that. What weak forcing near a ratio gives instead is intermittent locking, which is what the prenatal recordings show.
+===== phone dark | errors: [] | scrollWidth 390 clientWidth 390 
+
+real	0m4.357s
+user	0m0.662s
+sys	0m0.144s
