@@ -1,4 +1,6 @@
-"""Focused checks; independent mathematical review is still required."""
+"""Implementation checks, not a proof of the PDE estimates.
+The Fourier-set test checks structural support arithmetic only.
+"""
 from decimal import Decimal, localcontext
 from fractions import Fraction as F
 from pathlib import Path
@@ -71,6 +73,32 @@ class BoundsTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Pinned input mismatch'):
                 b.verify_inputs(root)
 
+    def test_scope_mutations_fail_closed(self):
+        import copy
+        import json
+        val=json.loads((b.PARENT/'absorption-b003/results/validated.json').read_text())
+        old=json.loads((b.PARENT/'absorption-b003/results/chain.json').read_text())
+        b.validate_scope(val,old)
+        cases=[('parameters',key) for key in val['parameters']
+               if key != 'source_sha256']
+        cases += [('chain',key) for key in ('b','T','phi','verdict','numerics_kind',
+                   'condition_A','condition_B1','condition_B2')]
+        cases += [('provenance','complete'),('provenance','cells_validated'),('initial','eps0_0')]
+        for section,key in cases:
+            for missing in (False,True):
+                with self.subTest(section=section,key=key,missing=missing):
+                    v,o=copy.deepcopy(val),copy.deepcopy(old)
+                    target=o if section=='chain' else v[section]
+                    if missing: del target[key]
+                    else: target[key]=None
+                    with self.assertRaisesRegex(ValueError,'Certificate scope mismatch'):
+                        b.validate_scope(v,o)
+        for key in ('sup_absq','sup_absgradq','sup_abshessq','sup_gradq'):
+            with self.subTest(short_array=key):
+                v=copy.deepcopy(val);v['cells'][key].pop()
+                with self.assertRaisesRegex(ValueError,'Certificate scope mismatch'):
+                    b.validate_scope(v,old)
+
     def test_existing_output_is_preserved(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)/'existing.json';original=b'preserve prior evidence\n';p.write_bytes(original)
@@ -83,7 +111,9 @@ class BoundsTests(unittest.TestCase):
     def test_reproduction_and_all_display_rounding(self):
         import json
         saved=json.loads((b.HERE/'results/bounds.json').read_text());fresh=b.evaluate()
-        self.assertEqual(saved,fresh)
+        for key in ('source_sha256', 'status'):
+            saved.pop(key); fresh.pop(key)
+        self.assertEqual(saved,fresh)  # All numerical/provenance inputs unchanged.
         for section in ['bounds','Dw_energy_terms','Jr_terms','mean_source_terms','CZ_terms']:
             for item in fresh[section].values():
                 self.assertLessEqual(Decimal(item['lo']),Decimal(item['hi']))

@@ -659,3 +659,15 @@ operation against results/bounds.json and pinned inputs. Independent mathematica
 review remains pending; no separate agent was launched, per user instruction.
 Stop at this first-stage result. Cellwise sharpening and subsequent Route B work
 need a new scoped decision; neither is underway.
+
+### Route B review follow-up (local only)
+
+User relayed NS-Speech's conditional AI acceptance of 375e399; actual reviewer
+model unverified. See route-b-dissipation/REVIEW.md for attribution, findings and
+limits. Corrected the absolute-milestone versus quadratic-dominance distinction,
+NumPy import dependency, initial-data distinctions and structural-test labeling.
+Added explicit fixed-scope guards and focused mutation tests. Eight tests pass
+under Python 3.12. Separate bounds.review.json preserves new source provenance;
+all numerical fields and pinned inputs match the original bounds.json exactly.
+Original archived results and analytic formulas are unchanged. No push authorized
+for this follow-up; no new scientific stage was started.

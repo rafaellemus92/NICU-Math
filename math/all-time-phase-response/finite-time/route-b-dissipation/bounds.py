@@ -60,11 +60,43 @@ def dissipation_bound(nu, terms, initial_scaled_energy):
     return (8 / nu) * (initial_scaled_energy / 2 + sum(terms.values(), Iv.of(0)))
 
 
+
+def validate_scope(val, old):
+    """Explicit semantic guards in addition to immutable input hashes.
+    Float entries are metadata checks; exact rational strings fix nu/phi/h.
+    """
+    expected_parameters = {
+        'a': 1.0, 'c': 1.0, 'd': 1.0, 'nu': 1 / 28, 'phi': 0.37,
+        'T': 0.25, 'H': 0.00002, 'NSTEP': 12500, 'COARSE': 50,
+        'KQ': 10, 'KW': 20, 'NP': 64, 'ncoarse': 250,
+        'coarse_width': 0.001, 'INFL': 0.0, 'ABS': 0.0,
+        'nu_exact': '1/28', 'phi_exact': '37/100', 'h_exact': '1/50000',
+    }
+    expected_chain = {
+        'b': '0.003', 'T': 0.25, 'phi': 0.37, 'verdict': 'CERTIFIED',
+        'numerics_kind': 'validated interval enclosure',
+        'condition_A': True, 'condition_B1': True, 'condition_B2': True,
+    }
+    for label, actual, expected in (
+        ('parameters', val.get('parameters', {}), expected_parameters),
+        ('chain', old, expected_chain),
+        ('provenance', val.get('provenance', {}),
+         {'complete': True, 'cells_validated': 12500}),
+        ('initial', val.get('initial', {}), {'eps0_0': 0.0}),
+    ):
+        for key, value in expected.items():
+            if key not in actual or actual[key] != value:
+                raise ValueError(f'Certificate scope mismatch: {label}.{key}')
+    for key in ('sup_absq', 'sup_absgradq', 'sup_abshessq', 'sup_gradq'):
+        if len(val.get('cells', {}).get(key, [])) != 250:
+            raise ValueError(f'Certificate scope mismatch: cells.{key}')
+
+
 def evaluate():
     verify_inputs()
     val = json.loads((PARENT / 'absorption-b003/results/validated.json').read_text())
     old = json.loads((PARENT / 'absorption-b003/results/chain.json').read_text())
-    assert val['provenance']['complete'] and old['verdict'] == 'CERTIFIED'
+    validate_scope(val, old)
     with localcontext(TRAP):
         T, nu, beta = Iv.of('1/4'), Iv.of('1/28'), Iv.of('3/1000')
         CA = Iv.of(old['C_A'])
@@ -127,7 +159,7 @@ def evaluate():
         def pack(x):
             return {'lo': str(x.lo), 'hi': str(x.hi), 'upper_5sig': str(c.round_up(x.hi))}
         return {
-            'status': 'derived interval bound; independent mathematical review pending',
+            'status': 'derived interval bound; conditional user-relayed AI review; not formalized',
             'base_commit': BASE, 'scope': 'a=c=d=1, nu=1/28, phi=37/100, T=1/4, |b|<=3/1000',
             'milestone': {'threshold': '0.01', 'strict_upper_bound_below_threshold': RZ.hi < Decimal('0.01')},
             'inputs_sha256': PINNED, 'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

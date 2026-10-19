@@ -2,7 +2,7 @@
 
 Owner: Codex, 2026-10-19. Base: `419e6c3d2e0321816849ca550ad8da5cf34ba75a`.
 Status: derived paper estimate and directed interval evaluation, **independent
-mathematical review pending; not formalized**. This is not a new simulation,
+mathematical review conditionally accepted in a user-relayed AI audit; not formalized**. This is not a new simulation,
 a novelty claim, a clinical result, or an assertion about general regularity.
 The [preregistered milestone](PLAN.md) was written before evaluation.
 
@@ -49,7 +49,19 @@ upper endpoint everywhere. Poincare constant is one, on mean-zero fields.
 All fields below have zero spatial mean, since their initial data and periodic
 advective forcing have zero mean. All bounds inherit the completed certificate's
 arithmetic/platform assumptions; Python Decimal and the interval implementation
-are also trusted. The calculation pins the input and interval-source SHA-256s.
+are also trusted. The calculation pins the input and interval-source SHA-256s. The lattice log
+is hashed as provenance, not parsed or recomputed by this postprocessor:
+C_A comes from the certified upper-endpoint string in the pinned chain.json
+(parent absorb_chain.py lines 94–95 and 216). Explicit scope guards additionally
+check the fixed parameters, amplitude, completion and cell counts.
+
+Initial conditions are distinguished: w(0)=q2(0)=r(0)=bar(r)(0)=0.
+Also e(0)=0 exactly, since the saved Q0 is checked to have just the exact -i
+coefficient (validate_residual.py lines 443–445), and its Leray projection
+reproduces q1(0). The base-flow approximation error is different:
+epsW0 is nonzero (<=2.695e-16) and was propagated by the archived certificate.
+Zero full spatial mean for qN and e follows from their k_z=+/-1 support,
+not from solenoidality alone.
 
 ## 1. Retaining W2's positive dissipation
 
@@ -187,6 +199,7 @@ by itself would not justify (6), nor bound the coefficients quantitatively.
 We use the actual mode support. No claim about a separate phase-onset rule
 is needed or made.
 
+The expansion also uses <grad U,grad q1>=0: U has k_z=0 and q1 has k_z=+/-1.
 Let Z2=<grad U,grad q2>+(1/2)||grad q1||² and
 R_Z=Z(U+bq1+w)-Z(U)-b²Z2. Direct expansion, integration by parts, and mode
 orthogonality <grad q1,grad q2>=0 give the exact identity
@@ -205,21 +218,23 @@ at beta are fixed, so smaller |b| are covered uniformly. Negative b is treated
 by absolute values throughout; the original translation z->z+pi also supplies
 its symmetry. No monotonicity of actual trajectories in b is asserted.
 This proves the proposed bound on paper conditional on the previously audited
-certificate; independent review of this new argument is still required.
+certificate. A user-relayed AI audit conditionally accepted this argument; see REVIEW.md.
 
 ## 5. Evaluation, provenance and first-stage verdict
 
 `bounds.py` is small interval postprocessing using the unmodified parent's
 40-digit directed interval implementation. It verifies pinned hashes before
-importing that implementation or reading inputs. It uses no trajectory reads,
-NumPy, solver, network or randomness. The previously downloaded and verified
+importing that implementation or reading inputs. It uses no trajectory reads, solver, network or randomness and performs no
+NumPy computation itself. The imported parent constants.py imports NumPy, so
+NumPy remains a runtime dependency. The previously downloaded and verified
 LFS arrays remain in the original isolated audit checkout; their recorded raw
 array hashes travel with this output. No files were downloaded again. The
 completed end-to-end reproduction at e9aa28a matched all numerical fields;
 its strict checker differed only in Python-version metadata after excluding
 wall time. Commit 419e6c3 changed documentation only.
 
-Commands from this folder (Python 3.12 or 3.13; standard library only):
+Commands from this folder (Python 3.12 or 3.13 with NumPy installed for the
+parent module import):
 
     python3 -B bounds.py --output results/bounds.rerun.json
     python3 -B -m unittest -v test_bounds.py
@@ -243,8 +258,16 @@ Every displayed entry is separately rounded upward from its own full interval;
 products of displayed bounds can therefore exceed a separately displayed
 product bound. Route A's previously reproduced displayed C_Z<=1.2102e14 gives
 9802.62 before display rounding at this amplitude (9.81e3 to three significant
-digits); the new derived bound is 7.1123e-6. The preregistered 1e-2 milestone
-is met by the interval evaluation. This is an upper bound, not a measured error,
+digits); the new derived bound is 7.1123e-6. The preregistered 1e-2 **absolute-error** milestone
+is met by the interval evaluation. This does not certify quadratic dominance:
+the user-relayed review estimates b²|Z2| at this amplitude and horizon as
+2.25–2.40e-6 from saved numerical data, below our 7.1123e-6 upper bound.
+Those estimates have no certified error control. Neither a relative-error
+certificate nor a rigorous amplitude threshold (such as the suggested ~0.0017)
+follows from them. Z2(0)=0, so a uniform positive lower bound on |Z2| over the
+whole interval [0,T] is unavailable. A dominance claim would require a certified
+lower bound on an explicitly specified time interval, or matched vanishing-order
+estimates near zero, together with a suitable remainder upper bound. This is an upper bound, not a measured error,
 not a sharp constant, and not a comparison with patient data.
 
 Dependency map:
@@ -257,10 +280,20 @@ Dependency map:
     same q1 source -> optional analytic q2 norm bounds (not used by C_B)
 
 There is no missing numerical input for this deliberately coarse first-stage
-bound. The remaining gate is independent mathematical review. Largest loss:
+bound. The conditional user-relayed AI review and its limits are recorded in
+REVIEW.md; this is not a human-refereed or formally verified result. Largest loss:
 W2's global K² growth contribution to D_w; then C(beta K+eps1) times the
 w-dissipation in J_r, and C K sqrt(T D_w) in the mean source. The latter alone
 contributes about 9353 before the mean propagator. The mean term dominates
 C_B. These are identifiable inequalities, not evidence that the actual
 remainder is large. Cellwise sharpening and validated q2 are optional future
 work, not part of this stage. No additional stage is launched here.
+
+
+Implementation validation is not a PDE proof. In particular the finite Fourier
+set test checks sums and disjointness of the stated supports; the PDE's preservation
+of those supports is the analytic argument above. E_r here bounds the full r,
+not merely its oscillating part. Saved oscillating-remainder diagnostics are not
+the same quantity. The reported N=24 samples at b=0.01 or 0.05 are outside this
+certificate's amplitude range and have no validated discretization error; no
+rigorous tightness ratio or true small-b error is inferred from them.
