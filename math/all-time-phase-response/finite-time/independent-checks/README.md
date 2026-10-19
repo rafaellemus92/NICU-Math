@@ -13,6 +13,7 @@ DNS, validator, adjoint or q₂ solve was run.
 |---|---|---|---|
 | `route-a-cd9c9f0/` | Route A corollary: the parent chain of ../NOTE.md with β₁ replaced by 3/1000 gives C_Z(1/4) ≤ 1.2102·10¹⁴ | a three-line hook on the parent's `constants.py` (`beta_hook.patch`), run once without and once with the hook | unhooked run reproduces ../results/constants.log at T = 1/4; hooked run gives C_Z ≤ 1.2102·10¹⁴ |
 | `route-b-375e399/` | route-b-dissipation formulas (1), (3), (5), (7), (8): C_B ≤ 87807, \|R_Z\| ≤ 7.1123·10⁻⁶ at \|b\| = 0.003 | own transcription of the note's formulas, 90-digit decimal, nearest rounding | every value lies inside the committed interval of `bounds.json` |
+| `endpoint-beta003-0f258a1/` | codex/endpoint-beta003-tightening: divergence-form mean self term, C_new ≤ 377.313, H_b(1/4)/b² ≥ 0.004804904671503 on 0 < \|b\| ≤ 0.003 | end-to-end recomputation of the scalar chain from primitive inputs on decimal intervals; Fourier check of the divergence-form normalization | all committed numbers reproduced; claimed bound valid; see that folder's README |
 | `endpoint-sign-cedb77cc/` | PLAN.md A–F and scripts/tr_remainder.py: C_one,TR ≤ 1201.92, rule (D), b* | own implementation of A–F and of DERIVATION.md variant B, on the parent's directed-rounding decimal intervals (not mpmath); exact-rational and tight-case tests; rerun of the per-cell chain | all committed numbers reproduced; see below |
 
 ## The endpoint-sign checks (cedb77cc)

@@ -1,0 +1,18 @@
+independent reproduction of endpoint-beta003 at 0f258a1 (decimal intervals, 40 digits, directed rounding)
+J2 lower end                     >= 0.008200720680466325   (candidate 0.0082007206804663)
+D_w,TR(T)                        <= 26061.10922725709   (candidate 26061.109227257084)
+I_inf(T)                         <= 15731.31827272633   (candidate 15731.318272726327)
+E_r(T)                           <= 81.64021286783372
+nonself = smooth + err_adv + err_grad <= 12.34463488586410   (candidate 12.344634885864094)
+   smooth 11.71971158686376, err_adv 0.03507081224608735, err_grad 0.5898524867542563
+old self bounds d1 <= 603.1594264580907, d2 <= 603.2624387875227   (candidate old 603.15942645809060)
+weighted I_inf (Abel, suffix majorant) <= 1788.137099998623   (candidate 1788.1370999986220); weights already monotone: False
+new self bound d_div             <= 158.2211092110681   (candidate 158.22110921106800)
+old C (recomputed)               <= 1201.917537489776   (candidate old 1201.9175374897753)
+new C                            <= 377.3128898847287   (candidate 377.31288988472868)
+beta^2 C_new                     <= 0.003395816008962559   (candidate 0.0033958160089625)
+H_b(1/4)/b^2 lower bound at |b| = 0.003 (hence on 0 < |b| <= 0.003): >= 0.004804904671503767   (candidate 0.0048049046715037)
+claimed 0.004804904671503 is below the recomputed lower bound: True
+target comparison J2_lo - beta^2 C_new > 0: True
+relative differences from the candidate (upper endpoints): nonself 0.0e+00, d_div 0.0e+00, C_new 0.0e+00
+wall 1.4 s

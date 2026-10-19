@@ -1,0 +1,2 @@
+(i) Leray and z-average drop: max rel. diff 6.2e-15; (ii) integration by parts sign: max rel. diff 5.1e-15; (iv) transport skew: max normalized |<(U.grad)X, X>| 5.9e-18
+(iii) the chain |<WW, grad X>| <= ||mean WW|| ||grad X|| <= ||WW|| ||grad X|| <= max|W| ||W|| ||grad X|| held in 40/40 trials; tightness of the last bound: 0.000..0.009
