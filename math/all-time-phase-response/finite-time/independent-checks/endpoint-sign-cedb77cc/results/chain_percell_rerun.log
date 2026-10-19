@@ -1,0 +1,9 @@
+rerun of the per-cell chain at cedb77cc (2026-10-19T05:16Z), commands from endpoint-sign/scripts/:
+  python3 -I -B make_chain_percell.py
+    source sha256 0984e22cceb823e94811aea2eb80406854f34ab347a206d74973dc39c4bfc516
+    wrote <FT>/endpoint-sign/scripts/chain_percell.py sha256 0af7b93e89fdd88ce105a0e0f9d3c31148221171b8b5c2620558569b77824b8b
+  python3 -I -B chain_percell.py --json <fresh path>
+    verdict for b = 0.003, T = 0.25, phi = 0.37: CERTIFIED
+sha256 committed results/chain_percell.json: 795e3a7b5c83bee29308392fd33232864e9df41e121646cbcd9b1fca395d58bc
+sha256 fresh output:                        795e3a7b5c83bee29308392fd33232864e9df41e121646cbcd9b1fca395d58bc
+byte-identical: True (fresh output not kept; it duplicates the committed file)

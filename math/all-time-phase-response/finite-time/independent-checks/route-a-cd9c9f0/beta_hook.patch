@@ -1,0 +1,50 @@
+--- constants.py
++++ constants_beta.py
+@@ -273,7 +273,7 @@
+         raise ValueError('hypothesis (H) |c| + |d| >= nu is not certified for these parameters; outside the supported range')
+ 
+ 
+-def chain(a, c, d, nu, CA, T, n, G1_override=None, D1_override=None, series_every=None):
++def chain(a, c, d, nu, CA, T, n, G1_override=None, D1_override=None, series_every=None, beta_override=None):
+     """Return a dict of the constants of NOTE.md sections 2-5 at the horizon T.
+ 
+     Parameters may be Iv, Decimal, int, float or strings ('1/28'). Values in the returned dict:
+@@ -284,10 +284,10 @@
+     so by the caller).
+     """
+     with localcontext(TRAP):
+-        return _chain(a, c, d, nu, T, CA, n, G1_override, D1_override, series_every)
++        return _chain(a, c, d, nu, T, CA, n, G1_override, D1_override, series_every, beta_override)
+ 
+ 
+-def _chain(a, c, d, nu, T, CA, n, G1_override, D1_override, series_every):
++def _chain(a, c, d, nu, T, CA, n, G1_override, D1_override, series_every, beta_override=None):
+     a, c, d, nu, T, CA = (Iv.of(x) for x in (a, c, d, nu, T, CA))
+     check_range(a, c, d, nu, T, n)
+     A, Dd = abs(a), abs(d)
+@@ -331,6 +331,8 @@
+     if G1_override is not None:
+         G1_T = Iv.of(G1_override)
+     beta1 = nu / (2 * CA * G1_T)
++    if beta_override is not None:      # SCRATCH HOOK (Route A audit): use beta = |b| in place of beta1 in Lemmas 5, 7 and the Theorem
++        beta1 = Iv.of(beta_override)
+ 
+     # pass 2: the whole chain, right-endpoint values at every cell
+     Phi1 = Psi = Theta = Iv(D0)
+@@ -427,6 +429,7 @@
+     p.add_argument('--n', type=int, default=20000, help='grid cells per horizon (upper sums)')
+     p.add_argument('--CA', default=None, help='override the certified Agmon constant (then not certified)')
+     p.add_argument('--json', type=Path, default=None)
++    p.add_argument('--beta', default=None, help='SCRATCH HOOK: replace beta1 by this value in N_r, S_r*, Ebar, C_Z')
+     args = p.parse_args()
+     here = Path(__file__).resolve().parent
+     CA, src = agmon_constant(here, args.CA)
+@@ -439,7 +442,7 @@
+           '7.142e-22 of review/radius_ceiling.log (a ceiling on a sufficient condition, not an admissible radius)')
+     rows = []
+     for T in args.T:
+-        rows.append(chain(args.a, args.c, args.d, args.nu, CA, T, args.n, series_every=max(1, args.n // 20)))
++        rows.append(chain(args.a, args.c, args.d, args.nu, CA, T, args.n, series_every=max(1, args.n // 20), beta_override=args.beta))
+     print()
+     print('quantity        ' + ''.join(f'{"T=" + str(r["T"]):>14s}' for r in rows))
+     for k in KEYS:

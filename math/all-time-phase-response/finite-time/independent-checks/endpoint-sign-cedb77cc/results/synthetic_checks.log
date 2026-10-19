@@ -1,0 +1,3 @@
+T1 summation by parts: implemented form valid in 4000/4000 trials; violations of broken forms: {'no majorant': 1645, 'no terminal term': 1381, 'lower-index boundary (B_{i-1})': 436}
+T2 propagation weights: max exact/bound with inclusive E(i,j) = 0.0840 (<= 1 required); with the source cell excluded = 0.5785 (no violation)
+T3 D_w,j nondecreasing in j: True ; K_j nondecreasing: True

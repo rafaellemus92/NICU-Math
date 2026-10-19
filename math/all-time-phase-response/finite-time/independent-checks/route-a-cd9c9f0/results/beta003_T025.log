@@ -1,0 +1,31 @@
+constants.py: explicit constants of NOTE.md in validated interval arithmetic (40 decimal digits, directed rounding; printed to 5 significant digits: beta1 rounded DOWN, all others UP)
+parameters a=1 c=1 d=1 nu=1/28; supported range enforced: nu > 0, T > 0, |c|+|d| >= nu
+C_A: results/lattice_sums.log (R = 250): C_A <= 4.06707921080; built-in R = 60: partial 1.6360E+1 + tail 2.1381E-1 -> C_A <= 4.0711E+0 (consistent); Agmon threshold nu/(2 C_A) >= 4.3906E-3
+ceiling of the all-time condition (PROOF.md, s = 4) at these parameters: 7.2e-22 rounded up from the double-precision 7.142e-22 of review/radius_ceiling.log (a ceiling on a sufficient condition, not an admissible radius)
+
+quantity                T=0.25
+m1(T)                2.6881E+0
+m2(T)                3.7365E+0
+mDelta(T)            4.2391E+0
+Phi1                 6.3176E-1
+Psi                  1.2770E+0
+Theta                2.8128E+0
+G1                   4.0382E+0
+D1                   4.5779E+2
+beta1                3.0000E-3
+N2                   3.3047E+2
+Q2                   7.6317E+3
+D2                   5.9394E+8
+Vbar                 1.0763E+4
+Dbar                 2.3651E+9
+Nr                   5.2262E+3
+R1                   1.3912E+5
+Dr                  1.3473E+11
+Ne                   1.8687E+7
+Etilde               5.8735E+8
+De                  1.8935E+18
+Ebar                2.8179E+13
+C_Z                 1.2102E+14
+
+rounding budget: maximal relative width of the enclosures over all reported quantities 1.2e-31 (the upper-sum slack is not an error; see the docstring)
+beta1(T): certified admissible radius for [0,T] (Proposition 1; strict inequality |b| < beta1(T)); C_Z(T): |R_Z(t)| <= C_Z(T) b^4 on [0,T] for |b| < beta1(T).

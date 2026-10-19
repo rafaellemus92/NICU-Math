@@ -1,0 +1,13 @@
+independent J2_lo = 0.0082007206805   (committed [0.008200720680)
+lambda      100: global collapse N_r(T) rel.diff 0.0e+00, E_r(T) 0.0e+00 Nbar 0.0e+00 | TR: N_r 8.192623 vs 8.192623, E_r 135.241892 vs 135.241892, Nbar 1650.586735 vs 1650.586735, C_one 3160.420907 vs 3160.420907
+lambda    10000: global collapse N_r(T) rel.diff 0.0e+00, E_r(T) 0.0e+00 Nbar 0.0e+00 | TR: N_r 6.062459 vs 6.062459, E_r 98.239825 vs 98.239825, Nbar 936.093150 vs 936.093150, C_one 1808.509862 vs 1808.509862
+lambda   100000: global collapse N_r(T) rel.diff 0.0e+00, E_r(T) 0.0e+00 Nbar 0.0e+00 | TR: N_r 5.404664 vs 5.404664, E_r 86.813567 vs 86.813567, Nbar 715.448223 vs 715.448223, C_one 1391.022465 vs 1391.022465
+lambda  1000000: global collapse N_r(T) rel.diff 0.0e+00, E_r(T) 0.0e+00 Nbar 0.0e+00 | TR: N_r 5.106899 vs 5.106899, E_r 81.640213 vs 81.640213, Nbar 615.504061 vs 615.504061, C_one 1201.917537 vs 1201.917537
+lambda 10000000: global collapse N_r(T) rel.diff 0.0e+00, E_r(T) 0.0e+00 Nbar 0.0e+00 | TR: N_r 5.973081 vs 5.973081, E_r 96.680638 vs 96.680638, Nbar 895.775785 vs 895.775785, C_one 1732.620770 vs 1732.620770
+independent D_w,TR(T) <= 26061.109227257   (committed 26061.109227257; global 50101.779795)
+best lambda 1000000: C_one,TR <= 1201.9175374898
+(D): J2_lo >= 0.0082007206804663  vs  beta^2 C_one,TR <= 0.010817257837408  ->  FAILS
+lower bound of H_b/b^2 at |b| = 0.003: >= -0.0026165371569417
+smaller-amplitude conclusion: J2_lo > 0: True; b* >= 0.0026120932319102 < beta: True; committed b*_lower = 0.0026120932319102891260440211837595876769724281921404153856572961497
+wrong-weight variant: N_r(T) 5.093787 (correct 5.106899); collapse with constant weights is unaffected by the index shift; monotonicity TR <= global still passes: True
+wall 9.1 s

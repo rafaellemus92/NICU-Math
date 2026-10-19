@@ -1,0 +1,14 @@
+M1          independent 2.6913432352e+00  in [lo, hi] of bounds.json: True   rel width 2.5e-38
+M2          independent 3.7388069196e+00  in [lo, hi] of bounds.json: True   rel width 2.1e-36
+MDelta      independent 4.2390771549e+00  in [lo, hi] of bounds.json: True   rel width 3.1e-36
+sigma       independent 1.3098141038e+00  in [lo, hi] of bounds.json: True   rel width 2.3e-39
+Dw          independent 8.6106450688e+04  in [lo, hi] of bounds.json: True   rel width 5.2e-38
+Lr          independent 3.5134807315e+01  in [lo, hi] of bounds.json: True   rel width 2.2e-38
+Jr          independent 1.0064202801e+04  in [lo, hi] of bounds.json: True   rel width 5.1e-38
+Nr          independent 6.8244683792e+01  in [lo, hi] of bounds.json: True   rel width 8.1e-38
+Er          independent 2.3761085337e+03  in [lo, hi] of bounds.json: True   rel width 2.5e-37
+Dr          independent 4.7332821415e+08  in [lo, hi] of bounds.json: True   rel width 5.3e-37
+Nbar        independent 2.0264319002e+04  in [lo, hi] of bounds.json: True   rel width 1.1e-37
+CZ          independent 8.7806146163e+04  in [lo, hi] of bounds.json: True   rel width 3.1e-36
+RZ_at_beta  independent 7.1122978392e-06  in [lo, hi] of bounds.json: True   rel width 3.1e-36
+ALL INSIDE: True
