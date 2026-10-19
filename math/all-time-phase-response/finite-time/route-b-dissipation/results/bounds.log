@@ -1,0 +1,14 @@
+Dw <= 86107
+physical_Dw <= 0.0000069747
+N2 <= 0.63604
+Q2 <= 21.949
+D2 <= 40386
+Nr <= 68.245
+Er <= 2376.2
+Dr <= 4.7333E+8
+Nbar <= 20265
+CZ <= 87807
+RZ_at_beta <= 0.0000071123
+route_a_RZ_at_beta <= 9802.7
+Fixed milestone below 0.01: True
+derived interval bound; independent mathematical review pending

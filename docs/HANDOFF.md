@@ -621,3 +621,41 @@ PR; human integration remains required.
 
 The pending-review wording above is historical; the PR15 independent review
 and later integration decisions are recorded in the reconciliation review.
+
+
+## Route B first stage (Codex, 2026-10-19; local review only)
+
+Owner: Codex. Branch `codex/phase-route-b-dissipation`; exact base
+`419e6c3d2e0321816849ca550ad8da5cf34ba75a`. User authorized bounded research and
+small interval postprocessing, not publication or integration. Scope: new
+`math/all-time-phase-response/finite-time/route-b-dissipation/`, this handoff,
+and one research-index row. Completed absorption scripts, inputs, arrays and
+archived outputs are unchanged. No additional trajectory download, simulation,
+validator rerun, parameter sweep, subagent, paid resource, push, PR or merge.
+
+Preregistered target: |R_Z| < 0.01 at |b|=0.003, T=1/4, with fixed unit a,c,d,
+nu=1/28, phi=37/100. The new paper derivation retains W2's nu/8 dissipation,
+includes the initial H1 energy in the separate cell formula, and yields
+integral ||Delta w||² <= b^4 * 86107. The direct full-r equation r=w-b²q2,
+its Fourier-support mean cancellation and an exact three-term observable
+identity give |R_Z| <= b^4 * C_B with C_B <= 87807; evaluation of the full
+interval product at b=0.003 gives |R_Z| <= 7.1123e-6. Thus the fixed milestone
+is met by the derived interval bound. This is not a measured error. Optional
+q2 bounds use the validated q1 source; their norms do not enter C_B.
+
+Validation: seven focused tests pass (exact rational W2 coefficients;
+nonzero cell initial energy; independent 80-digit linear formulas; Fourier
+support/normalization; tamper rejection; output preservation; exact result
+reproduction and upward display rounding). See the new folder's results/.
+A mistaken initial test-file path caused a test-discovery invocation failure;
+it was corrected before running these tests, with the diagnostic retained in
+/tmp/route-b-initial-test-invocation.log. No numerical experiment failed or was
+retuned. No broad app/physics/Lean suites were run because they are unchanged.
+
+Review required: independently check NOTE.md equations (W), (1)-(8), particularly
+the retained dissipation, per-cell initial terms, b/nu powers, the full-r versus
+mean-r distinction and mode cancellations. Review every source term and interval
+operation against results/bounds.json and pinned inputs. Independent mathematical
+review remains pending; no separate agent was launched, per user instruction.
+Stop at this first-stage result. Cellwise sharpening and subsequent Route B work
+need a new scoped decision; neither is underway.

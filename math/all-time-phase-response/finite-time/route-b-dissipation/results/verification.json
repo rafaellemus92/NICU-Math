@@ -1,0 +1,21 @@
+{
+  "base_commit": "419e6c3d2e0321816849ca550ad8da5cf34ba75a",
+  "branch": "codex/phase-route-b-dissipation",
+  "test_environments": [
+    "Python 3.12.14",
+    "Python 3.12.14"
+  ],
+  "tests_per_environment": 7,
+  "independent_mathematical_review": "pending",
+  "archived_certificate_diff": "",
+  "files_sha256": {
+    "NOTE.md": "681a86f986a801efd9d379cab86dc3208bb1e9890fd6c5c5ca4cb9604acd64c2",
+    "PLAN.md": "e71f5f3092bdc556472cdc050844b20cdcac0fcf0989dcd9995a5ac5b8f528f9",
+    "bounds.py": "010808a4e936f12bd99161aa4394b0df2412fcb65bcb6032e3f0fb58ff77c161",
+    "results/bounds.json": "67886fab527fe1305eb796089175fce1dd483fbd78b0bd2d0fafb6549f98f493",
+    "results/bounds.log": "38ea1fa2321cb118f205757f9696d82a2bd2b374dacae74f13fd558a311a6bad",
+    "results/tests-python312.log": "f87e801313401bafa2f5b330991bc69735278ba269f0a6d3a10477087fbd44e5",
+    "results/tests.log": "8fd7771601077136c336e309e6efaf32617043d8d9c07057a1206841b5d5fc71",
+    "test_bounds.py": "1322ebf464091e6be05c78ef20a30012b8442e28ccc0386d6156bbfb840fbbbd"
+  }
+}
