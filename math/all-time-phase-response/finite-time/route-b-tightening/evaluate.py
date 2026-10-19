@@ -1,0 +1,58 @@
+"""Bounded analytic sensitivity; no trajectories or evolution. Outputs never overwrite."""
+import sys
+sys.dont_write_bytecode=True
+import hashlib,importlib.util,json,time,signal
+from collections import Counter
+from decimal import localcontext
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+P=HERE.parent
+PINS={'z2-endpoint/results/endpoint.json':'37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc','constants.py':'996f39f171601a73bdbd87c61e82482f7a91508ab19d78584215da1475479014',
+'route-b-dissipation/results/bounds.review.json':'4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65'}
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+for n,d in PINS.items():
+    if sha(P/n)!=d:raise ValueError(n)
+spec=importlib.util.spec_from_file_location('c',P/'constants.py');c=importlib.util.module_from_spec(spec);spec.loader.exec_module(c)
+I=c.Iv
+old=json.loads((P/'route-b-dissipation/results/bounds.review.json').read_text())
+endpoint=json.loads((P/'z2-endpoint/results/endpoint.json').read_text())
+assert endpoint['scope']=='a=c=d=1, nu=1/28, phi=37/100, T=1/4, beta=3/1000'
+assert I.of(endpoint['bounds']['base_true_laplacian_upper']['hi']).hi <= I.of('1.8534').lo
+def histogram(R):
+    return Counter(x*x+y*y+z*z for x in range(-R,R+1) for y in range(-R,R+1) for z in range(-R,R+1) if x or y or z)
+def resolvent(hist,lam,CA):
+    return CA.sq()-sum((I.of(count)*lam/(I.of(n*n)*(lam+n*n)) for n,count in hist.items()),I.of(0))
+def linear(M1,M2,nu,T,L,J):
+    N=((M1-nu)*T).exp()*L
+    E=(((4*M1+1)*T).exp()*(M2.sq()*N.sq()*T+J/nu)).sqrt()
+    D=2/nu*((2*M1+I.of('1/2'))*E.sq()*T+M2.sq()*N.sq()*T/2+J/(2*nu))
+    return N,E,D
+
+def evaluate(hist,lam):
+    b={k:I.of(v['hi']) for k,v in old['bounds'].items()}
+    b['nu']=I.of('1/28')  # exact parameter, not its rounded upper endpoint
+    T,nu,beta,C,K,N,p,n1,eps1,delta,M1,M2,S,Dw=[b[k] for k in ('T','nu','beta','CA','K','Nw','p','n1','eps1','delta_e','M1','M2','S1','Dw')]
+    A=p*K+n1*N;h=eps1+beta*K
+    a=resolvent(hist,I.of(lam),C)
+    assert a.lo>0
+    ii=a*(I.of(lam)*T*N.sq()+Dw)
+    L=A*T+C*K*(T*delta).sqrt()+h*(T*ii).sqrt()
+    J=(A*T.sqrt()+C*K*delta.sqrt()+h*ii.sqrt()).sq()
+    Nr,Er,Dr=linear(M1,M2,nu,T,L,J)
+    parts={'smooth_q':(p*Er+n1*Nr)*T,'error_advection':C*Er*(T*delta).sqrt(),'error_gradient':C*eps1*(T*Dr).sqrt(),'self':K*(T*ii).sqrt()}
+    Nb=((M1-nu)*T).exp()*sum(parts.values(),I.of(0))
+    # Conservative rounded endpoint G from endpoint note; pending review, endpoint ONLY.
+    Cglobal=b['MDelta']*Nb+S*Er+K.sq()/2
+    Cend=I.of('1.8534')*Nb+S*Er+K.sq()/2
+    out=dict(A_lambda=a,I_infty=ii,Lr=L,Jr=J,Nr=Nr,Er=Er,Dr=Dr,Nbar=Nb,C_global=Cglobal,C_endpoint=Cend,threshold_global=beta.sq()*Cglobal,threshold_endpoint=beta.sq()*Cend,
+             physical_endpoint=beta.sq().sq()*Cend,**parts)
+    return {k:{'lo':str(x.lo),'hi':str(x.hi)} for k,x in out.items()}
+def main():
+    start=time.monotonic();signal.alarm(60)
+    hist=histogram(32)
+    with localcontext(c.TRAP): rows={str(l):evaluate(hist,l) for l in (100,10000,100000,1000000,10000000)}
+    out={'status':'candidate derivation, independent review pending; NOT dominance','base':'4bf68e0a6dcddc0d38b77c0123006fbea90d5f89','scope':old['scope'],'cube_radius':32,'lattice_points':sum(hist.values()),'inputs_sha256':PINS,'source_sha256':sha(Path(__file__)),'plan_sha256':sha(HERE/'PLAN.md'),'rows':rows,'wall_seconds':time.monotonic()-start}
+    with (HERE/'results/sensitivity.final.json').open('x') as f:json.dump(out,f,indent=2);f.write('\n')
+    for l,r in rows.items():print(l, 'A=',r['A_lambda']['hi'],'Cglobal=',r['C_global']['hi'],'Cendpoint=',r['C_endpoint']['hi'],'threshold=',r['threshold_endpoint']['hi'])
+    print('seconds',out['wall_seconds'])
+if __name__=='__main__':main()

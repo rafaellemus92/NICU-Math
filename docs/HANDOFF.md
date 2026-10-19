@@ -729,3 +729,29 @@ zero-mode distinction, spatial tails, polynomial time residual and frozen-shear
 correction. Independent mathematical review remains pending. Original archives
 and source arrays are unchanged; no new downloads, full runs, pushes or external
 actions. Stop here; the concrete full-run plan needs separate authorization.
+
+## Bounded analytic Route B tightening (Codex, local review)
+
+Branch codex/route-b-analytic-tightening, base
+4bf68e0a6dcddc0d38b77c0123006fbea90d5f89. See
+`math/all-time-phase-response/finite-time/route-b-tightening/NOTE.md`.
+Fixed original parameters and beta=.003. New weighted Fourier inequality uses
+inherited L2 information in the sup-norm estimate; zero-initial Duhamel cap
+reduces integrated H1 loss without changing pointwise K. Candidate directed
+bounds C_global<15128.8003 and C_endpoint<6921.6485 (endpoint G dependency)
+replace the old87806.1462 majorant only for this proposed derivation. No original
+archive changed. Dominance remains unproved; no measured coefficient is assumed.
+
+One independent read-only AI review accepted the derivations and corrected
+scripts. It caught upper-endpoint viscosity being used as a point; failed
+candidate outputs/code are preserved and final outputs use exact1/28. Endpoint
+scope/hash checks and both plan versions are retained. Eight focused tests
+pass; less than5 seconds total computation, within300-second budget. Review
+is not human refereeing; final documentation/commit has not been reviewed.
+
+Smallest next proposal: enclose integral norm of mean q1 quadratic forcing
+using250 interval hulls covering all fine nodes. If its certified total is<=.05,
+then Z2>=.100907792>.06230 suffices with the candidate endpoint remainder.
+This antecedent is NOT established. No mean-q2 evolution, source-only hull run,
+DNS, full validator, downloads, pushes or merges. Stop for parent independent
+review of the candidate formulas and exact local commit.

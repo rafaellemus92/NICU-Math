@@ -1,0 +1,14 @@
+test_constant_energy_cap_integral (test_estimates.Checks.test_constant_energy_cap_integral) ... ok
+test_exact_histogram_and_subtraction (test_estimates.Checks.test_exact_histogram_and_subtraction) ... ok
+test_increasing_cube_only_improves_majorant (test_estimates.Checks.test_increasing_cube_only_improves_majorant) ... ok
+test_minkowski_improves_three_square_bound (test_estimates.Checks.test_minkowski_improves_three_square_bound) ... ok
+test_nested_right_sums_and_endpoint_cap (test_estimates.Checks.test_nested_right_sums_and_endpoint_cap) ... ok
+test_source_only_sufficient_condition_exact (test_estimates.Checks.test_source_only_sufficient_condition_exact) ... ok
+test_zero_lambda_recovers_old_constant (test_estimates.Checks.test_zero_lambda_recovers_old_constant) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+OK
+
+wall_seconds=0.11137580900685862
