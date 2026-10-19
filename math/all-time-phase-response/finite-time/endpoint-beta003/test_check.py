@@ -63,6 +63,18 @@ class Check(unittest.TestCase):
         for rates,dt in (([],F(1)),([F(-1)],F(1)),([F(1)],F(0))):
             with self.assertRaises(ValueError): inclusive_tail_weights(rates,dt)
 
+    def test_interval_rate_guard(self):
+        # mpmath returns None for an undecidable whole-interval comparison.
+        self.assertIs(iv.mpf([-1,1]) < 0, None)
+        for rate in (iv.mpf([-2,-1]),iv.mpf([-1,1])):
+            with self.assertRaises(ValueError): inclusive_tail_weights([rate],iv.mpf(1))
+        for rate in (iv.mpf(0),iv.mpf([0,1]),iv.mpf([1,2])):
+            weight=inclusive_tail_weights([rate],iv.mpf(1))[0]
+            self.assertGreaterEqual(weight.a,iv.mpf(1))
+        self.assertEqual(inclusive_tail_weights([iv.mpf(0)],iv.mpf(1))[0],iv.mpf(1))
+        for dt in (iv.mpf([-1,1]),iv.mpf(0),iv.mpf([-2,-1])):
+            with self.assertRaises(ValueError): inclusive_tail_weights([iv.mpf(1)],dt)
+
     def test_directed_decimal_serialization(self):
         for value in (iv.mpf(1)/3,-iv.mpf(1)/7,iv.mpf('1e-70')):
             lo=iv.mpf(decimal_end(value,False));hi=iv.mpf(decimal_end(value,True))

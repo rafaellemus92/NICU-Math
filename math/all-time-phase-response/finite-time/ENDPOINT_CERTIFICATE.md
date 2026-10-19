@@ -171,15 +171,17 @@ is pinned at [0f258a1](https://github.com/rafaellemus92/NICU-Math/tree/0f258a1ad
 | Analytic identities | `NOTE.md`, `route-b-dissipation/NOTE.md`, `endpoint-beta003/NOTE.md`: linearized equations, mode supports, energy estimates, (2)–(5). These arguments are inspectable mathematics, not machine-checked proofs. |
 | Inherited validated computation | `absorption-b003/results/validated.json`, `chain.json` and `endpoint-sign/results/chain_percell.json`: residual/error enclosures, closure, uniform cellwise bounds. Smoothness over this interval and b-range depends on that closure/Lemma M. |
 | Quadratic coefficient | `z2-endpoint/results/endpoint.json`, `source-only-hull/results/full.json`, `endpoint-sign/DERIVATION.md`: endpoint E/G, mean-source enclosure and J2 lower bound. The postprocessor inherits the reviewed J2 total. |
-| Remainder bounds | `route-b-dissipation/results/bounds.review.json`, `endpoint-sign/results/tr_remainder.repaired.json`: global cap coefficients, Ahat, full-r estimates and separately named nonself components. Their derivation uses `route-b-tightening/NOTE.md` and endpoint-sign A–F. |
+| Remainder bounds | `route-b-dissipation/results/bounds.review.json`, `endpoint-sign/results/tr_remainder.repaired.json`: global cap coefficients, Ahat, full-r estimates and separately named nonself components. Upstream `route-b-tightening/results/time_refinement.final.json` supplies global D_r used in err_grad; the other derivations use `route-b-tightening/NOTE.md` and endpoint-sign A–F. |
 | New directed postprocessing | [Pinned check.py](https://github.com/rafaellemus92/NICU-Math/blob/0f258a1add2b9e339d6c28f3599c43c4ad8241c3/math/all-time-phase-response/finite-time/endpoint-beta003/check.py), [candidate.json](https://github.com/rafaellemus92/NICU-Math/blob/0f258a1add2b9e339d6c28f3599c43c4ad8241c3/math/all-time-phase-response/finite-time/endpoint-beta003/results/candidate.json), and `endpoint-beta003/INPUTS.json`: mpmath intervals, source/input hashes and scalar comparison. Current repaired code preserves the comparison. |
 | Independent reproduction | [Audit at b03bfa4](https://github.com/rafaellemus92/NICU-Math/tree/b03bfa45ae25d3543d7ecbd3a2361f990d01120f/math/all-time-phase-response/finite-time/independent-checks/endpoint-beta003-0f258a1): different implementation using 40-digit directed Decimal intervals, recomputing the scalar chain from primitive inputs rather than stored totals. It agrees with (1). |
 | Empirical implementation checks | Exact toy/mutation tests check source-cell inclusion and Abel algebra. The audit's resolved Fourier-field binary64 checks test normalization, integration-by-parts signs and skew transport; they are not certificates of arbitrary fields or independent PDE evidence. |
 | Trusted assumptions | Correct inherited inequalities/closure, Fourier tails and validated bounds; stated IEEE binary64 round-to-nearest, gradual underflow/no-FMA platform model; correct Python/Decimal/mpmath arithmetic. No inherited certificate was revalidated in preparing this note. |
 
-`time_refinement.final.json` remains hash-checked in INPUTS solely as historical
-provenance; no field supplies arithmetic to the current endpoint postprocessor.
-Current output explicitly distinguishes this role. Original plans, inputs,
+`time_refinement.final.json` remains an upstream arithmetic dependency: its
+global D_r enters the stored err_grad bound through endpoint-sign A–F. The
+current postprocessor hash-checks this file but does not parse it or read its
+fields directly; it consumes err_grad from tr_remainder.repaired.json. Current
+output explicitly distinguishes direct inputs from this upstream dependency. Original plans, inputs,
 outputs and SHA256SUMS remain historical records tied to their source commits.
 
 To reproduce the repaired postprocessor and focused tests, from

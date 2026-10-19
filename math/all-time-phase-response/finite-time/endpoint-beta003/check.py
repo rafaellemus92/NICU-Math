@@ -11,7 +11,7 @@ HERE = Path(__file__).resolve().parent
 iv.dps = 70
 X = iv.mpf
 
-# Hash-checked historical dependency; no field enters this arithmetic.
+# Upstream dependency via err_grad/global D_r; hash checked here, not parsed.
 PROVENANCE_ONLY = {"route-b-tightening/results/time_refinement.final.json"}
 
 
@@ -21,7 +21,10 @@ def inclusive_tail_weights(rates, dt, exp=iv.exp):
     Nonnegative cell growth bounds cover every source time in its cell.
     Generic arithmetic permits exact toy tests of this production function.
     """
-    if not rates or dt <= 0 or any(rate < 0 for rate in rates):
+    # Interval comparisons can return None when they overlap zero. Fail closed
+    # on the lower endpoint; zero growth is valid, but duration must be positive.
+    if (not rates or not (getattr(dt, "a", dt) > 0)
+            or any(not (getattr(rate, "a", rate) >= 0) for rate in rates)):
         raise ValueError('nonempty nonnegative rates and positive duration required')
     tail = rates[0]*0
     weights = [None]*len(rates)
@@ -138,7 +141,7 @@ def compute():
     E=X(ep['bounds']['half_q1_gradient_squared']['lo'])
     free=iv.exp(-2*nu*T)/4
     mthreshold=beta**2*cold-(E-free)
-    return dict(status='candidate conditional bound; focused independent review pending',
+    return dict(status='conditional bound; independent scalar reproduction completed at b03bfa45ae25d3543d7ecbd3a2361f990d01120f; inherited certificates not revalidated',
         scope=ep['scope'], inherited_J2_lower=bounds(jlo), old_C_upper=bounds(cold),
         nonself_sum=bounds(nonself), self_divergence_bound=bounds(ddiv),
         old_self_bound=bounds(stored(parts['self_d1'])),
@@ -149,7 +152,7 @@ def compute():
         alternative_requires_M_greater_than=bounds(mthreshold),
         Dw_T=bounds(dw[-1]), Iinf_T=bounds(cumulative[-1]),
         weighted_Iinf_bound=bounds(weighted), inputs_sha256=pins,
-        input_roles={name: ("provenance-only; hash checked, not parsed or used in arithmetic"
+        input_roles={name: ("upstream dependency via err_grad/global D_r; hash checked here, not parsed or directly used in arithmetic"
                             if name in PROVENANCE_ONLY else "arithmetic input") for name in pins},
         new_source_sha256={name:hashlib.sha256((HERE/name).read_bytes()).hexdigest()
                            for name in ('check.py','PLAN.md','INPUTS.json')})

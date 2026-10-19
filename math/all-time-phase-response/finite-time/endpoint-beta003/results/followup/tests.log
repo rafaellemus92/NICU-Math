@@ -1,0 +1,13 @@
+test_abel_exact_prefixes_and_slack (__main__.Check.test_abel_exact_prefixes_and_slack) ... ok
+test_cumulative_differencing_counterexample (__main__.Check.test_cumulative_differencing_counterexample) ... ok
+test_directed_decimal_serialization (__main__.Check.test_directed_decimal_serialization) ... ok
+test_exact_toy_source_growth_and_source_cell_mutation (__main__.Check.test_exact_toy_source_growth_and_source_cell_mutation) ... ok
+test_interval_rate_guard (__main__.Check.test_interval_rate_guard) ... ok
+test_stored_upper_padding_and_lower_padding (__main__.Check.test_stored_upper_padding_and_lower_padding) ... ok
+test_weight_domain (__main__.Check.test_weight_domain) ... ok
+test_young_exact_coefficient_and_sharpness (__main__.Check.test_young_exact_coefficient_and_sharpness) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.038s
+
+OK

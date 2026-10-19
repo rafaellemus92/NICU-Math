@@ -1,0 +1,28 @@
+{
+  "runs": [
+    {
+      "name": "tests",
+      "command": [
+        "python",
+        "-B",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/test_check.py",
+        "-v"
+      ],
+      "wall_seconds": 0.1386819499966805,
+      "exit_code": 0
+    },
+    {
+      "name": "regression",
+      "command": [
+        "python",
+        "-B",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/check.py",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/results/followup/regression.json"
+      ],
+      "wall_seconds": 0.11924445900513092,
+      "exit_code": 0
+    }
+  ],
+  "unchanged_numerical_decision_fields": true,
+  "total_seconds": 0.2579264090018114
+}

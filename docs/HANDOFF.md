@@ -858,3 +858,16 @@ its final outcome is in AUDIT_REPAIRS.md. No push, PR, merge, deployment, LFS,
 paid call or external-agent contact. Inherited certificates remain assumed,
 not revalidated. Original mpmath tests were not run by the published independent
 Decimal auditor; this stage's focused mpmath regression is a separate check.
+
+## Scoped certificate audit follow-up (local)
+
+Owner Codex; branch codex/endpoint-certificate-audit-repairs based exactly on
+3161f059c24878c9b5ea05e6cc081e72fb53bbc5. The separate attribution commit
+4e86fa995243c3a428a253ee3333eb42251cd85f is preserved. No diagnostic launched.
+See endpoint-beta003/AUDIT_FOLLOWUP.md: explicit upstream Dr/err_grad dependency,
+completed reproduction status in future outputs, and lower-endpoint interval
+rate guard (negative/straddling rejected, zero allowed). Eight tests pass;
+fresh regression leaves every numerical/decision field identical. Timed
+tests/regression0.257927s; total including semantics probe under1s (<60s).
+All original outputs, plans and manifests remain untouched. No push, merge,
+PR, deployment, LFS or simulation. Review outcome is in AUDIT_FOLLOWUP.md.

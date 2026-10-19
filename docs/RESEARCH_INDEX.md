@@ -79,3 +79,8 @@ pin provenance-only and replace the weight check with an exact source/growth
 toy plus actual-code mutation test; all prior scalar results are unchanged.
 Independent Decimal reproduction at b03bfa45ae25d3543d7ecbd3a2361f990d01120f
 is recorded separately from the original read-only proof review.
+
+Certificate implementation follow-up: `endpoint-beta003/AUDIT_FOLLOWUP.md`
+clarifies the indirect time-refinement dependency and completed reproduction
+status, and hardens the interval rate guard without changing any numerical
+certificate bound. The mechanism-attribution work remains on its separate branch.
