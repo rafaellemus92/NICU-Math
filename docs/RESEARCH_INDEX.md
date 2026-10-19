@@ -89,3 +89,13 @@ combination; it implies S>0 or R<0, not either sign separately. Saved summaries
 and base/q1 cache omit the signed nonlinear observables needed for attribution.
 Four exact algebra tests pass; no empirical attribution or new evolution.
 The note proposes a bounded future paired diagnostic and separate validation gate.
+
+## Paired DNS attribution: numerical follow-up
+
+[Fixed paired diagnostic](../math/all-time-phase-response/finite-time/excess-attribution/paired-dns/README.md)
+adds numerical evidence at b=±.003, T=.25: S/b²≈.02147034 and
+nu R/b²≈.000456986, hence H/b²≈.02101335. Both contributions are positive;
+excess stretching exceeds excess dissipation. Three preregistered time/space
+configurations pass balance/refinement/sign-separation checks. This supersedes
+the absence of numerical attribution in the preceding historical stage, but
+does not certify mechanism signs for a continuum amplitude interval.

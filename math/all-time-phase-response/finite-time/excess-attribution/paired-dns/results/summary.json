@@ -1,0 +1,155 @@
+{
+  "status": "accepted numerical evidence; not a continuum certificate",
+  "accepted": true,
+  "refinement": [
+    {
+      "b": 0.003,
+      "term": "S_over_b2",
+      "time_change": 3.3242505970143554e-13,
+      "space_change": 4.433571565432004e-13,
+      "passes": true
+    },
+    {
+      "b": 0.003,
+      "term": "nuR_over_b2",
+      "time_change": 2.8017231546925703e-13,
+      "space_change": 1.0612029918005694e-13,
+      "passes": true
+    },
+    {
+      "b": -0.003,
+      "term": "S_over_b2",
+      "time_change": 2.966238366042262e-13,
+      "space_change": 3.5779365581412037e-13,
+      "passes": true
+    },
+    {
+      "b": -0.003,
+      "term": "nuR_over_b2",
+      "time_change": 2.8054213683029183e-13,
+      "space_change": 1.048953133554742e-13,
+      "passes": true
+    }
+  ],
+  "diagnostic_maxima": {
+    "max_divergence": 1.606806778272321e-17,
+    "max_tail_enstrophy_fraction": 4.2629270745108593e-13,
+    "max_tri_rhs_scaled_error": 3.08395284618099e-11,
+    "max_direct_expanded_scaled_error": 6.133196164478938e-11,
+    "max_balance_scaled": 1.39384461753312e-10,
+    "max_parity_scaled": 1.3001925924793767e-13,
+    "max_trapezoid_scaled_difference": 9.973596978504751e-08
+  },
+  "conservative_empirical_error_scale": 9.973596978504751e-08,
+  "empirical_signs": [
+    {
+      "b": 0.003,
+      "term": "S_over_b2",
+      "value": 0.021470340460231926,
+      "error_scale": 9.973596978504751e-08,
+      "separated": true,
+      "sign": "positive"
+    },
+    {
+      "b": 0.003,
+      "term": "nuR_over_b2",
+      "value": 0.00045698606806878134,
+      "error_scale": 9.973596978504751e-08,
+      "separated": true,
+      "sign": "positive"
+    },
+    {
+      "b": -0.003,
+      "term": "S_over_b2",
+      "value": 0.021470340460176474,
+      "error_scale": 9.973596978504751e-08,
+      "separated": true,
+      "sign": "positive"
+    },
+    {
+      "b": -0.003,
+      "term": "nuR_over_b2",
+      "value": 0.0004569860680671586,
+      "error_scale": 9.973596978504751e-08,
+      "separated": true,
+      "sign": "positive"
+    }
+  ],
+  "endpoint_table": [
+    {
+      "configuration": "n24_coarse",
+      "t": 0.25,
+      "b": 0.003,
+      "S_over_b2": 0.02147034045978857,
+      "nuR_over_b2": 0.00045698606796266104,
+      "H_over_b2": 0.02101335432851789,
+      "balance_over_b2": -6.330801965992637e-11,
+      "trapS_over_b2": 0.02147024072396033,
+      "trapNuR_over_b2": 0.00045700842715741107,
+      "integrated_direct_expanded_error": 1.8865447202949488e-11
+    },
+    {
+      "configuration": "n24_fine",
+      "t": 0.25,
+      "b": 0.003,
+      "S_over_b2": 0.021470340459456144,
+      "nuR_over_b2": 0.00045698606824283336,
+      "H_over_b2": 0.021013354318100468,
+      "balance_over_b2": -7.31128451292386e-11,
+      "trapS_over_b2": 0.02147031552548637,
+      "trapNuR_over_b2": 0.0004569916580471047,
+      "integrated_direct_expanded_error": 3.3119647041046564e-11
+    },
+    {
+      "configuration": "n32_coarse",
+      "t": 0.25,
+      "b": 0.003,
+      "S_over_b2": 0.021470340460231926,
+      "nuR_over_b2": 0.00045698606806878134,
+      "H_over_b2": 0.021013354331102657,
+      "balance_over_b2": -6.106048832046603e-11,
+      "trapS_over_b2": 0.021470240724429174,
+      "trapNuR_over_b2": 0.0004570084272612057,
+      "integrated_direct_expanded_error": 4.612183806832987e-11
+    },
+    {
+      "configuration": "n24_coarse",
+      "t": 0.25,
+      "b": -0.003,
+      "S_over_b2": 0.02147034045981868,
+      "nuR_over_b2": 0.0004569860679622633,
+      "H_over_b2": 0.02101335432856857,
+      "balance_over_b2": -6.328784748205492e-11,
+      "trapS_over_b2": 0.021470240723848896,
+      "trapNuR_over_b2": 0.0004570084271569758,
+      "integrated_direct_expanded_error": 1.891612800762687e-11
+    },
+    {
+      "configuration": "n24_fine",
+      "t": 0.25,
+      "b": -0.003,
+      "S_over_b2": 0.021470340459522057,
+      "nuR_over_b2": 0.00045698606824280544,
+      "H_over_b2": 0.02101335431810155,
+      "balance_over_b2": -7.317770050089268e-11,
+      "trapS_over_b2": 0.021470315525541978,
+      "trapNuR_over_b2": 0.00045699165804707236,
+      "integrated_direct_expanded_error": 3.312072936092361e-11
+    },
+    {
+      "configuration": "n32_coarse",
+      "t": 0.25,
+      "b": -0.003,
+      "S_over_b2": 0.021470340460176474,
+      "nuR_over_b2": 0.0004569860680671586,
+      "H_over_b2": 0.02101335433101899,
+      "balance_over_b2": -6.109032490897873e-11,
+      "trapS_over_b2": 0.021470240724250633,
+      "trapNuR_over_b2": 0.0004570084272595146,
+      "integrated_direct_expanded_error": 4.6038170036095526e-11
+    }
+  ],
+  "process_wall_seconds": 18.372815321992675,
+  "peak_rss_MiB": 57.734375,
+  "quadrature_note": "every-step trapezoid versus RK4 stage difference included in sign error scale; not a rigorous quadrature error enclosure"
+}

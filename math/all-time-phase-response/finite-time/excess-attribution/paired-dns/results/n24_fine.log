@@ -1,0 +1,58 @@
+{
+  "label": "numerical evidence; not a continuum certificate",
+  "N": 24,
+  "K": 7,
+  "dt": 0.00125,
+  "steps": 200,
+  "T_run": 0.25,
+  "nu": 0.03571428571428571,
+  "phi": 0.37,
+  "b_values": [
+    0.003,
+    -0.003
+  ],
+  "a": 1,
+  "c": 1,
+  "d": 1,
+  "stats": {
+    "max_divergence": 1.5640589125423168e-17,
+    "max_tail_enstrophy_fraction": 4.2629270745108593e-13,
+    "max_tri_rhs_scaled_error": 2.4671622769447923e-11,
+    "max_direct_expanded_scaled_error": 5.263392148159284e-11,
+    "max_balance_scaled": 1.39384461753312e-10,
+    "max_parity_scaled": 1.3001925924793767e-13,
+    "max_trapezoid_scaled_difference": 2.4933980078550855e-08
+  },
+  "endpoints": [
+    {
+      "t": 0.25,
+      "b": 0.003,
+      "S_over_b2": 0.021470340459456144,
+      "nuR_over_b2": 0.00045698606824283336,
+      "H_over_b2": 0.021013354318100468,
+      "balance_over_b2": -7.31128451292386e-11,
+      "trapS_over_b2": 0.02147031552548637,
+      "trapNuR_over_b2": 0.0004569916580471047,
+      "integrated_direct_expanded_error": 3.3119647041046564e-11
+    },
+    {
+      "t": 0.25,
+      "b": -0.003,
+      "S_over_b2": 0.021470340459522057,
+      "nuR_over_b2": 0.00045698606824280544,
+      "H_over_b2": 0.02101335431810155,
+      "balance_over_b2": -7.317770050089268e-11,
+      "trapS_over_b2": 0.021470315525541978,
+      "trapNuR_over_b2": 0.00045699165804707236,
+      "integrated_direct_expanded_error": 3.312072936092361e-11
+    }
+  ],
+  "elapsed_seconds": 6.1747678630054,
+  "peak_rss_MiB": 37.83203125,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "source_sha256": "e82336ac601c8c2357a6425c89401e95649c412e0287fac8e732dac320a6bbcf",
+  "solver_sha256": "0ef3836723c1bb199d911c8e22df6a5f6683b97fc51532b163f3f05aab7a95b2",
+  "preregistration_sha256": "0ea74ecb4d501147b113c1c64524404eb1d2e98f41f8c145cf8ad45ed5594501"
+}

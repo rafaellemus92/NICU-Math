@@ -889,3 +889,17 @@ and subsequent diagnostic require separate authorization; none was launched.
 
 Final attribution syntax/whitespace checks passed. The focused reviewer confirmed
 the timing citation and explicit nonzero-stretching test repairs; no blocker.
+
+## Authorized paired DNS attribution follow-up (local)
+
+Owner Codex; branch `codex/enstrophy-excess-attribution`, base
+`4e86fa995243c3a428a253ee3333eb42251cd85f`. Subsequent user authorization
+allowed the frozen ten-step pilot and three fixed paired DNS configurations.
+The historical no-DNS statement above describes the preceding stage only.
+[Result and raw evidence](../math/all-time-phase-response/finite-time/excess-attribution/paired-dns/README.md)
+show S>0 and nu R>0 numerically at b=±.003, with S exceeding nu R.
+All preregistered acceptance checks passed; this does not establish individual
+mechanism signs uniformly in b. Solver-process time 18.373 s, peak RSS 57.734 MiB.
+One authorized independent AI reviewer checked source, frozen hashes, stored
+results and clean figure without rerunning DNS. Prior results and separate
+certificate repair branch remain preserved. No push, PR, merge or deployment.

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/NICU-Math-attribution/math/all-time-phase-response/finite-time/excess-attribution/paired-dns/diagnostic.py",
+    "--N",
+    "32",
+    "--dt",
+    "0.0025",
+    "--steps",
+    "100",
+    "--out",
+    "/workspace/NICU-Math-attribution/math/all-time-phase-response/finite-time/excess-attribution/paired-dns/results/n32_coarse"
+  ],
+  "wall_seconds": 7.7397013469962985,
+  "exit_code": 0,
+  "timeout_seconds": 274.3668860250036,
+  "memory_limit_MiB": 512
+}
