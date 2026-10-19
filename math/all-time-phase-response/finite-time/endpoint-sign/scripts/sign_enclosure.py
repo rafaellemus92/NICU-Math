@@ -5,6 +5,17 @@ import sys, json
 from mpmath import iv, mpf
 iv.dps = 60
 F = sys.argv[1]
+import hashlib
+PINS = {  # inputs at f4fe230 (audit repair 1: full.json sets J2_lo and was unpinned)
+    'source-only-hull/results/full.json': '0d2ab266fd226091a9116b83c54621ad480f2b8306f16e9dd830a705629cfa82',
+    'z2-endpoint/results/endpoint.json': '37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc',
+    'route-b-tightening/results/time_refinement.final.json': '79612f1164e92243b74ef40dd668651bc850ffa81d82695d7c59f039e119e849',
+    'absorption-b003/results/chain.json': '0cd069e1fdd83e66a9a65bf24b5be95f477b64d255290b4ced07aa3e7f5fe117',
+    'absorption-b003/results/validated.json': 'e404cb94b25a63989540e1cde2d6cc7630d6caa0f934125dbee4890fc7db2a5b',
+    'route-b-dissipation/results/bounds.review.json': '4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65',
+}
+for _name, _h in PINS.items():
+    if hashlib.sha256(open(F + '/' + _name, 'rb').read()).hexdigest() != _h: raise SystemExit('pinned input mismatch ' + _name)
 J = lambda p: json.load(open(F + '/' + p))
 hull = J('source-only-hull/results/full.json'); ep = J('z2-endpoint/results/endpoint.json')
 tr = J('route-b-tightening/results/time_refinement.final.json')['rows']['1000000']

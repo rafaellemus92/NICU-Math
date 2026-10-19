@@ -1,0 +1,15 @@
+test_tr_remainder_imports_and_does_not_redefine (__main__.CalculationUsesTheseFunctions.test_tr_remainder_imports_and_does_not_redefine) ... ok
+test_inclusive_weight_bounds_the_exact_solution (__main__.CellWeights.test_inclusive_weight_bounds_the_exact_solution) ... 
+  inclusive weights: exact/bound <= 0.8848 over both rate families
+ok
+test_tail_weights_are_the_inclusive_weights_to_the_end (__main__.CellWeights.test_tail_weights_are_the_inclusive_weights_to_the_end) ... ok
+test_weight_excluding_the_source_cell_is_rejected (__main__.CellWeights.test_weight_excluding_the_source_cell_is_rejected) ... ok
+test_implemented_form_never_fails_and_every_broken_form_does (__main__.SummationByParts.test_implemented_form_never_fails_and_every_broken_form_does) ... 
+  failures in 4000 exact trials: {'implemented': 0, 'no_majorant': 1541, 'no_end_term': 2393, 'index_shift': 584, 'cell_differencing': 1541}
+ok
+test_majorant_is_the_smallest_nonincreasing_one (__main__.SummationByParts.test_majorant_is_the_smallest_nonincreasing_one) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.455s
+
+OK

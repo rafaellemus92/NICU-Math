@@ -72,3 +72,6 @@ F. C_one,TR = G N̄ + S E_r,249.  Two-sided C_end,TR = C_one,TR + K_T²/2 is rep
 
 Sections A–F are a new derivation that the single reviewer of this round does not cover; any
 decision from them is conditional and pending its own independent review.
+
+Status update, recorded after the run without changing the preregistered text above: sections A–F
+and tr_remainder.py were independently reviewed once and accepted conditionally (REVIEW.md §2).

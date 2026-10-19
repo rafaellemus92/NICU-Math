@@ -1,0 +1,17 @@
+test_tr (unittest.loader._FailedTest.test_tr) ... ERROR
+
+======================================================================
+ERROR: test_tr (unittest.loader._FailedTest.test_tr)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_tr
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'test_tr'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+# Failed invocation: python3 -I -m unittest -v test_tr (run from scripts/). Under -I the current directory is not on sys.path, so the module could not be imported; no test executed. Rerun as: python3 -I test_tr.py -v

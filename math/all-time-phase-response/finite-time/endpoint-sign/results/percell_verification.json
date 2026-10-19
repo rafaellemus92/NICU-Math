@@ -1,0 +1,41 @@
+{
+ "all_250_rows_verified": true,
+ "rows": 250,
+ "fields": [
+  "t",
+  "m1",
+  "m2",
+  "epsW",
+  "eps0",
+  "eps1",
+  "delta2",
+  "S1",
+  "sigma1",
+  "N_w",
+  "K"
+ ],
+ "tolerance_relative": "1e-30",
+ "max_relative_difference": {
+  "t": "3.788e-61",
+  "m1": "5.956e-36",
+  "m2": "2.743e-34",
+  "epsW": "2.600e-37",
+  "eps0": "1.677e-36",
+  "eps1": "2.676e-35",
+  "delta2": "5.339e-35",
+  "S1": "2.133e-39",
+  "sigma1": "3.916e-39",
+  "N_w": "1.517e-36",
+  "K": "3.269e-36"
+ },
+ "mismatches": [],
+ "chain_percell_sha256": "795e3a7b5c83bee29308392fd33232864e9df41e121646cbcd9b1fca395d58bc",
+ "chain_percell_py_sha256": "0af7b93e89fdd88ce105a0e0f9d3c31148221171b8b5c2620558569b77824b8b",
+ "inputs_sha256": {
+  "absorption-b003/results/validated.json": "e404cb94b25a63989540e1cde2d6cc7630d6caa0f934125dbee4890fc7db2a5b",
+  "absorption-b003/results/chain.json": "0cd069e1fdd83e66a9a65bf24b5be95f477b64d255290b4ced07aa3e7f5fe117"
+ },
+ "source_sha256": "fa42d54ce0cfd312cd279b859ef31c08de0b592fc0d49663926ab51a463dde8a",
+ "method": "independent mpmath recomputation of the absorb_chain.py recursion",
+ "wall_seconds": 1.0397610719999761
+}

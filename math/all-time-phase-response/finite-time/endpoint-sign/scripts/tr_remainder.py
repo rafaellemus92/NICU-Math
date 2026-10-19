@@ -1,10 +1,12 @@
 """Time-resolved one-sided remainder at T = 1/4 (PLAN.md sections A-F), mpmath interval arithmetic, outputs new only.
 Usage:  python3 -I tr_remainder.py <finite-time dir> <chain_percell.json> <output json>
-New derivation, not independently reviewed; see PLAN.md. No trajectory is read."""
+Derivation of PLAN.md; independently reviewed once and accepted conditionally (REVIEW.md section 2). No trajectory is read."""
 import sys, json, hashlib, time
 from pathlib import Path
 import numpy as np
 from mpmath import iv, mpf
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tr_core import inclusive_weight_table, tail_weights, nonincreasing_majorant, abel   # tested in test_tr.py
 iv.dps = 60
 t0 = time.monotonic()
 FT, CPC, OUT = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
@@ -16,13 +18,21 @@ PINS = {  # inputs at f4fe230, as audited
     'route-b-dissipation/results/bounds.review.json': '4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65',
     'route-b-tightening/results/time_refinement.final.json': '79612f1164e92243b74ef40dd668651bc850ffa81d82695d7c59f039e119e849',
     'z2-endpoint/results/endpoint.json': '37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc',
+    'source-only-hull/results/full.json': '0d2ab266fd226091a9116b83c54621ad480f2b8306f16e9dd830a705629cfa82',   # sets J2_lo (audit repair 1)
 }
+CPC_PIN = '795e3a7b5c83bee29308392fd33232864e9df41e121646cbcd9b1fca395d58bc'        # results/chain_percell.json
+CPC_SCRIPT_PIN = '0af7b93e89fdd88ce105a0e0f9d3c31148221171b8b5c2620558569b77824b8b' # scripts/chain_percell.py (generated)
 for name, h in PINS.items():
     if sha(FT / name) != h: raise SystemExit('pinned input mismatch ' + name)
 J = lambda p: json.loads((FT / p).read_text())
 chain, val, rb, trf, ep, hull = (J('absorption-b003/results/chain.json'), J('absorption-b003/results/validated.json'),
     J('route-b-dissipation/results/bounds.review.json'), J('route-b-tightening/results/time_refinement.final.json'),
     J('z2-endpoint/results/endpoint.json'), J('source-only-hull/results/full.json'))
+if sha(CPC) != CPC_PIN: raise SystemExit('per-cell chain file is not the pinned one')
+if sha(Path(__file__).resolve().parent / 'chain_percell.py') != CPC_SCRIPT_PIN: raise SystemExit('generated chain script differs from the pinned one')
+VER = Path(__file__).resolve().parent.parent / 'results' / 'percell_verification.json'   # audit repair 3: every row
+ver = json.loads(VER.read_text())
+if not (ver['all_250_rows_verified'] and ver['chain_percell_sha256'] == CPC_PIN): raise SystemExit('per-cell rows not independently verified')
 cpc = json.loads(CPC.read_text())
 X = iv.mpf
 up = lambda x: x.b
@@ -96,21 +106,11 @@ def Ahat(lam):
     for m, cnt in zip(vals.tolist(), counts.tolist()): corr += cnt * lam / (X(m) ** 2 * (lam + X(m) ** 2))
     return C ** 2 - corr
 # ---------------------------------------------------------------- propagator weights
-Cm = [iv.mpf(0)]; Cq = [iv.mpf(0)]
-for i in range(n):
-    Cm.append(Cm[-1] + (m1c[i] - nu) * D); Cq.append(Cq[-1] + (4 * m1c[i] + 1) * D)
-Ew = {(i, j): iv.exp(Cm[j + 1] - Cm[i]) for j in range(n) for i in range(j + 1)}   # exact partial sums of explicit cell bounds
-Qw = {(i, j): iv.exp(Cq[j + 1] - Cq[i]) for j in range(n) for i in range(j + 1)}
-Pw = [iv.exp(Cm[n] - Cm[i]) for i in range(n)]
-def abel(phi_hi, B):
-    """Upper bound of sum_i phi_i X_i, X_i >= 0, given cumulative bounds sum_{k<=i} X_k <= B_i and phi nonincreasing (exact mpf)."""
-    m = len(phi_hi); tot = iv.mpf(phi_hi[-1]) * B[m - 1]
-    for i in range(m - 1): tot = tot + (iv.mpf(phi_hi[i]) - iv.mpf(phi_hi[i + 1])) * B[i]
-    return tot
-def nonincreasing_majorant(w_hi):
-    out = list(w_hi)
-    for i in range(len(out) - 2, -1, -1): out[i] = max(out[i], out[i + 1])
-    return out
+rate_m = [m1c[i] - nu for i in range(n)]; rate_q = [4 * m1c[i] + 1 for i in range(n)]
+assert all(r.a > 0 for r in rate_m + rate_q)                       # inclusive weights need nonnegative rates
+Ew = inclusive_weight_table(rate_m, D, iv.exp)                       # source cell i covers cells i..j inclusive
+Qw = inclusive_weight_table(rate_q, D, iv.exp)
+Pw = tail_weights(rate_m, D, iv.exp)
 # ---------------------------------------------------------------- synthetic self-checks (PLAN.md implementation check 2)
 def _selfcheck():
     from fractions import Fraction as Fr
@@ -131,7 +131,7 @@ def _selfcheck():
     via = phi[-1] * B[-1] + sum((phi[i] - phi[i + 1]) * B[i] for i in range(39))
     assert via == sum(p * x for p, x in zip(phi, Xs)) and via >= direct
     # the interval implementation of the same bound encloses the exact value
-    val_ = abel([mpf(p.numerator) / p.denominator for p in phi], [X(b.numerator) / b.denominator for b in B])
+    val_ = abel([iv.mpf(mpf(p.numerator) / p.denominator) for p in phi], [X(b.numerator) / b.denominator for b in B])
     assert val_.b >= mpf(via.numerator) / via.denominator - mpf('1e-50')
     assert nonincreasing_majorant([3, 1, 2, 0]) == [3, 2, 2, 0]
 _selfcheck()
@@ -154,14 +154,14 @@ def evaluate(cells, E_, Q_, P_, Iinf, tend, terminal_reuse):
         u1 = iv.sqrt(sum((Q_(i, j) * A[i] ** 2 for i in range(j + 1)), iv.mpf(0)) * D)
         u2 = iv.sqrt(Q_(0, j) * C ** 2 * K_[j] ** 2 * dl_[j])
         phi = nonincreasing_majorant([up(Q_(i, j) * h[i] ** 2) for i in range(j + 1)])
-        u3 = iv.sqrt(abel(phi, Iinf[:j + 1]))
+        u3 = iv.sqrt(abel([iv.mpf(x) for x in phi], Iinf[:j + 1]))
         Er.append(iv.sqrt(t1 + (u1 + u2 + u3) ** 2 / nu))
     if terminal_reuse: Er = [Er[-1]] * n
     a = sum((P_(i) * (p_[i] * Er[i] + n1_[i] * Nr[i]) for i in range(n)), iv.mpf(0)) * D
     b = C * iv.mpf(max(up(P_(i) * Er[i]) for i in range(n))) * iv.sqrt(T * dl_[-1])
     c = C * iv.mpf(max(up(P_(i) * e1_[i]) for i in range(n))) * iv.sqrt(T * Dr)
     d1 = iv.sqrt(sum((P_(i) ** 2 * K_[i] ** 2 for i in range(n)), iv.mpf(0)) * D) * iv.sqrt(Iinf[-1])
-    d2 = iv.sqrt(sum((P_(i) * K_[i] ** 2 for i in range(n)), iv.mpf(0)) * D) * iv.sqrt(abel(nonincreasing_majorant([up(P_(i)) for i in range(n)]), Iinf))
+    d2 = iv.sqrt(sum((P_(i) * K_[i] ** 2 for i in range(n)), iv.mpf(0)) * D) * iv.sqrt(abel([iv.mpf(x) for x in nonincreasing_majorant([up(P_(i)) for i in range(n)])], Iinf))
     Nbar = a + b + c + iv.mpf(min(up(d1), up(d2)))
     return dict(Nr=Nr[-1], Er=Er[-1], Nbar=Nbar, parts=dict(smooth=a, err_adv=b, err_grad=c, self_d1=d1, self_d2=d2))
 cells_tr = (Kc, Nc, e1c, dlc, pc, n1c, m2c)
@@ -200,12 +200,12 @@ if J2_lo > 0:
     bstar = iv.sqrt(iv.mpf(J2_lo) / Cbest).a
     assert bstar < beta.a or decided
     print(f'positive sign proved (conditional) for 0 < |b| < {fdn(bstar, 9)} with C_one,TR')
-out = dict(status='new derivation (PLAN.md A-F), not independently reviewed; conditional on inherited certificates',
+out = dict(status='PLAN.md A-F, independently reviewed once (REVIEW.md section 2), accepted conditionally on the inherited assumptions',
            decision_rule='J2_lo > beta^2 C_one,TR', certified=bool(decided), J2_lo=str(J2_lo), J2_hi=str(J2_hi),
            best_lambda=best, C_one_TR=str(Cbest.b), b_star_lower=(str(bstar) if bstar is not None else None), beta2_C_one_TR=str(rhs), H_over_b2_lower_at_beta=str(Hlo),
            per_lambda={k: {kk: (str(vv) if not isinstance(vv, dict) else {a: str(b) for a, b in vv.items()}) for kk, vv in v.items()} for k, v in results.items()},
            Dw_TR_T=str(up(Dw[-1])), Dw_global=str(up(Dw_global)), inputs_sha256=PINS, chain_percell_sha256=sha(CPC),
-           source_sha256=sha(__file__), plan_sha256=sha(Path(__file__).resolve().parent.parent / 'PLAN.md'),
+           source_sha256=sha(__file__), tr_core_sha256=sha(Path(__file__).resolve().parent / 'tr_core.py'), percell_verification_sha256=sha(VER), plan_sha256=sha(Path(__file__).resolve().parent.parent / 'PLAN.md'),
            wall_seconds=time.monotonic() - t0)
 with OUT.open('x') as f: json.dump(out, f, indent=1); f.write('\n')
 print(f'D_w,TR(T) <= {fup(Dw[-1], 3)}  (global {fup(Dw_global, 3)});  wall {out["wall_seconds"]:.1f} s; wrote {OUT.name}')

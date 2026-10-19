@@ -1,0 +1,2 @@
+all 250 rows x 11 fields verified: True   max relative differences: {'t': '3.788e-61', 'm1': '5.956e-36', 'm2': '2.743e-34', 'epsW': '2.600e-37', 'eps0': '1.677e-36', 'eps1': '2.676e-35', 'delta2': '5.339e-35', 'S1': '2.133e-39', 'sigma1': '3.916e-39', 'N_w': '1.517e-36', 'K': '3.269e-36'}
+wall 1.0 s; wrote percell_verification.json
