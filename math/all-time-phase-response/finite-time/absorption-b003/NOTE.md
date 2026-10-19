@@ -464,10 +464,11 @@ b = ±0.003:
    b sin z is its linear coefficient up to an O(b²) remainder with these explicit constants; since q₁
    has no z-mean, the mean part obeys v̄ = w̄, so ‖∇v̄‖ ≤ b² K as well.
 
-What does not follow: the Theorem of ../NOTE.md section 5, |R_Z(t)| ≤ C_Z(t) b⁴, is stated under
-|b| < β₁(T) and its text therefore does not cover b = 0.003; nothing here changes β₁; nothing is claimed
-for T > 0.25, for other φ, or for |b| ≠ 0.003 (the information table of Section 4 is not a certificate for
-other b).
+What does not follow from the certificate alone: the Theorem of ../NOTE.md section 5, |R_Z(t)| ≤ C_Z(t) b⁴,
+is stated under |b| < β₁(T) and its text therefore does not cover b = 0.003; nothing here changes β₁;
+nothing is claimed for T > 0.25 or for other φ. For |b| < 0.003 and for the enstrophy remainder at
+|b| ≤ 0.003 see the audited Route A corollary in Section 8.3 (the information table of Section 4 is not
+a certificate for other b).
 
 ### 8.3 What is needed to extend the enstrophy remainder theorem to b = 0.003
 
@@ -478,13 +479,61 @@ bounds and the absorption of the cubic term of Lemma 4 (C_A‖∇v̄‖ ≤ C_A�
 number, |b| ≤ β₁, wherever a power of b beyond the displayed one is absorbed: in N_r and S_r* (Lemma 5,
 hence R₁ and D_r), in Ē (Lemma 7) and in the terms β₁ Q₂ Ẽ + ½ β₁² Ẽ² of C_Z; Lemma 6 and the identity
 of Section 5 use no such bound. Purpose (1) is now certified at |b| = 0.003 by (A) and Section 1.
-Purpose (2) is bookkeeping: replace β₁ by β := 3/1000 in those four places. No new analytic estimate is
-needed; what is needed is one evaluation, C_Z^{(β)}(0.25) with β = 0.003 in the parent's constants.py
-(β enters polynomially, so C_Z^{(β)} ≤ (β/β₁)² C_Z^{(β₁)} ≈ 7.7 C_Z^{(β₁)} at worst), and a check of the
-reading above. The result would read |R_Z(t)| ≤ C_Z^{(0.003)}(t) b⁴ on [0, 0.25] at |b| = 0.003. It
-inherits the parent's loss: C_Z exceeds the measured remainder by about 10¹⁶, so this is a theorem with a
-constant that carries no information. Not done here (it would modify the parent's chain, and the target
-and scripts of this folder are fixed).
+Purpose (2) is bookkeeping: replace β₁ by β := 3/1000 in those four places and recompute everything
+downstream (R₁, D_r, N_e, Ẽ, D_e inherit the dependence through N_r and S_r*). No new analytic estimate
+is needed; what is needed is one evaluation of C_Z^{(β)}(0.25) in the parent's constants.py and a check of
+the reading above. The first version of this paragraph predicted "C_Z^{(β)} ≤ (β/β₁)² C_Z^{(β₁)} ≈ 7.7
+C_Z^{(β₁)} at worst"; that was wrong by a factor of about six, see the audit record below: β enters the
+chain to the fourth power (the dominant term of Ē is β² Ẽ D_e^{1/2} with Ẽ and D_e^{1/2} each linear in
+β at leading order), and the evaluated increase is 45.9. The result reads |R_Z(t)| ≤ C_Z^{(3/1000)}(t) b⁴
+on [0, 1/4] with C_Z^{(3/1000)}(1/4) ≤ 1.2102·10¹⁴; at b = 0.003 that is |R_Z| ≤ 9.80·10³ against an
+enstrophy of order one, and 1.9·10¹⁸ times the measured |R_Z|/b⁴ = 6.4·10⁻⁵ of ../NOTE.md Table B. A
+theorem with a constant that carries no information. The evaluation was not committed anywhere (it
+modifies the parent's chain; the target and scripts of this folder are fixed).
+
+**Route A audited (19 October 2026).** The session "Navier Stokes-Speech" audited Route A on the
+parent note at cd9c9f0 and this folder at 763c275 without editing either branch; its findings, which I
+checked as stated here:
+
+- *Where |b| < β₁(T) is used.* Exactly as read above: Proposition 1 (strictness at t = 0, the continuity
+  bootstrap, the continuation criterion); Section 4's preamble through Proposition 1; Lemma 3 b-free;
+  Lemma 6 and the six-term identity exactly of order b³ with no bound on b; the non-strict bookkeeping
+  |b| ≤ β₁ in N_r and S_r* (Lemma 5), Ē (Lemma 7) and the terms β₁Q₂Ẽ + ½β₁²Ẽ² of the Theorem. Confirmed.
+- *The constant.* Their interval evaluation of the parent's chain with β = 3/1000 at T = 0.25 (n = 20000,
+  rounded up): N_r ≤ 5.2262·10³ (was 2.1049·10³), Ẽ ≤ 5.8735·10⁸ (2.2538·10⁸), Ē ≤ 2.8179·10¹³
+  (6.1475·10¹¹), C_Z ≤ 1.2102·10¹⁴ (2.6389·10¹²), ratio 45.9. Replicated here digit for digit in a scratch
+  copy of ../constants.py with a three-line hook substituting β for β₁ (the unhooked copy reproduces
+  ../results/constants.log at T = 0.25 first); the scratch copy is not committed.
+- *Lemma M (uniform closure for every |b| ≤ b₀ := 3/1000).* Their statement: in this folder's chain b
+  enters only through |b|n₁, b²C_A²‖Δe‖²/ν, |b|n₂, |b|C_Aε₁ and b²K, each the product of |b| or b² with
+  a nonnegative b-independent quantity (q₁^N, its error bounds ε₀, ε₁, δ₂, S₁ and σ₁ do not depend on b),
+  so ρ₀, ρ₁, R₀, R₁, N_w(t; b), K(t; b) and the left sides of (A), (B), (H1) are nondecreasing in |b|.
+  Confirmed against absorb_chain.py: with the validated cell inputs fixed, rho0_int, Nw, rho1_int2, R0,
+  Nw_tot, Kw2 and lhsA, lhsB1, lhsB2 are built from b only through exp, sums, products and square roots
+  of nonnegative quantities in which b and b² carry nonnegative coefficients, so the exact recursion
+  values are nondecreasing functions of |b| ≥ 0. The uniform closure then runs as follows, which is the
+  precise form I accept: for 0 ≤ |b| ≤ b₀ the hypotheses of Section 1's closure at b, namely (H1)
+  |b|C_Aε₁ ≤ ν/8 and (B) C_A b² K̂(T; b) < ν/2 with K̂ the exact recursion value, follow from the same
+  inequalities at b₀, because K̂(T; b) ≤ K̂(T; b₀) ≤ the rounded-up printed K(T; b₀) = 15.674 and
+  |b| ≤ b₀; the closure (w(0) = 0 for every b, continuity, the enstrophy criterion) therefore gives the
+  smooth solution on [0, T] and ‖∇w_b‖ ≤ b² K̂(T; b) ≤ b² K(T; b₀), hence
+  ‖∇v_b‖ ≤ |b| S₁ + b² K(T; b₀) ≤ b₀ S₁ + b₀² K(T; b₀) ≤ 2.3901·10⁻³ and C_A‖∇v_b‖ ≤ ν/2 on [0, T],
+  for every |b| ≤ 3/1000 and both signs. Two remarks, not gaps: (i) this is monotonicity of the
+  certificate's bounds, proved from the recursion, not monotonicity of the solution in b, of which
+  nothing is known or used; (ii) the rounding direction matters only once, in K̂(T; b₀) ≤ K(T; b₀).
+  The information table of Section 4 (K from 15.673 at b = 0.003 to 15.795 at 0.017) is consistent with
+  Lemma M but is a check, not the proof. No gap found.
+- *The corollary (Route A), accepted.* For a = c = d = 1, ν = 1/28, φ = 37/100, T = 1/4, every
+  |b| ≤ 3/1000 and 0 ≤ t ≤ T: u_b is smooth on [0, T]; ‖∇v(t)‖ ≤ |b| G₁(t) and ∫₀ᵗ ‖Δv‖² ≤ b² D₁(t) with
+  the parent's G₁, D₁ (Lemma 2, whose hypothesis is the absorption inequality above); and
+  |R_Z(t)| ≤ C_Z^{(3/1000)}(t) b⁴ with C_Z^{(3/1000)} the parent's chain with β₁ replaced by 3/1000 in
+  N_r, S_r*, Ē and the Theorem and everything downstream recomputed, C_Z^{(3/1000)}(1/4) ≤ 1.2102·10¹⁴
+  (the parent's "Lemma 0": every constant of that chain is nondecreasing in β, so any β ≥ |b| is
+  admissible). Proof as in their audit: Lemma 1 by existence; Lemma 2 from the certified absorption
+  inequality; Lemma 4's absorption from ‖∇v̄‖ ≤ ‖∇v‖; Lemmas 5, 7 and the Theorem with β = 3/1000;
+  Lemma M for the whole interval. Status: exact calculation on certified constants, a theorem whose
+  constant is vacuous at this b (|R_Z| ≤ 9.80·10³). The audit, Lemma M and the corollary are
+  Navier Stokes-Speech's work; this record is my confirmation of them.
 
 Route B — a constant that means something, built from the certified sharp quantities. Replace the
 G₁, D₁-based chain of ../NOTE.md Lemmas 4–7 by this folder's bounds. The estimates needed, in order:
