@@ -434,17 +434,25 @@ Layout: W_nodes[j, i] is node j = 0..12500, mode n = i − 21; Q_nodes[j, c, ix,
 k_x = ix − 10, k_y = iy − 10. A plain tar of the two files and the manifest
 (absorption-b003-trajectory-63ddc17.tar, 273 233 920 bytes, SHA-256
 6ea552edc5b0a3ca83e1e4a4a1d5ef1aa0b70f55533f43e30c19b0ac643b73de) compresses to 209 MB with xz, above
-GitHub's 100 MB per-file limit, so the arrays are not in the repository: at the time of this commit they
-exist only in the session's worktree (git-ignored `trajectory/`) and scratchpad, and the external
-destination awaits the user's decision (Section 8.1 of the report accompanying this commit lists the
-options). Until then the arrays are regenerable bit-for-bit by absorb_numerics.py on the same platform
-(three regenerations in this session, hashes above each time); the certificate itself does not depend
-on where they are stored.
+GitHub's 100 MB per-file limit, so the arrays are not plain git objects. Since commit 6fbcd80 they are
+stored in this repository through Git LFS, tracked by exact path in this folder's .gitattributes (the
+LFS object ids are the file SHA-256 values above); the user verified the LFS allowance and the disabled
+paid budget before the upload, and a fresh clone followed by `git lfs pull` reproduced both hashes. The
+arrays are also regenerable bit-for-bit by absorb_numerics.py on the same platform (three regenerations
+in this session, hashes above each time); the certificate itself does not depend on where they are
+stored.
 
 check_artifact.py at this commit: step 1 passed; step 2 (`--full`, 11 min) passed — the fresh
 validate_residual.py output is identical to results/validated.json apart from wall time, and the chain
 run on it is identical to results/chain.json, verdict CERTIFIED. This is the standing check for the
 next review: verify the saved arrays' hashes, then rerun the validator end to end.
+
+Independent reproduction at e9aa28a (19 October 2026, reported by the user): every numerical value of
+results/validated.json and of the chain was reproduced exactly from the LFS arrays. The strict
+comparison of check_artifact.py reported one mismatch, in metadata only: the Python version recorded in
+validated.json's arithmetic block (3.13.16 here against 3.12.14 there). The comparison treats that field
+like a number; the distinction to record is that the numerical enclosures agreed to the last digit across
+the two Python versions and only the platform label differed. No value, decision or hash is affected.
 
 ### 8.2 Exactly what follows from the certified condition
 
@@ -460,7 +468,7 @@ b = ±0.003:
    ../NOTE.md Proposition 1 establishes it only for |b| < β₁(0.25) = 1.08·10⁻³. Consequently the conclusions
    of Lemma 2 hold at |b| = 0.003 on [0, T] (Lemma 1 needs no smallness): ‖∇v(t)‖ ≤ |b| G₁(t) and
    ∫₀ᵗ ‖Δv‖² ≤ b² D₁(t). The certified 2.39·10⁻³ is five times below |b| G₁(0.25) = 1.21·10⁻².
-3. ‖v − b q₁‖ ≤ b² N_w ≤ 3.03·10⁻⁶ and ‖∇(v − b q₁)‖ ≤ b² K ≤ 1.41·10⁻⁴ on [0, T]: the response to
+3. ‖v − b q₁‖ ≤ b² N_w ≤ 3.03·10⁻⁶ and ‖∇(v − b q₁)‖ ≤ b² K ≤ 1.4106·10⁻⁴ on [0, T]: the response to
    b sin z is its linear coefficient up to an O(b²) remainder with these explicit constants; since q₁
    has no z-mean, the mean part obeys v̄ = w̄, so ‖∇v̄‖ ≤ b² K as well.
 
@@ -486,7 +494,7 @@ the reading above. The first version of this paragraph predicted "C_Z^{(β)} ≤
 C_Z^{(β₁)} at worst"; that was wrong by a factor of about six, see the audit record below: β enters the
 chain to the fourth power (the dominant term of Ē is β² Ẽ D_e^{1/2} with Ẽ and D_e^{1/2} each linear in
 β at leading order), and the evaluated increase is 45.9. The result reads |R_Z(t)| ≤ C_Z^{(3/1000)}(t) b⁴
-on [0, 1/4] with C_Z^{(3/1000)}(1/4) ≤ 1.2102·10¹⁴; at b = 0.003 that is |R_Z| ≤ 9.80·10³ against an
+on [0, 1/4] with C_Z^{(3/1000)}(1/4) ≤ 1.2102·10¹⁴; at b = 0.003 that is |R_Z| ≤ 9.81·10³ against an
 enstrophy of order one, and 1.9·10¹⁸ times the measured |R_Z|/b⁴ = 6.4·10⁻⁵ of ../NOTE.md Table B. A
 theorem with a constant that carries no information. The evaluation was not committed anywhere (it
 modifies the parent's chain; the target and scripts of this folder are fixed).
@@ -532,7 +540,7 @@ checked as stated here:
   admissible). Proof as in their audit: Lemma 1 by existence; Lemma 2 from the certified absorption
   inequality; Lemma 4's absorption from ‖∇v̄‖ ≤ ‖∇v‖; Lemmas 5, 7 and the Theorem with β = 3/1000;
   Lemma M for the whole interval. Status: exact calculation on certified constants, a theorem whose
-  constant is vacuous at this b (|R_Z| ≤ 9.80·10³). The audit, Lemma M and the corollary are
+  constant is vacuous at this b (|R_Z| ≤ 9.81·10³). The audit, Lemma M and the corollary are
   Navier Stokes-Speech's work; this record is my confirmation of them.
 
 Route B — a constant that means something, built from the certified sharp quantities. Replace the

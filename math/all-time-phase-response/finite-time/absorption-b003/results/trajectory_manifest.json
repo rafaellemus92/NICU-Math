@@ -30,5 +30,5 @@
   }
  },
  "layout": "W_nodes[j, i]: node j = 0..NSTEP, mode n = i - (KW+1) for i = 0..2KW+2; Q_nodes[j, c, ix, iy]: node j, component c, k_x = ix - KQ, k_y = iy - KQ; complex128, raw-bytes SHA-256 below",
- "storage": "local only: trajectory/ in the worktree (git-ignored); tar archive in the session scratchpad; external destination pending user decision"
+ "storage": "Git LFS in this repository since commit 6fbcd80 (tracked by exact path in .gitattributes; object ids = file SHA-256); also regenerable bit-for-bit by absorb_numerics.py on the same platform"
 }
