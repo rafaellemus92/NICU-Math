@@ -1,0 +1,9 @@
+test_exact_enstrophy_balance_and_laplacian_norm (__main__.Balance.test_exact_enstrophy_balance_and_laplacian_norm) ... ok
+test_heat_baseline_symbolic_coefficients (__main__.Balance.test_heat_baseline_symbolic_coefficients) ... ok
+test_initial_normalization_and_zero_excess (__main__.Balance.test_initial_normalization_and_zero_excess) ... ok
+test_positive_excess_does_not_fix_mechanism_signs (__main__.Balance.test_positive_excess_does_not_fix_mechanism_signs) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.033s
+
+OK

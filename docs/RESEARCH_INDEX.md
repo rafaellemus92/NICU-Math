@@ -79,3 +79,13 @@ pin provenance-only and replace the weight check with an exact source/growth
 toy plus actual-code mutation test; all prior scalar results are unchanged.
 Independent Decimal reproduction at b03bfa45ae25d3543d7ecbd3a2361f990d01120f
 is recorded separately from the original read-only proof review.
+
+## Mechanism attribution: exact balance, unresolved split
+
+[Attribution note](../math/all-time-phase-response/finite-time/excess-attribution/NOTE.md)
+derives H=S-nu R with normalized stretching and excess dissipation relative
+to the isolated heat perturbation. The endpoint certificate fixes only this
+combination; it implies S>0 or R<0, not either sign separately. Saved summaries
+and base/q1 cache omit the signed nonlinear observables needed for attribution.
+Four exact algebra tests pass; no empirical attribution or new evolution.
+The note proposes a bounded future paired diagnostic and separate validation gate.

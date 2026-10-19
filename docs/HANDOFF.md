@@ -858,3 +858,34 @@ its final outcome is in AUDIT_REPAIRS.md. No push, PR, merge, deployment, LFS,
 paid call or external-agent contact. Inherited certificates remain assumed,
 not revalidated. Original mpmath tests were not run by the published independent
 Decimal auditor; this stage's focused mpmath regression is a separate check.
+
+## Enstrophy excess mechanism attribution (local)
+
+Owner Codex; new isolated `codex/enstrophy-excess-attribution`, exact base
+`3161f059c24878c9b5ea05e6cc081e72fb53bbc5`. Scope is new
+`math/all-time-phase-response/finite-time/excess-attribution/` plus required
+handoff/index updates. All published results, plans and branches preserved.
+
+Exact identity verified: H(T)=integral(Q_b-Q_U)-nu integral(D_b-D_U-D_heat),
+D=||grad curl u||²=||Delta u||² (twice solver palinstrophy), H(0)=H'(0)=0.
+Positive certified H implies at least positive stretching excess or negative
+dissipation excess, without establishing either contribution separately.
+No derivative of a cumulative upper bound is used as measured dissipation.
+
+Read-only data audit: saved measurements have no Q time history or signed
+Laplacian cross term. Cached arrays are base and q1 only, not q2/full u_b;
+headers and sizes inspected, bodies not loaded or freshly hash-validated.
+The missing mean-q2 pairing contributes already at order b². No attribution
+estimate manufactured from incomplete data. Inventory hashes and precise
+future fixed-parameter diagnostic/resource gates are in the note.
+
+Four exact Fraction/Fourier algebra tests passed in both initial and final
+runs; aggregate process wall time 0.193439s under 60s per-process hard timeout,
+far below 300s. One bounded independent review is recorded
+in REVIEW.md; no recursive reviewers. No DNS, q2/adjoint solve, validator, LFS,
+parameter sweep, push, PR, merge, deployment, paid call or external outreach.
+Unrelated application/web/Lean suites not rerun. A future ten-step timing pilot
+and subsequent diagnostic require separate authorization; none was launched.
+
+Final attribution syntax/whitespace checks passed. The focused reviewer confirmed
+the timing citation and explicit nonzero-stretching test repairs; no blocker.

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "math/all-time-phase-response/finite-time/excess-attribution/test_balance.py",
+    "-v"
+  ],
+  "wall_seconds": 0.09584972899756394,
+  "exit_code": 0
+}

@@ -1,0 +1,27 @@
+{
+  "base": "3161f059c24878c9b5ea05e6cc081e72fb53bbc5",
+  "inspected_sha256": {
+    "results/measurements.json": "d6585fffbaef5e9c0d4fde624c7f127cdd8a8d1d1f4ba0e3b2100b26ecc6c0fc",
+    "check_bounds.py": "be3d7ad4b0622a47f37049ccc117a3f7c4c25f45fc2d8a8d991fd91804c660b3",
+    "absorption-b003/results/trajectory_manifest.json": "8c39c91f4980ef30458c3300f6df0094709873e355546b7c54a764a0553dd847",
+    "absorption-b003/NOTE.md": "652007b552a619625f76b37be7d973ba1e7f6f12a673ab6f7b52e111b38f9a3a",
+    "mean-q2-pilot/results/pilot.json": "fda8968aae2e526030fe39eeae732ef60fdd1ce49650267be3d1d18977d5b6ef",
+    "../response.py": "30f135d87acf6a001626187f9dc89efaf28d985643301d94e1bb00890162a204",
+    "../results/pilot.json": "a26a7fc1a08e304d4f5dbfaa0eb84491f5e43fd5a254da2a74964de0dc2e83f4",
+    "../results/refined.json": "f0ef4d6be4c1ac7799f9639364807758453e805e6d0cbc80a0594908b1d1f139",
+    "../results/observable_remainder.json": "b28f99e3c4dd1679960af527afde75a63b0c005f0b98bcdce12149460fac85bb",
+    "../results/recheck.json": "914412564cf3ba26f327b05b4015c32e0038e36a13984ff62a50e540dbea1648",
+    "../../ns-phase-audit/audit_v2/dns/ns.py": "0ef3836723c1bb199d911c8e22df6a5f6683b97fc51532b163f3f05aab7a95b2",
+    "../../ns-phase-audit/audit_v2/dns/c1_N24_dt0.005.json": "6edc398c042c1f76ab70b70e8f0091942ff5ed282219f9376d502620d9d2d3ad",
+    "../../ns-phase-audit/audit_v2/dns/c3_N24_dt0.005.json": "f506f7b3aa74c7a52eadefd6b774deaf259d48a15030a6192a5ec75e6c8c4ad5",
+    "../../ns-phase-audit/audit_v2/dns/c4_N24_golden_newton.json": "116adf639cd49cc159afc0c41503efe9d3f06364012e398bcdd2013defdb99eb",
+    "../../ns-phase-audit/audit_v2/dns/c5_N24_M16.json": "243d8d692cc11b4461eb5fda8176c3eef3552f8d6dcc6b4a96820d0a42ec50bd"
+  },
+  "cached_array_inspection": "headers and byte sizes only; no body loads or fresh body hash validation",
+  "missing": [
+    "fixed-target Q(u_b),Q(U) histories",
+    "signed Laplacian cross pairing or full nonlinear trajectory",
+    "q2 trajectory for leading-order mechanism"
+  ],
+  "attribution_estimate_computed": false
+}
