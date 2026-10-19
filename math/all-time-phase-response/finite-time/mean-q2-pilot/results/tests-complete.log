@@ -1,0 +1,17 @@
+test_affine_cell_polynomial_matches_direct_midpoint (test_kernels.KernelTests.test_affine_cell_polynomial_matches_direct_midpoint) ... ok
+test_base_product_tail_is_retained (test_kernels.KernelTests.test_base_product_tail_is_retained) ... ok
+test_frozen_exponential_correction (test_kernels.KernelTests.test_frozen_exponential_correction) ... ok
+test_inherited_error_budget_and_initial_data_distinction (test_kernels.KernelTests.test_inherited_error_budget_and_initial_data_distinction) ... ok
+test_initial_sin_z_source_is_exactly_zero_target (test_kernels.KernelTests.test_initial_sin_z_source_is_exactly_zero_target) ... ok
+test_kz0_operator_has_no_vertical_advection (test_kernels.KernelTests.test_kz0_operator_has_no_vertical_advection) ... ok
+test_leray_zero_mode_preserved_for_force_removed_for_approximation (test_kernels.KernelTests.test_leray_zero_mode_preserved_for_force_removed_for_approximation) ... ok
+test_mean_norm_has_no_single_z_harmonic_half_factor (test_kernels.KernelTests.test_mean_norm_has_no_single_z_harmonic_half_factor) ... ok
+test_real_factor_flux_vs_exact_advective_convolution_and_source_tail (test_kernels.KernelTests.test_real_factor_flux_vs_exact_advective_convolution_and_source_tail) ... ok
+test_shear_real_factor (test_kernels.KernelTests.test_shear_real_factor) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.030s
+
+OK
+
+wall_seconds=0.164147

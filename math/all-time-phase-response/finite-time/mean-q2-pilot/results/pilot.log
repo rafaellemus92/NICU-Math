@@ -1,0 +1,5 @@
+cell 0: residual kernel 0.5360s, total 0.7200s, midpoint overlap True
+cell 6250: residual kernel 0.5479s, total 0.7269s, midpoint overlap True
+cell 12499: residual kernel 0.5433s, total 0.7258s, midpoint overlap True
+pilot total wall 2.3589s; residual kernels 1.6272s
+naive 12500-cell residual-only range (seconds): [6699.564012524206, 6849.2658375362225]

@@ -703,3 +703,29 @@ adjoint identity and concrete mean-q2 alternative, error budgets, support/tail
 requirements and unbenchmarked cost estimates before any larger work. A new
 pilot/evolution would require review first. Independent mathematical review
 of this new enclosure/plan remains pending. Stop at this first-stage result.
+
+
+## Forward mean-q2 bounded pilot (Codex, local review only)
+
+Base bc305995c49f3303352e1c1a4e13a50dbf90d965; branch
+`codex/phase-mean-q2-pilot`. Scope is only the authorized correctness/runtime
+pilot, not a full evolution, full validator or coefficient certificate.
+See `math/all-time-phase-response/finite-time/mean-q2-pilot/NOTE.md` for
+operator/source conventions, complete-support residual derivation, inherited
+error budget, measured resources and gated full-run plan.
+
+Ten focused tests pass on Python 3.12.14 / NumPy 2.0.2. Three actual Q/W
+cell pairs with zero/synthetic V probes took 2.3589 seconds including hashes;
+all numerical invocations together took under three seconds, within 300 seconds.
+An initial missing /usr/bin/time invocation did not execute tests; log preserved.
+Residual-only extrapolation is 112–115 minutes, not a runtime guarantee.
+Peak pilot RSS 34832 KiB; planned 251-node mean payload 20,252,688 bytes.
+The full-horizon inherited source allowance is <=3.3118e-5 before propagation;
+the actual mean trajectory residual is unknown. Total-Z2 dominance remains
+uncertified at beta=.003. No retargeting or new scientific success is claimed.
+
+Review the exact mean operator (no w*d_z V), real-harmonic source factors,
+zero-mode distinction, spatial tails, polynomial time residual and frozen-shear
+correction. Independent mathematical review remains pending. Original archives
+and source arrays are unchanged; no new downloads, full runs, pushes or external
+actions. Stop here; the concrete full-run plan needs separate authorization.

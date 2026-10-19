@@ -1,0 +1,25 @@
+{
+  "base_commit": "bc305995c49f3303352e1c1a4e13a50dbf90d965",
+  "pilot_sources_match_recorded_hashes": true,
+  "pinned_inputs_match_recorded_hashes": true,
+  "existing_changes": [
+    "docs/HANDOFF.md",
+    "docs/RESEARCH_INDEX.md"
+  ],
+  "prior_math_archives_unchanged": true,
+  "focused_tests": 10,
+  "independent_review": "pending",
+  "full_evolution_or_validation": "not run",
+  "files_sha256": {
+    "NOTE.md": "a7cdebed97a246179ef56108b3cfe795812eb5efda274fc92b59fcad1117ccdc",
+    "PLAN.md": "f62a4bdd99e7f991edee60539bd09c387ba953fe6659d8b7bb5b89faeccbe636",
+    "kernels.py": "9bc9eea62f5fc2930859f00c514cd80bfcaf138fc543b89a33975a8ccb2d3b86",
+    "pilot.py": "aa0a69cbbc2c5da14dbcd773b999cbb2d79e561024f7e29dd4f6e2ab32e15a18",
+    "results/initial-timer-invocation.log": "8e3f43892beb28eae47e6b7ef22578456ad2b1b19690c9aeffe18bd031d9d157",
+    "results/pilot.json": "fda8968aae2e526030fe39eeae732ef60fdd1ce49650267be3d1d18977d5b6ef",
+    "results/pilot.log": "91e0c498a8460aaa65733b51e39c1c3c45fd57282578941fbacddb7d316f7e84",
+    "results/tests-complete.log": "7118fef87e121349be04e73e3ab8f5bfc4f671586b77ad203d861d1799f34ac2",
+    "results/tests.log": "d91625aa72de8e7ecceae16836474f5f57da352e18b20ffca1ec1cde2b8e7829",
+    "test_kernels.py": "9d2a97efead504732ff67cbf25b211c9d8a320a2d3998cc32dd710adb36094e8"
+  }
+}
