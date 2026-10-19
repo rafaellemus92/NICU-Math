@@ -1,2 +1,4 @@
-trajectory/
+trajectory/*
+!trajectory/W_nodes.npy
+!trajectory/Q_nodes.npy
 __pycache__/
