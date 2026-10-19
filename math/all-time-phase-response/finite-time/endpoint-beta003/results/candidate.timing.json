@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "math/all-time-phase-response/finite-time/endpoint-beta003/check.py",
+    "math/all-time-phase-response/finite-time/endpoint-beta003/results/candidate.json"
+  ],
+  "wall_seconds": 0.14611838499695295,
+  "exit_code": 0
+}

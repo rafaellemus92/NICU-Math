@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/tmp/nicu-reconcile-venv/bin/python",
+    "-B",
+    "math/all-time-phase-response/finite-time/endpoint-beta003/check.py",
+    "math/all-time-phase-response/finite-time/endpoint-beta003/results/first.json"
+  ],
+  "wall_seconds": 0.025097789002757054,
+  "exit_code": 1
+}

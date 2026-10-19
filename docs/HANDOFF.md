@@ -787,3 +787,43 @@ T=.25, phi=.37 (other parameters unchanged). It is not uniform-time dominance
 or dynamically generated enhancement; Z2(0)=1/4. This documentation follow-up
 changes no numerical/source artifacts. Publication approval remains pending;
 no push or merge is authorized or performed.
+
+
+## Fixed beta=.003 interaction-excess refinement (local)
+
+Owner Codex; branch `codex/endpoint-beta003-tightening`, isolated worktree
+`/workspace/NICU-Math-beta003`, exact base
+`6757dcb7655387a09666c7928c0099516188ee38`. Independent audit
+`87fa0e39ac51d8fd63b110af60e88c2f0e606109` inspected read-only.
+Scope is the new `math/all-time-phase-response/finite-time/endpoint-beta003/`
+folder plus required research-index/handoff updates. No prior proof/output,
+application, dependency, branch or physiology artifact is modified.
+
+Selected route: divergence-form energy bound on the mean self response, using
+already committed cumulative envelopes, without differencing them. Fixed
+parameters/target unchanged. Conditional sufficient bound C_new<=377.312890
+replaces1201.917538; J2_lo>=.008200720680466 and beta²C_new<=.003395816008963,
+so H_b(T)/b²>=.004804904671503 throughout0<|b|<=.003. Positive final energy
+is kept in the exact identity and dropped only for the sufficient lower bound.
+The alternate signed-mean route requires M above approximately-.0245231653831
+at the old remainder; no positive-M assumption or mandatory adjoint solve.
+
+See the new PLAN, NOTE, REVIEW, pinned INPUTS and exclusive-create results.
+One focused independent AI reviewer found no blocking proof/code/test defect;
+no independent rerun, inherited-certificate revalidation or formal proof.
+The final review record, handoff/index and commit were not independently reviewed.
+The output's original pending-review status is preserved as run-time provenance;
+REVIEW.md records its later conditional acceptance.
+
+Validation: system Python3.12.14/mpmath1.3.0 postprocessor passed; six focused
+unittest cases passed. First invocation using the separate test venv failed
+before computation (mpmath unavailable); log preserved, no installation.
+Total recorded process time .303954s including that failure, below300s;
+all invocations hard-limited to60s. No arrays, LFS, DNS, full residual validator,
+q2/adjoint evolution or paid calls. Unrelated application/web/Lean suites not run.
+Owner and audit remote heads plus published physiology head55786d4 were checked
+again unchanged. No push, PR, merge or deployment. Human integration remains
+separate. The target is conditional on inherited closure/certificates, not an
+unconditional theorem on NS or an assertion outside this fixed parameter set.
+
+Final syntax check: `python -m compileall -q api ui tests math/all-time-phase-response/finite-time/endpoint-beta003` passed; `git diff --check` passed. Input/source hashes rechecked unchanged before commit.

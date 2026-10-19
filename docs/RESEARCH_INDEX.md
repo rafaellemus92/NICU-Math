@@ -57,3 +57,14 @@ consistency, not clinical validation or a new fluid-dynamics theorem.
 See [the canonical math map](../math/README.md#reconciled-evidence-and-status)
 and [reconciliation review](reconciliation/REVIEW.md) for pinned sources,
 source preservation, claim decisions and fresh tests.
+
+## Fixed interaction-excess endpoint: divergence-form refinement
+
+`math/all-time-phase-response/finite-time/endpoint-beta003/NOTE.md`: conditional
+analytic inequality with directed postprocessing, base6757dcb. Replacing only
+the mean self-term bound yields C_new<=377.312890 and
+H_b(1/4)/b²>=0.004804904671503 for every0<|b|<=.003 at
+a=c=d=1, nu=1/28, phi=37/100, assuming inherited certificates.
+One focused independent AI review accepted the new proof/code/tests without
+rerunning inherited certificates; not a general regularity or novelty claim.
+Original insufficient comparison and all outputs remain preserved.

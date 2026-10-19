@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "math/all-time-phase-response/finite-time/endpoint-beta003/test_check.py",
+    "-v"
+  ],
+  "wall_seconds": 0.1327371730003506,
+  "exit_code": 0
+}
