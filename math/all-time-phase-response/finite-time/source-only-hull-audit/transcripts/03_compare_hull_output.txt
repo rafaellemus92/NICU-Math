@@ -1,0 +1,17 @@
+# Terminal output of scripts/compare_hull_output.py (recorded full.json versus results/full.audit-claude.json), verbatim.
+rows: 250 250
+numerical/content differences: 0
+timing-only differences: 251 (per-cell seconds and wall)
+environment differences:
+   ('/peak_rss_kib', 290880, 295872)
+   ('/python', '3.12.14', '3.13.16')
+structural: []
+all 250 rows identical in every numerical field: True
+bounds identical: True | LF enclosure identical: True
+decisions: True True | wall recorded 36.62 this run 52.23
+  LF_majorant      lo 0.01163409998676984180  hi 0.01163409998676984180
+  abs_M_majorant   lo 0.04188032197489055112  hi 0.04188032197489055112
+  Z2               lo 0.23903543902058530388  hi 0.32288007529848318258
+  threshold        lo 0.06229483570521460066  hi 0.06229483570521460066
+  remainder_upper  lo 5.60653521346931405953  hi 5.60653521346931405953
+max hull radius over cells: 0.00025450459758389433  max source radius: 0.000627703656813071

@@ -1,0 +1,13 @@
+# Summary lines printed by the test runs and the single full source_hull.py run (copied verbatim).
+# Full logs: results/tests_*.log and results/full.audit-claude.log.
+source-only-hull: exit 0, Ran 17 tests in 0.670s, OK, wall 1.11 s
+z2-endpoint: exit 0, Ran 9 tests in 0.268s, OK, wall 0.54 s
+route-b-tightening: exit 0, Ran 8 tests in 0.012s, OK, wall 0.18 s
+route-b-dissipation: exit 0, Ran 8 tests in 0.209s, OK, wall 0.41 s
+mean-q2-pilot: exit 0, Ran 10 tests in 0.032s, OK, wall 0.23 s
+# Test count: 52 executions of 42 distinct tests. The source-only-hull suite already includes the
+# 10 mean-q2-pilot kernel tests (7 hull + 10 kernel = 17); the mean-q2-pilot line ran those 10 again.
+# Distinct: 7 hull + 10 kernel + 9 endpoint + 8 tightening + 8 dissipation = 42.
+
+# source_hull.py --mode full --output <fresh file outside the checkout>, on the existing arrays:
+exit 0, process wall 52.4 s

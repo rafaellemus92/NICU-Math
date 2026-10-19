@@ -1,0 +1,19 @@
+# Terminal output of the first checker version (attempts/scalar_chain.attempt1.py), verbatim. It aborted; no JSON was written.
+G = 1.8534 (as used)     C_endpoint <= 6921.6484116905   beta^2 C_endpoint <= 0.062294835705
+G = own exact upper      C_endpoint <= 6921.3079834826   beta^2 C_endpoint <= 0.062291771851
+M1 <= 2.69134324  M2 <= 3.73880692  sigma <= 1.30981410  Pprop <= 1.94236682
+I_y <= 31.88768420  D_w,new <= 50101.779795  Ahat <= 0.474521867  I_inf <= 37187.232615
+L_r <= 11.58167733  J_r <= 536.540999  N_r <= 22.4958657  E_r <= 563.964241  D_r <= 26664471.5  N_bar <= 3440.17708
+L_N <= 0.011600982569181  DeltaF <= 3.311741758910e-05  LF <= 0.011634099986770
+E in [0.2809157610, 0.2809997533]  G(recorded) = 1.853301043406  own G <= 1.853301043406
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user/5747e705-94f5-5b9e-86ec-b5eb1c6dd9b6/scratchpad/indep/scalar_chain.py", line 80, in <module>
+    print(f'|M| <= {float(up(absM)):.14f}   Z2(T) in [{float(Z2lo):.14f}, {float(Z2hi):.14f}]')
+                                                       ~~~~~^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/mpmath/ctx_iv.py", line 56, in __float__
+    return self.cast(float, libmp.to_float)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/mpmath/ctx_iv.py", line 50, in cast
+    raise ValueError
+ValueError
+wall 0.56 s

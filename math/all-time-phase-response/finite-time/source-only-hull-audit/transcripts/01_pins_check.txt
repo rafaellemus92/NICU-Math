@@ -1,0 +1,38 @@
+# Terminal output of scripts/pins_check.py, run from finite-time/ in the scratch checkout at f4fe230 (copied verbatim).
+Python 3.13.16
+numpy 2.0.2
+ok  absorption-b003/results/chain.json                             pinned by route-b-dissipation/bounds.py
+ok  absorption-b003/results/chain.json                             pinned by source-only-hull/source_hull.py
+ok  absorption-b003/results/chain.json                             pinned by z2-endpoint/endpoint.py
+ok  absorption-b003/results/trajectory_manifest.json               pinned by source-only-hull/source_hull.py
+ok  absorption-b003/results/trajectory_manifest.json               pinned by z2-endpoint/endpoint.py
+ok  absorption-b003/results/validated.json                         pinned by route-b-dissipation/bounds.py
+ok  absorption-b003/results/validated.json                         pinned by source-only-hull/source_hull.py
+ok  absorption-b003/validate_residual.py                           pinned by mean-q2-pilot/kernels.py
+ok  absorption-b003/validate_residual.py                           pinned by source-only-hull/source_hull.py
+ok  constants.py                                                   pinned by mean-q2-pilot/kernels.py
+ok  constants.py                                                   pinned by route-b-dissipation/bounds.py
+ok  constants.py                                                   pinned by route-b-tightening/evaluate.py
+ok  constants.py                                                   pinned by source-only-hull/source_hull.py
+ok  constants.py                                                   pinned by z2-endpoint/endpoint.py
+ok  mean-q2-pilot/kernels.py                                       pinned by source-only-hull/source_hull.py
+ok  results/lattice_sums.log                                       pinned by route-b-dissipation/bounds.py
+ok  route-b-dissipation/results/bounds.review.json                 pinned by route-b-tightening/evaluate.py
+ok  route-b-dissipation/results/bounds.review.json                 pinned by source-only-hull/source_hull.py
+ok  route-b-dissipation/results/bounds.review.json                 pinned by z2-endpoint/endpoint.py
+ok  route-b-tightening/results/time_refinement.final.json          pinned by source-only-hull/source_hull.py
+ok  z2-endpoint/results/endpoint.json                              pinned by route-b-tightening/evaluate.py
+ok  z2-endpoint/results/endpoint.json                              pinned by source-only-hull/source_hull.py
+mismatches: 0
+---- inherited absorption files vs 419e6c3 (git blob comparison):
+identical  validate_residual.py
+identical  absorb_chain.py
+identical  absorb_numerics.py
+identical  results/validated.json
+identical  results/chain.json
+identical  results/trajectory_manifest.json
+identical  constants.py
+identical  results/lattice_sums.log
+---- existing arrays passed to source_hull.py (sha256 of the files; separate command in the same audit):
+0fc8d078c09bf8c8b05e3e0a40bfbe6c019b0c873f1748a0f3bbae8d8112daa9  W_nodes.npy
+7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd  Q_nodes.npy

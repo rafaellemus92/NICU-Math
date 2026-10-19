@@ -1,0 +1,15 @@
+# Terminal output of scripts/scalar_chain.py (the corrected third version), verbatim. It wrote results/scalar_out.json.
+# Only this run's numbers are reported; see attempts/ for the two failed earlier versions.
+G = 1.8534 (as used)     C_endpoint <= 6921.6484116905   beta^2 C_endpoint <= 0.062294835705
+G = own exact upper      C_endpoint <= 6921.3079834826   beta^2 C_endpoint <= 0.062291771851
+M1 <= 2.69134324  M2 <= 3.73880692  sigma <= 1.30981410  Pprop <= 1.94236682
+I_y <= 31.88768420  D_w,new <= 50101.779795  Ahat <= 0.474521867  I_inf <= 37187.232615
+L_r <= 11.58167733  J_r <= 536.540999  N_r <= 22.4958657  E_r <= 563.964241  D_r <= 26664471.5  N_bar <= 3440.17708
+L_N <= 0.011600982569181  DeltaF <= 3.311741758910e-05  LF <= 0.011634099986770
+E in [0.2809157610, 0.2809997533]  G(recorded) = 1.853301043406  own G <= 1.853301043406
+|M| <= 0.04188032197489   Z2(T) in [0.23903543902059, 0.32288007529848]
+threshold beta^2 C_endpoint <= 0.06229483570521
+Z2 lower > threshold: True   margin >= 0.1767406033153707   threshold/Z2lo <= 0.26060920489639144
+LF <= 0.05: True
+strict for all 0<|b|<=beta  <=>  Z2lo > beta^2 C  (b-independent Z2): True
+wall 0.35 s

@@ -1,0 +1,5 @@
+# Terminal output of scripts/endpoint_exact.py, verbatim. It also wrote results/endpoint_fracs.json.
+grad qN(T)^2 exact equals endpoint.json fraction: True
+base vertical Laplacian^2 equals endpoint.json fraction: True
+||grad qN(T)|| ~ 0.7496102395114276   ||Delta w_N(T)||^2 ~ 2.9434979798032823
+wall 0.16 s

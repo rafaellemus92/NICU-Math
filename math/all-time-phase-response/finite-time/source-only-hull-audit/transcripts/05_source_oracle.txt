@@ -1,0 +1,8 @@
+# Terminal output of scripts/source_oracle.py (non-rigorous FFT oracle, advective form), verbatim.
+max over cells of (oracle sup / hull bound): 0.9974748735551039  min: 0.3562016666040437
+any oracle value above its hull bound: False
+max |zero mode| of oracle source: 2.7367634525786444e-18   max energy outside |k|<=20: 1.938785968182953e-17
+trapezoid estimate of integral ||F_N||  (non-rigorous): 0.011516415540307644
+hull rigorous L_N: 0.011600982569180743   ratio hull/estimate: 1.007343172758669
+||F_N|| at t=0, 0.125, 0.25: 0.0 0.0457896877900398 0.09329475232458329
+wall 77.03 s

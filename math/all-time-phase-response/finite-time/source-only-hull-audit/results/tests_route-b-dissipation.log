@@ -1,0 +1,13 @@
+test_cell_initial_energy_without_forcing (test_bounds.BoundsTests.test_cell_initial_energy_without_forcing) ... ok
+test_existing_output_is_preserved (test_bounds.BoundsTests.test_existing_output_is_preserved) ... ok
+test_fourier_cubic_cancellations_and_normalization (test_bounds.BoundsTests.test_fourier_cubic_cancellations_and_normalization) ... ok
+test_linear_enclosures_against_80_digit_reference (test_bounds.BoundsTests.test_linear_enclosures_against_80_digit_reference) ... ok
+test_reproduction_and_all_display_rounding (test_bounds.BoundsTests.test_reproduction_and_all_display_rounding) ... ok
+test_retained_w2_against_exact_rationals (test_bounds.BoundsTests.test_retained_w2_against_exact_rationals) ... ok
+test_scope_mutations_fail_closed (test_bounds.BoundsTests.test_scope_mutations_fail_closed) ... ok
+test_tampered_input_fails_closed (test_bounds.BoundsTests.test_tampered_input_fails_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.209s
+
+OK

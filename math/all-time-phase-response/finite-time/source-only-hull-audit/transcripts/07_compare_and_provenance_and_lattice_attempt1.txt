@@ -1,0 +1,19 @@
+# Terminal output of scripts/compare_and_provenance.py followed, in the same command, by attempts/lattice_sanity.attempt1.py (verbatim).
+full-precision comparison (independent mpmath upper bound vs recorded upper endpoint):
+  Cend  relative difference 1.6e-37   recorded >= mine - 1e-35 rel: True
+  thr   relative difference 1.6e-37   recorded >= mine - 1e-35 rel: True
+  LF    relative difference 1.6e-38   recorded >= mine - 1e-35 rel: True
+  absM  relative difference 5.6e-38   recorded >= mine - 1e-35 rel: True
+  Nbar  relative difference 1.6e-37   recorded >= mine - 1e-35 rel: True
+  Er    relative difference 2.2e-37   recorded >= mine - 1e-35 rel: True
+  Ahat  relative difference 1.4e-37   recorded >= mine - 1e-35 rel: True
+  Z2 lower: mine 0.2390354390205853038886062757  recorded 0.2390354390205853038886062757
+provenance recorded inside outputs:
+  endpoint.json source == endpoint.py: True | plan: True
+  bounds.review.json source == bounds.py: True
+  time_refinement.final.json source/helper/plan: True True True
+  full.json source/plan: True True | my run source: True
+  trajectory hashes recorded in bounds.review.json equal manifest raw-array hashes: True
+---- non-rigorous lattice sanity (cube R=200 plus integral tail):
+sum |k|^-4 ~ 16.54289633287226  C_A^2 = 16.54113330692155
+A_lambda(1e6) ~ 0.4519650214280415  Ahat <= 0.474521867

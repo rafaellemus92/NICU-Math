@@ -1,0 +1,2568 @@
+{
+  "mode": "full",
+  "completed_requested_cells": true,
+  "failure": null,
+  "rows": [
+    {
+      "coarse_cell": 0,
+      "first_node": 0,
+      "last_node": 50,
+      "seconds": 0.21237626999999293,
+      "source_norm_upper_binary64": 0.0010459943067208316,
+      "source_norm_upper_exact": "0.001045994306720831636126067820669049979187548160552978515625",
+      "max_raw_hull_radius": 0.00025003142613142827,
+      "max_source_disc_radius": 0.0005696090275951725
+    },
+    {
+      "coarse_cell": 1,
+      "first_node": 50,
+      "last_node": 100,
+      "seconds": 0.19622772100001384,
+      "source_norm_upper_binary64": 0.0012369149187566146,
+      "source_norm_upper_exact": "0.0012369149187566146064209959831714513711631298065185546875",
+      "max_raw_hull_radius": 0.0002500731547789961,
+      "max_source_disc_radius": 0.0005697323067262383
+    },
+    {
+      "coarse_cell": 2,
+      "first_node": 100,
+      "last_node": 150,
+      "seconds": 0.2249723340000287,
+      "source_norm_upper_binary64": 0.0014977417676112269,
+      "source_norm_upper_exact": "0.00149774176761122688496252752798909568809904158115386962890625",
+      "max_raw_hull_radius": 0.00025011468267346914,
+      "max_source_disc_radius": 0.0005698565347153374
+    },
+    {
+      "coarse_cell": 3,
+      "first_node": 150,
+      "last_node": 200,
+      "seconds": 0.17851829099998895,
+      "source_norm_upper_binary64": 0.0017982008165022341,
+      "source_norm_upper_exact": "0.0017982008165022341124317240002028484013862907886505126953125",
+      "max_raw_hull_radius": 0.0002501560098675646,
+      "max_source_disc_radius": 0.0005699817117170749
+    },
+    {
+      "coarse_cell": 4,
+      "first_node": 200,
+      "last_node": 250,
+      "seconds": 0.1740532140000255,
+      "source_norm_upper_binary64": 0.002121428276456344,
+      "source_norm_upper_exact": "0.00212142827645634378386230167734538554213941097259521484375",
+      "max_raw_hull_radius": 0.0002501971364143714,
+      "max_source_disc_radius": 0.0005701078378705434
+    },
+    {
+      "coarse_cell": 5,
+      "first_node": 250,
+      "last_node": 300,
+      "seconds": 0.17705370800001674,
+      "source_norm_upper_binary64": 0.0024583822834595287,
+      "source_norm_upper_exact": "0.00245838228345952869435819820864708162844181060791015625",
+      "max_raw_hull_radius": 0.00025023806236735527,
+      "max_source_disc_radius": 0.0005702349132992564
+    },
+    {
+      "coarse_cell": 6,
+      "first_node": 300,
+      "last_node": 350,
+      "seconds": 0.19333644900001445,
+      "source_norm_upper_binary64": 0.0028040517520329347,
+      "source_norm_upper_exact": "0.0028040517520329347363194916198381179128773510456085205078125",
+      "max_raw_hull_radius": 0.0002502787877803582,
+      "max_source_disc_radius": 0.0005703629381110938
+    },
+    {
+      "coarse_cell": 7,
+      "first_node": 350,
+      "last_node": 400,
+      "seconds": 0.24888056600002528,
+      "source_norm_upper_binary64": 0.0031555150908416235,
+      "source_norm_upper_exact": "0.00315551509084162351559399439793196506798267364501953125",
+      "max_raw_hull_radius": 0.00025031931270759895,
+      "max_source_disc_radius": 0.0005704919123982938
+    },
+    {
+      "coarse_cell": 8,
+      "first_node": 400,
+      "last_node": 450,
+      "seconds": 0.19766628799999353,
+      "source_norm_upper_binary64": 0.003510980805527573,
+      "source_norm_upper_exact": "0.003510980805527572946866943226496005081571638584136962890625",
+      "max_raw_hull_radius": 0.0002503596372036658,
+      "max_source_disc_radius": 0.0005706218362373661
+    },
+    {
+      "coarse_cell": 9,
+      "first_node": 450,
+      "last_node": 500,
+      "seconds": 0.17952073300000393,
+      "source_norm_upper_binary64": 0.003869299571814624,
+      "source_norm_upper_exact": "0.003869299571814623951715450544952545897103846073150634765625",
+      "max_raw_hull_radius": 0.00025039976132352646,
+      "max_source_disc_radius": 0.0005707527096890995
+    },
+    {
+      "coarse_cell": 10,
+      "first_node": 500,
+      "last_node": 550,
+      "seconds": 0.20186002399998415,
+      "source_norm_upper_binary64": 0.004229704591817063,
+      "source_norm_upper_exact": "0.00422970459181706316675875001465101377107203006744384765625",
+      "max_raw_hull_radius": 0.00025043968512252325,
+      "max_source_disc_radius": 0.0005708845327985596
+    },
+    {
+      "coarse_cell": 11,
+      "first_node": 550,
+      "last_node": 600,
+      "seconds": 0.1992683990000046,
+      "source_norm_upper_binary64": 0.004591666786932988,
+      "source_norm_upper_exact": "0.004591666786932987846803211340329653467051684856414794921875",
+      "max_raw_hull_radius": 0.00025047940865638316,
+      "max_source_disc_radius": 0.0005710173055949869
+    },
+    {
+      "coarse_cell": 12,
+      "first_node": 600,
+      "last_node": 650,
+      "seconds": 0.18664113200003385,
+      "source_norm_upper_binary64": 0.004954810416465114,
+      "source_norm_upper_exact": "0.004954810416465113727391145204137501423247158527374267578125",
+      "max_raw_hull_radius": 0.00025051893198119423,
+      "max_source_disc_radius": 0.000571151028091881
+    },
+    {
+      "coarse_cell": 13,
+      "first_node": 650,
+      "last_node": 700,
+      "seconds": 0.18170440599999438,
+      "source_norm_upper_binary64": 0.005318861926359247,
+      "source_norm_upper_exact": "0.0053188619263592473718205155819305218756198883056640625",
+      "max_raw_hull_radius": 0.0002505582551534293,
+      "max_source_disc_radius": 0.0005712857002869177
+    },
+    {
+      "coarse_cell": 14,
+      "first_node": 700,
+      "last_node": 750,
+      "seconds": 0.18767701500001976,
+      "source_norm_upper_binary64": 0.005683617833673731,
+      "source_norm_upper_exact": "0.00568361783367373092634711184700790909118950366973876953125",
+      "max_raw_hull_radius": 0.0002505973782299455,
+      "max_source_disc_radius": 0.0005714213221620037
+    },
+    {
+      "coarse_cell": 15,
+      "first_node": 750,
+      "last_node": 800,
+      "seconds": 0.2246954590000314,
+      "source_norm_upper_binary64": 0.006048923925556238,
+      "source_norm_upper_exact": "0.006048923925556237875256204716833963175304234027862548828125",
+      "max_raw_hull_radius": 0.0002506363012679555,
+      "max_source_disc_radius": 0.0005715578936832115
+    },
+    {
+      "coarse_cell": 16,
+      "first_node": 800,
+      "last_node": 850,
+      "seconds": 0.17724268099999563,
+      "source_norm_upper_binary64": 0.006414661409645865,
+      "source_norm_upper_exact": "0.006414661409645865293438493637268038582988083362579345703125",
+      "max_raw_hull_radius": 0.0002506750243250822,
+      "max_source_disc_radius": 0.0005716954148008319
+    },
+    {
+      "coarse_cell": 17,
+      "first_node": 850,
+      "last_node": 900,
+      "seconds": 0.18307628499997008,
+      "source_norm_upper_binary64": 0.006780737463684091,
+      "source_norm_upper_exact": "0.00678073746368409134566146434508482343517243862152099609375",
+      "max_raw_hull_radius": 0.00025071354745928435,
+      "max_source_disc_radius": 0.0005718338854493478
+    },
+    {
+      "coarse_cell": 18,
+      "first_node": 900,
+      "last_node": 950,
+      "seconds": 0.21800345500003004,
+      "source_norm_upper_binary64": 0.007147078644033969,
+      "source_norm_upper_exact": "0.007147078644033968801430045658662493224255740642547607421875",
+      "max_raw_hull_radius": 0.00025075187072893254,
+      "max_source_disc_radius": 0.0005719733055474367
+    },
+    {
+      "coarse_cell": 19,
+      "first_node": 950,
+      "last_node": 1000,
+      "seconds": 0.17794696699996848,
+      "source_norm_upper_binary64": 0.007513626196940217,
+      "source_norm_upper_exact": "0.007513626196940217417952201373054776922799646854400634765625",
+      "max_raw_hull_radius": 0.00025078999419275846,
+      "max_source_disc_radius": 0.0005721136749980397
+    },
+    {
+      "coarse_cell": 20,
+      "first_node": 1000,
+      "last_node": 1050,
+      "seconds": 0.1736883300000045,
+      "source_norm_upper_binary64": 0.007880332663663522,
+      "source_norm_upper_exact": "0.00788033266366352201648393105415379977785050868988037109375",
+      "max_raw_hull_radius": 0.000250827917909871,
+      "max_source_disc_radius": 0.0005722549936882602
+    },
+    {
+      "coarse_cell": 21,
+      "first_node": 1050,
+      "last_node": 1100,
+      "seconds": 0.1784985749999919,
+      "source_norm_upper_binary64": 0.008247159382729297,
+      "source_norm_upper_exact": "0.008247159382729296606129310021060518920421600341796875",
+      "max_raw_hull_radius": 0.00025086564193976536,
+      "max_source_disc_radius": 0.0005723972614894707
+    },
+    {
+      "coarse_cell": 22,
+      "first_node": 1100,
+      "last_node": 1150,
+      "seconds": 0.2044765839999627,
+      "source_norm_upper_binary64": 0.008614074625273593,
+      "source_norm_upper_exact": "0.0086140746252735926613564032550129923038184642791748046875",
+      "max_raw_hull_radius": 0.00025090316634231586,
+      "max_source_disc_radius": 0.0005725404782572889
+    },
+    {
+      "coarse_cell": 23,
+      "first_node": 1150,
+      "last_node": 1200,
+      "seconds": 0.20549185999999509,
+      "source_norm_upper_binary64": 0.008981052184414083,
+      "source_norm_upper_exact": "0.00898105218441408274798742894517999957315623760223388671875",
+      "max_raw_hull_radius": 0.00025094049117775863,
+      "max_source_disc_radius": 0.000572684643831605
+    },
+    {
+      "coarse_cell": 24,
+      "first_node": 1200,
+      "last_node": 1250,
+      "seconds": 0.18906069100000877,
+      "source_norm_upper_binary64": 0.009348070295050465,
+      "source_norm_upper_exact": "0.00934807029505046495343467682914706529118120670318603515625",
+      "max_raw_hull_radius": 0.00025097761650672484,
+      "max_source_disc_radius": 0.0005728297580365606
+    },
+    {
+      "coarse_cell": 25,
+      "first_node": 1250,
+      "last_node": 1300,
+      "seconds": 0.18848236800005225,
+      "source_norm_upper_binary64": 0.009715110797412786,
+      "source_norm_upper_exact": "0.00971511079741278586741071165988614666275680065155029296875",
+      "max_raw_hull_radius": 0.0002510145423902213,
+      "max_source_disc_radius": 0.0005729758206806465
+    },
+    {
+      "coarse_cell": 26,
+      "first_node": 1300,
+      "last_node": 1350,
+      "seconds": 0.17767640900001425,
+      "source_norm_upper_binary64": 0.010082158482662995,
+      "source_norm_upper_exact": "0.01008215848266299542734802940913141355849802494049072265625",
+      "max_raw_hull_radius": 0.00025105126888962743,
+      "max_source_disc_radius": 0.0005731228315566188
+    },
+    {
+      "coarse_cell": 27,
+      "first_node": 1350,
+      "last_node": 1400,
+      "seconds": 0.18238820300001635,
+      "source_norm_upper_binary64": 0.010449200576040091,
+      "source_norm_upper_exact": "0.01044920057604009112905973921670010895468294620513916015625",
+      "max_raw_hull_radius": 0.00025108779606671037,
+      "max_source_disc_radius": 0.0005732707904416137
+    },
+    {
+      "coarse_cell": 28,
+      "first_node": 1400,
+      "last_node": 1450,
+      "seconds": 0.1775014049999868,
+      "source_norm_upper_binary64": 0.010816226325030055,
+      "source_norm_upper_exact": "0.01081622632503005491944048088726049172692000865936279296875",
+      "max_raw_hull_radius": 0.00025112412398360477,
+      "max_source_disc_radius": 0.0005734196970970959
+    },
+    {
+      "coarse_cell": 29,
+      "first_node": 1450,
+      "last_node": 1500,
+      "seconds": 0.17673078899997563,
+      "source_norm_upper_binary64": 0.011183226668525299,
+      "source_norm_upper_exact": "0.0111832266685252985916054768722460721619427204132080078125",
+      "max_raw_hull_radius": 0.00025116025270283663,
+      "max_source_disc_radius": 0.000573569551268951
+    },
+    {
+      "coarse_cell": 30,
+      "first_node": 1500,
+      "last_node": 1550,
+      "seconds": 0.20300940499998887,
+      "source_norm_upper_binary64": 0.01155019396901396,
+      "source_norm_upper_exact": "0.011550193969013959616187747769799898378551006317138671875",
+      "max_raw_hull_radius": 0.0002511961822873011,
+      "max_source_disc_radius": 0.0005737203526874537
+    },
+    {
+      "coarse_cell": 31,
+      "first_node": 1550,
+      "last_node": 1600,
+      "seconds": 0.33574785799999063,
+      "source_norm_upper_binary64": 0.011917121794244093,
+      "source_norm_upper_exact": "0.0119171217942440933745817943645306513644754886627197265625",
+      "max_raw_hull_radius": 0.00025123191280028667,
+      "max_source_disc_radius": 0.0005738721010673143
+    },
+    {
+      "coarse_cell": 32,
+      "first_node": 1600,
+      "last_node": 1650,
+      "seconds": 0.1812348099999781,
+      "source_norm_upper_binary64": 0.01228400473803443,
+      "source_norm_upper_exact": "0.0122840047380344298544319059374174685217440128326416015625",
+      "max_raw_hull_radius": 0.0002512674443054491,
+      "max_source_disc_radius": 0.0005740247961076681
+    },
+    {
+      "coarse_cell": 33,
+      "first_node": 1650,
+      "last_node": 1700,
+      "seconds": 0.18932340500003875,
+      "source_norm_upper_binary64": 0.012650838272293002,
+      "source_norm_upper_exact": "0.0126508382722930017016960135833869571797549724578857421875",
+      "max_raw_hull_radius": 0.0002513027768668185,
+      "max_source_disc_radius": 0.000574178437492169
+    },
+    {
+      "coarse_cell": 34,
+      "first_node": 1700,
+      "last_node": 1750,
+      "seconds": 0.22873792799998682,
+      "source_norm_upper_binary64": 0.013017618624089917,
+      "source_norm_upper_exact": "0.0130176186240899167956275306323732365854084491729736328125",
+      "max_raw_hull_radius": 0.00025133791054882365,
+      "max_source_disc_radius": 0.0005743330248889477
+    },
+    {
+      "coarse_cell": 35,
+      "first_node": 1750,
+      "last_node": 1800,
+      "seconds": 0.18146796899998208,
+      "source_norm_upper_binary64": 0.013384342672978123,
+      "source_norm_upper_exact": "0.01338434267297812334251982946398129570297896862030029296875",
+      "max_raw_hull_radius": 0.00025137284541627467,
+      "max_source_disc_radius": 0.0005744885579507296
+    },
+    {
+      "coarse_cell": 36,
+      "first_node": 1800,
+      "last_node": 1850,
+      "seconds": 0.23610353700001951,
+      "source_norm_upper_binary64": 0.01375100786477977,
+      "source_norm_upper_exact": "0.01375100786477976948229962061986952903680503368377685546875",
+      "max_raw_hull_radius": 0.0002514075815343422,
+      "max_source_disc_radius": 0.0005746450363147096
+    },
+    {
+      "coarse_cell": 37,
+      "first_node": 1850,
+      "last_node": 1900,
+      "seconds": 0.21315094600004159,
+      "source_norm_upper_binary64": 0.014117612138841726,
+      "source_norm_upper_exact": "0.01411761213884172617982759589949637302197515964508056640625",
+      "max_raw_hull_radius": 0.0002514421189685921,
+      "max_source_disc_radius": 0.0005748024596027568
+    },
+    {
+      "coarse_cell": 38,
+      "first_node": 1900,
+      "last_node": 1950,
+      "seconds": 0.17817277299997158,
+      "source_norm_upper_binary64": 0.014484153866370175,
+      "source_norm_upper_exact": "0.01448415386637017486515244257816448225639760494232177734375",
+      "max_raw_hull_radius": 0.00025147645778495425,
+      "max_source_disc_radius": 0.0005749608274213139
+    },
+    {
+      "coarse_cell": 39,
+      "first_node": 1950,
+      "last_node": 2000,
+      "seconds": 0.22011398199998666,
+      "source_norm_upper_binary64": 0.01485063179792682,
+      "source_norm_upper_exact": "0.01485063179792681965774026053850320749916136264801025390625",
+      "max_raw_hull_radius": 0.0002515105980497644,
+      "max_source_disc_radius": 0.0005751201393614824
+    },
+    {
+      "coarse_cell": 40,
+      "first_node": 2000,
+      "last_node": 2050,
+      "seconds": 0.18496798700005002,
+      "source_norm_upper_binary64": 0.01521704501853839,
+      "source_norm_upper_exact": "0.01521704501853838979730237923604363459162414073944091796875",
+      "max_raw_hull_radius": 0.0002515445398297328,
+      "max_source_disc_radius": 0.0005752803949990505
+    },
+    {
+      "coarse_cell": 41,
+      "first_node": 2050,
+      "last_node": 2100,
+      "seconds": 0.18273583199999166,
+      "source_norm_upper_binary64": 0.015583392909163562,
+      "source_norm_upper_exact": "0.0155833929091635618735534052348157274536788463592529296875",
+      "max_raw_hull_radius": 0.00025157828319194426,
+      "max_source_disc_radius": 0.0005754415938944933
+    },
+    {
+      "coarse_cell": 42,
+      "first_node": 2100,
+      "last_node": 2150,
+      "seconds": 0.22222217800003818,
+      "source_norm_upper_binary64": 0.015949675113491678,
+      "source_norm_upper_exact": "0.015949675113491677824750780700924224220216274261474609375",
+      "max_raw_hull_radius": 0.0002516118282038512,
+      "max_source_disc_radius": 0.0005756037355930592
+    },
+    {
+      "coarse_cell": 43,
+      "first_node": 2150,
+      "last_node": 2200,
+      "seconds": 0.17435631400002194,
+      "source_norm_upper_binary64": 0.016315891509233123,
+      "source_norm_upper_exact": "0.0163158915092331234519829052942441194318234920501708984375",
+      "max_raw_hull_radius": 0.00025164517493331533,
+      "max_source_disc_radius": 0.0005757668196247518
+    },
+    {
+      "coarse_cell": 44,
+      "first_node": 2200,
+      "last_node": 2250,
+      "seconds": 0.21268844600001557,
+      "source_norm_upper_binary64": 0.016682042183208446,
+      "source_norm_upper_exact": "0.0166820421832084460345146936788296443410217761993408203125",
+      "max_raw_hull_radius": 0.0002516783234485627,
+      "max_source_disc_radius": 0.000575930845504333
+    },
+    {
+      "coarse_cell": 45,
+      "first_node": 2250,
+      "last_node": 2300,
+      "seconds": 0.17989851400000134,
+      "source_norm_upper_binary64": 0.017048127409663053,
+      "source_norm_upper_exact": "0.0170481274096630532055574036576217622496187686920166015625",
+      "max_raw_hull_radius": 0.00025171127381823924,
+      "max_source_disc_radius": 0.0005760958127314609
+    },
+    {
+      "coarse_cell": 46,
+      "first_node": 2300,
+      "last_node": 2350,
+      "seconds": 0.201624876999972,
+      "source_norm_upper_binary64": 0.0174141476313307,
+      "source_norm_upper_exact": "0.017414147631330700871643557547940872609615325927734375",
+      "max_raw_hull_radius": 0.00025174402611130646,
+      "max_source_disc_radius": 0.0005762617207906093
+    },
+    {
+      "coarse_cell": 47,
+      "first_node": 2350,
+      "last_node": 2400,
+      "seconds": 0.3312097310000013,
+      "source_norm_upper_binary64": 0.01778010344284828,
+      "source_norm_upper_exact": "0.0177801034428482808424920591505724587477743625640869140625",
+      "max_raw_hull_radius": 0.0002517765803971388,
+      "max_source_disc_radius": 0.0005764285691511378
+    },
+    {
+      "coarse_cell": 48,
+      "first_node": 2400,
+      "last_node": 2450,
+      "seconds": 0.3418359519999967,
+      "source_norm_upper_binary64": 0.018145995576188213,
+      "source_norm_upper_exact": "0.018145995576188213294077655746150412596762180328369140625",
+      "max_raw_hull_radius": 0.0002518089367455204,
+      "max_source_disc_radius": 0.0005765963572674409
+    },
+    {
+      "coarse_cell": 49,
+      "first_node": 2450,
+      "last_node": 2500,
+      "seconds": 0.2890119300000151,
+      "source_norm_upper_binary64": 0.018511824887827915,
+      "source_norm_upper_exact": "0.0185118248878279149927106317363723064772784709930419921875",
+      "max_raw_hull_radius": 0.0002518410952265857,
+      "max_source_disc_radius": 0.0005767650845787556
+    },
+    {
+      "coarse_cell": 50,
+      "first_node": 2500,
+      "last_node": 2550,
+      "seconds": 0.1952060030000098,
+      "source_norm_upper_binary64": 0.018877592347419727,
+      "source_norm_upper_exact": "0.0188775923474197269980034974423688254319131374359130859375",
+      "max_raw_hull_radius": 0.0002518730559108545,
+      "max_source_disc_radius": 0.0005769347505093364
+    },
+    {
+      "coarse_cell": 51,
+      "first_node": 2550,
+      "last_node": 2600,
+      "seconds": 0.22676439700001083,
+      "source_norm_upper_binary64": 0.019243299027760515,
+      "source_norm_upper_exact": "0.019243299027760514541274261546277557499706745147705078125",
+      "max_raw_hull_radius": 0.00025190481886924927,
+      "max_source_disc_radius": 0.000577105354468484
+    },
+    {
+      "coarse_cell": 52,
+      "first_node": 2600,
+      "last_node": 2650,
+      "seconds": 0.2088480259999983,
+      "source_norm_upper_binary64": 0.019608946095890294,
+      "source_norm_upper_exact": "0.0196089460958902943310544486621438409201800823211669921875",
+      "max_raw_hull_radius": 0.0002519363841730569,
+      "max_source_disc_radius": 0.0005772768958505906
+    },
+    {
+      "coarse_cell": 53,
+      "first_node": 2650,
+      "last_node": 2700,
+      "seconds": 0.2193244479999521,
+      "source_norm_upper_binary64": 0.019974534805174405,
+      "source_norm_upper_exact": "0.0199745348051744049666655911323687178082764148712158203125",
+      "max_raw_hull_radius": 0.00025196775189395326,
+      "max_source_disc_radius": 0.0005774493740351067
+    },
+    {
+      "coarse_cell": 54,
+      "first_node": 2700,
+      "last_node": 2750,
+      "seconds": 0.2535983999999871,
+      "source_norm_upper_binary64": 0.02034006648824485,
+      "source_norm_upper_exact": "0.0203400664882448511949775138418772257864475250244140625",
+      "max_raw_hull_radius": 0.0002519989221040168,
+      "max_source_disc_radius": 0.000577622788386611
+    },
+    {
+      "coarse_cell": 55,
+      "first_node": 2750,
+      "last_node": 2800,
+      "seconds": 0.24187850599997773,
+      "source_norm_upper_binary64": 0.020705542550693855,
+      "source_norm_upper_exact": "0.0207055425506938554913727301709513994865119457244873046875",
+      "max_raw_hull_radius": 0.00025202989487566995,
+      "max_source_disc_radius": 0.0005777971382548109
+    },
+    {
+      "coarse_cell": 56,
+      "first_node": 2800,
+      "last_node": 2850,
+      "seconds": 0.20584059399999433,
+      "source_norm_upper_binary64": 0.02107096446542794,
+      "source_norm_upper_exact": "0.0210709644654279402986585267854025005362927913665771484375",
+      "max_raw_hull_radius": 0.00025206067028173086,
+      "max_source_disc_radius": 0.0005779724229746854
+    },
+    {
+      "coarse_cell": 57,
+      "first_node": 2850,
+      "last_node": 2900,
+      "seconds": 0.2518601799999942,
+      "source_norm_upper_binary64": 0.021436333767602903,
+      "source_norm_upper_exact": "0.0214363337676029032385915940039922134019434452056884765625",
+      "max_raw_hull_radius": 0.0002520912483954553,
+      "max_source_disc_radius": 0.0005781486418664316
+    },
+    {
+      "coarse_cell": 58,
+      "first_node": 2900,
+      "last_node": 2950,
+      "seconds": 0.2156151080000086,
+      "source_norm_upper_binary64": 0.02180165205007129,
+      "source_norm_upper_exact": "0.0218016520500712886188043881929843337275087833404541015625",
+      "max_raw_hull_radius": 0.00025212162929039085,
+      "max_source_disc_radius": 0.0005783257942354415
+    },
+    {
+      "coarse_cell": 59,
+      "first_node": 2950,
+      "last_node": 3000,
+      "seconds": 0.17723397500003557,
+      "source_norm_upper_binary64": 0.022166920959282972,
+      "source_norm_upper_exact": "0.022166920959282972181103588127371040172874927520751953125",
+      "max_raw_hull_radius": 0.0002521518130405436,
+      "max_source_disc_radius": 0.0005785038793724893
+    },
+    {
+      "coarse_cell": 60,
+      "first_node": 3000,
+      "last_node": 3050,
+      "seconds": 0.17767266300000983,
+      "source_norm_upper_binary64": 0.022532142191586654,
+      "source_norm_upper_exact": "0.02253214219158665432285459928607451729476451873779296875",
+      "max_raw_hull_radius": 0.00025218179972027034,
+      "max_source_disc_radius": 0.0005786828965536712
+    },
+    {
+      "coarse_cell": 61,
+      "first_node": 3050,
+      "last_node": 3100,
+      "seconds": 0.17978242499998487,
+      "source_norm_upper_binary64": 0.022897317489887613,
+      "source_norm_upper_exact": "0.0228973174898876134786274150201279553584754467010498046875",
+      "max_raw_hull_radius": 0.00025221158940434154,
+      "max_source_disc_radius": 0.0005788628450404539
+    },
+    {
+      "coarse_cell": 62,
+      "first_node": 3100,
+      "last_node": 3150,
+      "seconds": 0.1892507399999772,
+      "source_norm_upper_binary64": 0.023262448640621915,
+      "source_norm_upper_exact": "0.023262448640621914697224070778247551061213016510009765625",
+      "max_raw_hull_radius": 0.0002522411821678715,
+      "max_source_disc_radius": 0.0005790437240796044
+    },
+    {
+      "coarse_cell": 63,
+      "first_node": 3150,
+      "last_node": 3200,
+      "seconds": 0.19295767399995611,
+      "source_norm_upper_binary64": 0.023627537471012972,
+      "source_norm_upper_exact": "0.0236275374710129722199969393159335595555603504180908203125",
+      "max_raw_hull_radius": 0.0002522705780863638,
+      "max_source_disc_radius": 0.0005792255329035197
+    },
+    {
+      "coarse_cell": 64,
+      "first_node": 3200,
+      "last_node": 3250,
+      "seconds": 0.18894218899998805,
+      "source_norm_upper_binary64": 0.023992585846579834,
+      "source_norm_upper_exact": "0.0239925858465798343133190684284272720105946063995361328125",
+      "max_raw_hull_radius": 0.00025229977723577703,
+      "max_source_disc_radius": 0.0005794082707300196
+    },
+    {
+      "coarse_cell": 65,
+      "first_node": 3250,
+      "last_node": 3300,
+      "seconds": 0.18463952899998048,
+      "source_norm_upper_binary64": 0.024357595668870604,
+      "source_norm_upper_exact": "0.0243575956688706039832137406619949615560472011566162109375",
+      "max_raw_hull_radius": 0.0002523287796923481,
+      "max_source_disc_radius": 0.0005795919367623305
+    },
+    {
+      "coarse_cell": 66,
+      "first_node": 3300,
+      "last_node": 3350,
+      "seconds": 0.18165926599999693,
+      "source_norm_upper_binary64": 0.02472256887339763,
+      "source_norm_upper_exact": "0.0247225688733976288469218474119770689867436885833740234375",
+      "max_raw_hull_radius": 0.0002523575855327622,
+      "max_source_disc_radius": 0.0005797765301892601
+    },
+    {
+      "coarse_cell": 67,
+      "first_node": 3350,
+      "last_node": 3400,
+      "seconds": 0.18096485400002393,
+      "source_norm_upper_binary64": 0.025087507427754032,
+      "source_norm_upper_exact": "0.0250875074277540320577539745272588334046304225921630859375",
+      "max_raw_hull_radius": 0.0002523861948341179,
+      "max_source_disc_radius": 0.0005799620501853798
+    },
+    {
+      "coarse_cell": 68,
+      "first_node": 3400,
+      "last_node": 3450,
+      "seconds": 0.17405040499994584,
+      "source_norm_upper_binary64": 0.02545241332989225,
+      "source_norm_upper_exact": "0.0254524133298922490553639619292880524881184101104736328125",
+      "max_raw_hull_radius": 0.0002524146076738237,
+      "max_source_disc_radius": 0.00058014849591068
+    },
+    {
+      "coarse_cell": 69,
+      "first_node": 3450,
+      "last_node": 3500,
+      "seconds": 0.1781043249999925,
+      "source_norm_upper_binary64": 0.025817288606549794,
+      "source_norm_upper_exact": "0.0258172886065497937668755668028097716160118579864501953125",
+      "max_raw_hull_radius": 0.00025244282412972916,
+      "max_source_disc_radius": 0.0005803358665109435
+    },
+    {
+      "coarse_cell": 70,
+      "first_node": 3500,
+      "last_node": 3550,
+      "seconds": 0.17468085500001962,
+      "source_norm_upper_binary64": 0.026182135311806437,
+      "source_norm_upper_exact": "0.0261821353118064370502082738312310539186000823974609375",
+      "max_raw_hull_radius": 0.0002524708442800491,
+      "max_source_disc_radius": 0.0005805241611175846
+    },
+    {
+      "coarse_cell": 71,
+      "first_node": 3550,
+      "last_node": 3600,
+      "seconds": 0.1807882229999791,
+      "source_norm_upper_binary64": 0.026546955525760935,
+      "source_norm_upper_exact": "0.0265469555257609353404735230697042425163090229034423828125",
+      "max_raw_hull_radius": 0.0002524986682033914,
+      "max_source_disc_radius": 0.0005807133788476716
+    },
+    {
+      "coarse_cell": 72,
+      "first_node": 3600,
+      "last_node": 3650,
+      "seconds": 0.21583852999998498,
+      "source_norm_upper_binary64": 0.02691175135331553,
+      "source_norm_upper_exact": "0.0269117513533155307270394729357576579786837100982666015625",
+      "max_raw_hull_radius": 0.0002525262959787498,
+      "max_source_disc_radius": 0.0005809035188042236
+    },
+    {
+      "coarse_cell": 73,
+      "first_node": 3650,
+      "last_node": 3700,
+      "seconds": 0.3622301799999832,
+      "source_norm_upper_binary64": 0.027276524923057727,
+      "source_norm_upper_exact": "0.0272765249230577273842346386345525388605892658233642578125",
+      "max_raw_hull_radius": 0.00025255372768546937,
+      "max_source_disc_radius": 0.0005810945800760572
+    },
+    {
+      "coarse_cell": 74,
+      "first_node": 3700,
+      "last_node": 3750,
+      "seconds": 0.22537159099999826,
+      "source_norm_upper_binary64": 0.027641278386230903,
+      "source_norm_upper_exact": "0.0276412783862309031912563028754448168911039829254150390625",
+      "max_raw_hull_radius": 0.0002525809634033785,
+      "max_source_disc_radius": 0.0005812865617375925
+    },
+    {
+      "coarse_cell": 75,
+      "first_node": 3750,
+      "last_node": 3800,
+      "seconds": 0.18903061200001048,
+      "source_norm_upper_binary64": 0.02800601391578519,
+      "source_norm_upper_exact": "0.0280060139157851904767593254064195207320153713226318359375",
+      "max_raw_hull_radius": 0.00025260800321257374,
+      "max_source_disc_radius": 0.0005814794628494779
+    },
+    {
+      "coarse_cell": 76,
+      "first_node": 3800,
+      "last_node": 3850,
+      "seconds": 0.19145704800001795,
+      "source_norm_upper_binary64": 0.02837073370550097,
+      "source_norm_upper_exact": "0.0283707337055009688187023897398830740712583065032958984375",
+      "max_raw_hull_radius": 0.0002526348471936072,
+      "max_source_disc_radius": 0.0005816732824579537
+    },
+    {
+      "coarse_cell": 77,
+      "first_node": 3850,
+      "last_node": 3900,
+      "seconds": 0.21149365799999487,
+      "source_norm_upper_binary64": 0.028735439969179516,
+      "source_norm_upper_exact": "0.0287354399691795159288432159883086569607257843017578125",
+      "max_raw_hull_radius": 0.00025266149542743795,
+      "max_source_disc_radius": 0.0005818680195954893
+    },
+    {
+      "coarse_cell": 78,
+      "first_node": 3900,
+      "last_node": 3950,
+      "seconds": 0.20598903699999482,
+      "source_norm_upper_binary64": 0.029100134939893392,
+      "source_norm_upper_exact": "0.029100134939893392005405559075370547361671924591064453125",
+      "max_raw_hull_radius": 0.0002526879479953211,
+      "max_source_disc_radius": 0.0005820636732804371
+    },
+    {
+      "coarse_cell": 79,
+      "first_node": 3950,
+      "last_node": 4000,
+      "seconds": 0.2145727139999849,
+      "source_norm_upper_binary64": 0.029464820869292654,
+      "source_norm_upper_exact": "0.02946482086929265442609704450660501606762409210205078125",
+      "max_raw_hull_radius": 0.0002527142049789953,
+      "max_source_disc_radius": 0.000582260242517165
+    },
+    {
+      "coarse_cell": 80,
+      "first_node": 4000,
+      "last_node": 4050,
+      "seconds": 0.2253051600000049,
+      "source_norm_upper_binary64": 0.029829500026961286,
+      "source_norm_upper_exact": "0.0298295000269612857468626287982260691933333873748779296875",
+      "max_raw_hull_radius": 0.00025274026646052974,
+      "max_source_disc_radius": 0.0005824577262961241
+    },
+    {
+      "coarse_cell": 81,
+      "first_node": 4050,
+      "last_node": 4100,
+      "seconds": 0.21996610000002192,
+      "source_norm_upper_binary64": 0.030194174699819734,
+      "source_norm_upper_exact": "0.03019417469981973412007647539212484844028949737548828125",
+      "max_raw_hull_radius": 0.0002527661325224357,
+      "max_source_disc_radius": 0.0005826561235938734
+    },
+    {
+      "coarse_cell": 82,
+      "first_node": 4100,
+      "last_node": 4150,
+      "seconds": 0.3762616270000194,
+      "source_norm_upper_binary64": 0.03055884719156968,
+      "source_norm_upper_exact": "0.0305588471915696803515860580091612064279615879058837890625",
+      "max_raw_hull_radius": 0.0002527918032475345,
+      "max_source_disc_radius": 0.0005828554333731715
+    },
+    {
+      "coarse_cell": 83,
+      "first_node": 4150,
+      "last_node": 4200,
+      "seconds": 0.36819545600002357,
+      "source_norm_upper_binary64": 0.030923519822177312,
+      "source_norm_upper_exact": "0.0309235198221773123494759971663370379246771335601806640625",
+      "max_raw_hull_radius": 0.00025281727871908917,
+      "max_source_disc_radius": 0.0005830556545829524
+    },
+    {
+      "coarse_cell": 84,
+      "first_node": 4200,
+      "last_node": 4250,
+      "seconds": 0.36976231499994583,
+      "source_norm_upper_binary64": 0.03128819492739244,
+      "source_norm_upper_exact": "0.031288194927392438959845577528540161438286304473876953125",
+      "max_raw_hull_radius": 0.00025284255902075636,
+      "max_source_disc_radius": 0.0005832567861583362
+    },
+    {
+      "coarse_cell": 85,
+      "first_node": 4250,
+      "last_node": 4300,
+      "seconds": 0.35578602599997566,
+      "source_norm_upper_binary64": 0.03165287485829974,
+      "source_norm_upper_exact": "0.031652874858299741289702211588519276119768619537353515625",
+      "max_raw_hull_radius": 0.00025286764423655136,
+      "max_source_disc_radius": 0.0005834588270207142
+    },
+    {
+      "coarse_cell": 86,
+      "first_node": 4300,
+      "last_node": 4350,
+      "seconds": 0.30386393500003805,
+      "source_norm_upper_binary64": 0.03201756198090015,
+      "source_norm_upper_exact": "0.03201756198090015270718566853247466497123241424560546875",
+      "max_raw_hull_radius": 0.0002528925344508622,
+      "max_source_disc_radius": 0.0005836617760778468
+    },
+    {
+      "coarse_cell": 87,
+      "first_node": 4350,
+      "last_node": 4400,
+      "seconds": 0.17644933200000423,
+      "source_norm_upper_binary64": 0.03238225867571962,
+      "source_norm_upper_exact": "0.032382258675719623186584072982441284693777561187744140625",
+      "max_raw_hull_radius": 0.0002529172297485466,
+      "max_source_disc_radius": 0.0005838656322237393
+    },
+    {
+      "coarse_cell": 88,
+      "first_node": 4400,
+      "last_node": 4450,
+      "seconds": 0.18147344099998008,
+      "source_norm_upper_binary64": 0.032746967337443415,
+      "source_norm_upper_exact": "0.032746967337443415313469330385487410239875316619873046875",
+      "max_raw_hull_radius": 0.0002529417302147587,
+      "max_source_disc_radius": 0.0005840703943388863
+    },
+    {
+      "coarse_cell": 89,
+      "first_node": 4450,
+      "last_node": 4500,
+      "seconds": 0.17635886900001196,
+      "source_norm_upper_binary64": 0.033111690374573365,
+      "source_norm_upper_exact": "0.033111690374573364559207533375229104422032833099365234375",
+      "max_raw_hull_radius": 0.0002529660359350741,
+      "max_source_disc_radius": 0.0005842760612901276
+    },
+    {
+      "coarse_cell": 90,
+      "first_node": 4500,
+      "last_node": 4550,
+      "seconds": 0.178300562000004,
+      "source_norm_upper_binary64": 0.03347643020910702,
+      "source_norm_upper_exact": "0.033476430209107017887948387624419410713016986846923828125",
+      "max_raw_hull_radius": 0.0002529901469955105,
+      "max_source_disc_radius": 0.0005844826319307348
+    },
+    {
+      "coarse_cell": 91,
+      "first_node": 4550,
+      "last_node": 4600,
+      "seconds": 0.1936102960000312,
+      "source_norm_upper_binary64": 0.03384118927623641,
+      "source_norm_upper_exact": "0.033841189276236409433362695153846289031207561492919921875",
+      "max_raw_hull_radius": 0.0002530140634823752,
+      "max_source_disc_radius": 0.0005846901051005239
+    },
+    {
+      "coarse_cell": 92,
+      "first_node": 4600,
+      "last_node": 4650,
+      "seconds": 0.18549522500001103,
+      "source_norm_upper_binary64": 0.03420597002406513,
+      "source_norm_upper_exact": "0.03420597002406512709971053709523403085768222808837890625",
+      "max_raw_hull_radius": 0.0002530377854824524,
+      "max_source_disc_radius": 0.0005848984796259431
+    },
+    {
+      "coarse_cell": 93,
+      "first_node": 4650,
+      "last_node": 4700,
+      "seconds": 0.24430450200003406,
+      "source_norm_upper_binary64": 0.03457077491334236,
+      "source_norm_upper_exact": "0.03457077491334235863629231744198477827012538909912109375",
+      "max_raw_hull_radius": 0.0002530613130828507,
+      "max_source_disc_radius": 0.0005851077543199089
+    },
+    {
+      "coarse_cell": 94,
+      "first_node": 4700,
+      "last_node": 4750,
+      "seconds": 0.17431049900000062,
+      "source_norm_upper_binary64": 0.03493560641721268,
+      "source_norm_upper_exact": "0.034935606417212682062167772301108925603330135345458984375",
+      "max_raw_hull_radius": 0.0002530846463711211,
+      "max_source_disc_radius": 0.0005853179279818898
+    },
+    {
+      "coarse_cell": 95,
+      "first_node": 4750,
+      "last_node": 4800,
+      "seconds": 0.18307227600001852,
+      "source_norm_upper_binary64": 0.035300467020980345,
+      "source_norm_upper_exact": "0.03530046702098034450134633743800804950296878814697265625",
+      "max_raw_hull_radius": 0.00025310778543515276,
+      "max_source_disc_radius": 0.0005855289993982431
+    },
+    {
+      "coarse_cell": 96,
+      "first_node": 4800,
+      "last_node": 4850,
+      "seconds": 0.18044961700002204,
+      "source_norm_upper_binary64": 0.035665359221886656,
+      "source_norm_upper_exact": "0.0356653592218866555274559004828915931284427642822265625",
+      "max_raw_hull_radius": 0.00025313073036328424,
+      "max_source_disc_radius": 0.000585740967341754
+    },
+    {
+      "coarse_cell": 97,
+      "first_node": 4850,
+      "last_node": 4900,
+      "seconds": 0.1886095790000013,
+      "source_norm_upper_binary64": 0.036030285528900294,
+      "source_norm_upper_exact": "0.03603028552890029378996672448920435272157192230224609375",
+      "max_raw_hull_radius": 0.0002531534812442064,
+      "max_source_disc_radius": 0.000585953830572121
+    },
+    {
+      "coarse_cell": 98,
+      "first_node": 4900,
+      "last_node": 4950,
+      "seconds": 0.26509421800000155,
+      "source_norm_upper_binary64": 0.03639524846251883,
+      "source_norm_upper_exact": "0.036395248462518826892964085573112242855131626129150390625",
+      "max_raw_hull_radius": 0.0002531760381669624,
+      "max_source_disc_radius": 0.0005861675878358553
+    },
+    {
+      "coarse_cell": 99,
+      "first_node": 4950,
+      "last_node": 5000,
+      "seconds": 0.20966357200001084,
+      "source_norm_upper_binary64": 0.0367602505545917,
+      "source_norm_upper_exact": "0.036760250554591700211659599517588503658771514892578125",
+      "max_raw_hull_radius": 0.00025319840122107947,
+      "max_source_disc_radius": 0.0005863822378661589
+    },
+    {
+      "coarse_cell": 100,
+      "first_node": 5000,
+      "last_node": 5050,
+      "seconds": 0.18335868899998786,
+      "source_norm_upper_binary64": 0.037125294348128335,
+      "source_norm_upper_exact": "0.037125294348128334842584763464401476085186004638671875",
+      "max_raw_hull_radius": 0.00025322057049643033,
+      "max_source_disc_radius": 0.0005865977793832775
+    },
+    {
+      "coarse_cell": 101,
+      "first_node": 5050,
+      "last_node": 5100,
+      "seconds": 0.1746289010000055,
+      "source_norm_upper_binary64": 0.037490382397109355,
+      "source_norm_upper_exact": "0.037490382397109354994935159766100696288049221038818359375",
+      "max_raw_hull_radius": 0.00025324254608320544,
+      "max_source_disc_radius": 0.0005868142110940376
+    },
+    {
+      "coarse_cell": 102,
+      "first_node": 5100,
+      "last_node": 5150,
+      "seconds": 0.2223284670000112,
+      "source_norm_upper_binary64": 0.037855517266366726,
+      "source_norm_upper_exact": "0.03785551726636672553727436252302140928804874420166015625",
+      "max_raw_hull_radius": 0.00025326432807210725,
+      "max_source_disc_radius": 0.0005870315316923954
+    },
+    {
+      "coarse_cell": 103,
+      "first_node": 5150,
+      "last_node": 5200,
+      "seconds": 0.18751901500002077,
+      "source_norm_upper_binary64": 0.03822070153141532,
+      "source_norm_upper_exact": "0.038220701531415317286910493521645548753440380096435546875",
+      "max_raw_hull_radius": 0.00025328591655416293,
+      "max_source_disc_radius": 0.0005872497398593298
+    },
+    {
+      "coarse_cell": 104,
+      "first_node": 5200,
+      "last_node": 5250,
+      "seconds": 0.18814990599997827,
+      "source_norm_upper_binary64": 0.038585937778308384,
+      "source_norm_upper_exact": "0.038585937778308383727665642481952090747654438018798828125",
+      "max_raw_hull_radius": 0.0002533073116208077,
+      "max_source_disc_radius": 0.0005874688342628149
+    },
+    {
+      "coarse_cell": 105,
+      "first_node": 5250,
+      "last_node": 5300,
+      "seconds": 0.18642228599998134,
+      "source_norm_upper_binary64": 0.038951228603499526,
+      "source_norm_upper_exact": "0.038951228603499525593445440563300508074462413787841796875",
+      "max_raw_hull_radius": 0.00025332851336382246,
+      "max_source_disc_radius": 0.0005876888135577817
+    },
+    {
+      "coarse_cell": 106,
+      "first_node": 5300,
+      "last_node": 5350,
+      "seconds": 0.18592901700003495,
+      "source_norm_upper_binary64": 0.039316576613711914,
+      "source_norm_upper_exact": "0.039316576613711913534832120831197244115173816680908203125",
+      "max_raw_hull_radius": 0.0002533495218754308,
+      "max_source_disc_radius": 0.000587909676386305
+    },
+    {
+      "coarse_cell": 107,
+      "first_node": 5350,
+      "last_node": 5400,
+      "seconds": 0.18718558699998766,
+      "source_norm_upper_binary64": 0.03968198442581288,
+      "source_norm_upper_exact": "0.039681984425812881489559202918826485984027385711669921875",
+      "max_raw_hull_radius": 0.0002533703372482924,
+      "max_source_disc_radius": 0.0005881314213777411
+    },
+    {
+      "coarse_cell": 108,
+      "first_node": 5400,
+      "last_node": 5450,
+      "seconds": 0.19182517100000496,
+      "source_norm_upper_binary64": 0.04004745466669389,
+      "source_norm_upper_exact": "0.04004745466669389075686780188334523700177669525146484375",
+      "max_raw_hull_radius": 0.0002533909595753291,
+      "max_source_disc_radius": 0.0005883540471485018
+    },
+    {
+      "coarse_cell": 109,
+      "first_node": 5450,
+      "last_node": 5500,
+      "seconds": 0.1807708289999823,
+      "source_norm_upper_binary64": 0.04041298997315632,
+      "source_norm_upper_exact": "0.040412989973156322742742219134015613235533237457275390625",
+      "max_raw_hull_radius": 0.0002534113889499199,
+      "max_source_disc_radius": 0.0005885775523022086
+    },
+    {
+      "coarse_cell": 110,
+      "first_node": 5500,
+      "last_node": 5550,
+      "seconds": 0.17982467799998858,
+      "source_norm_upper_binary64": 0.040778592991801914,
+      "source_norm_upper_exact": "0.040778592991801913825167247296121786348521709442138671875",
+      "max_raw_hull_radius": 0.0002534316254659004,
+      "max_source_disc_radius": 0.0005888019354298547
+    },
+    {
+      "coarse_cell": 111,
+      "first_node": 5550,
+      "last_node": 5600,
+      "seconds": 0.17652922399997806,
+      "source_norm_upper_binary64": 0.0411442663789271,
+      "source_norm_upper_exact": "0.04114426637892709681665337484446354210376739501953125",
+      "max_raw_hull_radius": 0.00025345166921736194,
+      "max_source_disc_radius": 0.0005890271951095951
+    },
+    {
+      "coarse_cell": 112,
+      "first_node": 5600,
+      "last_node": 5650,
+      "seconds": 0.17786334400000214,
+      "source_norm_upper_binary64": 0.041510012800422734,
+      "source_norm_upper_exact": "0.041510012800422733947325326653299271129071712493896484375",
+      "max_raw_hull_radius": 0.00025347152029891524,
+      "max_source_disc_radius": 0.0005892533299070814
+    },
+    {
+      "coarse_cell": 113,
+      "first_node": 5650,
+      "last_node": 5700,
+      "seconds": 0.19229634300000953,
+      "source_norm_upper_binary64": 0.04187583493167653,
+      "source_norm_upper_exact": "0.04187583493167652826105751273644273169338703155517578125",
+      "max_raw_hull_radius": 0.0002534911788054892,
+      "max_source_disc_radius": 0.0005894803383752415
+    },
+    {
+      "coarse_cell": 114,
+      "first_node": 5700,
+      "last_node": 5750,
+      "seconds": 0.19828975799998716,
+      "source_norm_upper_binary64": 0.04224173545748013,
+      "source_norm_upper_exact": "0.042241735457480132642782422180971479974687099456787109375",
+      "max_raw_hull_radius": 0.0002535106448324488,
+      "max_source_disc_radius": 0.000589708219054455
+    },
+    {
+      "coarse_cell": 115,
+      "first_node": 5750,
+      "last_node": 5800,
+      "seconds": 0.20225467599999547,
+      "source_norm_upper_binary64": 0.04260771707193886,
+      "source_norm_upper_exact": "0.0426077170719388609310129822915769182145595550537109375",
+      "max_raw_hull_radius": 0.0002535299184754914,
+      "max_source_disc_radius": 0.0005899369704725893
+    },
+    {
+      "coarse_cell": 116,
+      "first_node": 5800,
+      "last_node": 5850,
+      "seconds": 0.23002150600001414,
+      "source_norm_upper_binary64": 0.04297378247838548,
+      "source_norm_upper_exact": "0.042973782478385479099980415185200399719178676605224609375",
+      "max_raw_hull_radius": 0.00025354899983074346,
+      "max_source_disc_radius": 0.0005901665911450917
+    },
+    {
+      "coarse_cell": 117,
+      "first_node": 5850,
+      "last_node": 5900,
+      "seconds": 0.2054893130000437,
+      "source_norm_upper_binary64": 0.043339934389296,
+      "source_norm_upper_exact": "0.043339934389296001782110323574670474044978618621826171875",
+      "max_raw_hull_radius": 0.0002535678889947469,
+      "max_source_disc_radius": 0.000590397079574916
+    },
+    {
+      "coarse_cell": 118,
+      "first_node": 5900,
+      "last_node": 5950,
+      "seconds": 0.19513872100003482,
+      "source_norm_upper_binary64": 0.04370617552620883,
+      "source_norm_upper_exact": "0.043706175526208833337360459836418158374726772308349609375",
+      "max_raw_hull_radius": 0.00025358658606436927,
+      "max_source_disc_radius": 0.0005906284342524807
+    },
+    {
+      "coarse_cell": 119,
+      "first_node": 5950,
+      "last_node": 6000,
+      "seconds": 0.19019922400002542,
+      "source_norm_upper_binary64": 0.04407250861964688,
+      "source_norm_upper_exact": "0.044072508619646878769149367371937842108309268951416015625",
+      "max_raw_hull_radius": 0.00025360509113695585,
+      "max_source_disc_radius": 0.000590860653656022
+    },
+    {
+      "coarse_cell": 120,
+      "first_node": 6000,
+      "last_node": 6050,
+      "seconds": 0.2051643689999878,
+      "source_norm_upper_binary64": 0.04443893640904136,
+      "source_norm_upper_exact": "0.044438936409041361608185383147429092787206172943115234375",
+      "max_raw_hull_radius": 0.00025362340431019125,
+      "max_source_disc_radius": 0.0005910937362514735
+    },
+    {
+      "coarse_cell": 121,
+      "first_node": 6050,
+      "last_node": 6100,
+      "seconds": 0.22583575800001654,
+      "source_norm_upper_binary64": 0.04480546164265808,
+      "source_norm_upper_exact": "0.044805461642658077348055911670599016360938549041748046875",
+      "max_raw_hull_radius": 0.000253641525682148,
+      "max_source_disc_radius": 0.0005913276804923144
+    },
+    {
+      "coarse_cell": 122,
+      "first_node": 6100,
+      "last_node": 6150,
+      "seconds": 0.2170351149999874,
+      "source_norm_upper_binary64": 0.04517208707755276,
+      "source_norm_upper_exact": "0.045172087077552762479637493697737227194011211395263671875",
+      "max_raw_hull_radius": 0.0002536594553513076,
+      "max_source_disc_radius": 0.0005915624848229506
+    },
+    {
+      "coarse_cell": 123,
+      "first_node": 6150,
+      "last_node": 6200,
+      "seconds": 0.18601588899997523,
+      "source_norm_upper_binary64": 0.04553881547948339,
+      "source_norm_upper_exact": "0.045538815479483386872150418867022381164133548736572265625",
+      "max_raw_hull_radius": 0.0002536771934165252,
+      "max_source_disc_radius": 0.0005917981476767017
+    },
+    {
+      "coarse_cell": 124,
+      "first_node": 6200,
+      "last_node": 6250,
+      "seconds": 0.17538572299997668,
+      "source_norm_upper_binary64": 0.0459056496227461,
+      "source_norm_upper_exact": "0.0459056496227460975045886470979894511401653289794921875",
+      "max_raw_hull_radius": 0.0002536947399770929,
+      "max_source_disc_radius": 0.0005920346674642746
+    },
+    {
+      "coarse_cell": 125,
+      "first_node": 6250,
+      "last_node": 6300,
+      "seconds": 0.17576298599999518,
+      "source_norm_upper_binary64": 0.046272592290250845,
+      "source_norm_upper_exact": "0.046272592290250845470378493473617709241807460784912109375",
+      "max_raw_hull_radius": 0.00025371209513264917,
+      "max_source_disc_radius": 0.0005922720425907715
+    },
+    {
+      "coarse_cell": 126,
+      "first_node": 6300,
+      "last_node": 6350,
+      "seconds": 0.17592056300003378,
+      "source_norm_upper_binary64": 0.046639646273403564,
+      "source_norm_upper_exact": "0.046639646273403563558890283502478268928825855255126953125",
+      "max_raw_hull_radius": 0.0002537292589831857,
+      "max_source_disc_radius": 0.0005925102714489946
+    },
+    {
+      "coarse_cell": 127,
+      "first_node": 6350,
+      "last_node": 6400,
+      "seconds": 0.1761713939999936,
+      "source_norm_upper_binary64": 0.04700681437204363,
+      "source_norm_upper_exact": "0.047006814372043632943576341176594723947346210479736328125",
+      "max_raw_hull_radius": 0.0002537462316292976,
+      "max_source_disc_radius": 0.0005927493524198893
+    },
+    {
+      "coarse_cell": 128,
+      "first_node": 6400,
+      "last_node": 6450,
+      "seconds": 0.17564187100003892,
+      "source_norm_upper_binary64": 0.047374099394382266,
+      "source_norm_upper_exact": "0.04737409939438226580410429278344963677227497100830078125",
+      "max_raw_hull_radius": 0.0002537630131717115,
+      "max_source_disc_radius": 0.0005929892838722785
+    },
+    {
+      "coarse_cell": 129,
+      "first_node": 6450,
+      "last_node": 6500,
+      "seconds": 0.1782759669999905,
+      "source_norm_upper_binary64": 0.047741504156942755,
+      "source_norm_upper_exact": "0.0477415041569427545109505217624246142804622650146484375",
+      "max_raw_hull_radius": 0.0002537796037116599,
+      "max_source_disc_radius": 0.0005932300641631605
+    },
+    {
+      "coarse_cell": 130,
+      "first_node": 6500,
+      "last_node": 6550,
+      "seconds": 0.17836690000001454,
+      "source_norm_upper_binary64": 0.0481090314845015,
+      "source_norm_upper_exact": "0.048109031484501497966110861170818679966032505035400390625",
+      "max_raw_hull_radius": 0.00025379600335081245,
+      "max_source_disc_radius": 0.0005934716916376568
+    },
+    {
+      "coarse_cell": 131,
+      "first_node": 6550,
+      "last_node": 6600,
+      "seconds": 0.20315401200002725,
+      "source_norm_upper_binary64": 0.048476684210030645,
+      "source_norm_upper_exact": "0.048476684210030644706090896534078638069331645965576171875",
+      "max_raw_hull_radius": 0.00025381221219113675,
+      "max_source_disc_radius": 0.000593714164628991
+    },
+    {
+      "coarse_cell": 132,
+      "first_node": 6600,
+      "last_node": 6650,
+      "seconds": 0.2507023240000308,
+      "source_norm_upper_binary64": 0.04884446517464178,
+      "source_norm_upper_exact": "0.0488444651746417768389818547802860848605632781982421875",
+      "max_raw_hull_radius": 0.00025382823033502346,
+      "max_source_disc_radius": 0.0005939574814585887
+    },
+    {
+      "coarse_cell": 133,
+      "first_node": 6650,
+      "last_node": 6700,
+      "seconds": 0.2136587249999593,
+      "source_norm_upper_binary64": 0.0492123772275303,
+      "source_norm_upper_exact": "0.049212377227530301748714691711938939988613128662109375",
+      "max_raw_hull_radius": 0.0002538440578852864,
+      "max_source_disc_radius": 0.0005942016404361825
+    },
+    {
+      "coarse_cell": 134,
+      "first_node": 6700,
+      "last_node": 6750,
+      "seconds": 0.2013620699999592,
+      "source_norm_upper_binary64": 0.04958042322592168,
+      "source_norm_upper_exact": "0.0495804232259216826061987148932530544698238372802734375",
+      "max_raw_hull_radius": 0.0002538596949452178,
+      "max_source_disc_radius": 0.0005944466398598038
+    },
+    {
+      "coarse_cell": 135,
+      "first_node": 6750,
+      "last_node": 6800,
+      "seconds": 0.19444671500002642,
+      "source_norm_upper_binary64": 0.04994860603501763,
+      "source_norm_upper_exact": "0.049948606035017627247096783094093552790582180023193359375",
+      "max_raw_hull_radius": 0.00025387514161836686,
+      "max_source_disc_radius": 0.000594692478015897
+    },
+    {
+      "coarse_cell": 136,
+      "first_node": 6800,
+      "last_node": 6850,
+      "seconds": 0.18691158999990876,
+      "source_norm_upper_binary64": 0.050316928527944615,
+      "source_norm_upper_exact": "0.050316928527944615456846122469869442284107208251953125",
+      "max_raw_hull_radius": 0.0002538903980086086,
+      "max_source_disc_radius": 0.0005949391531790804
+    },
+    {
+      "coarse_cell": 137,
+      "first_node": 6850,
+      "last_node": 6900,
+      "seconds": 0.1848214569999982,
+      "source_norm_upper_binary64": 0.050685393585702884,
+      "source_norm_upper_exact": "0.05068539358570288422267680061850114725530147552490234375",
+      "max_raw_hull_radius": 0.0002539054642204495,
+      "max_source_disc_radius": 0.0005951866636127981
+    },
+    {
+      "coarse_cell": 138,
+      "first_node": 6900,
+      "last_node": 6950,
+      "seconds": 0.190372635000017,
+      "source_norm_upper_binary64": 0.05105400409711673,
+      "source_norm_upper_exact": "0.05105400409711673137547194301077979616820812225341796875",
+      "max_raw_hull_radius": 0.0002539203403585696,
+      "max_source_disc_radius": 0.0005954350075687895
+    },
+    {
+      "coarse_cell": 139,
+      "first_node": 6950,
+      "last_node": 7000,
+      "seconds": 0.2032622319999291,
+      "source_norm_upper_binary64": 0.051422762958787116,
+      "source_norm_upper_exact": "0.0514227629587871160055101427133195102214813232421875",
+      "max_raw_hull_radius": 0.00025393502652821094,
+      "max_source_disc_radius": 0.0005956841832873924
+    },
+    {
+      "coarse_cell": 140,
+      "first_node": 7000,
+      "last_node": 7050,
+      "seconds": 0.19910101200002828,
+      "source_norm_upper_binary64": 0.05179167307504563,
+      "source_norm_upper_exact": "0.05179167307504563277920084374272846616804599761962890625",
+      "max_raw_hull_radius": 0.0002539495228348726,
+      "max_source_disc_radius": 0.0005959341889978886
+    },
+    {
+      "coarse_cell": 141,
+      "first_node": 7050,
+      "last_node": 7100,
+      "seconds": 0.1946869800000286,
+      "source_norm_upper_binary64": 0.05216073735791147,
+      "source_norm_upper_exact": "0.052160737357911469980198404527982347644865512847900390625",
+      "max_raw_hull_radius": 0.000253963829384574,
+      "max_source_disc_radius": 0.0005961850229182324
+    },
+    {
+      "coarse_cell": 142,
+      "first_node": 7100,
+      "last_node": 7150,
+      "seconds": 0.19077063999998245,
+      "source_norm_upper_binary64": 0.05252995872705124,
+      "source_norm_upper_exact": "0.05252995872705124025259237896534614264965057373046875",
+      "max_raw_hull_radius": 0.0002539779462835639,
+      "max_source_disc_radius": 0.0005964366832553262
+    },
+    {
+      "coarse_cell": 143,
+      "first_node": 7150,
+      "last_node": 7200,
+      "seconds": 0.1832791440000392,
+      "source_norm_upper_binary64": 0.05289934010974208,
+      "source_norm_upper_exact": "0.05289934010974207956312653777786181308329105377197265625",
+      "max_raw_hull_radius": 0.0002539918736387087,
+      "max_source_disc_radius": 0.0005966891682053914
+    },
+    {
+      "coarse_cell": 144,
+      "first_node": 7200,
+      "last_node": 7250,
+      "seconds": 0.17775765100009266,
+      "source_norm_upper_binary64": 0.05326888444083544,
+      "source_norm_upper_exact": "0.05326888444083544005280828059767372906208038330078125",
+      "max_raw_hull_radius": 0.0002540056115570487,
+      "max_source_disc_radius": 0.000596942475953853
+    },
+    {
+      "coarse_cell": 145,
+      "first_node": 7250,
+      "last_node": 7300,
+      "seconds": 0.18273710900007245,
+      "source_norm_upper_binary64": 0.05363859466271605,
+      "source_norm_upper_exact": "0.053638594662716053418360928617403260432183742523193359375",
+      "max_raw_hull_radius": 0.00025401916014620036,
+      "max_source_disc_radius": 0.0005971966046757708
+    },
+    {
+      "coarse_cell": 146,
+      "first_node": 7300,
+      "last_node": 7350,
+      "seconds": 0.17830180600003587,
+      "source_norm_upper_binary64": 0.05400847372524177,
+      "source_norm_upper_exact": "0.05400847372524177070207684892011457122862339019775390625",
+      "max_raw_hull_radius": 0.0002540325195140095,
+      "max_source_disc_radius": 0.0005974515525353841
+    },
+    {
+      "coarse_cell": 147,
+      "first_node": 7350,
+      "last_node": 7400,
+      "seconds": 0.20236763200000496,
+      "source_norm_upper_binary64": 0.0543785245858788,
+      "source_norm_upper_exact": "0.0543785245858788013340046063603949733078479766845703125",
+      "max_raw_hull_radius": 0.0002540456897688705,
+      "max_source_disc_radius": 0.0005977073176884861
+    },
+    {
+      "coarse_cell": 148,
+      "first_node": 7400,
+      "last_node": 7450,
+      "seconds": 0.18265750899990962,
+      "source_norm_upper_binary64": 0.05474875020952864,
+      "source_norm_upper_exact": "0.05474875020952864324019770947415963746607303619384765625",
+      "max_raw_hull_radius": 0.0002540586710194071,
+      "max_source_disc_radius": 0.0005979638982809642
+    },
+    {
+      "coarse_cell": 149,
+      "first_node": 7450,
+      "last_node": 7500,
+      "seconds": 0.17976809200001753,
+      "source_norm_upper_binary64": 0.055119153567161856,
+      "source_norm_upper_exact": "0.055119153567161856266398700654463027603924274444580078125",
+      "max_raw_hull_radius": 0.0002540714633748752,
+      "max_source_disc_radius": 0.0005982212924354005
+    },
+    {
+      "coarse_cell": 150,
+      "first_node": 7500,
+      "last_node": 7550,
+      "seconds": 0.17848351499992532,
+      "source_norm_upper_binary64": 0.05548973763741501,
+      "source_norm_upper_exact": "0.05548973763741500697665998131924425251781940460205078125",
+      "max_raw_hull_radius": 0.0002540840669446489,
+      "max_source_disc_radius": 0.0005984794982675573
+    },
+    {
+      "coarse_cell": 151,
+      "first_node": 7550,
+      "last_node": 7600,
+      "seconds": 0.20287793400007104,
+      "source_norm_upper_binary64": 0.055860505406038076,
+      "source_norm_upper_exact": "0.055860505406038075959518351965016336180269718170166015625",
+      "max_raw_hull_radius": 0.00025409648183863734,
+      "max_source_disc_radius": 0.0005987385138815538
+    },
+    {
+      "coarse_cell": 152,
+      "first_node": 7600,
+      "last_node": 7650,
+      "seconds": 0.221737462999954,
+      "source_norm_upper_binary64": 0.056231459865908405,
+      "source_norm_upper_exact": "0.056231459865908405004741865695905289612710475921630859375",
+      "max_raw_hull_radius": 0.00025410870816724296,
+      "max_source_disc_radius": 0.0005989983373704678
+    },
+    {
+      "coarse_cell": 153,
+      "first_node": 7650,
+      "last_node": 7700,
+      "seconds": 0.20305749399994966,
+      "source_norm_upper_binary64": 0.05660260401701697,
+      "source_norm_upper_exact": "0.0566026040170169719711878997259191237390041351318359375",
+      "max_raw_hull_radius": 0.00025412074604104213,
+      "max_source_disc_radius": 0.0005992589668169224
+    },
+    {
+      "coarse_cell": 154,
+      "first_node": 7700,
+      "last_node": 7750,
+      "seconds": 0.1833119870000246,
+      "source_norm_upper_binary64": 0.056973940866432024,
+      "source_norm_upper_exact": "0.05697394086643202404385277759502059780061244964599609375",
+      "max_raw_hull_radius": 0.00025413259557118814,
+      "max_source_disc_radius": 0.0005995204002926407
+    },
+    {
+      "coarse_cell": 155,
+      "first_node": 7750,
+      "last_node": 7800,
+      "seconds": 0.18770043099993927,
+      "source_norm_upper_binary64": 0.057345473428250464,
+      "source_norm_upper_exact": "0.057345473428250463843180995127113419584929943084716796875",
+      "max_raw_hull_radius": 0.00025414425686913315,
+      "max_source_disc_radius": 0.0005997826358592143
+    },
+    {
+      "coarse_cell": 156,
+      "first_node": 7800,
+      "last_node": 7850,
+      "seconds": 0.19272485599992706,
+      "source_norm_upper_binary64": 0.05771720472354573,
+      "source_norm_upper_exact": "0.05771720472354573139295297323769773356616497039794921875",
+      "max_raw_hull_radius": 0.0002541557300467535,
+      "max_source_disc_radius": 0.0006000456715675158
+    },
+    {
+      "coarse_cell": 157,
+      "first_node": 7850,
+      "last_node": 7900,
+      "seconds": 0.2641189810000242,
+      "source_norm_upper_binary64": 0.05808913778031548,
+      "source_norm_upper_exact": "0.05808913778031547792135569352467427961528301239013671875",
+      "max_raw_hull_radius": 0.00025416701521639127,
+      "max_source_disc_radius": 0.0006003095054580949
+    },
+    {
+      "coarse_cell": 158,
+      "first_node": 7900,
+      "last_node": 7950,
+      "seconds": 0.3517827690000104,
+      "source_norm_upper_binary64": 0.05846127563343022,
+      "source_norm_upper_exact": "0.05846127563343021804609378477834980003535747528076171875",
+      "max_raw_hull_radius": 0.00025417811249065994,
+      "max_source_disc_radius": 0.0006005741355609205
+    },
+    {
+      "coarse_cell": 159,
+      "first_node": 7950,
+      "last_node": 8000,
+      "seconds": 0.3384036219999871,
+      "source_norm_upper_binary64": 0.05883362132458346,
+      "source_norm_upper_exact": "0.05883362132458345994390214173108688555657863616943359375",
+      "max_raw_hull_radius": 0.0002541890219825972,
+      "max_source_disc_radius": 0.0006008395598955606
+    },
+    {
+      "coarse_cell": 160,
+      "first_node": 8000,
+      "last_node": 8050,
+      "seconds": 0.28402024100000745,
+      "source_norm_upper_binary64": 0.05920617790224231,
+      "source_norm_upper_exact": "0.059206177902242307364844009498483501374721527099609375",
+      "max_raw_hull_radius": 0.0002541997438056513,
+      "max_source_disc_radius": 0.0006011057764708697
+    },
+    {
+      "coarse_cell": 161,
+      "first_node": 8050,
+      "last_node": 8100,
+      "seconds": 0.18023603500000718,
+      "source_norm_upper_binary64": 0.05957894842160017,
+      "source_norm_upper_exact": "0.059578948421600171070355855817979318089783191680908203125",
+      "max_raw_hull_radius": 0.0002542102780737638,
+      "max_source_disc_radius": 0.0006013727832854998
+    },
+    {
+      "coarse_cell": 162,
+      "first_node": 8100,
+      "last_node": 8150,
+      "seconds": 0.17826949200002673,
+      "source_norm_upper_binary64": 0.05995193594452832,
+      "source_norm_upper_exact": "0.059951935944528321476010290780322975479066371917724609375",
+      "max_raw_hull_radius": 0.0002542206249010928,
+      "max_source_disc_radius": 0.0006016405783276055
+    },
+    {
+      "coarse_cell": 163,
+      "first_node": 8150,
+      "last_node": 8200,
+      "seconds": 0.17688241500002277,
+      "source_norm_upper_binary64": 0.06032514353952932,
+      "source_norm_upper_exact": "0.06032514353952932173452694541992968879640102386474609375",
+      "max_raw_hull_radius": 0.0002542307844023592,
+      "max_source_disc_radius": 0.0006019091595749103
+    },
+    {
+      "coarse_cell": 164,
+      "first_node": 8200,
+      "last_node": 8250,
+      "seconds": 0.17735427599996,
+      "source_norm_upper_binary64": 0.06069857428168978,
+      "source_norm_upper_exact": "0.060698574281689780807180767396857845596969127655029296875",
+      "max_raw_hull_radius": 0.00025424075669254194,
+      "max_source_disc_radius": 0.0006021785249950011
+    },
+    {
+      "coarse_cell": 165,
+      "first_node": 8250,
+      "last_node": 8300,
+      "seconds": 0.17697992299997622,
+      "source_norm_upper_binary64": 0.061072231252633336,
+      "source_norm_upper_exact": "0.061072231252633335518709145617322064936161041259765625",
+      "max_raw_hull_radius": 0.0002542505418871416,
+      "max_source_disc_radius": 0.0006024486725447279
+    },
+    {
+      "coarse_cell": 166,
+      "first_node": 8300,
+      "last_node": 8350,
+      "seconds": 0.17549227200004225,
+      "source_norm_upper_binary64": 0.061446117540474555,
+      "source_norm_upper_exact": "0.061446117540474555485108254515580483712255954742431640625",
+      "max_raw_hull_radius": 0.0002542601401019304,
+      "max_source_disc_radius": 0.0006027196001711971
+    },
+    {
+      "coarse_cell": 167,
+      "first_node": 8350,
+      "last_node": 8400,
+      "seconds": 0.18380193799998779,
+      "source_norm_upper_binary64": 0.061820236239771544,
+      "source_norm_upper_exact": "0.061820236239771543529375463776887045241892337799072265625",
+      "max_raw_hull_radius": 0.0002542695514532164,
+      "max_source_disc_radius": 0.0006029913058109466
+    },
+    {
+      "coarse_cell": 168,
+      "first_node": 8400,
+      "last_node": 8450,
+      "seconds": 0.19083568499991088,
+      "source_norm_upper_binary64": 0.06219459045147967,
+      "source_norm_upper_exact": "0.06219459045147966713695808493866934441030025482177734375",
+      "max_raw_hull_radius": 0.0002542787760574962,
+      "max_source_disc_radius": 0.0006032637873904863
+    },
+    {
+      "coarse_cell": 169,
+      "first_node": 8450,
+      "last_node": 8500,
+      "seconds": 0.17894254999998793,
+      "source_norm_upper_binary64": 0.06256918328290495,
+      "source_norm_upper_exact": "0.0625691832829049499054008265375159680843353271484375",
+      "max_raw_hull_radius": 0.0002542878140319823,
+      "max_source_disc_radius": 0.0006035370428261358
+    },
+    {
+      "coarse_cell": 170,
+      "first_node": 8500,
+      "last_node": 8550,
+      "seconds": 0.20466286600003514,
+      "source_norm_upper_binary64": 0.06294401784765688,
+      "source_norm_upper_exact": "0.0629440178476568801269053210489801131188869476318359375",
+      "max_raw_hull_radius": 0.00025429666549388184,
+      "max_source_disc_radius": 0.0006038110700241841
+    },
+    {
+      "coarse_cell": 171,
+      "first_node": 8550,
+      "last_node": 8600,
+      "seconds": 0.20023216699996738,
+      "source_norm_upper_binary64": 0.06331909726560209,
+      "source_norm_upper_exact": "0.063319097265602086732627640230930410325527191162109375",
+      "max_raw_hull_radius": 0.0002543053305610903,
+      "max_source_disc_radius": 0.0006040858668808434
+    },
+    {
+      "coarse_cell": 172,
+      "first_node": 8600,
+      "last_node": 8650,
+      "seconds": 0.19570331699992494,
+      "source_norm_upper_binary64": 0.06369442466281686,
+      "source_norm_upper_exact": "0.0636944246628168564416938579597626812756061553955078125",
+      "max_raw_hull_radius": 0.0002543138093519557,
+      "max_source_disc_radius": 0.0006043614312824419
+    },
+    {
+      "coarse_cell": 173,
+      "first_node": 8650,
+      "last_node": 8700,
+      "seconds": 0.1837526210000533,
+      "source_norm_upper_binary64": 0.06407000317154075,
+      "source_norm_upper_exact": "0.06407000317154075419434633431592374108731746673583984375",
+      "max_raw_hull_radius": 0.0002543221019848762,
+      "max_source_disc_radius": 0.0006046377611049986
+    },
+    {
+      "coarse_cell": 174,
+      "first_node": 8700,
+      "last_node": 8750,
+      "seconds": 0.21565585299993018,
+      "source_norm_upper_binary64": 0.064445835930129,
+      "source_norm_upper_exact": "0.06444583593012899458418729636832722462713718414306640625",
+      "max_raw_hull_radius": 0.00025433020857892446,
+      "max_source_disc_radius": 0.0006049148542151877
+    },
+    {
+      "coarse_cell": 175,
+      "first_node": 8750,
+      "last_node": 8800,
+      "seconds": 0.18128863299989462,
+      "source_norm_upper_binary64": 0.06482192608300542,
+      "source_norm_upper_exact": "0.06482192608300542391308596279486664570868015289306640625",
+      "max_raw_hull_radius": 0.0002543381292535426,
+      "max_source_disc_radius": 0.000605192708469481
+    },
+    {
+      "coarse_cell": 176,
+      "first_node": 8800,
+      "last_node": 8850,
+      "seconds": 0.17895773899999767,
+      "source_norm_upper_binary64": 0.06519827678061509,
+      "source_norm_upper_exact": "0.06519827678061508591245143406922579742968082427978515625",
+      "max_raw_hull_radius": 0.0002543458641284867,
+      "max_source_disc_radius": 0.0006054713217144736
+    },
+    {
+      "coarse_cell": 177,
+      "first_node": 8850,
+      "last_node": 8900,
+      "seconds": 0.17914568099990902,
+      "source_norm_upper_binary64": 0.06557489117937668,
+      "source_norm_upper_exact": "0.0655748911793766764422031201320351101458072662353515625",
+      "max_raw_hull_radius": 0.0002543534133239517,
+      "max_source_disc_radius": 0.000605750691787273
+    },
+    {
+      "coarse_cell": 178,
+      "first_node": 8900,
+      "last_node": 8950,
+      "seconds": 0.19024590200001512,
+      "source_norm_upper_binary64": 0.06595177244163511,
+      "source_norm_upper_exact": "0.0659517724416351092120436305776820518076419830322265625",
+      "max_raw_hull_radius": 0.00025436077696051575,
+      "max_source_disc_radius": 0.0006060308165150907
+    },
+    {
+      "coarse_cell": 179,
+      "first_node": 8950,
+      "last_node": 9000,
+      "seconds": 0.18091421600001922,
+      "source_norm_upper_binary64": 0.0663289237356136,
+      "source_norm_upper_exact": "0.06632892373561359578015839133513509295880794525146484375",
+      "max_raw_hull_radius": 0.0002543679551592101,
+      "max_source_disc_radius": 0.0006063116937155683
+    },
+    {
+      "coarse_cell": 180,
+      "first_node": 9000,
+      "last_node": 9050,
+      "seconds": 0.17377432500006762,
+      "source_norm_upper_binary64": 0.06670634823822384,
+      "source_norm_upper_exact": "0.06670634823822384207314684090306400321424007415771484375",
+      "max_raw_hull_radius": 0.0002543749480413244,
+      "max_source_disc_radius": 0.0006065933213615833
+    },
+    {
+      "coarse_cell": 181,
+      "first_node": 9050,
+      "last_node": 9100,
+      "seconds": 0.17847570799995083,
+      "source_norm_upper_binary64": 0.06708404912683454,
+      "source_norm_upper_exact": "0.06708404912683453569233194002663367427885532379150390625",
+      "max_raw_hull_radius": 0.00025438175572879544,
+      "max_source_disc_radius": 0.0006068756971102437
+    },
+    {
+      "coarse_cell": 182,
+      "first_node": 9100,
+      "last_node": 9150,
+      "seconds": 0.17850577399997292,
+      "source_norm_upper_binary64": 0.0674620295867838,
+      "source_norm_upper_exact": "0.0674620295867837949099765637583914212882518768310546875",
+      "max_raw_hull_radius": 0.0002543883783435969,
+      "max_source_disc_radius": 0.0006071588187371783
+    },
+    {
+      "coarse_cell": 183,
+      "first_node": 9150,
+      "last_node": 9200,
+      "seconds": 0.18845374199997877,
+      "source_norm_upper_binary64": 0.06784029280933174,
+      "source_norm_upper_exact": "0.067840292809331737000633211209787987172603607177734375",
+      "max_raw_hull_radius": 0.00025439481600836333,
+      "max_source_disc_radius": 0.0006074426840222461
+    },
+    {
+      "coarse_cell": 184,
+      "first_node": 9200,
+      "last_node": 9250,
+      "seconds": 0.21738012399998752,
+      "source_norm_upper_binary64": 0.0682188419913758,
+      "source_norm_upper_exact": "0.06821884199137580317984230759975616820156574249267578125",
+      "max_raw_hull_radius": 0.00025440106884616864,
+      "max_source_disc_radius": 0.0006077272907357096
+    },
+    {
+      "coarse_cell": 185,
+      "first_node": 9250,
+      "last_node": 9300,
+      "seconds": 0.19182054600003084,
+      "source_norm_upper_binary64": 0.06859768033540178,
+      "source_norm_upper_exact": "0.0685976803354017838909584270368213765323162078857421875",
+      "max_raw_hull_radius": 0.0002544071369802483,
+      "max_source_disc_radius": 0.000608012636638552
+    },
+    {
+      "coarse_cell": 186,
+      "first_node": 9300,
+      "last_node": 9350,
+      "seconds": 0.18783991200007222,
+      "source_norm_upper_binary64": 0.06897681104943516,
+      "source_norm_upper_exact": "0.06897681104943516328109609503371757455170154571533203125",
+      "max_raw_hull_radius": 0.0002544130205343881,
+      "max_source_disc_radius": 0.0006082987194825409
+    },
+    {
+      "coarse_cell": 187,
+      "first_node": 9350,
+      "last_node": 9400,
+      "seconds": 0.22191534700004922,
+      "source_norm_upper_binary64": 0.06935623734699166,
+      "source_norm_upper_exact": "0.06935623734699165876538273778351140208542346954345703125",
+      "max_raw_hull_radius": 0.0002544187196327993,
+      "max_source_disc_radius": 0.000608585537009886
+    },
+    {
+      "coarse_cell": 188,
+      "first_node": 9400,
+      "last_node": 9450,
+      "seconds": 0.21285384899999826,
+      "source_norm_upper_binary64": 0.06973596244702855,
+      "source_norm_upper_exact": "0.06973596244702855162511667685976135544478893280029296875",
+      "max_raw_hull_radius": 0.0002544242343999658,
+      "max_source_disc_radius": 0.0006088730869539047
+    },
+    {
+      "coarse_cell": 189,
+      "first_node": 9450,
+      "last_node": 9500,
+      "seconds": 0.2111897190000036,
+      "source_norm_upper_binary64": 0.07011598957389474,
+      "source_norm_upper_exact": "0.07011598957389474084944680498665547929704189300537109375",
+      "max_raw_hull_radius": 0.00025442956496082506,
+      "max_source_disc_radius": 0.0006091613670385653
+    },
+    {
+      "coarse_cell": 190,
+      "first_node": 9500,
+      "last_node": 9550,
+      "seconds": 0.20475547500006996,
+      "source_norm_upper_binary64": 0.07049632195728128,
+      "source_norm_upper_exact": "0.07049632195728128269962553531513549387454986572265625",
+      "max_raw_hull_radius": 0.0002544347114407814,
+      "max_source_disc_radius": 0.0006094503749786219
+    },
+    {
+      "coarse_cell": 191,
+      "first_node": 9550,
+      "last_node": 9600,
+      "seconds": 0.1935024599999906,
+      "source_norm_upper_binary64": 0.07087696283217196,
+      "source_norm_upper_exact": "0.0708769628321719580288373663279344327747821807861328125",
+      "max_raw_hull_radius": 0.00025443967396559565,
+      "max_source_disc_radius": 0.0006097401084799129
+    },
+    {
+      "coarse_cell": 192,
+      "first_node": 9600,
+      "last_node": 9650,
+      "seconds": 0.19471805500006667,
+      "source_norm_upper_binary64": 0.0712579154387931,
+      "source_norm_upper_exact": "0.07125791543879310407927363257840625010430812835693359375",
+      "max_raw_hull_radius": 0.0002544444526613014,
+      "max_source_disc_radius": 0.0006100305652393116
+    },
+    {
+      "coarse_cell": 193,
+      "first_node": 9650,
+      "last_node": 9700,
+      "seconds": 0.20478029999992486,
+      "source_norm_upper_binary64": 0.07163918302256292,
+      "source_norm_upper_exact": "0.0716391830225629189232705584799987263977527618408203125",
+      "max_raw_hull_radius": 0.00025444904765449685,
+      "max_source_disc_radius": 0.0006103217429443475
+    },
+    {
+      "coarse_cell": 194,
+      "first_node": 9700,
+      "last_node": 9750,
+      "seconds": 0.2683744050000314,
+      "source_norm_upper_binary64": 0.07202076883404221,
+      "source_norm_upper_exact": "0.0720207688340422091943793247992289252579212188720703125",
+      "max_raw_hull_radius": 0.0002544534590721365,
+      "max_source_disc_radius": 0.0006106136392740911
+    },
+    {
+      "coarse_cell": 195,
+      "first_node": 9750,
+      "last_node": 9800,
+      "seconds": 0.2479979889999413,
+      "source_norm_upper_binary64": 0.07240267612910649,
+      "source_norm_upper_exact": "0.07240267612910648853397077573390561155974864959716796875",
+      "max_raw_hull_radius": 0.0002544576870414757,
+      "max_source_disc_radius": 0.0006109062519245146
+    },
+    {
+      "coarse_cell": 196,
+      "first_node": 9800,
+      "last_node": 9850,
+      "seconds": 0.30382656799997676,
+      "source_norm_upper_binary64": 0.07278490816874793,
+      "source_norm_upper_exact": "0.07278490816874792768143009880077443085610866546630859375",
+      "max_raw_hull_radius": 0.0002544617316903346,
+      "max_source_disc_radius": 0.0006111995785917242
+    },
+    {
+      "coarse_cell": 197,
+      "first_node": 9850,
+      "last_node": 9900,
+      "seconds": 0.19030387899999823,
+      "source_norm_upper_binary64": 0.07316746821817174,
+      "source_norm_upper_exact": "0.0731674682181717439544144099272671155631542205810546875",
+      "max_raw_hull_radius": 0.0002544655931467229,
+      "max_source_disc_radius": 0.0006114936168721667
+    },
+    {
+      "coarse_cell": 198,
+      "first_node": 9900,
+      "last_node": 9950,
+      "seconds": 0.1853485079999473,
+      "source_norm_upper_binary64": 0.07355035954800163,
+      "source_norm_upper_exact": "0.0735503595480016258978395171652664430439472198486328125",
+      "max_raw_hull_radius": 0.0002544692715392571,
+      "max_source_disc_radius": 0.0006117883644098632
+    },
+    {
+      "coarse_cell": 199,
+      "first_node": 9950,
+      "last_node": 10000,
+      "seconds": 0.18579195600000276,
+      "source_norm_upper_binary64": 0.07393358543550468,
+      "source_norm_upper_exact": "0.0739335854355046839803122793455258943140506744384765625",
+      "max_raw_hull_radius": 0.00025447276699672953,
+      "max_source_disc_radius": 0.0006120838189465321
+    },
+    {
+      "coarse_cell": 200,
+      "first_node": 10000,
+      "last_node": 10050,
+      "seconds": 0.17996412200000123,
+      "source_norm_upper_binary64": 0.07431714916980105,
+      "source_norm_upper_exact": "0.07431714916980104723709388281349674798548221588134765625",
+      "max_raw_hull_radius": 0.00025447607964858065,
+      "max_source_disc_radius": 0.0006123799786449742
+    },
+    {
+      "coarse_cell": 201,
+      "first_node": 10050,
+      "last_node": 10100,
+      "seconds": 0.18306753000001663,
+      "source_norm_upper_binary64": 0.07470105402605677,
+      "source_norm_upper_exact": "0.07470105402605677069605150109055102802813053131103515625",
+      "max_raw_hull_radius": 0.00025447920962448287,
+      "max_source_disc_radius": 0.0006126768405184361
+    },
+    {
+      "coarse_cell": 202,
+      "first_node": 10100,
+      "last_node": 10150,
+      "seconds": 0.18212525799992818,
+      "source_norm_upper_binary64": 0.07508530329415261,
+      "source_norm_upper_exact": "0.0750853032941526110644048230824409984052181243896484375",
+      "max_raw_hull_radius": 0.0002544821570545205,
+      "max_source_disc_radius": 0.0006129744021771881
+    },
+    {
+      "coarse_cell": 203,
+      "first_node": 10150,
+      "last_node": 10200,
+      "seconds": 0.181823009000027,
+      "source_norm_upper_binary64": 0.07546990026865094,
+      "source_norm_upper_exact": "0.0754699002686509412551885134234908036887645721435546875",
+      "max_raw_hull_radius": 0.0002544849220691764,
+      "max_source_disc_radius": 0.0006132726612236645
+    },
+    {
+      "coarse_cell": 204,
+      "first_node": 10200,
+      "last_node": 10250,
+      "seconds": 0.1794834739999942,
+      "source_norm_upper_binary64": 0.0758548482487428,
+      "source_norm_upper_exact": "0.0758548482487428066267654003240750171244144439697265625",
+      "max_raw_hull_radius": 0.00025448750479931814,
+      "max_source_disc_radius": 0.0006135716152514646
+    },
+    {
+      "coarse_cell": 205,
+      "first_node": 10250,
+      "last_node": 10300,
+      "seconds": 0.17913967100002992,
+      "source_norm_upper_binary64": 0.07624015053819634,
+      "source_norm_upper_exact": "0.07624015053819634124554482923485920764505863189697265625",
+      "max_raw_hull_radius": 0.00025448990537630864,
+      "max_source_disc_radius": 0.0006138712618459676
+    },
+    {
+      "coarse_cell": 206,
+      "first_node": 10300,
+      "last_node": 10350,
+      "seconds": 0.17760572200006663,
+      "source_norm_upper_binary64": 0.07662581044530398,
+      "source_norm_upper_exact": "0.076625810445303976781161736653302796185016632080078125",
+      "max_raw_hull_radius": 0.0002544921239317985,
+      "max_source_disc_radius": 0.0006141715985842302
+    },
+    {
+      "coarse_cell": 207,
+      "first_node": 10350,
+      "last_node": 10400,
+      "seconds": 0.18062603999999283,
+      "source_norm_upper_binary64": 0.0770118312828299,
+      "source_norm_upper_exact": "0.077011831282829901201836264590383507311344146728515625",
+      "max_raw_hull_radius": 0.00025449416059793395,
+      "max_source_disc_radius": 0.0006144726230349988
+    },
+    {
+      "coarse_cell": 208,
+      "first_node": 10400,
+      "last_node": 10450,
+      "seconds": 0.1850527179999517,
+      "source_norm_upper_binary64": 0.07739821636795728,
+      "source_norm_upper_exact": "0.07739821636795728154734064219155698083341121673583984375",
+      "max_raw_hull_radius": 0.0002544960155071072,
+      "max_source_disc_radius": 0.0006147743327592021
+    },
+    {
+      "coarse_cell": 209,
+      "first_node": 10450,
+      "last_node": 10500,
+      "seconds": 0.18835860600006527,
+      "source_norm_upper_binary64": 0.07778496902223458,
+      "source_norm_upper_exact": "0.077784969022234584645758559418027289211750030517578125",
+      "max_raw_hull_radius": 0.0002544976887922618,
+      "max_source_disc_radius": 0.0006150767253089889
+    },
+    {
+      "coarse_cell": 210,
+      "first_node": 10500,
+      "last_node": 10550,
+      "seconds": 0.1842806610000025,
+      "source_norm_upper_binary64": 0.07817209257152331,
+      "source_norm_upper_exact": "0.07817209257152331336460093780260649509727954864501953125",
+      "max_raw_hull_radius": 0.00025449918058665673,
+      "max_source_disc_radius": 0.0006153797982286744
+    },
+    {
+      "coarse_cell": 211,
+      "first_node": 10550,
+      "last_node": 10600,
+      "seconds": 0.1919752599999356,
+      "source_norm_upper_binary64": 0.07855959034594442,
+      "source_norm_upper_exact": "0.0785595903459444244720799588321824558079242706298828125",
+      "max_raw_hull_radius": 0.0002545004910239358,
+      "max_source_disc_radius": 0.0006156835490550469
+    },
+    {
+      "coarse_cell": 212,
+      "first_node": 10600,
+      "last_node": 10650,
+      "seconds": 0.20672453600002427,
+      "source_norm_upper_binary64": 0.07894746567982384,
+      "source_norm_upper_exact": "0.07894746567982384444217558439049753360450267791748046875",
+      "max_raw_hull_radius": 0.0002545016202381833,
+      "max_source_disc_radius": 0.0006159879753159253
+    },
+    {
+      "coarse_cell": 213,
+      "first_node": 10650,
+      "last_node": 10700,
+      "seconds": 0.20418867200010027,
+      "source_norm_upper_binary64": 0.07933572191164014,
+      "source_norm_upper_exact": "0.07933572191164013631681228844172437675297260284423828125",
+      "max_raw_hull_radius": 0.0002545025683638269,
+      "max_source_disc_radius": 0.0006162930745321087
+    },
+    {
+      "coarse_cell": 214,
+      "first_node": 10700,
+      "last_node": 10750,
+      "seconds": 0.21371131800003695,
+      "source_norm_upper_binary64": 0.07972436238396971,
+      "source_norm_upper_exact": "0.0797243623839697101995938055551960133016109466552734375",
+      "max_raw_hull_radius": 0.0002545033355358734,
+      "max_source_disc_radius": 0.0006165988442159461
+    },
+    {
+      "coarse_cell": 215,
+      "first_node": 10750,
+      "last_node": 10800,
+      "seconds": 0.19120323900006042,
+      "source_norm_upper_binary64": 0.08011339044343298,
+      "source_norm_upper_exact": "0.08011339044343297743910881081319530494511127471923828125",
+      "max_raw_hull_radius": 0.00025450392188947876,
+      "max_source_disc_radius": 0.0006169052818722734
+    },
+    {
+      "coarse_cell": 216,
+      "first_node": 10800,
+      "last_node": 10850,
+      "seconds": 0.19897838700001103,
+      "source_norm_upper_binary64": 0.08050280944064031,
+      "source_norm_upper_exact": "0.080502809440640310523207290316349826753139495849609375",
+      "max_raw_hull_radius": 0.0002545043275601982,
+      "max_source_disc_radius": 0.0006172123849977022
+    },
+    {
+      "coarse_cell": 217,
+      "first_node": 10850,
+      "last_node": 10900,
+      "seconds": 0.19973688300001413,
+      "source_norm_upper_binary64": 0.08089262273013739,
+      "source_norm_upper_exact": "0.0808926227301373923506133678529295139014720916748046875",
+      "max_raw_hull_radius": 0.0002545045526842216,
+      "max_source_disc_radius": 0.0006175201510816616
+    },
+    {
+      "coarse_cell": 218,
+      "first_node": 10900,
+      "last_node": 10950,
+      "seconds": 0.23071852500004297,
+      "source_norm_upper_binary64": 0.0812828336704724,
+      "source_norm_upper_exact": "0.08128283367047239860170293468399904668331146240234375",
+      "max_raw_hull_radius": 0.00025450459758389433,
+      "max_source_disc_radius": 0.000617828577626644
+    },
+    {
+      "coarse_cell": 219,
+      "first_node": 10950,
+      "last_node": 11000,
+      "seconds": 0.18806802999995398,
+      "source_norm_upper_binary64": 0.08167344568247979,
+      "source_norm_upper_exact": "0.08167344568247979219588472687973990105092525482177734375",
+      "max_raw_hull_radius": 0.0002545045521437723,
+      "max_source_disc_radius": 0.0006181376722981689
+    },
+    {
+      "coarse_cell": 220,
+      "first_node": 11000,
+      "last_node": 11050,
+      "seconds": 0.1806497519999084,
+      "source_norm_upper_binary64": 0.08206446207342045,
+      "source_norm_upper_exact": "0.08206446207342045495725102455253363586962223052978515625",
+      "max_raw_hull_radius": 0.00025450432649879525,
+      "max_source_disc_radius": 0.000618447422436626
+    },
+    {
+      "coarse_cell": 221,
+      "first_node": 11050,
+      "last_node": 11100,
+      "seconds": 0.18379166499994426,
+      "source_norm_upper_binary64": 0.08245588621303526,
+      "source_norm_upper_exact": "0.0824558862130352621111484268112690187990665435791015625",
+      "max_raw_hull_radius": 0.0002545039207863904,
+      "max_source_disc_radius": 0.000618757825500879
+    },
+    {
+      "coarse_cell": 222,
+      "first_node": 11100,
+      "last_node": 11150,
+      "seconds": 0.19178798999996616,
+      "source_norm_upper_binary64": 0.08284772147472617,
+      "source_norm_upper_exact": "0.08284772147472617420671525678699254058301448822021484375",
+      "max_raw_hull_radius": 0.0002545033351443427,
+      "max_source_disc_radius": 0.000619068878942023
+    },
+    {
+      "coarse_cell": 223,
+      "first_node": 11150,
+      "last_node": 11200,
+      "seconds": 0.18495882299998812,
+      "source_norm_upper_binary64": 0.08323997123550117,
+      "source_norm_upper_exact": "0.0832399712355011700548601538685034029185771942138671875",
+      "max_raw_hull_radius": 0.00025450256971091965,
+      "max_source_disc_radius": 0.0006193805802037349
+    },
+    {
+      "coarse_cell": 224,
+      "first_node": 11200,
+      "last_node": 11250,
+      "seconds": 0.20071805199995651,
+      "source_norm_upper_binary64": 0.0836326388759188,
+      "source_norm_upper_exact": "0.08363263887591880496596985494761611334979534149169921875",
+      "max_raw_hull_radius": 0.00025450162462478795,
+      "max_source_disc_radius": 0.0006196929267228638
+    },
+    {
+      "coarse_cell": 225,
+      "first_node": 11250,
+      "last_node": 11300,
+      "seconds": 0.19638065300000562,
+      "source_norm_upper_binary64": 0.08402572778003231,
+      "source_norm_upper_exact": "0.084025727780032311020619317787350155413150787353515625",
+      "max_raw_hull_radius": 0.0002545005000248889,
+      "max_source_disc_radius": 0.0006200059159279039
+    },
+    {
+      "coarse_cell": 226,
+      "first_node": 11300,
+      "last_node": 11350,
+      "seconds": 0.2949843689999625,
+      "source_norm_upper_binary64": 0.08441924133533424,
+      "source_norm_upper_exact": "0.084419241335334238574006349153933115303516387939453125",
+      "max_raw_hull_radius": 0.00025449919605071564,
+      "max_source_disc_radius": 0.0006203195452411207
+    },
+    {
+      "coarse_cell": 227,
+      "first_node": 11350,
+      "last_node": 11400,
+      "seconds": 0.33760623299997405,
+      "source_norm_upper_binary64": 0.08481318293270051,
+      "source_norm_upper_exact": "0.084813182932700514893298304741620086133480072021484375",
+      "max_raw_hull_radius": 0.00025449771284207775,
+      "max_source_disc_radius": 0.000620633812077203
+    },
+    {
+      "coarse_cell": 228,
+      "first_node": 11400,
+      "last_node": 11450,
+      "seconds": 0.3126285820000021,
+      "source_norm_upper_binary64": 0.08520755596633375,
+      "source_norm_upper_exact": "0.0852075559663337533944371671168482862412929534912109375",
+      "max_raw_hull_radius": 0.00025449605053905937,
+      "max_source_disc_radius": 0.0006209487138434406
+    },
+    {
+      "coarse_cell": 229,
+      "first_node": 11450,
+      "last_node": 11500,
+      "seconds": 0.2676154629999701,
+      "source_norm_upper_binary64": 0.08560236383388248,
+      "source_norm_upper_exact": "0.085602363833882477717196479716221801936626434326171875",
+      "max_raw_hull_radius": 0.0002544942092824633,
+      "max_source_disc_radius": 0.0006212642479635753
+    },
+    {
+      "coarse_cell": 230,
+      "first_node": 11500,
+      "last_node": 11550,
+      "seconds": 0.2195504040000742,
+      "source_norm_upper_binary64": 0.085997609935982,
+      "source_norm_upper_exact": "0.08599760993598200287113542117367614991962909698486328125",
+      "max_raw_hull_radius": 0.00025449218921313105,
+      "max_source_disc_radius": 0.0006215804118237934
+    },
+    {
+      "coarse_cell": 231,
+      "first_node": 11550,
+      "last_node": 11600,
+      "seconds": 0.21852392000005239,
+      "source_norm_upper_binary64": 0.08639329767637542,
+      "source_norm_upper_exact": "0.08639329767637542178970733175447094254195690155029296875",
+      "max_raw_hull_radius": 0.0002544899904724982,
+      "max_source_disc_radius": 0.0006218972027964151
+    },
+    {
+      "coarse_cell": 232,
+      "first_node": 11600,
+      "last_node": 11650,
+      "seconds": 0.2948108169999841,
+      "source_norm_upper_binary64": 0.08678943046201268,
+      "source_norm_upper_exact": "0.0867894304620126788574197007619659416377544403076171875",
+      "max_raw_hull_radius": 0.00025448761320244153,
+      "max_source_disc_radius": 0.0006222146182612118
+    },
+    {
+      "coarse_cell": 233,
+      "first_node": 11650,
+      "last_node": 11700,
+      "seconds": 0.174652053999921,
+      "source_norm_upper_binary64": 0.0871860117028888,
+      "source_norm_upper_exact": "0.08718601170288879653735847341522458009421825408935546875",
+      "max_raw_hull_radius": 0.00025448505754502965,
+      "max_source_disc_radius": 0.0006225326555908454
+    },
+    {
+      "coarse_cell": 234,
+      "first_node": 11700,
+      "last_node": 11750,
+      "seconds": 0.17850311299991972,
+      "source_norm_upper_binary64": 0.08758304481198735,
+      "source_norm_upper_exact": "0.08758304481198735114144682256664964370429515838623046875",
+      "max_raw_hull_radius": 0.00025448232364293867,
+      "max_source_disc_radius": 0.0006228513121510247
+    },
+    {
+      "coarse_cell": 235,
+      "first_node": 11750,
+      "last_node": 11800,
+      "seconds": 0.1849722299999712,
+      "source_norm_upper_binary64": 0.08798053320522366,
+      "source_norm_upper_exact": "0.08798053320522365716715995631602709181606769561767578125",
+      "max_raw_hull_radius": 0.00025447941163913386,
+      "max_source_disc_radius": 0.0006231705853010862
+    },
+    {
+      "coarse_cell": 236,
+      "first_node": 11800,
+      "last_node": 11850,
+      "seconds": 0.1755204970000932,
+      "source_norm_upper_binary64": 0.08837848030138726,
+      "source_norm_upper_exact": "0.0883784803013872577448495349017321132123470306396484375",
+      "max_raw_hull_radius": 0.00025447632167695244,
+      "max_source_disc_radius": 0.0006234904723933752
+    },
+    {
+      "coarse_cell": 237,
+      "first_node": 11850,
+      "last_node": 11900,
+      "seconds": 0.1820830209999258,
+      "source_norm_upper_binary64": 0.08877688952208541,
+      "source_norm_upper_exact": "0.08877688952208541428579025023282156325876712799072265625",
+      "max_raw_hull_radius": 0.00025447305390017335,
+      "max_source_disc_radius": 0.0006238109707734687
+    },
+    {
+      "coarse_cell": 238,
+      "first_node": 11900,
+      "last_node": 11950,
+      "seconds": 0.19784519099994213,
+      "source_norm_upper_binary64": 0.0891757642916856,
+      "source_norm_upper_exact": "0.08917576429168559692950424278024001978337764739990234375",
+      "max_raw_hull_radius": 0.000254469608453003,
+      "max_source_disc_radius": 0.0006241320777806953
+    },
+    {
+      "coarse_cell": 239,
+      "first_node": 11950,
+      "last_node": 12000,
+      "seconds": 0.22673135000002276,
+      "source_norm_upper_binary64": 0.08957510803725825,
+      "source_norm_upper_exact": "0.08957510803725825254684167475716094486415386199951171875",
+      "max_raw_hull_radius": 0.0002544659854799785,
+      "max_source_disc_radius": 0.0006244537907476092
+    },
+    {
+      "coarse_cell": 240,
+      "first_node": 12000,
+      "last_node": 12050,
+      "seconds": 0.2957861800000501,
+      "source_norm_upper_binary64": 0.0899749241885193,
+      "source_norm_upper_exact": "0.0899749241885192951873051470101927407085895538330078125",
+      "max_raw_hull_radius": 0.000254462185126051,
+      "max_source_disc_radius": 0.0006247761070004773
+    },
+    {
+      "coarse_cell": 241,
+      "first_node": 12050,
+      "last_node": 12100,
+      "seconds": 0.17526638500009994,
+      "source_norm_upper_binary64": 0.09037521617777239,
+      "source_norm_upper_exact": "0.090375216177772388359556998693733476102352142333984375",
+      "max_raw_hull_radius": 0.0002544582075365856,
+      "max_source_disc_radius": 0.0006250990238586923
+    },
+    {
+      "coarse_cell": 242,
+      "first_node": 12100,
+      "last_node": 12150,
+      "seconds": 0.17522275499993611,
+      "source_norm_upper_binary64": 0.09077598743985182,
+      "source_norm_upper_exact": "0.09077598743985182405680234296596609055995941162109375",
+      "max_raw_hull_radius": 0.00025445405285731964,
+      "max_source_disc_radius": 0.000625422538635918
+    },
+    {
+      "coarse_cell": 243,
+      "first_node": 12150,
+      "last_node": 12200,
+      "seconds": 0.17938513100000364,
+      "source_norm_upper_binary64": 0.09117724141206447,
+      "source_norm_upper_exact": "0.09117724141206447197038897911625099368393421173095703125",
+      "max_raw_hull_radius": 0.00025444972123441856,
+      "max_source_disc_radius": 0.0006257466486390573
+    },
+    {
+      "coarse_cell": 244,
+      "first_node": 12200,
+      "last_node": 12250,
+      "seconds": 0.2175644830000465,
+      "source_norm_upper_binary64": 0.09157898153413198,
+      "source_norm_upper_exact": "0.09157898153413197850358784535274025984108448028564453125",
+      "max_raw_hull_radius": 0.00025444521281436477,
+      "max_source_disc_radius": 0.0006260713511688448
+    },
+    {
+      "coarse_cell": 245,
+      "first_node": 12250,
+      "last_node": 12300,
+      "seconds": 0.18879673200001434,
+      "source_norm_upper_binary64": 0.09198121124813392,
+      "source_norm_upper_exact": "0.09198121124813392335273221078750793822109699249267578125",
+      "max_raw_hull_radius": 0.0002544405277441656,
+      "max_source_disc_radius": 0.000626396643519713
+    },
+    {
+      "coarse_cell": 246,
+      "first_node": 12300,
+      "last_node": 12350,
+      "seconds": 0.1830134110000472,
+      "source_norm_upper_binary64": 0.09238393399846644,
+      "source_norm_upper_exact": "0.09238393399846643594397477272650576196610927581787109375",
+      "max_raw_hull_radius": 0.0002544356661710904,
+      "max_source_disc_radius": 0.0006267225229803986
+    },
+    {
+      "coarse_cell": 247,
+      "first_node": 12350,
+      "last_node": 12400,
+      "seconds": 0.19650570599992534,
+      "source_norm_upper_binary64": 0.09278715323172948,
+      "source_norm_upper_exact": "0.092787153231729480040712587651796638965606689453125",
+      "max_raw_hull_radius": 0.0002544306282428917,
+      "max_source_disc_radius": 0.0006270489868329338
+    },
+    {
+      "coarse_cell": 248,
+      "first_node": 12400,
+      "last_node": 12450,
+      "seconds": 0.28858625700001994,
+      "source_norm_upper_binary64": 0.09319087239672452,
+      "source_norm_upper_exact": "0.09319087239672452227523535839281976222991943359375",
+      "max_raw_hull_radius": 0.0002544254141077505,
+      "max_source_disc_radius": 0.000627376032353795
+    },
+    {
+      "coarse_cell": 249,
+      "first_node": 12450,
+      "last_node": 12500,
+      "seconds": 0.19558731799997986,
+      "source_norm_upper_binary64": 0.0935950949443772,
+      "source_norm_upper_exact": "0.0935950949443772051150602919733501039445400238037109375",
+      "max_raw_hull_radius": 0.0002544200239139705,
+      "max_source_disc_radius": 0.000627703656813071
+    }
+  ],
+  "inputs_sha256": {
+    "mean-q2-pilot/kernels.py": "9bc9eea62f5fc2930859f00c514cd80bfcaf138fc543b89a33975a8ccb2d3b86",
+    "absorption-b003/validate_residual.py": "2d2952363b8d2f4cf6918123a94d47c7b69988ca2ec54c06179830562ecea4bc",
+    "constants.py": "996f39f171601a73bdbd87c61e82482f7a91508ab19d78584215da1475479014",
+    "absorption-b003/results/trajectory_manifest.json": "8c39c91f4980ef30458c3300f6df0094709873e355546b7c54a764a0553dd847",
+    "absorption-b003/results/validated.json": "e404cb94b25a63989540e1cde2d6cc7630d6caa0f934125dbee4890fc7db2a5b",
+    "absorption-b003/results/chain.json": "0cd069e1fdd83e66a9a65bf24b5be95f477b64d255290b4ced07aa3e7f5fe117",
+    "route-b-dissipation/results/bounds.review.json": "4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65",
+    "z2-endpoint/results/endpoint.json": "37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc"
+  },
+  "Q_file_sha256": "7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd",
+  "source_sha256": "7fad19ce339445f151a4ad2b8da680e4d99a2bdd5c99329c2f6098a81d69a91c",
+  "plan_sha256": "fca4b05baa3122eb4f07815eb654ab7c61854382b396310b125fbe82b72d4d90",
+  "python": "3.13.16",
+  "numpy": "2.0.2",
+  "base_commit": "f6cdc6d3eeed4c4e947eef0b56f48f1cc0b1eccd",
+  "path": "exact P_(kx,ky,1) of exact saved dyadics, affine at j/50000; coarse hull includes all51 fine nodes",
+  "peak_rss_kib": 295872,
+  "bounds": {
+    "source_majorant": {
+      "lo": "0.01160098256918074329847347103683574687222",
+      "hi": "0.01160098256918074329847347103683574687256"
+    },
+    "DeltaF": {
+      "lo": "0.00003311741758909850330230978103381679315262",
+      "hi": "0.00003311741758909850330230978103381679315268"
+    },
+    "LF_majorant": {
+      "lo": "0.01163409998676984180177578081786956366537",
+      "hi": "0.01163409998676984180177578081786956366572"
+    },
+    "propagator": {
+      "lo": "1.942366815339482226068806088954903901043",
+      "hi": "1.942366815339482226068806088954903901125"
+    },
+    "abs_M_majorant": {
+      "lo": "0.04188032197489055112430458451614510153579",
+      "hi": "0.04188032197489055112430458451614510153884"
+    },
+    "Z2": {
+      "lo": "0.2390354390205853038886062757535706692524",
+      "hi": "0.3228800752984831825812954945495797069070"
+    },
+    "threshold": {
+      "lo": "0.06229483570521460066153433755445732483801",
+      "hi": "0.06229483570521460066153433755445732483802"
+    },
+    "remainder_upper": {
+      "lo": "5.606535213469314059538090379901159235420E-7",
+      "hi": "5.606535213469314059538090379901159235421E-7"
+    }
+  },
+  "LF_physical_enclosure": {
+    "lo": "0",
+    "hi": "0.01163409998676984180177578081786956366572"
+  },
+  "checkpoint_LF_le_point05": true,
+  "positive_Z2_lower_exceeds_threshold": true,
+  "remainder_input_sha256": "79612f1164e92243b74ef40dd668651bc850ffa81d82695d7c59f039e119e849",
+  "status": "complete conditional interval result; focused independent review required",
+  "wall_seconds": 52.22821565999999
+}

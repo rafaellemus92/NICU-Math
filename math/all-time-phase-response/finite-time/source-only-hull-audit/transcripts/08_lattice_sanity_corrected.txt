@@ -1,0 +1,4 @@
+# Terminal output of scripts/lattice_sanity.py (corrected ball truncation), verbatim.
+ball R=150: sum |k|^-4 ~ 16.532317   A_lambda(1e6) ~ 0.441386
+ball R=300: sum |k|^-4 ~ 16.532316   A_lambda(1e6) ~ 0.441383
+C_A^2 (certified upper) = 16.541133   literature value of the cubic-lattice sum: 16.532316 (Epstein zeta, s=2)
