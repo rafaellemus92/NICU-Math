@@ -755,3 +755,21 @@ then Z2>=.100907792>.06230 suffices with the candidate endpoint remainder.
 This antecedent is NOT established. No mean-q2 evolution, source-only hull run,
 DNS, full validator, downloads, pushes or merges. Stop for parent independent
 review of the candidate formulas and exact local commit.
+
+## Source-only mean forcing validation (Codex, local review)
+
+Base f6cdc6d3eeed4c4e947eef0b56f48f1cc0b1eccd; branch codex/mean-source-hull.
+See math/all-time-phase-response/finite-time/source-only-hull/NOTE.md.
+All250 coarse hulls cover exactly the inherited12500 projected affine qN cells.
+Physical LF in [0,.01163410], below fixed.05 checkpoint. Conditional Z2(T)
+in [.23903543,.32288008] has lower endpoint above unchanged beta²C_endpoint
+upper.06229484. Endpoint dominance comparison passes subject to inherited
+certificates and focused review of this new implementation; no signed M solve.
+
+Zero spatial mean/Poincare hypotheses documented for W,e,q2,r and mean fields;
+M1>=nu explicitly asserted with exact1/28. Actual raw Q hash matches manifest,
+validator and chain; exact Fraction accumulation independently checks interval
+summation.17 tests pass. Pilot fits budget; full run36.62s; aggregate<45s<300s.
+A postprocessing nested-key lookup failure was preserved and corrected; no
+source output changed. No new reviewer, DNS, mean solver, downloads or external
+writes. New code/outputs require parent-side focused independent review.

@@ -1,0 +1,56 @@
+{
+  "mode": "pilot",
+  "completed_requested_cells": true,
+  "failure": null,
+  "rows": [
+    {
+      "coarse_cell": 0,
+      "first_node": 0,
+      "last_node": 50,
+      "seconds": 0.14647325000260025,
+      "source_norm_upper_binary64": 0.0010459943067208316,
+      "source_norm_upper_exact": "0.001045994306720831636126067820669049979187548160552978515625",
+      "max_raw_hull_radius": 0.00025003142613142827,
+      "max_source_disc_radius": 0.0005696090275951725
+    },
+    {
+      "coarse_cell": 125,
+      "first_node": 6250,
+      "last_node": 6300,
+      "seconds": 0.14406926999799907,
+      "source_norm_upper_binary64": 0.046272592290250845,
+      "source_norm_upper_exact": "0.046272592290250845470378493473617709241807460784912109375",
+      "max_raw_hull_radius": 0.00025371209513264917,
+      "max_source_disc_radius": 0.0005922720425907715
+    },
+    {
+      "coarse_cell": 249,
+      "first_node": 12450,
+      "last_node": 12500,
+      "seconds": 0.13456993199361023,
+      "source_norm_upper_binary64": 0.0935950949443772,
+      "source_norm_upper_exact": "0.0935950949443772051150602919733501039445400238037109375",
+      "max_raw_hull_radius": 0.0002544200239139705,
+      "max_source_disc_radius": 0.000627703656813071
+    }
+  ],
+  "inputs_sha256": {
+    "mean-q2-pilot/kernels.py": "9bc9eea62f5fc2930859f00c514cd80bfcaf138fc543b89a33975a8ccb2d3b86",
+    "absorption-b003/validate_residual.py": "2d2952363b8d2f4cf6918123a94d47c7b69988ca2ec54c06179830562ecea4bc",
+    "constants.py": "996f39f171601a73bdbd87c61e82482f7a91508ab19d78584215da1475479014",
+    "absorption-b003/results/trajectory_manifest.json": "8c39c91f4980ef30458c3300f6df0094709873e355546b7c54a764a0553dd847",
+    "absorption-b003/results/validated.json": "e404cb94b25a63989540e1cde2d6cc7630d6caa0f934125dbee4890fc7db2a5b",
+    "absorption-b003/results/chain.json": "0cd069e1fdd83e66a9a65bf24b5be95f477b64d255290b4ced07aa3e7f5fe117",
+    "route-b-dissipation/results/bounds.review.json": "4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65",
+    "z2-endpoint/results/endpoint.json": "37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc"
+  },
+  "Q_file_sha256": "7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd",
+  "source_sha256": "7fad19ce339445f151a4ad2b8da680e4d99a2bdd5c99329c2f6098a81d69a91c",
+  "plan_sha256": "fca4b05baa3122eb4f07815eb654ab7c61854382b396310b125fbe82b72d4d90",
+  "python": "3.12.14",
+  "numpy": "2.0.2",
+  "base_commit": "f6cdc6d3eeed4c4e947eef0b56f48f1cc0b1eccd",
+  "path": "exact P_(kx,ky,1) of exact saved dyadics, affine at j/50000; coarse hull includes all51 fine nodes",
+  "peak_rss_kib": 35832,
+  "wall_seconds": 0.6110390600006212
+}

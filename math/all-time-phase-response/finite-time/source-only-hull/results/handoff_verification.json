@@ -1,0 +1,32 @@
+{
+  "base_commit": "f6cdc6d3eeed4c4e947eef0b56f48f1cc0b1eccd",
+  "prior_math_files_unchanged": true,
+  "changed_existing_files": [
+    "docs/HANDOFF.md",
+    "docs/RESEARCH_INDEX.md"
+  ],
+  "tests_passed": 17,
+  "full_cells": 250,
+  "fine_cells_covered": 12500,
+  "numerical_seconds_conservative_upper": 45,
+  "budget_seconds": 300,
+  "new_independent_review": "not performed per instruction; parent review requested",
+  "files_sha256": {
+    "NOTE.md": "5da625a5afad2b1eea5229b833fcfb63714dc565636f9a1a2e118d72da07b74f",
+    "PLAN.md": "fca4b05baa3122eb4f07815eb654ab7c61854382b396310b125fbe82b72d4d90",
+    "results/budget_gate.json": "6cff6ab6160d2718dcbeadc96497c42d9ec2318ed20b81788a1a86339ba71cef",
+    "results/full.json": "0d2ab266fd226091a9116b83c54621ad480f2b8306f16e9dd830a705629cfa82",
+    "results/full.log": "93992392fa809df8b47a9ad290336a51564a35b016f2fb6c389e20f0571334eb",
+    "results/pilot.json": "cbfccf1821fd6520a37299ce2e0347ec2f58bee8bfbf9b5d20e341fbd8deb27c",
+    "results/pilot.log": "57d7e98c034871618c37535f0176f3f78b6755d2e340d98b5523c86f53b705e5",
+    "results/tests.log": "73771662178648989d01cbe72f9c66e30f7e1ff2b171b377900cea5baa730f25",
+    "results/verification.final.log": "d071bc03b1e1fa776881fe5ee6ac24e551f0a6616ae7456b792b066e1aa03351",
+    "results/verification.initial-failure.txt": "22e43b46d9081ed64e1ec27cded4e9edba4b0e1d1d0cb6acf361722bd24c2959",
+    "results/verification.json": "d071bc03b1e1fa776881fe5ee6ac24e551f0a6616ae7456b792b066e1aa03351",
+    "results/verification.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/verify_result.initial.py.txt": "4e0850c51af79143da956a4086da70222cbede1addb01a5b4eaae8801607d9a3",
+    "source_hull.py": "7fad19ce339445f151a4ad2b8da680e4d99a2bdd5c99329c2f6098a81d69a91c",
+    "test_hull.py": "208fe6ab97e2a9f6e5078ad04187f1cb0be60502d7c0bc0828fbcdf99b0fff32",
+    "verify_result.py": "527262b6325e88707583e7172164f6b7d9cafc68a6cd7845fb64dad8d87edc58"
+  }
+}

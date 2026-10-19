@@ -1,0 +1,1 @@
+First verify_result.py run failed with KeyError: 'trajectory_sha256_of_array_bytes'. The key is nested under validated.json['provenance']; this was a postprocessor schema lookup error. No verification JSON was written, and no source bounds or existing artifacts were changed. Corrected lookup and rerun separately.

@@ -1,0 +1,23 @@
+{
+  "raw_Q_sha256": "529b1e4c61f0a98437d09d92b1e71a1ad9a271fefafb7bbd5d507412cb4bd9d8",
+  "matches_manifest_validator_chain": true,
+  "source_inputs_and_plan_hashes_match": true,
+  "all_12500_fine_cells_covered": true,
+  "exact_fraction_sum_within_recorded_interval": true,
+  "source_sum_exact_fraction": "53500089114310671209/4611686018427387904000",
+  "Z2_lower_minus_threshold": {
+    "lo": "0.1767406033153707032270719381991133444143",
+    "hi": "0.1767406033153707032270719381991133444144"
+  },
+  "b_squared_Z2_lower": {
+    "lo": "0.000002151318951185267734997456481782136023271",
+    "hi": "0.000002151318951185267734997456481782136023272"
+  },
+  "remainder_upper_divided_by_quadratic_lower": {
+    "lo": "0.2606092048963914550870177072563643969710",
+    "hi": "0.2606092048963914550870177072563643969712"
+  },
+  "source_sha256": "527262b6325e88707583e7172164f6b7d9cafc68a6cd7845fb64dad8d87edc58",
+  "full_result_sha256": "0d2ab266fd226091a9116b83c54621ad480f2b8306f16e9dd830a705629cfa82",
+  "wall_seconds": 0.16735914300079457
+}

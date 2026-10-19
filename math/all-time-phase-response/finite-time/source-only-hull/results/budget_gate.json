@@ -1,0 +1,7 @@
+{
+  "prior_execution_seconds_conservative_upper": 3,
+  "double_max_cell_times_250_plus_10_seconds": 83.23662500130013,
+  "full_process_watchdog_seconds": 180,
+  "aggregate_cap_seconds": 300,
+  "decision": "proceed: prior+180<300 and doubled measured forecast<180; no trajectory evolution"
+}
