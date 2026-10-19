@@ -1,0 +1,14 @@
+795e3a7b5c83bee29308392fd33232864e9df41e121646cbcd9b1fca395d58bc t025_chain_percell.json
+e404cb94b25a63989540e1cde2d6cc7630d6caa0f934125dbee4890fc7db2a5b t025_validated.json
+9dbc57beed75213c6438f19a0b54da1ebf9ba2e60f774b9e8f4317d0b8eb89b2 chain_percell_t050_rerun.json
+31b36704f98dc27e8895f33babbb911c42b66ff911bfa991148f1cfd7e8d62e3 chain_percell.json
+98ca5c1e47617e30d7bd71fb4f0ffc86b4f3de8b80ff708d7ba017bd64277701 validated.json
+d95eaa8ee2f4ebef93ce1c6f8e2ec938ea83a48000787922a47291b62b2e8896 chain.json
+per-cell table, cells 1..250 identical in all 11 columns: True
+validated cells 1..250 identical in all 9 fields: True
+validated conventions/approximation/initial identical: True True True
+validated parameters that differ: {'T': (0.25, 0.5), 'NSTEP': (12500, 25000), 'ncoarse': (250, 500), 'source_sha256': ('2d2952363b8d2f4cf6918123a94d47c7b69988ca2ec54c06179830562ecea4bc', 'd849ec96cc2b788350ecfd0bf0526d09ce33dff0762689239db38875c798009e')}
+validator sha256 T=1/4 vs T=1/2: 2d2952363b8d2f4c d849ec96cc2b7883
+rerun of reviewed recursion: 500 rows identical to bundle table: True
+rerun top-level fields identical to bundle chain.json (except the T label): True
+closure at b = 0.003: True True True CERTIFIED lhs_A 3.3599E-3 threshold 4.3906E-3

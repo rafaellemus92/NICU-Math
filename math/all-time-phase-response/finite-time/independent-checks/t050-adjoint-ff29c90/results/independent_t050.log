@@ -1,0 +1,60 @@
+== 0. input hashes
+   25 pinned files present and matching
+== 1. adjoint strain constants, exact rationals
+   e^(1/2) < 1.648721270700128 < 5/3; M = 10/3, 10/3, 35/6, 25/2; B0 = 275/18, B1 = 1225/36; F = 8875/54
+   strain <= 18155/81 + 275/18 + 1225/36 = 88595/324 = 273.441358024691 < 274   (with the exact e^(1/2) bound: 237.376724)
+== 2. integral of N_w^2 over 500 cells, exact
+   sum dt N_i^2 = 0.164134205993919702 (equals the certificate fraction); 274 * stored upper = 44.9727724423340
+== 3. endpoint energy E and base Laplacian G from the stored exact fractions
+   E_lo mine 0.3866451131876691818166458241715466359302  stored 0.3866451083297471488213825258991914701337
+   E_hi mine 0.3874898467460496040077743943896151157987  stored 0.3874898516092755116575189243539287703110
+   G    mine 2.053596145156921302493684911598637715421  stored 2.053596146548743800209933462811738469265
+   committed convention (eps1 = 4.8005E-4, epsW = 2.2081E-4):
+   E_lo conv 0.3866451083297471488213825258991914701337  E_hi conv 0.3874898516092755116575189243539287703110  G conv 2.053596146548743800209933462811738469265
+== 4. J2 lower end with structural strain mu = m1/sqrt(3)
+   V <= 0.06549129966866799060458207  (source 0.0653005697936, smooth error 1.897542E-4, dissipation error 9.756442E-7)
+   J2 >= 0.0109234416046090248941977554473707935484   committed 0.01092344160460902489419775544737079359984298417769161997
+   J2 >= 0.0109234465536833221729898575717143843342   (with own E, G from the fractions)
+== 5. inherited cumulative dissipation D_w and I_inf (lambda = 10^6), own resolvent constant
+   cells where the global Lemma B cap (bounds.review.json) is below K_i^2: 0 of 500
+   Ahat 0.474521867247627181942457977757  stored 0.474521867247627181942457977757
+   D_w(T) 673308.4062095365801713825  stored 673308.4062095365801713825  rel 0.0e+00
+   I_inf(T) 397384.8320555146149113816  stored 397384.8320555146149113816  rel 0.0e+00
+== 6. remainder envelopes Nr, Er, Dr and the mean nonself observable
+   Nr(T)   80.4382793326233336505923990962  committed 80.4382793326233336505923990962  rel 0.0e+00
+   Er(T)   1391.97137467458189913377563665  committed 1391.97137467458189913377563665  rel 0.0e+00
+   Dr(T)   63741426.4535146047072926004631  committed 63741426.4535146047072926004631  rel 0.0e+00
+   direct  355.388741998858184623326884141  committed 355.388741998858184623326884141  rel 0.0e+00
+   cross   343.083987027364151072485498032  committed 343.083987027364151072485498032  rel 0.0e+00
+   selected nonself = cross 343.083987027364151072485498032
+   all 500 per-cell Nr, Er within 1e-30 relative of the committed table: True
+== 7. final comparison H_b(1/2)/b^2 >= J2_lo - beta^2 (274 int N^2 + G nonself + gradient)
+   [as certified (inherited G, E, ||Delta qN||)]
+      self 44.9727724423339994705489909686  G*nonself 704.555953701974228013589303074  gradient 98.7047199436853138995614812582
+      C <= 848.233446087993541383699775300   beta^2 C <= 0.00763410101479194187245329797770
+      H/b^2 >= 0.00328934058981708302174445746967   positive: True
+   [own E, G from fractions]
+      self 44.9727724423339994705489909686  G*nonself 704.555953224462216262714314347  gradient 98.7047199436853138995614812582
+      C <= 848.233445610481529632824786574   beta^2 C <= 0.00763410101049433376669542307916
+      H/b^2 >= 0.00328934554318898840629443449255   positive: True
+   [validated-only gradient (no array read for ||Delta qN||)]
+      self 44.9727724423339994705489909686  G*nonself 704.555953701974228013589303074  gradient 425.136546734000630201903562736
+      C <= 1174.66527287830885768604185678   beta^2 C <= 0.0105719874559047797191743767110
+      H/b^2 >= 0.000351454148704245175023378736367   positive: True
+   [committed rounding convention (eps1, epsW rounded up to 5 digits)]
+      self 44.9727724423339994705489909686  G*nonself 704.555953701974228013589303074  gradient 98.7047276333886513917301922724
+      C <= 848.233453777696878875868486315   beta^2 C <= 0.00763410108399927190988281637683
+      H/b^2 >= 0.00328934052060975298431493907054   positive: True
+   committed: C <= 848.2334537776968788758684863145, H/b^2 >= 0.003289340520609752984314939070
+   reconciliation: H/b^2 (committed convention) - committed = -5.329E-38;  H/b^2 (full-precision eps1) - committed = 6.920733E-11
+   the latter equals beta^2 * (eps1 rounding) * Er(T) = 9e-6 * 7.689703E-6; E and G enter through the stored endpoint values in both
+   gradient: inherited ||Delta qN(T)|| 1.2187793248234671498 -> 98.704719943685313900 (committed 98.7047276333886513917); validated-only 5.2769445354500504888 -> 425.13654673400063020
+== 8. hypothetical sensitivity, one input at a time with all others fixed (not an error allowance; the rigorous claim needs every enclosure to be a valid bound)
+   source hull U_i (relative increase)      comparison stays positive for an adverse change up to 2.452883E-2
+   G (relative increase)                    comparison stays positive for an adverse change up to 2.335621E-2
+   E lower end (absolute decrease)          comparison stays positive for an adverse change up to 3.289341E-3
+   ||Delta qN(T)|| (absolute increase)      comparison stays positive for an adverse change up to 4.543636E+0
+   all N_w (relative increase of int N^2)   comparison stays positive for an adverse change up to 8.126746E+0
+   nonself (relative increase)              comparison stays positive for an adverse change up to 5.187413E-1
+   strain constant 274 (absolute increase)  comparison stays positive for an adverse change up to 2.226728E+3
+wall 4.9 s; wrote ../results/independent_t050.json
