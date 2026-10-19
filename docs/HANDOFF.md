@@ -671,3 +671,35 @@ under Python 3.12. Separate bounds.review.json preserves new source provenance;
 all numerical fields and pinned inputs match the original bounds.json exactly.
 Original archived results and analytic formulas are unchanged. No push authorized
 for this follow-up; no new scientific stage was started.
+
+## Fixed-endpoint Z2 first stage (Codex, local review only)
+
+User authorized pushing exact correction 2af8fe4b3abceee08547f0fee699d78b5ac29bf2
+and then a bounded coefficient-certification investigation. That correction push
+was completed without force/LFS upload and the remote SHA verified. New branch
+`codex/phase-z2-endpoint` starts at that commit; new work is not authorized for push.
+
+Scope: new finite-time/z2-endpoint folder, this handoff/index, and a necessary
+prose correction in Route B NOTE/REVIEW. Fixed unit a,c,d, nu=1/28, phi=37/100,
+T=1/4, beta=.003. Exact rational sums of the existing verified endpoint arrays,
+plus inherited interval errors and the analytic q2 norm bound, yield the
+conditional enclosure Z2(T) in [-0.89785,1.4598]. It includes zero. Its available
+|Z2| lower bound is 0, versus beta² times the existing C_B upper endpoint in
+[.79025,.79026]. Original-target dominance is NOT certified; no smaller-amplitude
+success is substituted. This does not establish failure of physical dominance.
+
+Important correction: for the coefficient actually defined in these notes,
+Z2(0)=1/4, not zero. q2(0)=0 and ||grad q1(0)||²=1/2. The earlier review wording
+was repeated incorrectly in Route B explanatory prose; corrected here and
+covered by an exact normalization test. All archived numbers/formulas are intact.
+
+Validation: nine focused implementation tests pass in Python 3.12.14. A first
+invocation caught Decimal abs() rounding under the outer Inexact trap; fixed
+using exact copy_abs and covered by a regression test, with failure retained.
+No new evolution, full validator, sweep, download, paid resource or extra agent.
+
+The blocker is the signed scalar <-Delta U(T),bar(q2(T))>. NOTE.md derives an
+adjoint identity and concrete mean-q2 alternative, error budgets, support/tail
+requirements and unbenchmarked cost estimates before any larger work. A new
+pilot/evolution would require review first. Independent mathematical review
+of this new enclosure/plan remains pending. Stop at this first-stage result.

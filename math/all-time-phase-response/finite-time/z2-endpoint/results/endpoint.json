@@ -1,0 +1,110 @@
+{
+  "status": "rigorous enclosure conditional on inherited certificates; new derivation needs review",
+  "base_commit": "2af8fe4b3abceee08547f0fee699d78b5ac29bf2",
+  "scope": "a=c=d=1, nu=1/28, phi=37/100, T=1/4, beta=3/1000",
+  "source_sha256": "8586815edb05ea15be84ade56583fb74a6f1e5653a5b8dff42bafcfa1e8c4f1c",
+  "plan_sha256": "8e9c5669c9dd18635c9881c9629d155cb6ac4b2d94127823c482937373d956f3",
+  "inputs_sha256": {
+    "constants.py": "996f39f171601a73bdbd87c61e82482f7a91508ab19d78584215da1475479014",
+    "absorption-b003/results/chain.json": "0cd069e1fdd83e66a9a65bf24b5be95f477b64d255290b4ced07aa3e7f5fe117",
+    "absorption-b003/results/trajectory_manifest.json": "8c39c91f4980ef30458c3300f6df0094709873e355546b7c54a764a0553dd847",
+    "route-b-dissipation/results/bounds.review.json": "4ca49f7ffa12fafa45ca83d36d551b34afd02de9671963b275e1f602237f7e65"
+  },
+  "trajectory_files": {
+    "W_nodes.npy": {
+      "bytes": 8600816,
+      "shape": [
+        12501,
+        43
+      ],
+      "dtype": "complex128",
+      "sha256_file": "0fc8d078c09bf8c8b05e3e0a40bfbe6c019b0c873f1748a0f3bbae8d8112daa9",
+      "sha256_array_bytes": "825078dc2eaf8818b6e0bcd0ca6615559a3d5bb32781507dd0c4e01bf37e22bd",
+      "matches_numerics_json": true,
+      "matches_validated_json": true
+    },
+    "Q_nodes.npy": {
+      "bytes": 264621296,
+      "shape": [
+        12501,
+        3,
+        21,
+        21
+      ],
+      "dtype": "complex128",
+      "sha256_file": "7a8157de830a5c2358119084947299a8aeb5daf7b749f69e8506c23c47e94ccd",
+      "sha256_array_bytes": "529b1e4c61f0a98437d09d92b1e71a1ad9a271fefafb7bbd5d507412cb4bd9d8",
+      "matches_numerics_json": true,
+      "matches_validated_json": true
+    }
+  },
+  "exact_endpoint_fractions": {
+    "projected_q_gradient_squared": "1016646422100479639215026924651431203486760727720536706562456161014304803097/1809251394333065553493296640760748560207343510400633813116524750123642650624",
+    "base_vertical_laplacian_squared": "13825860695753523049190252849238269921283651992673233917398313289033213915529073111153749493774083980158702465/4697085165547666455778961193578674054751365097816639741414581943064418050229216886927397996769537406063869952"
+  },
+  "bounds": {
+    "qN_gradient_norm": {
+      "lo": "0.7496102395114276388695002473835729022664",
+      "hi": "0.7496102395114276388695002473835729022666",
+      "display_lower": "0.74961",
+      "display_upper": "0.74962"
+    },
+    "half_q1_gradient_squared": {
+      "lo": "0.2809157609954758550129108602697157707913",
+      "hi": "0.2809997533235926314569909100334346053681",
+      "display_lower": "0.28091",
+      "display_upper": "0.28100"
+    },
+    "base_approx_laplacian_norm": {
+      "lo": "1.853280511782593408984368550888636177239",
+      "hi": "1.853280511782593408984368550888636177241",
+      "display_lower": "1.8532",
+      "display_upper": "1.8533"
+    },
+    "base_laplacian_error": {
+      "lo": "0.00002053162302400859881908963511418478164745",
+      "hi": "0.00002053162302400859881908963511418478164747",
+      "display_lower": "0.000020531",
+      "display_upper": "0.000020532"
+    },
+    "base_true_laplacian_upper": {
+      "lo": "1.853301043405617417583187640523750362023",
+      "hi": "1.853301043405617417583187640523750362023",
+      "display_lower": "1.8533",
+      "display_upper": "1.8534"
+    },
+    "N2_upper": {
+      "lo": "0.6360349089847990303600261781051790755900",
+      "hi": "0.6360349089847990303600261781051790755900",
+      "display_lower": "0.63603",
+      "display_upper": "0.63604"
+    },
+    "signed_q2_pairing": {
+      "lo": "-1.178764160463924951386797154209953799139",
+      "hi": "1.178764160463924951386797154209953799139",
+      "display_lower": "-1.1788",
+      "display_upper": "1.1788"
+    },
+    "Z2": {
+      "lo": "-0.8978483994684490963738862939402380283477",
+      "hi": "1.459763913787517582843788064243388404508",
+      "display_lower": "-0.89785",
+      "display_upper": "1.4598"
+    },
+    "abs_Z2": {
+      "lo": "0",
+      "hi": "1.459763913787517582843788064243388404508",
+      "display_lower": "0",
+      "display_upper": "1.4598"
+    },
+    "beta_squared_CB": {
+      "lo": "0.7902553154714449889588133704217826330357",
+      "hi": "0.7902553154714449889588133704217826330358",
+      "display_lower": "0.79025",
+      "display_upper": "0.79026"
+    }
+  },
+  "fixed_target_dominance_certified": false,
+  "zero_excluded": false,
+  "interpretation": "Failure to certify dominance is not a claim that physical dominance fails."
+}

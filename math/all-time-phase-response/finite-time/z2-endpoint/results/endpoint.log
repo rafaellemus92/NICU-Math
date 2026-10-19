@@ -1,0 +1,12 @@
+qN_gradient_norm: [0.74961, 0.74962]
+half_q1_gradient_squared: [0.28091, 0.28100]
+base_approx_laplacian_norm: [1.8532, 1.8533]
+base_laplacian_error: [0.000020531, 0.000020532]
+base_true_laplacian_upper: [1.8533, 1.8534]
+N2_upper: [0.63603, 0.63604]
+signed_q2_pairing: [-1.1788, 1.1788]
+Z2: [-0.89785, 1.4598]
+abs_Z2: [0, 1.4598]
+beta_squared_CB: [0.79025, 0.79026]
+Fixed target dominance certified: False
+Zero excluded from Z2: False

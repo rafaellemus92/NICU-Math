@@ -20,7 +20,9 @@ local follow-up checks are distinguished below.
    milestone is an absolute normalized enstrophy error below 0.01. The bound
    7.1123e-6 exceeds the relayed sampled b²|Z2| estimate 2.25–2.40e-6 at b=0.003.
    No dominance or certified relative accuracy follows. The sampled estimate and
-   suggested ~0.0017 threshold are not rigorous or uniform certificates. Z2(0)=0.
+   suggested ~0.0017 threshold are not rigorous or uniform certificates. Correction during the
+   fixed-endpoint follow-up: the relayed Z2(0)=0 assertion was incorrect for
+   the defined coefficient; Z2(0)=1/4. See ../z2-endpoint/NOTE.md.
    NOTE.md states this limitation next to the milestone.
 2. **NumPy dependency: accepted.** Parent constants.py imports NumPy at line 59.
    The new postprocessor performs no NumPy computation, but importing its parent
@@ -71,5 +73,5 @@ Suggested next scientific target, not started: at the fixed T=1/4, certify an
 interval enclosure for Z2 with a nonzero lower bound on |Z2| and compare b²|Z2|
 against the remainder bound. If the current remainder envelope remains larger,
 sharpen its dominant mean/self-interaction estimate before claiming dominance.
-Any extension to a time interval must specify its endpoints and handle the
-vanishing at t=0; no numerical threshold is preregistered or certified here.
+Any extension to a time interval must specify its endpoints and certify a
+lower bound there (the defined coefficient does not vanish at t=0); no numerical threshold is preregistered or certified here.

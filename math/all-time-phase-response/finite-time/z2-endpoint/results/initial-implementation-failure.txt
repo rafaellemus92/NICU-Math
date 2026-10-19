@@ -1,0 +1,6 @@
+Initial implementation run failed before writing endpoint.json:
+decimal.Inexact in absolute_interval, from Python abs(Decimal) under the
+one-digit Inexact-trapping outer context. Corrected to Decimal.copy_abs(),
+which changes sign exactly without context rounding. A focused regression test
+covers positive, negative and zero-crossing intervals under that trap.
+No numerical result or milestone was retuned; this was an implementation failure.

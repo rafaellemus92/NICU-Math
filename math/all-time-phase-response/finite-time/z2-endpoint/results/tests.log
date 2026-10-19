@@ -1,0 +1,14 @@
+test_absolute_intervals_do_not_round_in_outer_context (test_endpoint.EndpointTests.test_absolute_intervals_do_not_round_in_outer_context) ... ok
+test_base_laplacian_normalization (test_endpoint.EndpointTests.test_base_laplacian_normalization) ... ok
+test_error_clips_lower_norm_before_squaring (test_endpoint.EndpointTests.test_error_clips_lower_norm_before_squaring) ... ok
+test_initial_coefficient_is_one_quarter (test_endpoint.EndpointTests.test_initial_coefficient_is_one_quarter) ... ok
+test_output_preservation_before_array_access (test_endpoint.EndpointTests.test_output_preservation_before_array_access) ... ok
+test_parallel_mode_projects_to_zero (test_endpoint.EndpointTests.test_parallel_mode_projects_to_zero) ... ok
+test_projection_against_independent_rational_projector (test_endpoint.EndpointTests.test_projection_against_independent_rational_projector) ... ok
+test_recorded_endpoint_energy_from_exact_fraction (test_endpoint.EndpointTests.test_recorded_endpoint_energy_from_exact_fraction) ... ok
+test_weight_ratio_factor_identity (test_endpoint.EndpointTests.test_weight_ratio_factor_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.148s
+
+OK

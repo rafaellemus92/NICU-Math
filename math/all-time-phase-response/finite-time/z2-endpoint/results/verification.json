@@ -1,0 +1,18 @@
+{
+  "base_commit": "2af8fe4b3abceee08547f0fee699d78b5ac29bf2",
+  "python": "Python 3.12.14",
+  "protected_archive_diff_empty": true,
+  "source_and_preregistration_hashes_match": true,
+  "tests_passed": 9,
+  "independent_review": "pending",
+  "files_sha256": {
+    "NOTE.md": "7d276880a376e4babaafaabac86dbf81eff49f4fd5ae679a55d45e8598fd5d22",
+    "PLAN.md": "8e9c5669c9dd18635c9881c9629d155cb6ac4b2d94127823c482937373d956f3",
+    "endpoint.py": "8586815edb05ea15be84ade56583fb74a6f1e5653a5b8dff42bafcfa1e8c4f1c",
+    "results/endpoint.json": "37368b9c6c7781e9cc691deb4742fd56e194c4ee80bed0b6a517e2425d8ab0bc",
+    "results/endpoint.log": "849f2c665c1cef46379912f2a3e19ec83f2bcda05351591c61997307ab2bfba0",
+    "results/initial-implementation-failure.txt": "c2924c9b47c4a9f5f18c2558baff9d8c94988b021b247132a736f8b36d80c39e",
+    "results/tests.log": "f75b8fdcc0ee3c512cc985aa5a44f4b6c0765982e8fde1a678d3d84f1df6b359",
+    "test_endpoint.py": "0decee925efb5bf8dba665ec78892934cfb7d270e0af832aaf333a82c6d79f08"
+  }
+}

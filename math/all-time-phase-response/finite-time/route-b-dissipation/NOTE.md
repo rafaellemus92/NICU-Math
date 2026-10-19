@@ -264,10 +264,12 @@ the user-relayed review estimates b²|Z2| at this amplitude and horizon as
 2.25–2.40e-6 from saved numerical data, below our 7.1123e-6 upper bound.
 Those estimates have no certified error control. Neither a relative-error
 certificate nor a rigorous amplitude threshold (such as the suggested ~0.0017)
-follows from them. Z2(0)=0, so a uniform positive lower bound on |Z2| over the
-whole interval [0,T] is unavailable. A dominance claim would require a certified
-lower bound on an explicitly specified time interval, or matched vanishing-order
-estimates near zero, together with a suitable remainder upper bound. This is an upper bound, not a measured error,
+follows from them. Correction from the fixed-endpoint follow-up: for the Z2
+actually defined here, Z2(0)=1/4, not zero (q2(0)=0 and ||grad q1(0)||²=1/2).
+The centered difference Z2(t)-Z2(0) vanishes initially; Z2(t) does not.
+No uniform positive lower bound on |Z2| over [0,T] has yet been certified; a
+dominance claim requires a certified lower bound on the specified time interval,
+together with a suitable remainder upper bound. See ../z2-endpoint/NOTE.md. This is an upper bound, not a measured error,
 not a sharp constant, and not a comparison with patient data.
 
 Dependency map:
