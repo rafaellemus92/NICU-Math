@@ -1,0 +1,24 @@
+# Terminal output of attempts/sign_enclosure.attempt1.py (first version), verbatim. It aborted in a reporting line;
+# every enclosure printed above the traceback was already computed. No file was written.
+free decay exp(-2nuT)/4 in [0.245575338, 0.245575338];  E - free in [0.035340, 0.035424]
+A  recorded certificate (hull note)          |M| <= 0.041880   J2 in [-0.006540, +0.077305]   sign(J2) undetermined
+B' time-weighted, constant M1                |M| <= 0.027326   J2 in [+0.008014, +0.062751]   sign(J2) > 0 certified
+B  time-weighted, per-cell m1(t)             |M| <= 0.027140   J2 in [+0.008201, +0.062564]   sign(J2) > 0 certified
+||V(T)|| <= 0.014644 (B)  vs recorded 0.022598
+remainder at |b| = 0.003: two-sided b^2 C_endpoint <= 0.062295;  one-sided (positive sign only, K^2/2 dropped) <= 0.061189
+A: H_b/b^2 at |b|=0.003 in [-0.067729, +0.139600]   sign undetermined
+B: H_b/b^2 at |b|=0.003 in [-0.052989, +0.124859]   sign undetermined
+   positive sign proved only for 0 < |b| < 1.098271e-03  (fixed target |b| <= 0.003 NOT met)
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user/5747e705-94f5-5b9e-86ec-b5eb1c6dd9b6/scratchpad/sign/sign_enclosure.py", line 58, in <module>
+    print(f'required one-sided constant for the fixed range with J2_lo(B): C < {float(need_C_now):.1f}   (current {float(Cone.b):.1f}, factor {float(Cone.b / need_C_now):.2f})')
+                                                                                                                                               ~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/mpmath/ctx_iv.py", line 56, in __float__
+    return self.cast(float, libmp.to_float)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/mpmath/ctx_iv.py", line 50, in cast
+    raise ValueError
+ValueError
+wall 0.16 s
+# Cause: float() of a non-point interval (Cone.b / need_C_now is an interval quotient). Fix: take its upper endpoint .b.
+# The same edit made the uncertified J2 estimate an explicit interval endpoint and added two reporting lines.

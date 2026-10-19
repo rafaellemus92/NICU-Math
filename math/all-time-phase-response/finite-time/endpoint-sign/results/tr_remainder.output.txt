@@ -1,0 +1,12 @@
+synthetic self-checks passed
+lambda       100: N_r(T) <=      8.1927  E_r(T) <=   135.2419  Nbar <=   1650.5868  (global   7946.853)   C_one <=   3160.421
+lambda     10000: N_r(T) <=      6.0625  E_r(T) <=    98.2399  Nbar <=    936.0932  (global   4629.631)   C_one <=   1808.510
+lambda    100000: N_r(T) <=      5.4047  E_r(T) <=    86.8136  Nbar <=    715.4483  (global   3643.535)   C_one <=   1391.023
+lambda   1000000: N_r(T) <=      5.1069  E_r(T) <=    81.6403  Nbar <=    615.5041  (global   3440.178)   C_one <=   1201.918
+lambda  10000000: N_r(T) <=      5.9731  E_r(T) <=    96.6807  Nbar <=    895.7758  (global   5887.547)   C_one <=   1732.621
+
+best lambda 1000000: C_one,TR <= 1201.9176   (one-sided, all 0<|b|<=0.003)
+decision rule (D):  J2_lo >= 0.0082007206  >  beta^2 C_one,TR <= 0.0108172579 ?  ->  NOT CERTIFIED
+lower bound of H_b/b^2 at |b| = 0.003: >= -0.0026165372
+positive sign proved (conditional) for 0 < |b| < 0.002612093 with C_one,TR
+D_w,TR(T) <= 26061.110  (global 50101.780);  wall 28.0 s; wrote tr_remainder.json
