@@ -871,3 +871,15 @@ fresh regression leaves every numerical/decision field identical. Timed
 tests/regression0.257927s; total including semantics probe under1s (<60s).
 All original outputs, plans and manifests remain untouched. No push, merge,
 PR, deployment, LFS or simulation. Review outcome is in AUDIT_FOLLOWUP.md.
+
+## Documentary reconciliation of external PDF review (local)
+
+Owner Codex; isolated branch codex/endpoint-documentary-reconciliation based on
+0f83002654040c88e4bc652c4589550696cae3bf. Documentation only: explicit H0,
+mean-zero/scaled-response and norm conventions, parity by uniqueness, named
+bounds and source/evidence map. See endpoint-beta003/DOCUMENTARY_RECONCILIATION.md
+for historical versus current provenance, six/seven/eight test stages, G versus
+G-prime, and limitations on margin/independent-review claims. Existing source,
+outputs, manifests and branches preserved. No numerical work or tests rerun;
+whitespace and changed-path checks only. Parent/PDF review remains pending.
+No push, merge, deployment or new theorem claim.

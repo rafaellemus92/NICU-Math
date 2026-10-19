@@ -84,3 +84,11 @@ Certificate implementation follow-up: `endpoint-beta003/AUDIT_FOLLOWUP.md`
 clarifies the indirect time-refinement dependency and completed reproduction
 status, and hardens the interval rate guard without changing any numerical
 certificate bound. The mechanism-attribution work remains on its separate branch.
+
+## Endpoint certificate documentary clarification
+
+[External-review reconciliation](../math/all-time-phase-response/finite-time/endpoint-beta003/DOCUMENTARY_RECONCILIATION.md)
+clarifies inherited hypotheses, scaled norm bounds, source provenance, test
+stages and the distinction between reported reproductions and end-to-end formal
+or human verification. It changes no certificate value or archived output.
+Externally reported solver/component values remain unverified reports.

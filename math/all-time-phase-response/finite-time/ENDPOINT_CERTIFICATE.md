@@ -34,7 +34,19 @@ The last term is exactly the enstrophy of the isolated heat evolution
 \(b e^{-\nu t}\sin z\,e_y\). It is a reference subtraction, not a claim
 that this perturbation evolves independently inside the full solution.
 
-**Conditional endpoint theorem.** Assume the analytic inequalities, validated
+**Inherited hypothesis H0.** For every \(|b|\le\beta\), assume existence and
+uniqueness of a smooth solenoidal solution on \([0,T]\), as supplied by the
+inherited closure/Lemma M under its stated hypotheses. The response equations
+and bounds below also inherit their regularity justification. This note does
+not independently reprove that closure.
+
+Translation invariance and uniqueness give
+\(u_{-b}(x,y,z,t)=u_b(x,y,z+\pi,t)\): the translation reverses the initial
+\(b\sin z\) term and leaves the other initial components fixed. Normalized
+norms and the heat subtraction are invariant, so \(H_{-b}(t)=H_b(t)\).
+This parity does not replace the mode-support argument used below.
+
+**Conditional endpoint theorem.** Assume H0, the analytic inequalities, validated
 input enclosures, smoothness closure and arithmetic hypotheses listed in the
 appendix. At
 \[
@@ -91,7 +103,10 @@ uses a validated norm enclosure, not an assumed favorable sign.
 
 ## Divergence-form improvement
 
-Fix a nonzero admissible b and set \(W=w/b^2\). Split \(\bar r/b^4=X+Y\)
+Fix a nonzero admissible b and set \(W=w/b^2\). W is solenoidal and has zero
+spatial mean: the means of \(u_b,U,q_1\) vanish and are preserved by their
+equations. This is the mean-zero hypothesis needed for the inherited weighted
+Fourier/Agmon inequality. Split \(\bar r/b^4=X+Y\)
 by linearity of \(L_U\), with zero initial data for both terms. Take
 \[
  L_U X=-P\operatorname{div}\overline{W\otimes W},\qquad
@@ -113,7 +128,8 @@ normalized z-average and the Frobenius tensor norm give
 \]
 There is no volume or component factor since \(|W\otimes W|_F=|W|^2\).
 Transport by U is skew; stretching is bounded using
-\(m_1(t)\ge\|\nabla U(t)\|_\infty\). Young's inequality gives
+\(m_1(t)\ge\operatorname*{ess\,sup}_x|\nabla U(x,t)|_F\), with the
+Frobenius matrix norm (which dominates the operator norm). Young's inequality gives
 \[
  \tfrac12(\|X\|_2^2)'+\nu\|\nabla X\|_2^2
  \le m_1\|X\|_2^2+\nu\|\nabla X\|_2^2
@@ -147,6 +163,36 @@ gives
 All coefficients multiplying I are nonnegative. In particular, no difference
 of cumulative upper bounds is interpreted as cell dissipation.
 
+The inherited cumulative dissipation bound is explicitly
+\[
+ \int_0^{t_{j+1}}\|\Delta W(s)\|_2^2\,ds\le D_{w,j},\qquad
+ I_j=\widehat A_\lambda\left(\lambda\Delta\sum_{i\le j}N_i^2+D_{w,j}\right).
+\]
+Here \(D_{w,j}\) is the scaled cumulative bound from endpoint-sign/PLAN.md
+A; it is not the instantaneous dissipation or a cell increment. Its subscript
+w is inherited notation although the inequality is for \(W=w/b^2\).
+
+For clarity, define the nonnegative inherited norm bounds
+\[
+ \|Y(T)\|_2\le\mathrm{nonself}
+ :=\mathrm{smooth}+\mathrm{err\_adv}+\mathrm{err\_grad},\qquad
+ \|X(T)\|_2\le d_1,\quad\|X(T)\|_2\le d_2.
+\]
+The three nonself terms are the separately bounded terms in endpoint-sign/PLAN.md
+E, stored in `tr_remainder.repaired.json` under `parts`; they are not obtained
+by subtracting upper bounds. The old self-response bounds can be written
+\[
+ d_1=\left(\Delta\sum_iP_i^2K_i^2\right)^{1/2}I_{249}^{1/2},\qquad
+ d_2=\left(\Delta\sum_iP_iK_i^2\right)^{1/2}
+       \left[\mathcal A(\widehat P,I)\right]^{1/2},
+\]
+where \(K_i\ge\|\nabla W\|_2\) on cell i,
+\(P_i=\exp(\Delta\sum_{k\ge i}(m_{1,k}-\nu))\),
+\(\widehat P_i=\max_{k\ge i}P_k\), and
+\(\mathcal A(v,I)=v_{249}I_{249}+\sum_{i<249}(v_i-v_{i+1})I_i\).
+Thus \(d_1,d_2,d_{\rm div}\) bound the norm of the **scaled response X**;
+they are not themselves coefficients in the enstrophy remainder bound.
+
 At the previously selected Fourier weight \(\lambda=10^6\), the evaluated
 bounds are \(d_{\rm div}\le158.221110\) and \(\|Y(T)\|_2\le12.344635\).
 The former self bound was 603.159427. With inherited
@@ -156,6 +202,8 @@ The former self bound was 603.159427. With inherited
  C_{\rm new}=G(\text{nonself}+\min(d_1,d_2,d_{\rm div}))+S E_r
  \le377.312890.
 \]
+The quantities \(C_{\rm new}\) and the former \(C_{\rm one,TR}\) are
+**coefficients in** \(R_Z\ge-b^4C\), not norms of X or values of \(\beta^2C\).
 Dropping only the positive last term in (2) proves
 \(R_Z\ge-b^4C_{\rm new}\). Together with the full-precision evaluation
 in (1), \(b^2\le\beta^2\) proves the statement. The rounded C alone would
@@ -197,7 +245,9 @@ bounded audit; the published scalar log records 1.4 seconds for that component.
 It inspected but did not run the original mpmath script/tests, and did not
 revalidate inherited certificates. Its Decimal calculation and Fourier checks
 are AI audit artifacts, not human refereeing or formal verification. See
-[repair/reproduction record](endpoint-beta003/AUDIT_REPAIRS.md) for exact scope,
+[historical repair/reproduction record](endpoint-beta003/AUDIT_REPAIRS.md),
+[current audit follow-up](endpoint-beta003/AUDIT_FOLLOWUP.md), and
+[documentary reconciliation](endpoint-beta003/DOCUMENTARY_RECONCILIATION.md) for exact scope,
 fresh outputs and mutation evidence.
 
 This conclusion is only at T=1/4 and the fixed phase/parameters. It implies
