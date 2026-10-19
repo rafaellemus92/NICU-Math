@@ -11,6 +11,25 @@ HERE = Path(__file__).resolve().parent
 iv.dps = 70
 X = iv.mpf
 
+# Hash-checked historical dependency; no field enters this arithmetic.
+PROVENANCE_ONLY = {"route-b-tightening/results/time_refinement.final.json"}
+
+
+def inclusive_tail_weights(rates, dt, exp=iv.exp):
+    """Inclusive source-cell factors exp(sum_{k>=i} rate_k*dt).
+
+    Nonnegative cell growth bounds cover every source time in its cell.
+    Generic arithmetic permits exact toy tests of this production function.
+    """
+    if not rates or dt <= 0 or any(rate < 0 for rate in rates):
+        raise ValueError('nonempty nonnegative rates and positive duration required')
+    tail = rates[0]*0
+    weights = [None]*len(rates)
+    for i in range(len(rates)-1, -1, -1):
+        tail += rates[i]*dt
+        weights[i] = exp(tail)
+    return weights
+
 
 def majorant(values):
     out = list(values)
@@ -62,7 +81,8 @@ def compute():
         raw = (ft/name).read_bytes()
         if hashlib.sha256(raw).hexdigest() != expected:
             raise ValueError('pinned input mismatch: '+name)
-        data[name] = json.loads(raw)
+        if name not in PROVENANCE_ONLY:
+            data[name] = json.loads(raw)
     parent = data['endpoint-sign/results/tr_remainder.repaired.json']
     chain = data['absorption-b003/results/chain.json']
     val = data['absorption-b003/results/validated.json']
@@ -103,11 +123,8 @@ def compute():
     for new, old in ((dw[-1],parent['Dw_TR_T']),(cumulative[-1],row['Iinf_T'])):
         ratio=abs(new/stored(old)-1)
         assert ratio.b<X('1e-45').a, 'parent cumulative reproduction failed'
-    tail=X(0); weights=[None]*250
-    for i in range(249,-1,-1):
-        assert m1[i].a>0
-        tail += 2*m1[i]*dt
-        weights[i]=(iv.exp(tail)*N[i]**2).b
+    propagation = inclusive_tail_weights([2*m for m in m1], dt)
+    weights = [(propagation[i]*N[i]**2).b for i in range(250)]
     phi=majorant(weights)
     weighted=abel(phi,cumulative)
     ddiv=iv.sqrt(weighted/(2*nu))
@@ -132,6 +149,8 @@ def compute():
         alternative_requires_M_greater_than=bounds(mthreshold),
         Dw_T=bounds(dw[-1]), Iinf_T=bounds(cumulative[-1]),
         weighted_Iinf_bound=bounds(weighted), inputs_sha256=pins,
+        input_roles={name: ("provenance-only; hash checked, not parsed or used in arithmetic"
+                            if name in PROVENANCE_ONLY else "arithmetic input") for name in pins},
         new_source_sha256={name:hashlib.sha256((HERE/name).read_bytes()).hexdigest()
                            for name in ('check.py','PLAN.md','INPUTS.json')})
 

@@ -1,0 +1,44 @@
+{
+  "runs": [
+    {
+      "name": "regression",
+      "command": [
+        "python",
+        "-B",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/check.py",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/results/repair/regression.json"
+      ],
+      "cwd": null,
+      "exit_code": 0,
+      "wall_seconds": 0.1378993789985543
+    },
+    {
+      "name": "tests",
+      "command": [
+        "python",
+        "-B",
+        "math/all-time-phase-response/finite-time/endpoint-beta003/test_check.py",
+        "-v"
+      ],
+      "cwd": null,
+      "exit_code": 0,
+      "wall_seconds": 0.15762094700039597
+    },
+    {
+      "name": "excluded-source-mutation",
+      "command": [
+        "python",
+        "-B",
+        "test_check.py",
+        "Check.test_exact_toy_source_growth_and_source_cell_mutation",
+        "-v"
+      ],
+      "cwd": "/tmp/nicu-weight-mutation-bj_zj5ia",
+      "exit_code": 1,
+      "wall_seconds": 0.24286364499857882
+    }
+  ],
+  "all_prior_numerical_decision_fields_identical": true,
+  "excluded_source_mutation_rejected": true,
+  "total_wall_seconds": 0.5383839709975291
+}

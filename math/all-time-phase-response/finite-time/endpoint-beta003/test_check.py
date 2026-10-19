@@ -4,7 +4,7 @@ from decimal import Decimal
 import random
 import unittest
 from mpmath import iv
-from check import abel, majorant, decimal_end, stored
+from check import abel, majorant, decimal_end, stored, inclusive_tail_weights
 
 
 class Check(unittest.TestCase):
@@ -38,12 +38,30 @@ class Check(unittest.TestCase):
         self.assertEqual(abel(majorant(w),B),direct)
         with self.assertRaises(ValueError): abel(w,B)
 
-    def test_inclusive_cell_weight_covers_source_time(self):
-        rates=[iv.mpf('2'),iv.mpf('3')];dt=iv.mpf('0.1')
-        # Source starts at the left edge: excluding its cell is definitely too small.
-        exact=iv.exp((rates[0]+rates[1])*dt)
-        excluded=iv.exp(rates[1]*dt)
-        self.assertGreater(exact.a,excluded.b)
+    def test_exact_toy_source_growth_and_source_cell_mutation(self):
+        # Exact equation: x'=log(2)*(x+1), x(0)=0, t in [0,2].
+        # Thus x(2)=3. Each unit cell has source mass log(2).
+        # Represent integrated growth in units of log(2), so exp is exactly 2**r.
+        # 2/3 < log(2) < 3/4: midpoint/trapezoid bounds on integral_1^2 1/t.
+        rates=[F(1),F(1)]; dt=F(1)
+        exp2=lambda exponent: F(2)**exponent.numerator if exponent.denominator==1 else None
+        exact=F(3); source_lo=F(2,3); source_hi=F(3,4)
+        def assert_covers(weights):
+            # Even the lower bound on the proposed upper majorant exceeds x(2).
+            self.assertGreaterEqual(sum(weights)*source_lo,exact)
+        weights=inclusive_tail_weights(rates,dt,exp2)
+        assert_covers(weights)
+        # Mutation: store weight BEFORE adding the source cell's growth.
+        tail=F(0); excluded=[None]*2
+        for i in range(1,-1,-1):
+            excluded[i]=exp2(tail)
+            tail+=rates[i]*dt
+        self.assertLess(sum(excluded)*source_hi,exact)
+        with self.assertRaises(AssertionError): assert_covers(excluded)
+
+    def test_weight_domain(self):
+        for rates,dt in (([],F(1)),([F(-1)],F(1)),([F(1)],F(0))):
+            with self.assertRaises(ValueError): inclusive_tail_weights(rates,dt)
 
     def test_directed_decimal_serialization(self):
         for value in (iv.mpf(1)/3,-iv.mpf(1)/7,iv.mpf('1e-70')):

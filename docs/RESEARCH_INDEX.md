@@ -68,3 +68,14 @@ a=c=d=1, nu=1/28, phi=37/100, assuming inherited certificates.
 One focused independent AI review accepted the new proof/code/tests without
 rerunning inherited certificates; not a general regularity or novelty claim.
 Original insufficient comparison and all outputs remain preserved.
+
+## Human-readable endpoint certificate
+
+[Technical note](../math/all-time-phase-response/finite-time/ENDPOINT_CERTIFICATE.md)
+collects the fixed-family conditional endpoint theorem, proof, dependency map
+and bounded primary-literature context. It distinguishes baseline excess from
+absolute enstrophy growth. The endpoint-beta003 audit repairs label the unused
+pin provenance-only and replace the weight check with an exact source/growth
+toy plus actual-code mutation test; all prior scalar results are unchanged.
+Independent Decimal reproduction at b03bfa45ae25d3543d7ecbd3a2361f990d01120f
+is recorded separately from the original read-only proof review.

@@ -827,3 +827,34 @@ separate. The target is conditional on inherited closure/certificates, not an
 unconditional theorem on NS or an assertion outside this fixed parameter set.
 
 Final syntax check: `python -m compileall -q api ui tests math/all-time-phase-response/finite-time/endpoint-beta003` passed; `git diff --check` passed. Input/source hashes rechecked unchanged before commit.
+
+## Endpoint certificate review note (local)
+
+Owner Codex; isolated branch `codex/endpoint-certificate-review-note`, exact base
+`0f258a1add2b9e339d6c28f3599c43c4ad8241c3`. Read-only audit source:
+`b03bfa45ae25d3543d7ecbd3a2361f990d01120f`. New technical note is
+`math/all-time-phase-response/finite-time/ENDPOINT_CERTIFICATE.md`; repairs and
+fresh evidence are in `endpoint-beta003/AUDIT_REPAIRS.md` and `results/repair/`.
+Original inputs, plans, outputs and audit history are unchanged. Existing
+SHA256SUMS remains the historical manifest; REPAIR_SHA256SUMS records this stage.
+
+Changed code labels time_refinement.final.json provenance-only, hash-checks it
+but does not parse it, and reports input roles. Production inclusive weights
+now have a reusable helper exercised by an exact toy equation. All seven focused
+tests pass; a temporary mutation of the actual helper omitting source-cell
+growth is rejected by that test (expected failure log retained). Recomputed
+scalar/decision fields match every original field exactly. Total recorded
+regression/test/mutation process time is 0.538384s, each timeout 60s, below 300s.
+No research simulation or parameter exploration was performed.
+
+Literature context was supplied by the parent's bounded primary-source check;
+no priority is claimed. The note makes the initial family, coefficient
+conventions, conditional closure/arithmetic dependencies and endpoint-only
+conclusion explicit. The signed baseline excess does not imply absolute
+enstrophy growth. The completed physiology study remains on its separate branch.
+
+One permitted bounded review covers the changed code, note and recorded checks;
+its final outcome is in AUDIT_REPAIRS.md. No push, PR, merge, deployment, LFS,
+paid call or external-agent contact. Inherited certificates remain assumed,
+not revalidated. Original mpmath tests were not run by the published independent
+Decimal auditor; this stage's focused mpmath regression is a separate check.

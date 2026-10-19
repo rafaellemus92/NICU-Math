@@ -1,0 +1,16 @@
+test_exact_toy_source_growth_and_source_cell_mutation (__main__.Check.test_exact_toy_source_growth_and_source_cell_mutation) ... FAIL
+
+======================================================================
+FAIL: test_exact_toy_source_growth_and_source_cell_mutation (__main__.Check.test_exact_toy_source_growth_and_source_cell_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/nicu-weight-mutation-bj_zj5ia/test_check.py", line 53, in test_exact_toy_source_growth_and_source_cell_mutation
+    assert_covers(weights)
+  File "/tmp/nicu-weight-mutation-bj_zj5ia/test_check.py", line 51, in assert_covers
+    self.assertGreaterEqual(sum(weights)*source_lo,exact)
+AssertionError: Fraction(2, 1) not greater than or equal to Fraction(3, 1)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
