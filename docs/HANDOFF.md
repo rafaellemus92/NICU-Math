@@ -773,3 +773,17 @@ summation.17 tests pass. Pilot fits budget; full run36.62s; aggregate<45s<300s.
 A postprocessing nested-key lookup failure was preserved and corrected; no
 source output changed. No new reviewer, DNS, mean solver, downloads or external
 writes. New code/outputs require parent-side focused independent review.
+
+## Parent-side source-only review recorded
+
+The parent reports independent AI analytic/source review of f6bffd7435e19bc40e975e251696cf4cb93b6761
+and its analytic dependencies, with no blocking enclosure defect under inherited
+arithmetic assumptions. See source-only-hull/REVIEW.md for exact scope and limits.
+No numerical rerun or independent output reproduction occurred; the exact
+accumulation postprocessor is not a separate source-bound proof.
+
+The conditional dominance statement covers every nonzero |b|<=.003 at fixed
+T=.25, phi=.37 (other parameters unchanged). It is not uniform-time dominance
+or dynamically generated enhancement; Z2(0)=1/4. This documentation follow-up
+changes no numerical/source artifacts. Publication approval remains pending;
+no push or merge is authorized or performed.
