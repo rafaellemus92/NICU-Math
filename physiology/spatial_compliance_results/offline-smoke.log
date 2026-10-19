@@ -1,0 +1,19 @@
+test_default_ignores_dummy_credential_and_does_not_import_services (tests.test_smoke.DefaultModeSmoke.test_default_ignores_dummy_credential_and_does_not_import_services) ... ok
+test_compatibility_entrypoint (tests.test_smoke.OfflineAPI.test_compatibility_entrypoint) ... ok
+test_health_and_disabled_evidence (tests.test_smoke.OfflineAPI.test_health_and_disabled_evidence) ... ok
+test_homepage_evidence_mode_copy (tests.test_smoke.OfflineAPI.test_homepage_evidence_mode_copy) ... ok
+test_homepage_scope_and_resource_links (tests.test_smoke.OfflineAPI.test_homepage_scope_and_resource_links) ... ok
+test_sample_limits_and_missing_fields (tests.test_smoke.OfflineAPI.test_sample_limits_and_missing_fields) ... ok
+test_seeded_scenarios_and_probability_invariants (tests.test_smoke.OfflineAPI.test_seeded_scenarios_and_probability_invariants) ... ok
+test_evidence_sources_keep_excerpt_without_unserved_pdf_link (tests.test_smoke.StreamlitSmoke.test_evidence_sources_keep_excerpt_without_unserved_pdf_link) ... 2026-10-19 05:36:44.510 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_initial_render_and_failed_scenario (tests.test_smoke.StreamlitSmoke.test_initial_render_and_failed_scenario) ... 2026-10-19 05:36:44.958 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_root_is_flat_and_matches_service_requirements (tests.test_requirements.RequirementsManifest.test_root_is_flat_and_matches_service_requirements) ... ok
+test_in_memory_synthetic_pdf_text_extraction (tests.test_optional_pdf.OptionalPDFSmoke.test_in_memory_synthetic_pdf_text_extraction) ... ok
+test_pdf_pins_match_installed_dependency_contract (tests.test_optional_pdf.OptionalPDFSmoke.test_pdf_pins_match_installed_dependency_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.252s
+
+OK

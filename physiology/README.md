@@ -8,7 +8,7 @@
 
 Read [`../RESEARCH.md`](../RESEARCH.md) first.
 
-The two-compartment teaching model is implemented and tested. Other model
+The two-compartment and four-terminal RC teaching models are implemented and tested. Other model
 proposals and reference-note files remain planned. No clinical dataset use is authorized.
 
 ## Structure
@@ -19,6 +19,10 @@ physiology/
 ├── CLAIMS.md       # tiered claim ledger
 ├── two_compartment.py  # closed-form passive emptying
 ├── two_compartment.md  # derivation, domains and limits
+├── rc_network.py       # four-terminal shared-trunk passive network
+├── rc_network.md       # derivation, fixed endpoint and controls
+├── spatial_compliance_plan.md # preregistered comparison
+├── spatial_compliance_results/ # preserved output and verification
 └── references/     # planned per-paper summaries with equation notes
 ```
 
@@ -38,6 +42,7 @@ clinician might read.
   distributions of local time constants τ_i = R_i C_i, producing
   different passive-emptying responses. A motivating analogy, not an established link to the
   Navier–Stokes "reduced state doesn't determine evolution" claim.
+- **Spatial compliance assignment** (implemented). [Four-terminal RC network](rc_network.md): a fixed shared-trunk graph with matched compliance and terminal RC multisets still has different aggregate emptying when sibling assignments change. Synthetic passive linear model only.
 - **Cardiopulmonary coupling.** Pressures, geometry, compliance,
   transmural distinctions. Candidate reviews still need verification and notes under
   `references/`.

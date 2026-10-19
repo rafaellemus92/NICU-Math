@@ -46,6 +46,8 @@ Every claim in `physiology/` lives in exactly one tier below. See
   instrument only: no specific-patient inference, nonlinear compliance,
   recruitment, or validated predictive clinical tool is claimed.
 
+- **RC-GROUPING-1: Compliance assignment on a fixed shared-trunk graph changes aggregate emptying despite matching compliance and terminal RC multisets.** The synthetic four-terminal model uses unit resistances, C=(1,1)|(2,2) versus (1,2)|(1,2), uniform initial pressure 1 and boundary release to 0. Both start with volume 6 and energy 3; exact third volume derivatives are -5/54 and -1/9. The [derivation](rc_network.md) gives exact closed forms and contraction/relabel controls. The [preregistered](spatial_compliance_plan.md) t=1 retained-fraction difference evaluates approximately to 0.0003556421057062664. Float64 output is numerical verification of the analytic calculation, not a formal certificate or clinical evidence. Source hashes and output are in `spatial_compliance_results/`; 46 new tests plus 41 existing physiology cases pass. No patient inference or general NS result follows.
+
 ## Numerical evidence
 
 *(Pre-registered hypothesis, path to plan.md, held-out outcome.)*

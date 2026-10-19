@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/tmp/nicu-reconcile-venv/bin/python",
+    "-B",
+    "-m",
+    "physiology.rc_network"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.1147902709999471,
+  "stderr": "",
+  "python": "3.12.14",
+  "numpy": "2.0.2",
+  "scipy": "1.18.1",
+  "sha256": {
+    "physiology/rc_network.py": "bb0d5704a1294d0e40fdf6b928c88e4af0aa083ae93005bf8da05fd341272eb4",
+    "physiology/spatial_compliance_plan.md": "e3de352c76747017b6cebcd1bd601d66da41ce590129c3585644df5364097a20",
+    "tests/physiology/test_rc_network.py": "b4928e3de938cb178eec20494ddc51d43a704bbed2066df662558a3ee7264b5e"
+  }
+}

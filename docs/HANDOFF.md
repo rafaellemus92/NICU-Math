@@ -573,3 +573,42 @@ PR; human integration remains required.
 
 The pending-review wording above is historical; the PR15 independent review
 and later integration decisions are recorded in the reconciliation review.
+
+## Synthetic spatial-compliance RC study
+
+Owner: Codex; isolated local branch `codex/physiology-spatial-compliance`, base
+`2b14eeaa3d6a432e357f9ae0b9b2c936a725f6aa`. Scope: new four-terminal shared-trunk
+passive network, preregistered fixed comparison, derivation, tests and stored
+results under `physiology/` and `tests/physiology/`. This handoff and research
+index are the root-guidance-required documentation exceptions. Existing
+two-compartment source/tests, NS work, web, dependencies and other branches are
+unchanged. No push, PR, merge, deployment, installs or patient data.
+
+Owner refs were checked without integration: `claude/endpoint-sign-research`
+`6757dcb7655387a09666c7928c0099516188ee38` and
+`claude/endpoint-sign-audit` `87fa0e39ac51d8fd63b110af60e88c2f0e606109`.
+
+All resistances 1; compliance assignment G=(1,1)|(2,2), M=(1,2)|(1,2),
+initial pressure 1 and boundary release to 0. At the preregistered t=1,
+fG-fM approximately 0.0003556421057062664. Exact third volume derivatives
+-5/54 versus -1/9 distinguish the trajectories. See
+[derivation and limits](../physiology/rc_network.md), [plan](../physiology/spatial_compliance_plan.md)
+and [review](../physiology/spatial_compliance_results/review.md).
+
+Validation using existing Python 3.12.14 / NumPy 2.0.2 / SciPy 1.18.1 environment:
+- `/tmp/nicu-reconcile-venv/bin/python -B -m pytest -q tests/physiology`:
+  87 passed, including all 41 existing cases; wall time 0.77134 seconds.
+- `/tmp/nicu-reconcile-venv/bin/python -B -m physiology.rc_network`:
+  fixed output saved, exit 0, wall time 0.11479 seconds.
+- `NICU_OFFLINE=1 /tmp/nicu-reconcile-venv/bin/python -B -m unittest tests.test_smoke tests.test_requirements tests.test_optional_pdf -v`:
+  12 passed, wall time 1.98961 seconds.
+- `/tmp/nicu-reconcile-venv/bin/python -m compileall -q physiology api ui tests`:
+  exit 0, wall time 0.05211 seconds.
+- `git diff --check`: passed. Numerical execution plus even smoke/syntax totals
+  less than 3 seconds, within the 300-second cap. No failed numerical runs.
+
+The one authorized independent AI reviewer found no blocking source/math/test/
+claim defect; no independent reruns, interval certification or clinical validation.
+The review record and this final handoff text were not independently reviewed.
+Unrelated web/NS/Lean suites and hosted services were not run for this scoped
+physiology addition. A human decides any publication or integration.
